@@ -66,12 +66,14 @@ margin-top:8px;
 color:#555;
 }
 
+
 .stats{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
 margin-top:15px;
 }
+
 
 .stat{
 background:white;
@@ -81,9 +83,11 @@ text-align:center;
 box-shadow:0 2px 8px #ddd;
 }
 
+
 .menu{
 margin-top:20px;
 }
+
 
 .menu a{
 display:block;
@@ -96,12 +100,14 @@ margin-bottom:12px;
 text-align:center;
 }
 
+
 .task{
 background:#fff7ed;
 padding:15px;
 border-radius:12px;
 margin-top:15px;
 }
+
 
 .task-box{
 background:white;
@@ -110,15 +116,17 @@ border-radius:12px;
 margin-top:10px;
 }
 
+
 .task-btn{
 width:100%;
 padding:12px;
+margin-top:10px;
 background:#2563eb;
 color:white;
 border:none;
 border-radius:10px;
-margin-top:10px;
 }
+
 
 </style>
 
@@ -172,28 +180,52 @@ Rs 0
 
 <div class="stats">
 
+
 <div class="stat">
-<h3 id="completed">0</h3>
+
+<h3 id="completed">
+0
+</h3>
+
 <p>Completed</p>
+
 </div>
 
 
+
 <div class="stat">
-<h3 id="commission">Rs 0</h3>
+
+<h3 id="commission">
+Rs 0
+</h3>
+
 <p>Commission</p>
+
 </div>
 
 
+
 <div class="stat">
-<h3>0</h3>
+
+<h3>
+0
+</h3>
+
 <p>Pending</p>
+
 </div>
 
 
 <div class="stat">
-<h3>ID</h3>
-<p>User</p>
+
+<h3>
+User
+</h3>
+
+<p>ID</p>
+
 </div>
+
 
 </div>
 <div class="menu">
@@ -224,18 +256,15 @@ Rs 0
 Today's Tasks
 </h3>
 
-
 <div id="taskList">
 Loading Tasks...
 </div>
-
 
 </div>
 
 
 
 <script type="module">
-
 
 import { auth, db } from "./firebase.js";
 
@@ -249,6 +278,7 @@ from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 import {
 doc,
 getDoc,
+updateDoc,
 collection,
 getDocs
 }
@@ -256,12 +286,17 @@ from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 
+let currentUserId = "";
+
 
 
 onAuthStateChanged(auth, async(user)=>{
 
 
 if(user){
+
+
+currentUserId = user.uid;
 
 
 const userRef = doc(db,"users",user.uid);
@@ -274,7 +309,8 @@ const userSnap = await getDoc(userRef);
 if(userSnap.exists()){
 
 
-const data = userSnap.data();
+let data=userSnap.data();
+
 
 
 document.getElementById("userName").innerText=data.name;
@@ -293,30 +329,44 @@ document.getElementById("commission").innerText=
 "Rs "+data.commission;
 
 
+document.getElementById("completed").innerText=
+data.completed || 0;
+
+
 }
 
 
 
-const taskList =
-document.getElementById("taskList");
+loadTasks();
 
 
-const tasks =
-await getDocs(collection(db,"tasks"));
+
+}else{
+
+
+window.location.href="index.html";
+
+
+}
+
+
+});
+
+
+
+
+
+async function loadTasks(){
+
+
+const taskList=document.getElementById("taskList");
+
+
+const tasks=await getDocs(collection(db,"tasks"));
 
 
 taskList.innerHTML="";
 
-
-
-if(tasks.empty){
-
-
-taskList.innerHTML=
-"No Task Available";
-
-
-}else{
 
 
 tasks.forEach((item)=>{
@@ -345,8 +395,11 @@ Commission: Rs ${task.commission}
 </p>
 
 
-<button class="task-btn">
+<button class="task-btn"
+onclick="completeTask('${item.id}','${task.commission}')">
+
 Complete Task
+
 </button>
 
 
@@ -356,6 +409,7 @@ Complete Task
 `;
 
 
+
 });
 
 
@@ -363,22 +417,60 @@ Complete Task
 
 
 
-}else{
+
+window.completeTask = async function(id,commission){
 
 
-window.location.href="index.html";
+
+const userRef=doc(db,"users",currentUserId);
+
+
+const userSnap=await getDoc(userRef);
+
+
+let data=userSnap.data();
+
+
+
+let newBalance =
+Number(data.balance) + Number(commission);
+
+
+
+let newCommission =
+Number(data.commission) + Number(commission);
+
+
+
+let completed =
+Number(data.completed || 0) + 1;
+
+
+
+await updateDoc(userRef,{
+
+balance:newBalance,
+
+commission:newCommission,
+
+completed:completed
+
+});
+
+
+
+alert("Task Completed Successfully");
+
+
+location.reload();
 
 
 }
 
-
-
-});
 
 
 </script>
 
 
 </body>
-
 </html>
