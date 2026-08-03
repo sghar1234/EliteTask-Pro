@@ -29,7 +29,7 @@
 <input id="password" type="password" placeholder="Enter Password">
 
 
-<button onclick="login()">
+<button id="loginBtn">
 Login
 </button>
 
@@ -46,11 +46,15 @@ New User?
 
 <script type="module">
 
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 
-import { getAuth, signInWithEmailAndPassword }
+import { 
+getAuth,
+signInWithEmailAndPassword
+}
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
@@ -80,19 +84,47 @@ const auth = getAuth(app);
 
 
 
-window.login = function(){
-
-
-let email = document.getElementById("email").value;
-
-let password = document.getElementById("password").value;
+const loginBtn = document.getElementById("loginBtn");
 
 
 
-signInWithEmailAndPassword(auth,email,password)
+loginBtn.addEventListener("click", async ()=>{
 
 
-.then(()=>{
+const email =
+document.getElementById("email").value.trim();
+
+
+const password =
+document.getElementById("password").value;
+
+
+
+if(!email || !password){
+
+alert("Please enter email and password");
+
+return;
+
+}
+
+
+
+try{
+
+
+loginBtn.innerText="Loading...";
+
+loginBtn.disabled=true;
+
+
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
 
 
 alert("Login Successful");
@@ -101,23 +133,27 @@ alert("Login Successful");
 window.location.href="dashboard.html";
 
 
-})
 
-
-.catch((error)=>{
+}catch(error){
 
 
 alert(error.message);
 
 
-});
+loginBtn.innerText="Login";
+
+loginBtn.disabled=false;
 
 
 }
 
 
-</script>
 
+});
+
+
+
+</script>
 
 
 </body>
