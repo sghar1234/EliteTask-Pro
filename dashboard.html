@@ -3,181 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>EliteTask Pro Dashboard</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    padding:15px;
+}
+
+.topbar{
+    background:#111827;
+    color:white;
+    padding:18px;
+    border-radius:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.support{
+    background:#22c55e;
+    color:white;
+    padding:8px 12px;
+    border-radius:20px;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.card{
+    background:white;
+    margin-top:15px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 10px #ddd;
+}
+
+.balance{
+    font-size:28px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:15px;
+}
+
+.stat{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 8px #ddd;
+}
+
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
+    display:block;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:12px;
+    text-align:center;
+    font-size:16px;
+}
+
+.menu a:hover{
+    opacity:.8;
+}
+
+.task{
+    background:#fff7ed;
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+</style>
 
 </head>
+
 <body>
 
 <div class="topbar">
-
-<div class="logo">
-EliteTask Pro
-</div>
-
-<div class="top-icons">
-
-<button class="notify">🔔</button>
-
-<button class="profile">👤</button>
-
-</div>
-
+    <div class="logo">EliteTask Pro</div>
+    <a href="support.html" class="support">Customer Service</a>
 </div>
 
 
-<div class="welcome-card">
-
-<h2 id="userName">
-Welcome
-</h2>
-
-<p id="userId">
-User ID : Loading...
-</p>
-
+<div class="card">
+    <p>My Balance</p>
+    <div class="balance">Rs 0</div>
 </div>
 
 
-<div class="balance-card">
+<div class="stats">
 
-<div>
-
-<h3>Balance</h3>
-
-<h1 id="balance">
-$0.00
-</h1>
-
+<div class="stat">
+<h3>0</h3>
+<p>Completed</p>
 </div>
 
-<div>
-
-<h3>Commission</h3>
-
-<h2 id="commission">
-$0.00
-</h2>
-
+<div class="stat">
+<h3>Rs 0</h3>
+<p>Commission</p>
 </div>
 
-</div>
-<div class="vip-card">
-
-<h3>⭐ VIP Level</h3>
-
-<h2 id="vipLevel">VIP 0</h2>
-
-<p>Complete orders to unlock higher VIP levels.</p>
-
+<div class="stat">
+<h3>0</h3>
+<p>Pending</p>
 </div>
 
-
-<button class="grab-btn">
-🛒 Start Grabbing Orders
-</button>
-
-
-<div class="product-card">
-
-<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"
-alt="Product">
-
-<div class="product-info">
-
-<h3>Wireless Sneakers</h3>
-
-<p>Price : <b>$120</b></p>
-
-<p>Commission :
-<span>$6.00</span>
-</p>
-
-<button class="grab-order">
-Grab Order
-</button>
-
+<div class="stat">
+<h3>User ID</h3>
+<p>ELT001</p>
 </div>
 
 </div>
 
 
-<div class="menu-grid">
+<div class="menu">
 
-<a href="withdraw.html" class="menu-box">
-💸
-<br>
-Withdraw
-</a>
+<a href="orders.html">📦 Orders</a>
 
-<a href="support.html" class="menu-box">
-💬
-<br>
-Support
-</a>
+<a href="withdraw.html">💰 Withdraw</a>
 
-<a href="#" class="menu-box">
-👥
-<br>
-Invite
-</a>
+<a href="profile.html">👤 Profile</a>
 
-<a href="#" class="menu-box">
-📜
-<br>
-History
-</a>
+<a href="support.html">🎧 Customer Service</a>
 
 </div>
-<script type="module">
 
-import { auth, db } from "./firebase.js";
 
-import {
-onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+<div class="task">
+<h3>Today's Task</h3>
+<p>No Task Available</p>
+</div>
 
-import {
-doc,
-getDoc
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-        window.location.href = "index.html";
-        return;
-    }
-
-    document.getElementById("userId").innerText =
-        "User ID : " + user.uid.substring(0,8).toUpperCase();
-
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-
-        const data = docSnap.data();
-
-        document.getElementById("userName").innerText =
-            "Welcome, " + data.name;
-
-        document.getElementById("balance").innerText =
-            "$" + (data.balance || 0);
-
-        document.getElementById("commission").innerText =
-            "$" + (data.commission || 0);
-
-        if(data.vip){
-            document.getElementById("vipLevel").innerText = data.vip;
-        }
-
-    }
-
-});
-
-</script>
 
 </body>
 </html>
