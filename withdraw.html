@@ -1,89 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Withdraw</title>
+<title>Withdraw - EliteTask Pro</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+padding:15px;
+}
+
+.header{
+background:#111827;
+color:white;
+padding:18px;
+border-radius:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+margin-top:15px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px #ddd;
+}
+
+.balance{
+font-size:26px;
+font-weight:bold;
+color:#2563eb;
+margin-top:10px;
+}
+
+input,select{
+width:100%;
+padding:13px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+}
+
+.back{
+display:block;
+text-align:center;
+margin-top:20px;
+color:#2563eb;
+text-decoration:none;
+}
+
+</style>
 
 </head>
 
-
 <body>
 
-
-<div class="top-bar">
-
-<h2>Withdraw</h2>
-
-<p>Request Payment</p>
-
+<div class="header">
+💰 Withdraw
 </div>
 
 
+<div class="card">
+
+<p>Available Balance</p>
+
+<div class="balance">
+Rs 0
+</div>
 
 
-<div class="withdraw-box">
-
-
-<h3>Available Balance</h3>
-
-<h1>Rs 0</h1>
-
+<select>
+<option>Select Payment Method</option>
+<option>EasyPaisa</option>
+<option>JazzCash</option>
+<option>Bank Account</option>
+</select>
 
 
 <input type="number" placeholder="Enter Amount">
 
 
-
-<select>
-
-<option>Select Payment Method</option>
-
-<option>EasyPaisa</option>
-
-<option>JazzCash</option>
-
-<option>Bank Account</option>
-
-<option>USDT</option>
-
-</select>
-
-
-
-<input type="text" placeholder="Account Number">
-
-
-
-<button onclick="submitWithdraw()">
-
-Submit Request
-
+<button onclick="withdraw()">
+Submit Withdraw Request
 </button>
-
-
 
 </div>
 
 
+<a class="back" href="dashboard.html">
+⬅ Back to Dashboard
+</a>
 
 
 <script>
 
-function submitWithdraw(){
+function withdraw(){
 
-alert("Withdraw request submitted");
+alert("Withdraw Request Submitted Successfully!");
 
 }
 
 </script>
 
 
-
 </body>
-
 </html>
