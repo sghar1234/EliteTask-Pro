@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EliteTask Pro Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="top-bar">
+
+<h2>EliteTask Pro</h2>
+
+<p id="username">Welcome User</p>
+
+</div>
+
+
+
+<div class="balance-card">
+
+<h3>Total Balance</h3>
+
+<h1>Rs <span id="balance">0</span></h1>
+
+</div>
+
+
+
+<div class="dashboard-card">
+
+<h3>Commission</h3>
+
+<p>Today's Commission: Rs <span id="commission">0</span></p>
+
+</div>
+
+
+
+<div class="dashboard-card">
+
+<h3>Daily Tasks</h3>
+
+<p>Complete tasks and earn commission</p>
+
+
+<button onclick="startTask()">
+Start Task
+</button>
+
+
+</div>
+
+
+
+<div class="menu-box">
+
+
+<button onclick="location.href='withdraw.html'">
+Withdraw
+</button>
+
+
+<button onclick="location.href='support.html'">
+Customer Service
+</button>
+
+
+</div>
+
+
+
+
+<script type="module">
+
+
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+
+import { getAuth, onAuthStateChanged }
+
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import { getDatabase, ref, get }
+
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
+
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+authDomain: "elitetask-pro.firebaseapp.com",
+
+projectId: "elitetask-pro",
+
+storageBucket: "elitetask-pro.firebasestorage.app",
+
+messagingSenderId: "504295275402",
+
+appId: "1:504295275402:web:cf744a5d4e82c72145a673"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+
+const auth = getAuth(app);
+
+
+const database = getDatabase(app);
+
+
+
+onAuthStateChanged(auth,(user)=>{
+
+
+if(user){
+
+
+get(ref(database,"users/"+user.uid))
+
+.then((snapshot)=>{
+
+
+let data = snapshot.val();
+
+
+if(data){
+
+
+document.getElementById("username").innerHTML =
+"Welcome "+data.name;
+
+
+document.getElementById("balance").innerHTML =
+data.balance;
+
+
+document.getElementById("commission").innerHTML =
+data.commission;
+
+
+}
+
+
+});
+
+
+}
+
+
+});
+
+
+
+
+window.startTask=function(){
+
+alert("Tasks will appear soon");
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

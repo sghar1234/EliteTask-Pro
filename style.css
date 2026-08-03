@@ -1,0 +1,115 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f1f5f9;
+    padding:15px;
+}
+
+
+/* Header */
+
+.top-bar,
+.admin-header{
+    background:#111827;
+    color:white;
+    padding:22px;
+    border-radius:20px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.top-bar h2,
+.admin-header h2{
+    font-size:24px;
+}
+
+
+/* Login */
+
+.login-box{
+    background:white;
+    max-width:400px;
+    margin:50px auto;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    text-align:center;
+}
+
+.login-box h1{
+    color:#2563eb;
+    margin-bottom:10px;
+}
+
+
+input, select{
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border-radius:12px;
+    border:1px solid #ddd;
+    font-size:15px;
+}
+
+
+/* Buttons */
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    margin:8px 0;
+}
+
+
+/* Cards */
+
+.balance-card,
+.dashboard-card,
+.withdraw-box,
+.support-box,
+.admin-card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    margin-bottom:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+
+.balance-card h1{
+    color:#16a34a;
+    margin-top:10px;
+}
+
+
+/* Menu */
+
+.menu-box{
+    margin-top:15px;
+}
+
+
+/* Links */
+
+a{
+    text-decoration:none;
+    color:#2563eb;
+}
+
+
+/* Text */
+
+p{
+    color:#64748b;
+    margin-top:8px;
+}

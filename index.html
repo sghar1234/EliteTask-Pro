@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EliteTask Pro - Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+<h1>EliteTask Pro</h1>
+
+<p>Welcome Back</p>
+
+
+<input id="email" type="email" placeholder="Enter Email">
+
+
+<input id="password" type="password" placeholder="Enter Password">
+
+
+<button onclick="login()">
+Login
+</button>
+
+
+<p>
+New User?
+<a href="signup.html">Create Account</a>
+</p>
+
+
+</div>
+
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+
+import { getAuth, signInWithEmailAndPassword }
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+authDomain: "elitetask-pro.firebaseapp.com",
+
+projectId: "elitetask-pro",
+
+storageBucket: "elitetask-pro.firebasestorage.app",
+
+messagingSenderId: "504295275402",
+
+appId: "1:504295275402:web:cf744a5d4e82c72145a673"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+
+const auth = getAuth(app);
+
+
+
+window.login = function(){
+
+
+let email = document.getElementById("email").value;
+
+let password = document.getElementById("password").value;
+
+
+
+signInWithEmailAndPassword(auth,email,password)
+
+
+.then(()=>{
+
+
+alert("Login Successful");
+
+
+window.location.href="dashboard.html";
+
+
+})
+
+
+.catch((error)=>{
+
+
+alert(error.message);
+
+
+});
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
