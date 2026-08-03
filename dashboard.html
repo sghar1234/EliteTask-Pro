@@ -61,12 +61,10 @@ color:#2563eb;
 margin-top:10px;
 }
 
-
 .user{
-color:#555;
 margin-top:8px;
+color:#555;
 }
-
 
 .stats{
 display:grid;
@@ -74,7 +72,6 @@ grid-template-columns:1fr 1fr;
 gap:12px;
 margin-top:15px;
 }
-
 
 .stat{
 background:white;
@@ -84,11 +81,9 @@ text-align:center;
 box-shadow:0 2px 8px #ddd;
 }
 
-
 .menu{
 margin-top:20px;
 }
-
 
 .menu a{
 display:block;
@@ -99,9 +94,7 @@ padding:15px;
 border-radius:12px;
 margin-bottom:12px;
 text-align:center;
-font-size:16px;
 }
-
 
 .task{
 background:#fff7ed;
@@ -110,6 +103,22 @@ border-radius:12px;
 margin-top:15px;
 }
 
+.task-box{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-top:10px;
+}
+
+.task-btn{
+width:100%;
+padding:12px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:10px;
+margin-top:10px;
+}
 
 </style>
 
@@ -125,11 +134,9 @@ margin-top:15px;
 EliteTask Pro
 </div>
 
-
 <a href="support.html" class="support">
 Customer Service
 </a>
-
 
 </div>
 
@@ -143,14 +150,9 @@ Customer Service
 Loading...
 </h2>
 
+<p class="user" id="userEmail"></p>
 
-<p class="user" id="userEmail">
-</p>
-
-
-<p class="user" id="userId">
-</p>
-
+<p class="user" id="userId"></p>
 
 </div>
 
@@ -164,56 +166,34 @@ Loading...
 Rs 0
 </div>
 
-
 </div>
+
 
 
 <div class="stats">
 
-
 <div class="stat">
-
-<h3 id="completed">
-0
-</h3>
-
+<h3 id="completed">0</h3>
 <p>Completed</p>
-
 </div>
 
 
 <div class="stat">
-
-<h3 id="commission">
-Rs 0
-</h3>
-
+<h3 id="commission">Rs 0</h3>
 <p>Commission</p>
-
 </div>
 
 
 <div class="stat">
-
-<h3>
-0
-</h3>
-
+<h3>0</h3>
 <p>Pending</p>
-
 </div>
 
 
 <div class="stat">
-
-<h3>
-User
-</h3>
-
-<p>ID</p>
-
+<h3>ID</h3>
+<p>User</p>
 </div>
-
 
 </div>
 <div class="menu">
@@ -237,15 +217,18 @@ User
 </div>
 
 
+
 <div class="task">
 
 <h3>
-Today's Task
+Today's Tasks
 </h3>
 
-<p>
-No Task Available
-</p>
+
+<div id="taskList">
+Loading Tasks...
+</div>
+
 
 </div>
 
@@ -253,24 +236,29 @@ No Task Available
 
 <script type="module">
 
+
 import { auth, db } from "./firebase.js";
 
 
-import { 
-onAuthStateChanged 
+import {
+onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
 doc,
-getDoc
+getDoc,
+collection,
+getDocs
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 
-onAuthStateChanged(auth, async (user)=>{
+
+
+onAuthStateChanged(auth, async(user)=>{
 
 
 if(user){
@@ -289,30 +277,90 @@ if(userSnap.exists()){
 const data = userSnap.data();
 
 
-document.getElementById("userName").innerText =
-data.name;
+document.getElementById("userName").innerText=data.name;
+
+document.getElementById("userEmail").innerText=data.email;
+
+document.getElementById("userId").innerText=
+"ID: "+user.uid.substring(0,8);
 
 
-document.getElementById("userEmail").innerText =
-data.email;
+document.getElementById("balance").innerText=
+"Rs "+data.balance;
 
 
-document.getElementById("userId").innerText =
-"ID: " + user.uid.substring(0,8);
-
-
-
-document.getElementById("balance").innerText =
-"Rs " + data.balance;
-
-
-
-document.getElementById("commission").innerText =
-"Rs " + data.commission;
-
+document.getElementById("commission").innerText=
+"Rs "+data.commission;
 
 
 }
+
+
+
+const taskList =
+document.getElementById("taskList");
+
+
+const tasks =
+await getDocs(collection(db,"tasks"));
+
+
+taskList.innerHTML="";
+
+
+
+if(tasks.empty){
+
+
+taskList.innerHTML=
+"No Task Available";
+
+
+}else{
+
+
+tasks.forEach((item)=>{
+
+
+let task=item.data();
+
+
+
+taskList.innerHTML += `
+
+
+<div class="task-box">
+
+
+<h3>${task.name}</h3>
+
+
+<p>
+Price: Rs ${task.price}
+</p>
+
+
+<p>
+Commission: Rs ${task.commission}
+</p>
+
+
+<button class="task-btn">
+Complete Task
+</button>
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
 
 
 }else{
@@ -332,4 +380,5 @@ window.location.href="index.html";
 
 
 </body>
+
 </html>
