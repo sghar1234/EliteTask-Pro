@@ -38,26 +38,33 @@ box-shadow:0 3px 10px #ddd;
 
 .order h3{
 color:#2563eb;
+margin-bottom:10px;
+}
+
+.info{
+margin:8px 0;
+color:#555;
 }
 
 .btn{
 display:block;
-margin-top:15px;
 background:#2563eb;
 color:white;
+padding:13px;
+border-radius:12px;
 text-align:center;
-padding:12px;
-border-radius:10px;
 text-decoration:none;
+margin-top:15px;
 }
 
 .back{
 display:block;
 margin-top:20px;
 text-align:center;
-text-decoration:none;
 color:#2563eb;
+text-decoration:none;
 }
+
 </style>
 
 </head>
@@ -70,19 +77,23 @@ color:#2563eb;
 
 
 <div class="order">
-<h3>📦 Order #001</h3>
-<p>Product: Premium Shirt</p>
-<p>Order Price: Rs 500</p>
-<p>Commission: Rs 50</p>
 
-<a class="btn" href="#">
+<h3>Order #001</h3>
+
+<p class="info">👕 Product: Premium Shirt</p>
+
+<p class="info">💰 Order Price: Rs 500</p>
+
+<p class="info">⭐ Commission: Rs 50</p>
+
+<a href="#" class="btn">
 Complete Task
 </a>
 
 </div>
 
 
-<a class="back" href="dashboard.html">
+<a href="dashboard.html" class="back">
 ⬅ Back to Dashboard
 </a>
 
