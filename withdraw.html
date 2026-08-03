@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Withdraw - EliteTask Pro</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -44,14 +47,17 @@ margin-top:10px;
 }
 
 input,select{
+
 width:100%;
 padding:13px;
 margin-top:12px;
 border-radius:10px;
 border:1px solid #ddd;
+
 }
 
 button{
+
 width:100%;
 padding:14px;
 margin-top:15px;
@@ -60,52 +66,81 @@ color:white;
 border:none;
 border-radius:12px;
 font-size:16px;
+
 }
 
 .back{
+
 display:block;
 text-align:center;
 margin-top:20px;
 color:#2563eb;
 text-decoration:none;
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="header">
 💰 Withdraw
 </div>
 
 
+
 <div class="card">
 
-<p>Available Balance</p>
 
-<div class="balance">
+<p>
+Available Balance
+</p>
+
+
+<div class="balance" id="balance">
 Rs 0
 </div>
 
 
-<select>
-<option>Select Payment Method</option>
-<option>EasyPaisa</option>
-<option>JazzCash</option>
-<option>Bank Account</option>
+
+<select id="method">
+
+<option value="">
+Select Payment Method
+</option>
+
+<option>
+EasyPaisa
+</option>
+
+<option>
+JazzCash
+</option>
+
+<option>
+Bank Account
+</option>
+
 </select>
 
 
-<input type="number" placeholder="Enter Amount">
+
+<input id="amount" type="number" placeholder="Enter Amount">
 
 
-<button onclick="withdraw()">
+
+<button id="withdrawBtn">
 Submit Withdraw Request
 </button>
 
+
+
 </div>
+
 
 
 <a class="back" href="dashboard.html">
@@ -113,13 +148,114 @@ Submit Withdraw Request
 </a>
 
 
-<script>
 
-function withdraw(){
 
-alert("Withdraw Request Submitted Successfully!");
+<script type="module">
+
+
+import { auth, db } from "./firebase.js";
+
+
+import {
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+doc,
+getDoc,
+addDoc,
+collection,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+
+let userData;
+
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(user){
+
+
+const snap =
+await getDoc(doc(db,"users",user.uid));
+
+
+userData=snap.data();
+
+
+
+document.getElementById("balance").innerText =
+"Rs "+userData.balance;
+
+
 
 }
+
+
+});
+
+
+
+
+
+document.getElementById("withdrawBtn")
+.addEventListener("click",async()=>{
+
+
+let amount =
+document.getElementById("amount").value;
+
+
+let method =
+document.getElementById("method").value;
+
+
+
+if(!amount || !method){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+
+
+await addDoc(collection(db,"withdraws"),{
+
+
+uid:userData.uid || "",
+
+name:userData.name,
+
+email:userData.email,
+
+amount:Number(amount),
+
+method:method,
+
+status:"Pending",
+
+createdAt:serverTimestamp()
+
+
+});
+
+
+
+alert("Withdraw Request Submitted Successfully");
+
+
+});
+
+
 
 </script>
 
