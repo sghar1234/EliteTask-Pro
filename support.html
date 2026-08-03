@@ -1,91 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Support</title>
+<title>Customer Service - EliteTask Pro</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+padding:15px;
+}
+
+.header{
+background:#111827;
+color:white;
+padding:18px;
+border-radius:15px;
+font-size:20px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+margin-top:15px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 3px 10px #ddd;
+}
+
+.btn{
+display:block;
+background:#2563eb;
+color:white;
+padding:14px;
+border-radius:12px;
+text-align:center;
+text-decoration:none;
+margin-top:15px;
+}
+
+.back{
+display:block;
+text-align:center;
+margin-top:20px;
+color:#2563eb;
+text-decoration:none;
+}
+</style>
 
 </head>
 
-
 <body>
 
-
-<div class="top-bar">
-
-<h2>Customer Service</h2>
-
-<p>We are here to help</p>
-
+<div class="header">
+🎧 Customer Service
 </div>
 
 
-
-
-<div class="support-box">
-
+<div class="card">
 
 <h3>Need Help?</h3>
 
-<p>
-Contact our support team for any problem.
+<p style="margin-top:10px;">
+Our support team is available for your questions.
 </p>
 
 
-
-<button onclick="whatsapp()">
-WhatsApp Support
-</button>
-
+<a href="#" class="btn">
+💬 Chat With Support
+</a>
 
 
-<button onclick="chat()">
-Live Chat
-</button>
-
-
-
-<button onclick="email()">
-Email Support
-</button>
-
-
+<a href="#" class="btn">
+📧 Email Support
+</a>
 
 </div>
 
 
-
-
-<script>
-
-function whatsapp(){
-
-alert("WhatsApp support opening...");
-
-}
-
-
-function chat(){
-
-alert("Live chat coming soon...");
-
-}
-
-
-function email(){
-
-alert("Email support coming soon...");
-
-}
-
-</script>
-
+<a href="dashboard.html" class="back">
+⬅ Back to Dashboard
+</a>
 
 
 </body>
-
 </html>
