@@ -1,186 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>EliteTask Pro Dashboard</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
-
-
 <body>
 
+<div class="topbar">
 
-<div class="top-bar">
+<div class="logo">
+EliteTask Pro
+</div>
 
-<h2>EliteTask Pro</h2>
+<div class="top-icons">
 
-<p id="username">Welcome User</p>
+<button class="notify">🔔</button>
+
+<button class="profile">👤</button>
 
 </div>
 
+</div>
+
+
+<div class="welcome-card">
+
+<h2 id="userName">
+Welcome
+</h2>
+
+<p id="userId">
+User ID : Loading...
+</p>
+
+</div>
 
 
 <div class="balance-card">
 
-<h3>Total Balance</h3>
+<div>
 
-<h1>Rs <span id="balance">0</span></h1>
+<h3>Balance</h3>
+
+<h1 id="balance">
+$0.00
+</h1>
 
 </div>
 
-
-
-<div class="dashboard-card">
+<div>
 
 <h3>Commission</h3>
 
-<p>Today's Commission: Rs <span id="commission">0</span></p>
+<h2 id="commission">
+$0.00
+</h2>
+
+</div>
+
+</div>
+<div class="vip-card">
+
+<h3>⭐ VIP Level</h3>
+
+<h2 id="vipLevel">VIP 0</h2>
+
+<p>Complete orders to unlock higher VIP levels.</p>
 
 </div>
 
 
-
-<div class="dashboard-card">
-
-<h3>Daily Tasks</h3>
-
-<p>Complete tasks and earn commission</p>
-
-
-<button onclick="startTask()">
-Start Task
+<button class="grab-btn">
+🛒 Start Grabbing Orders
 </button>
 
 
+<div class="product-card">
+
+<img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"
+alt="Product">
+
+<div class="product-info">
+
+<h3>Wireless Sneakers</h3>
+
+<p>Price : <b>$120</b></p>
+
+<p>Commission :
+<span>$6.00</span>
+</p>
+
+<button class="grab-order">
+Grab Order
+</button>
+
+</div>
+
 </div>
 
 
+<div class="menu-grid">
 
-<div class="menu-box">
-
-
-<button onclick="location.href='withdraw.html'">
+<a href="withdraw.html" class="menu-box">
+💸
+<br>
 Withdraw
-</button>
+</a>
 
+<a href="support.html" class="menu-box">
+💬
+<br>
+Support
+</a>
 
-<button onclick="location.href='support.html'">
-Customer Service
-</button>
+<a href="#" class="menu-box">
+👥
+<br>
+Invite
+</a>
 
+<a href="#" class="menu-box">
+📜
+<br>
+History
+</a>
 
 </div>
-
-
-
-
 <script type="module">
 
+import { auth, db } from "./firebase.js";
 
-import { initializeApp }
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+onAuthStateChanged(auth, async (user) => {
 
-import { getAuth, onAuthStateChanged }
+    if (!user) {
+        window.location.href = "index.html";
+        return;
+    }
 
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+    document.getElementById("userId").innerText =
+        "User ID : " + user.uid.substring(0,8).toUpperCase();
 
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
 
-import { getDatabase, ref, get }
+    if (docSnap.exists()) {
 
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-database.js";
+        const data = docSnap.data();
 
+        document.getElementById("userName").innerText =
+            "Welcome, " + data.name;
 
+        document.getElementById("balance").innerText =
+            "$" + (data.balance || 0);
 
-const firebaseConfig = {
+        document.getElementById("commission").innerText =
+            "$" + (data.commission || 0);
 
-apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+        if(data.vip){
+            document.getElementById("vipLevel").innerText = data.vip;
+        }
 
-authDomain: "elitetask-pro.firebaseapp.com",
-
-projectId: "elitetask-pro",
-
-storageBucket: "elitetask-pro.firebasestorage.app",
-
-messagingSenderId: "504295275402",
-
-appId: "1:504295275402:web:cf744a5d4e82c72145a673"
-
-};
-
-
-
-const app = initializeApp(firebaseConfig);
-
-
-const auth = getAuth(app);
-
-
-const database = getDatabase(app);
-
-
-
-onAuthStateChanged(auth,(user)=>{
-
-
-if(user){
-
-
-get(ref(database,"users/"+user.uid))
-
-.then((snapshot)=>{
-
-
-let data = snapshot.val();
-
-
-if(data){
-
-
-document.getElementById("username").innerHTML =
-"Welcome "+data.name;
-
-
-document.getElementById("balance").innerHTML =
-data.balance;
-
-
-document.getElementById("commission").innerHTML =
-data.commission;
-
-
-}
-
+    }
 
 });
-
-
-}
-
-
-});
-
-
-
-
-window.startTask=function(){
-
-alert("Tasks will appear soon");
-
-}
-
 
 </script>
 
-
-
 </body>
-
 </html>
