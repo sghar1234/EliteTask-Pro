@@ -40,24 +40,21 @@ box-shadow:0 3px 10px #ddd;
 }
 
 .balance{
-font-size:26px;
+font-size:27px;
 font-weight:bold;
 color:#2563eb;
 margin-top:10px;
 }
 
 input,select{
-
 width:100%;
 padding:13px;
 margin-top:12px;
 border-radius:10px;
 border:1px solid #ddd;
-
 }
 
 button{
-
 width:100%;
 padding:14px;
 margin-top:15px;
@@ -66,17 +63,46 @@ color:white;
 border:none;
 border-radius:12px;
 font-size:16px;
+}
 
+.request{
+background:#f9fafb;
+padding:15px;
+border-radius:12px;
+margin-top:12px;
+border:1px solid #eee;
+}
+
+.status{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+}
+
+.pending{
+background:#fef3c7;
+color:#92400e;
+}
+
+.approved{
+background:#dcfce7;
+color:#166534;
+}
+
+.rejected{
+background:#fee2e2;
+color:#991b1b;
 }
 
 .back{
-
 display:block;
 text-align:center;
 margin-top:20px;
 color:#2563eb;
 text-decoration:none;
-
 }
 
 </style>
@@ -92,19 +118,13 @@ text-decoration:none;
 </div>
 
 
-
 <div class="card">
 
-
-<p>
-Available Balance
-</p>
-
+<p>Available Balance</p>
 
 <div class="balance" id="balance">
 Rs 0
 </div>
-
 
 
 <select id="method">
@@ -113,31 +133,46 @@ Rs 0
 Select Payment Method
 </option>
 
-<option>
+<option value="EasyPaisa">
 EasyPaisa
 </option>
 
-<option>
+<option value="JazzCash">
 JazzCash
 </option>
 
-<option>
+<option value="Bank Account">
 Bank Account
 </option>
 
 </select>
 
 
-
-<input id="amount" type="number" placeholder="Enter Amount">
-
+<input
+id="amount"
+type="number"
+placeholder="Enter Amount"
+min="1"
+>
 
 
 <button id="withdrawBtn">
 Submit Withdraw Request
 </button>
 
+</div>
 
+
+
+<div class="card">
+
+<h3>
+My Withdraw Requests
+</h3>
+
+<div id="requestList">
+Loading...
+</div>
 
 </div>
 
@@ -149,95 +184,124 @@ Submit Withdraw Request
 
 
 
-
 <script type="module">
 
-
 import { auth, db } from "./firebase.js";
-
 
 import {
 onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
-
 import {
 doc,
 getDoc,
 addDoc,
 collection,
+query,
+where,
+getDocs,
 serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-
-let userData;
+let currentUser = null;
+let currentBalance = 0;
 
 
 
 onAuthStateChanged(auth, async(user)=>{
 
+if(!user){
 
-if(user){
-
-
-const snap =
-await getDoc(doc(db,"users",user.uid));
-
-
-userData=snap.data();
-
-
-
-document.getElementById("balance").innerText =
-"Rs "+userData.balance;
-
-
-
-}
-
-
-});
-
-
-
-
-
-document.getElementById("withdrawBtn")
-.addEventListener("click",async()=>{
-
-
-let amount =
-document.getElementById("amount").value;
-
-
-let method =
-document.getElementById("method").value;
-
-
-
-if(!amount || !method){
-
-alert("Fill all fields");
-
+window.location.href="index.html";
 return;
 
 }
 
 
+currentUser = user;
 
-await addDoc(collection(db,"withdraws"),{
+
+const userSnap =
+await getDoc(doc(db,"users",user.uid));
 
 
-uid:userData.uid || "",
+if(userSnap.exists()){
 
-name:userData.name,
+const data = userSnap.data();
 
-email:userData.email,
+currentBalance = Number(data.balance || 0);
 
-amount:Number(amount),
+document.getElementById("balance").innerText =
+"Rs " + currentBalance;
+
+}
+
+
+loadRequests();
+
+});
+
+
+
+document.getElementById("withdrawBtn")
+.addEventListener("click", async()=>{
+
+if(!currentUser){
+
+alert("Please login first");
+return;
+
+}
+
+
+const amount =
+Number(document.getElementById("amount").value);
+
+
+const method =
+document.getElementById("method").value;
+
+
+if(!amount || amount <= 0){
+
+alert("Enter a valid amount");
+return;
+
+}
+
+
+if(!method){
+
+alert("Select payment method");
+return;
+
+}
+
+
+if(amount > currentBalance){
+
+alert("Insufficient balance");
+return;
+
+}
+
+
+try{
+
+await addDoc(
+collection(db,"withdraws"),
+{
+
+uid:currentUser.uid,
+
+name:currentUser.displayName || "",
+
+email:currentUser.email,
+
+amount:amount,
 
 method:method,
 
@@ -245,20 +309,124 @@ status:"Pending",
 
 createdAt:serverTimestamp()
 
-
-});
-
+}
+);
 
 
 alert("Withdraw Request Submitted Successfully");
 
 
+document.getElementById("amount").value="";
+document.getElementById("method").value="";
+
+
+loadRequests();
+
+
+}catch(error){
+
+alert(error.message);
+
+}
+
 });
 
 
+
+async function loadRequests(){
+
+if(!currentUser){
+return;
+}
+
+
+const requestList =
+document.getElementById("requestList");
+
+
+try{
+
+
+const q = query(
+collection(db,"withdraws"),
+where("uid","==",currentUser.uid)
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+requestList.innerHTML="";
+
+
+if(snapshot.empty){
+
+requestList.innerHTML=
+"<p style='margin-top:12px;color:#777;'>No withdraw requests yet.</p>";
+
+return;
+
+}
+
+
+snapshot.forEach((item)=>{
+
+const data = item.data();
+
+const status =
+data.status || "Pending";
+
+
+let statusClass="pending";
+
+
+if(status === "Approved"){
+statusClass="approved";
+}
+
+if(status === "Rejected"){
+statusClass="rejected";
+}
+
+
+requestList.innerHTML += `
+
+<div class="request">
+
+<p>
+<strong>Amount:</strong>
+Rs ${data.amount || 0}
+</p>
+
+<p style="margin-top:7px;">
+<strong>Method:</strong>
+${data.method || ""}
+</p>
+
+<span class="status ${statusClass}">
+${status}
+</span>
+
+</div>
+
+`;
+
+});
+
+
+}catch(error){
+
+requestList.innerHTML =
+"<p>Unable to load requests.</p>";
+
+}
+
+}
 
 </script>
 
 
 </body>
+
 </html>
