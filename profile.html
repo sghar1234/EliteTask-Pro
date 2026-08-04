@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Profile - EliteTask Pro</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -24,76 +27,183 @@ background:#111827;
 color:white;
 padding:18px;
 border-radius:15px;
-font-size:20px;
+font-size:21px;
 font-weight:bold;
 }
 
-.card{
+.profile-card{
 background:white;
 margin-top:15px;
-padding:20px;
+padding:22px;
 border-radius:15px;
 box-shadow:0 3px 10px #ddd;
+text-align:center;
 }
 
 .avatar{
-width:80px;
-height:80px;
+width:75px;
+height:75px;
+margin:auto;
+border-radius:50%;
 background:#2563eb;
 color:white;
-border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
 font-size:30px;
-margin:auto;
+font-weight:bold;
 }
 
-.info{
+.name{
+font-size:22px;
+font-weight:bold;
+margin-top:12px;
+}
+
+.email{
+color:#666;
+margin-top:6px;
+font-size:14px;
+}
+
+.info-card{
+background:white;
 margin-top:15px;
-line-height:30px;
-color:#555;
+padding:18px;
+border-radius:15px;
+box-shadow:0 3px 10px #ddd;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:13px 0;
+border-bottom:1px solid #eee;
+}
+
+.row:last-child{
+border-bottom:none;
+}
+
+.label{
+color:#666;
+}
+
+.value{
+font-weight:bold;
+color:#111827;
 }
 
 .back{
 display:block;
-text-align:center;
 margin-top:20px;
-color:#2563eb;
+background:#2563eb;
+color:white;
 text-decoration:none;
+text-align:center;
+padding:14px;
+border-radius:12px;
+}
+
+.logout{
+width:100%;
+margin-top:12px;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#dc2626;
+color:white;
+font-size:16px;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="header">
 👤 My Profile
 </div>
 
 
-<div class="card">
+<div class="profile-card">
 
-<div class="avatar">
+<div class="avatar" id="avatar">
 U
 </div>
 
+<div class="name" id="name">
+Loading...
+</div>
 
-<div class="info">
-
-<p><b>User ID:</b> ELT001</p>
-
-<p><b>Name:</b> User</p>
-
-<p><b>Email:</b> user@email.com</p>
-
-<p><b>Status:</b> Active</p>
-
+<div class="email" id="email">
+Loading...
 </div>
 
 </div>
+
+
+
+<div class="info-card">
+
+
+<div class="row">
+
+<span class="label">
+User ID
+</span>
+
+<span class="value" id="userId">
+Loading...
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Balance
+</span>
+
+<span class="value" id="balance">
+Rs 0
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Commission
+</span>
+
+<span class="value" id="commission">
+Rs 0
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Completed Tasks
+</span>
+
+<span class="value" id="completed">
+0
+</span>
+
+</div>
+
+
+</div>
+
 
 
 <a href="dashboard.html" class="back">
@@ -101,5 +211,130 @@ U
 </a>
 
 
+<button id="logoutBtn" class="logout">
+Logout
+</button>
+
+
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+
+import {
+onAuthStateChanged,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+doc,
+getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(!user){
+
+window.location.href="index.html";
+
+return;
+
+}
+
+
+const userRef =
+doc(db,"users",user.uid);
+
+
+const userSnap =
+await getDoc(userRef);
+
+
+if(!userSnap.exists()){
+
+alert("User data not found");
+
+return;
+
+}
+
+
+const data =
+userSnap.data();
+
+
+const name =
+data.name || "User";
+
+
+document.getElementById("name")
+.innerText=name;
+
+
+document.getElementById("email")
+.innerText=
+data.email || user.email || "";
+
+
+document.getElementById("userId")
+.innerText=
+user.uid.substring(0,8);
+
+
+document.getElementById("balance")
+.innerText=
+"Rs " + Number(data.balance || 0);
+
+
+document.getElementById("commission")
+.innerText=
+"Rs " + Number(data.commission || 0);
+
+
+document.getElementById("completed")
+.innerText=
+Number(data.completed || 0);
+
+
+document.getElementById("avatar")
+.innerText=
+name.charAt(0).toUpperCase();
+
+
+});
+
+
+
+document.getElementById("logoutBtn")
+.addEventListener("click",async()=>{
+
+
+try{
+
+await signOut(auth);
+
+window.location.href="index.html";
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+
 </body>
+
 </html>
