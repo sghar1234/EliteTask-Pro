@@ -1,357 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro Admin</title>
+<title>Users Management - EliteTask Pro</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f5f5f5;
-padding:15px;
+    background:#f5f5f5;
+    padding:15px;
 }
 
 .header{
-background:#111827;
-color:white;
-padding:18px;
-border-radius:15px;
-font-size:22px;
-font-weight:bold;
+    background:#111827;
+    color:white;
+    padding:18px;
+    border-radius:15px;
+    font-size:21px;
+    font-weight:bold;
 }
 
 .card{
-background:white;
-margin-top:15px;
-padding:20px;
-border-radius:15px;
-box-shadow:0 3px 10px #ddd;
+    background:white;
+    margin-top:15px;
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 3px 10px #ddd;
 }
 
-.card h3{
-margin-bottom:15px;
-color:#2563eb;
+.user-card{
+    background:white;
+    margin-top:12px;
+    padding:17px;
+    border-radius:13px;
+    border:1px solid #eee;
 }
 
-input,
-textarea{
-width:100%;
-padding:13px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ddd;
-font-size:15px;
+.user-name{
+    font-size:18px;
+    font-weight:bold;
+    color:#111827;
 }
 
-textarea{
-height:90px;
-resize:none;
+.email{
+    margin-top:6px;
+    color:#666;
+    font-size:14px;
+    word-break:break-word;
+}
+
+.id{
+    margin-top:6px;
+    color:#777;
+    font-size:11px;
+    word-break:break-all;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.label{
+    color:#666;
+}
+
+.value{
+    font-weight:bold;
+    color:#111827;
+}
+
+.buttons{
+    display:flex;
+    gap:8px;
+    margin-top:15px;
 }
 
 button{
-width:100%;
-background:#2563eb;
-color:white;
-border:none;
-padding:14px;
-border-radius:12px;
-margin-top:15px;
-font-size:16px;
+    border:none;
+    color:white;
+    padding:11px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.option{
-display:block;
-background:#2563eb;
-color:white;
-padding:15px;
-border-radius:12px;
-margin-top:12px;
-text-align:center;
-text-decoration:none;
-font-size:16px;
+.edit-btn{
+    background:#2563eb;
+    flex:1;
 }
 
-.option:active{
-opacity:.8;
+.delete-btn{
+    background:#dc2626;
+    flex:1;
 }
 
-.message{
-margin-top:12px;
-text-align:center;
-font-weight:bold;
+.save-btn{
+    background:#16a34a;
+    width:100%;
+    margin-top:10px;
 }
 
-.logout{
-background:#dc2626;
+.cancel-btn{
+    background:#6b7280;
+    width:100%;
+    margin-top:8px;
 }
 
+.edit-box{
+    display:none;
+    margin-top:15px;
+    padding:14px;
+    background:#f3f4f6;
+    border-radius:12px;
+}
+
+.edit-box label{
+    display:block;
+    font-size:13px;
+    color:#555;
+    margin-top:9px;
+}
+
+.edit-box input{
+    width:100%;
+    padding:11px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    background:white;
+}
+
+.back{
+    display:block;
+    margin-top:20px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    text-align:center;
+    padding:14px;
+    border-radius:12px;
+}
+
+.loading{
+    text-align:center;
+    color:#777;
+    padding:20px;
+}
+
+.error{
+    color:#dc2626;
+    text-align:center;
+    padding:15px;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:20px;
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="header">
-⚙️ EliteTask Pro Admin
+    👥 Users Management
 </div>
-
-
-<!-- ADD TASK -->
 
 <div class="card">
-
-<h3>
-➕ Add New Task
-</h3>
-
-
-<input
-id="taskName"
-type="text"
-placeholder="Task Name"
->
-
-
-<input
-id="taskPrice"
-type="number"
-placeholder="Task Price"
->
-
-
-<input
-id="taskCommission"
-type="number"
-placeholder="Commission"
->
-
-
-<textarea
-id="taskDesc"
-placeholder="Task Description"
-></textarea>
-
-
-<button id="addTaskBtn">
-Add Task
-</button>
-
-
-<div
-id="taskMessage"
-class="message">
+    <div id="usersList">
+        <div class="loading">
+            Loading Users...
+        </div>
+    </div>
 </div>
 
-</div>
-
-
-
-<!-- ADMIN CONTROLS -->
-
-<div class="card">
-
-<h3>
-Admin Controls
-</h3>
-
-
-<a
-class="option"
-href="users.html">
-👥 Users Management
+<a href="admin.html" class="back">
+    ⬅ Back to Admin
 </a>
-
-
-<a
-class="option"
-href="orders-admin.html">
-📦 Orders Management
-</a>
-
-
-<a
-class="option"
-href="withdraw-admin.html">
-💰 Withdraw Requests
-</a>
-
-
-<a
-class="option"
-href="support-admin.html">
-🎧 Live Chat Support
-</a>
-
-
-</div>
-
-
-
-<!-- LOGOUT -->
-
-<div class="card">
-
-<button
-id="logoutBtn"
-class="logout">
-Logout Admin
-</button>
-
-</div>
-
-
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
-
+import { db } from "./firebase.js";
 
 import {
-collection,
-addDoc,
-serverTimestamp
+    collection,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    doc
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-import {
-signOut
+const usersList =
+document.getElementById("usersList");
+
+
+async function loadUsers(){
+
+    try{
+
+        const snapshot =
+        await getDocs(
+            collection(db,"users")
+        );
+
+        usersList.innerHTML="";
+
+
+        if(snapshot.empty){
+
+            usersList.innerHTML=`
+                <div class="empty">
+                    No users found.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        snapshot.forEach((item)=>{
+
+            const user = item.data();
+
+            const name =
+            user.name || "User";
+
+            const email =
+            user.email || "";
+
+            const balance =
+            Number(user.balance || 0);
+
+            const commission =
+            Number(user.commission || 0);
+
+            const completed =
+            Number(user.completed || 0);
+
+            const role =
+            user.role || "user";
+
+
+            usersList.innerHTML += `
+
+            <div class="user-card"
+                 id="card-${item.id}">
+
+                <div class="user-name">
+                    👤 ${escapeHtml(name)}
+                </div>
+
+                <div class="email">
+                    📧 ${escapeHtml(email)}
+                </div>
+
+                <div class="id">
+                    🆔 ${escapeHtml(item.id)}
+                </div>
+
+
+                <div class="row">
+                    <span class="label">
+                        Balance
+                    </span>
+
+                    <span class="value">
+                        Rs ${balance}
+                    </span>
+                </div>
+
+
+                <div class="row">
+                    <span class="label">
+                        Commission
+                    </span>
+
+                    <span class="value">
+                        Rs ${commission}
+                    </span>
+                </div>
+
+
+                <div class="row">
+                    <span class="label">
+                        Completed Tasks
+                    </span>
+
+                    <span class="value">
+                        ${completed}
+                    </span>
+                </div>
+
+
+                <div class="row">
+                    <span class="label">
+                        Role
+                    </span>
+
+                    <span class="value">
+                        ${escapeHtml(role)}
+                    </span>
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        class="edit-btn"
+                        onclick="showEdit('${item.id}')">
+
+                        ✏️ Edit
+
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteUser('${item.id}','${escapeJs(email)}')">
+
+                        🗑️ Delete
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="edit-box"
+                    id="edit-${item.id}">
+
+                    <label>
+                        Balance
+                    </label>
+
+                    <input
+                        type="number"
+                        id="balance-${item.id}"
+                        value="${balance}"
+                        min="0">
+
+
+                    <label>
+                        Commission
+                    </label>
+
+                    <input
+                        type="number"
+                        id="commission-${item.id}"
+                        value="${commission}"
+                        min="0">
+
+
+                    <label>
+                        Completed Tasks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="completed-${item.id}"
+                        value="${completed}"
+                        min="0">
+
+
+                    <button
+                        class="save-btn"
+                        onclick="saveUser('${item.id}')">
+
+                        💾 Save Changes
+
+                    </button>
+
+
+                    <button
+                        class="cancel-btn"
+                        onclick="hideEdit('${item.id}')">
+
+                        Cancel
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+
+    }catch(error){
+
+        usersList.innerHTML=`
+
+            <div class="error">
+
+                Error loading users:
+
+                <br><br>
+
+                ${escapeHtml(error.message)}
+
+            </div>
+
+        `;
+
+    }
+
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 
-const addTaskBtn =
-document.getElementById("addTaskBtn");
+window.showEdit = function(id){
 
-const taskMessage =
-document.getElementById("taskMessage");
+    const box =
+    document.getElementById("edit-"+id);
 
+    if(box){
 
+        box.style.display="block";
 
-addTaskBtn.addEventListener(
-"click",
-async function(){
+    }
 
-const name =
-document.getElementById("taskName")
-.value
-.trim();
-
-const price =
-document.getElementById("taskPrice")
-.value;
-
-const commission =
-document.getElementById("taskCommission")
-.value;
-
-const description =
-document.getElementById("taskDesc")
-.value
-.trim();
+};
 
 
-if(
-!name ||
-!price ||
-!commission
-){
 
-taskMessage.innerText =
-"Please fill Task Name, Price and Commission.";
+window.hideEdit = function(id){
 
-return;
+    const box =
+    document.getElementById("edit-"+id);
+
+    if(box){
+
+        box.style.display="none";
+
+    }
+
+};
+
+
+
+window.saveUser = async function(id){
+
+    try{
+
+        const balance =
+        Number(
+            document.getElementById(
+                "balance-"+id
+            ).value
+        );
+
+
+        const commission =
+        Number(
+            document.getElementById(
+                "commission-"+id
+            ).value
+        );
+
+
+        const completed =
+        Number(
+            document.getElementById(
+                "completed-"+id
+            ).value
+        );
+
+
+        if(balance < 0 ||
+           commission < 0 ||
+           completed < 0){
+
+            alert(
+                "Values cannot be negative."
+            );
+
+            return;
+
+        }
+
+
+        await updateDoc(
+
+            doc(db,"users",id),
+
+            {
+                balance: balance,
+                commission: commission,
+                completed: completed
+            }
+
+        );
+
+
+        alert(
+            "User updated successfully!"
+        );
+
+
+        loadUsers();
+
+
+    }catch(error){
+
+        alert(
+            "Update failed: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+
+window.deleteUser = async function(id,email){
+
+    const confirmDelete =
+    confirm(
+
+        "Delete this user record?\n\n" +
+        "Email: " + email +
+        "\n\n" +
+        "This will delete the Firestore user record."
+
+    );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    try{
+
+        await deleteDoc(
+            doc(db,"users",id)
+        );
+
+
+        alert(
+            "User record deleted successfully."
+        );
+
+
+        loadUsers();
+
+
+    }catch(error){
+
+        alert(
+            "Delete failed: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+
+function escapeHtml(text){
+
+    const div =
+    document.createElement("div");
+
+    div.textContent =
+    text || "";
+
+    return div.innerHTML;
 
 }
 
 
-try{
 
-await addDoc(
-collection(db,"tasks"),
-{
+function escapeJs(text){
 
-name:name,
-
-price:Number(price),
-
-commission:Number(commission),
-
-description:description,
-
-createdAt:serverTimestamp()
-
-}
-);
-
-
-taskMessage.innerText =
-"Task Added Successfully ✅";
-
-
-document.getElementById("taskName")
-.value="";
-
-document.getElementById("taskPrice")
-.value="";
-
-document.getElementById("taskCommission")
-.value="";
-
-document.getElementById("taskDesc")
-.value="";
-
-
-}catch(error){
-
-taskMessage.innerText =
-"Error: " + error.message;
+    return String(text || "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'")
+        .replace(/"/g,'\\"')
+        .replace(/\n/g,"\\n")
+        .replace(/\r/g,"\\r");
 
 }
 
-});
 
 
-
-document.getElementById("logoutBtn")
-.addEventListener(
-"click",
-async function(){
-
-try{
-
-await signOut(auth);
-
-window.location.href =
-"admin-login.html";
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-});
+loadUsers();
 
 </script>
 
-
 </body>
-
 </html>
