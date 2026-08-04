@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Withdraw Requests Admin</title>
+<title>Withdraw Requests - Admin</title>
 
 <style>
 
@@ -27,7 +27,7 @@ background:#111827;
 color:white;
 padding:18px;
 border-radius:15px;
-font-size:22px;
+font-size:21px;
 font-weight:bold;
 }
 
@@ -42,6 +42,34 @@ box-shadow:0 3px 10px #ddd;
 .info{
 margin-top:8px;
 color:#555;
+}
+
+.status{
+margin-top:10px;
+font-weight:bold;
+}
+
+.buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:15px;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:10px;
+color:white;
+font-size:15px;
+}
+
+.approve{
+background:#16a34a;
+}
+
+.reject{
+background:#dc2626;
 }
 
 .back{
@@ -78,47 +106,76 @@ Loading Requests...
 
 <script type="module">
 
-
 import { db } from "./firebase.js";
-
 
 import {
 collection,
-getDocs
+getDocs,
+doc,
+updateDoc
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+const list =
+document.getElementById("withdrawList");
 
-const list=document.getElementById("withdrawList");
 
-
+async function loadWithdraws(){
 
 const data =
 await getDocs(collection(db,"withdraws"));
 
-
-
 list.innerHTML="";
-
 
 
 if(data.empty){
 
-list.innerHTML="No Withdraw Requests";
+list.innerHTML=`
+<div class="card">
+No Withdraw Requests
+</div>
+`;
 
-}else{
+return;
+
+}
 
 
 data.forEach((item)=>{
 
+const w=item.data();
 
-let w=item.data();
+const status=w.status || "Pending";
 
+
+let buttons="";
+
+
+if(status === "Pending"){
+
+buttons=`
+
+<div class="buttons">
+
+<button class="approve"
+onclick="updateStatus('${item.id}','Approved')">
+Approve
+</button>
+
+<button class="reject"
+onclick="updateStatus('${item.id}','Rejected')">
+Reject
+</button>
+
+</div>
+
+`;
+
+}
 
 
 list.innerHTML += `
-
 
 <div class="card">
 
@@ -127,33 +184,60 @@ ${w.name || "User"}
 </h3>
 
 <p class="info">
-Amount: Rs ${w.amount}
+Email: ${w.email || ""}
 </p>
 
 <p class="info">
-Method: ${w.method}
+Amount: Rs ${w.amount || 0}
 </p>
 
 <p class="info">
-Status: ${w.status || "Pending"}
+Method: ${w.method || ""}
 </p>
+
+<p class="status">
+Status: ${status}
+</p>
+
+${buttons}
 
 </div>
 
-
 `;
 
-
 });
-
 
 }
 
 
+window.updateStatus = async function(id,status){
+
+try{
+
+await updateDoc(
+doc(db,"withdraws",id),
+{
+status:status
+}
+);
+
+alert("Request " + status);
+
+loadWithdraws();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+loadWithdraws();
 
 </script>
 
 
 </body>
-
 </html>
