@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Withdraw Requests - Admin</title>
+<title>Withdraw Requests - EliteTask Pro</title>
 
 <style>
 
@@ -38,43 +39,39 @@ border-radius:15px;
 box-shadow:0 3px 10px #ddd;
 }
 
+.request{
+border:1px solid #eee;
+padding:16px;
+border-radius:13px;
+margin-top:12px;
+}
+
+.request h3{
+color:#2563eb;
+margin-bottom:10px;
+}
+
 .info{
-margin-top:8px;
+margin-top:7px;
 color:#555;
+font-size:14px;
 }
 
 .status{
 display:inline-block;
 margin-top:10px;
-font-weight:bold;
 padding:6px 10px;
 border-radius:20px;
-}
-
-.pending{
+font-size:12px;
+font-weight:bold;
 background:#fef3c7;
 color:#92400e;
 }
 
-.approved{
-background:#dcfce7;
-color:#166534;
-}
-
-.rejected{
-background:#fee2e2;
-color:#991b1b;
-}
-
-.buttons{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-top:15px;
-}
-
 button{
-padding:12px;
+width:100%;
+padding:13px;
+margin-top:12px;
 border:none;
 border-radius:10px;
 color:white;
@@ -89,66 +86,141 @@ background:#16a34a;
 background:#dc2626;
 }
 
+button:disabled{
+opacity:.6;
+}
+
+.empty{
+text-align:center;
+color:#777;
+padding:20px;
+}
+
+.error{
+color:#dc2626;
+text-align:center;
+padding:15px;
+}
+
 .back{
 display:block;
 margin-top:20px;
-text-align:center;
-color:#2563eb;
+background:#2563eb;
+color:white;
 text-decoration:none;
+text-align:center;
+padding:14px;
+border-radius:12px;
 }
 
 </style>
+
 </head>
 
 
 <body>
 
+
 <div class="header">
 💰 Withdraw Requests
 </div>
 
-<div id="withdrawList">
+
+<div class="card">
+
+<div id="requestsList">
 Loading Requests...
 </div>
 
-<a href="admin.html" class="back">
+</div>
+
+
+<a
+href="admin.html"
+class="back">
+
 ⬅ Back to Admin
+
 </a>
+
 
 
 <script type="module">
 
-import { db } from "./firebase.js";
+import { auth, db } from "./firebase.js";
+
+
+import {
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
 collection,
 getDocs,
 doc,
-runTransaction
+runTransaction,
+serverTimestamp,
+query,
+orderBy
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-const list =
-document.getElementById("withdrawList");
+
+const requestsList =
+document.getElementById("requestsList");
 
 
-async function loadWithdraws(){
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+window.location.href =
+"admin-login.html";
+
+return;
+
+}
+
+loadRequests();
+
+});
+
+
+
+async function loadRequests(){
 
 try{
 
-const snapshot =
-await getDocs(collection(db,"withdraws"));
+const q =
+query(
+collection(db,"withdraws"),
+orderBy("createdAt","desc")
+);
 
-list.innerHTML="";
+
+const snapshot =
+await getDocs(q);
+
+
+requestsList.innerHTML="";
 
 
 if(snapshot.empty){
 
-list.innerHTML=`
-<div class="card">
-No Withdraw Requests
+requestsList.innerHTML=`
+
+<div class="empty">
+
+No withdraw requests yet.
+
 </div>
+
 `;
 
 return;
@@ -158,76 +230,76 @@ return;
 
 snapshot.forEach((item)=>{
 
-const w=item.data();
+const data =
+item.data();
+
 
 const status =
-w.status || "Pending";
+data.status || "Pending";
 
 
-let statusClass="pending";
-
-if(status === "Approved"){
-statusClass="approved";
-}
-
-if(status === "Rejected"){
-statusClass="rejected";
-}
-
-
-let buttons="";
+let buttons = "";
 
 
 if(status === "Pending"){
 
-buttons=`
+buttons = `
 
-<div class="buttons">
-
-<button class="approve"
+<button
+class="approve"
 onclick="approveRequest('${item.id}')">
-Approve
+
+✅ Approve Withdraw
+
 </button>
 
-<button class="reject"
+
+<button
+class="reject"
 onclick="rejectRequest('${item.id}')">
-Reject
-</button>
 
-</div>
+❌ Reject Request
+
+</button>
 
 `;
 
 }
 
 
-list.innerHTML += `
+requestsList.innerHTML += `
 
-<div class="card">
+<div class="request">
 
 <h3>
-${w.name || "User"}
+💰 Rs ${Number(data.amount || 0)}
 </h3>
 
-<p class="info">
-Email: ${w.email || ""}
-</p>
 
 <p class="info">
-Amount: Rs ${w.amount || 0}
+👤 ${escapeHtml(data.name || "User")}
 </p>
+
 
 <p class="info">
-Method: ${w.method || ""}
+📧 ${escapeHtml(data.email || "")}
 </p>
+
 
 <p class="info">
-User ID: ${w.uid || ""}
+💳 Method: ${escapeHtml(data.method || "")}
 </p>
 
-<span class="status ${statusClass}">
-${status}
+
+<p class="info">
+🔢 Account: ${escapeHtml(data.account || "")}
+</p>
+
+
+<span class="status">
+${escapeHtml(status)}
 </span>
+
 
 ${buttons}
 
@@ -239,10 +311,15 @@ ${buttons}
 
 }catch(error){
 
-list.innerHTML=`
-<div class="card">
-Error: ${error.message}
+requestsList.innerHTML=`
+
+<div class="error">
+
+Error loading requests:<br>
+${escapeHtml(error.message)}
+
 </div>
+
 `;
 
 }
@@ -251,29 +328,48 @@ Error: ${error.message}
 
 
 
-window.approveRequest = async function(requestId){
+/* APPROVE */
 
-const confirmApprove =
-confirm("Approve this withdrawal?");
+window.approveRequest =
+async function(requestId){
 
-if(!confirmApprove){
+if(!confirm(
+"Approve this withdraw request?"
+)){
+
 return;
+
 }
 
 
 try{
 
-await runTransaction(db, async(transaction)=>{
+
+await runTransaction(
+db,
+async(transaction)=>{
+
 
 const requestRef =
-doc(db,"withdraws",requestId);
+doc(
+db,
+"withdraws",
+requestId
+);
+
 
 const requestSnap =
-await transaction.get(requestRef);
+await transaction.get(
+requestRef
+);
 
 
 if(!requestSnap.exists()){
-throw new Error("Request not found");
+
+throw new Error(
+"Withdraw request not found."
+);
+
 }
 
 
@@ -282,24 +378,60 @@ requestSnap.data();
 
 
 if(request.status !== "Pending"){
-throw new Error("This request has already been processed");
+
+throw new Error(
+"This request has already been processed."
+);
+
 }
 
 
-if(!request.uid){
-throw new Error("User ID missing");
+const uid =
+request.uid;
+
+
+const amount =
+Number(request.amount || 0);
+
+
+if(!uid){
+
+throw new Error(
+"User ID missing."
+);
+
+}
+
+
+if(amount <= 0){
+
+throw new Error(
+"Invalid withdrawal amount."
+);
+
 }
 
 
 const userRef =
-doc(db,"users",request.uid);
+doc(
+db,
+"users",
+uid
+);
+
 
 const userSnap =
-await transaction.get(userRef);
+await transaction.get(
+userRef
+);
 
 
 if(!userSnap.exists()){
-throw new Error("User account not found");
+
+throw new Error(
+"User account not found."
+);
+
 }
 
 
@@ -310,44 +442,68 @@ userSnap.data();
 const balance =
 Number(user.balance || 0);
 
-const amount =
-Number(request.amount || 0);
 
+if(balance < amount){
 
-if(amount <= 0){
-throw new Error("Invalid withdrawal amount");
+throw new Error(
+"User has insufficient balance."
+);
+
 }
 
 
-if(amount > balance){
-throw new Error("User balance is insufficient");
+const newBalance =
+balance - amount;
+
+
+/*
+Update user balance
+*/
+
+transaction.update(
+userRef,
+{
+
+balance:newBalance
+
 }
+);
 
 
-transaction.update(userRef,{
+/*
+Update withdrawal status
+*/
 
-balance: balance - amount
+transaction.update(
+requestRef,
+{
 
-});
+status:"Approved",
+
+processedAt:
+serverTimestamp()
+
+}
+);
+
+}
+);
 
 
-transaction.update(requestRef,{
-
-status:"Approved"
-
-});
-
-});
+alert(
+"Withdraw approved successfully ✅"
+);
 
 
-alert("Withdrawal Approved");
-
-loadWithdraws();
+loadRequests();
 
 
 }catch(error){
 
-alert(error.message);
+alert(
+"Approval failed: " +
+error.message
+);
 
 }
 
@@ -355,30 +511,48 @@ alert(error.message);
 
 
 
-window.rejectRequest = async function(requestId){
+/* REJECT */
 
-const confirmReject =
-confirm("Reject this withdrawal?");
+window.rejectRequest =
+async function(requestId){
 
-if(!confirmReject){
+if(!confirm(
+"Reject this withdraw request?"
+)){
+
 return;
+
 }
 
 
 try{
 
+
 const requestRef =
-doc(db,"withdraws",requestId);
+doc(
+db,
+"withdraws",
+requestId
+);
 
 
-await runTransaction(db, async(transaction)=>{
+await runTransaction(
+db,
+async(transaction)=>{
+
 
 const requestSnap =
-await transaction.get(requestRef);
+await transaction.get(
+requestRef
+);
 
 
 if(!requestSnap.exists()){
-throw new Error("Request not found");
+
+throw new Error(
+"Request not found."
+);
+
 }
 
 
@@ -387,36 +561,66 @@ requestSnap.data();
 
 
 if(request.status !== "Pending"){
-throw new Error("This request has already been processed");
+
+throw new Error(
+"This request has already been processed."
+);
+
 }
 
 
-transaction.update(requestRef,{
+transaction.update(
+requestRef,
+{
 
-status:"Rejected"
+status:"Rejected",
 
-});
+processedAt:
+serverTimestamp()
 
-});
+}
+);
+
+}
+);
 
 
-alert("Withdrawal Rejected");
+alert(
+"Withdraw request rejected."
+);
 
-loadWithdraws();
+
+loadRequests();
 
 
 }catch(error){
 
-alert(error.message);
+alert(
+"Rejection failed: " +
+error.message
+);
 
 }
 
 };
 
 
-loadWithdraws();
+
+function escapeHtml(text){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+text || "";
+
+return div.innerHTML;
+
+}
 
 </script>
 
+
 </body>
+
 </html>
