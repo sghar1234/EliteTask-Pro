@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Users - EliteTask Pro Admin</title>
+<title>Users Management - EliteTask Pro</title>
 
 <style>
 
@@ -27,11 +27,11 @@ background:#111827;
 color:white;
 padding:18px;
 border-radius:15px;
-font-size:22px;
+font-size:21px;
 font-weight:bold;
 }
 
-.user-card{
+.card{
 background:white;
 margin-top:15px;
 padding:18px;
@@ -39,21 +39,75 @@ border-radius:15px;
 box-shadow:0 3px 10px #ddd;
 }
 
-.user-card h3{
-color:#2563eb;
+.user-card{
+background:white;
+margin-top:12px;
+padding:17px;
+border-radius:13px;
+border:1px solid #eee;
 }
 
-.info{
-margin-top:8px;
-color:#555;
+.user-name{
+font-size:18px;
+font-weight:bold;
+color:#111827;
+}
+
+.email{
+margin-top:6px;
+color:#666;
+font-size:14px;
+}
+
+.id{
+margin-top:6px;
+color:#777;
+font-size:12px;
+word-break:break-all;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+padding:9px 0;
+border-bottom:1px solid #eee;
+margin-top:5px;
+}
+
+.row:last-child{
+border-bottom:none;
+}
+
+.label{
+color:#666;
+}
+
+.value{
+font-weight:bold;
+color:#111827;
 }
 
 .back{
 display:block;
 margin-top:20px;
-text-align:center;
+background:#2563eb;
+color:white;
 text-decoration:none;
-color:#2563eb;
+text-align:center;
+padding:14px;
+border-radius:12px;
+}
+
+.loading{
+text-align:center;
+color:#777;
+padding:20px;
+}
+
+.error{
+color:#dc2626;
+text-align:center;
+padding:15px;
 }
 
 </style>
@@ -69,24 +123,30 @@ color:#2563eb;
 </div>
 
 
+<div class="card">
 
 <div id="usersList">
 
+<div class="loading">
 Loading Users...
+</div>
+
+</div>
 
 </div>
 
 
+<a
+href="admin.html"
+class="back">
 
-<a href="admin.html" class="back">
 ⬅ Back to Admin
+
 </a>
 
 
 
-
 <script type="module">
-
 
 import { db } from "./firebase.js";
 
@@ -95,7 +155,8 @@ import {
 collection,
 getDocs
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 
@@ -104,67 +165,169 @@ document.getElementById("usersList");
 
 
 
-const users =
-await getDocs(collection(db,"users"));
+async function loadUsers(){
 
+try{
+
+
+const snapshot =
+await getDocs(
+collection(db,"users")
+);
 
 
 usersList.innerHTML="";
 
 
+if(snapshot.empty){
 
-users.forEach((item)=>{
+usersList.innerHTML=`
+
+<div class="loading">
+No users found.
+</div>
+
+`;
+
+return;
+
+}
 
 
-let user=item.data();
+snapshot.forEach((item)=>{
 
+const user =
+item.data();
+
+
+const name =
+user.name || "User";
+
+
+const email =
+user.email || "";
+
+
+const balance =
+Number(user.balance || 0);
+
+
+const commission =
+Number(user.commission || 0);
+
+
+const completed =
+Number(user.completed || 0);
 
 
 usersList.innerHTML += `
 
-
 <div class="user-card">
 
+<div class="user-name">
 
-<h3>
-${user.name}
-</h3>
-
-
-<p class="info">
-Email: ${user.email}
-</p>
-
-
-<p class="info">
-Balance: Rs ${user.balance}
-</p>
-
-
-<p class="info">
-Commission: Rs ${user.commission}
-</p>
-
-
-<p class="info">
-ID: ${item.id.substring(0,8)}
-</p>
-
+👤 ${escapeHtml(name)}
 
 </div>
 
 
+<div class="email">
+
+📧 ${escapeHtml(email)}
+
+</div>
+
+
+<div class="id">
+
+🆔 ${escapeHtml(item.id)}
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Balance
+</span>
+
+<span class="value">
+Rs ${balance}
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Commission
+</span>
+
+<span class="value">
+Rs ${commission}
+</span>
+
+</div>
+
+
+<div class="row">
+
+<span class="label">
+Completed Tasks
+</span>
+
+<span class="value">
+${completed}
+</span>
+
+</div>
+
+</div>
+
 `;
-
-
 
 });
 
 
+}catch(error){
+
+usersList.innerHTML=`
+
+<div class="error">
+
+Error loading users:<br>
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+function escapeHtml(text){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+text || "";
+
+return div.innerHTML;
+
+}
+
+
+
+loadUsers();
 
 </script>
 
 
-
 </body>
+
 </html>
