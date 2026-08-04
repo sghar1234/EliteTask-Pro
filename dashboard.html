@@ -66,14 +66,12 @@ margin-top:8px;
 color:#555;
 }
 
-
 .stats{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
 margin-top:15px;
 }
-
 
 .stat{
 background:white;
@@ -83,11 +81,9 @@ text-align:center;
 box-shadow:0 2px 8px #ddd;
 }
 
-
 .menu{
 margin-top:20px;
 }
-
 
 .menu a{
 display:block;
@@ -100,14 +96,12 @@ margin-bottom:12px;
 text-align:center;
 }
 
-
 .task{
 background:#fff7ed;
 padding:15px;
 border-radius:12px;
 margin-top:15px;
 }
-
 
 .task-box{
 background:white;
@@ -116,6 +110,9 @@ border-radius:12px;
 margin-top:10px;
 }
 
+.task-box h3{
+margin-bottom:8px;
+}
 
 .task-btn{
 width:100%;
@@ -126,7 +123,6 @@ color:white;
 border:none;
 border-radius:10px;
 }
-
 
 </style>
 
@@ -180,7 +176,6 @@ Rs 0
 
 <div class="stats">
 
-
 <div class="stat">
 
 <h3 id="completed">
@@ -192,7 +187,6 @@ Rs 0
 </div>
 
 
-
 <div class="stat">
 
 <h3 id="commission">
@@ -202,7 +196,6 @@ Rs 0
 <p>Commission</p>
 
 </div>
-
 
 
 <div class="stat">
@@ -226,8 +219,10 @@ User
 
 </div>
 
-
 </div>
+
+
+
 <div class="menu">
 
 <a href="orders.html">
@@ -272,7 +267,8 @@ import { auth, db } from "./firebase.js";
 import {
 onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
@@ -280,9 +276,12 @@ doc,
 getDoc,
 updateDoc,
 collection,
-getDocs
+getDocs,
+addDoc,
+serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 
@@ -292,158 +291,211 @@ let currentUserId = "";
 
 onAuthStateChanged(auth, async(user)=>{
 
+if(!user){
 
-if(user){
+window.location.href="index.html";
+
+return;
+
+}
 
 
 currentUserId = user.uid;
 
 
-const userRef = doc(db,"users",user.uid);
+const userRef =
+doc(db,"users",user.uid);
 
 
-const userSnap = await getDoc(userRef);
-
+const userSnap =
+await getDoc(userRef);
 
 
 if(userSnap.exists()){
 
-
-let data=userSnap.data();
-
-
-
-document.getElementById("userName").innerText=data.name;
-
-document.getElementById("userEmail").innerText=data.email;
-
-document.getElementById("userId").innerText=
-"ID: "+user.uid.substring(0,8);
+const data =
+userSnap.data();
 
 
-document.getElementById("balance").innerText=
-"Rs "+data.balance;
+document.getElementById("userName")
+.innerText =
+data.name || "User";
 
 
-document.getElementById("commission").innerText=
-"Rs "+data.commission;
+document.getElementById("userEmail")
+.innerText =
+data.email || "";
 
 
-document.getElementById("completed").innerText=
-data.completed || 0;
+document.getElementById("userId")
+.innerText =
+"ID: " + user.uid.substring(0,8);
 
+
+document.getElementById("balance")
+.innerText =
+"Rs " + Number(data.balance || 0);
+
+
+document.getElementById("commission")
+.innerText =
+"Rs " + Number(data.commission || 0);
+
+
+document.getElementById("completed")
+.innerText =
+Number(data.completed || 0);
 
 }
-
 
 
 loadTasks();
 
-
-
-}else{
-
-
-window.location.href="index.html";
-
-
-}
-
-
 });
-
-
 
 
 
 async function loadTasks(){
 
+const taskList =
+document.getElementById("taskList");
 
-const taskList=document.getElementById("taskList");
 
+try{
 
-const tasks=await getDocs(collection(db,"tasks"));
+const tasks =
+await getDocs(
+collection(db,"tasks")
+);
 
 
 taskList.innerHTML="";
 
 
+if(tasks.empty){
+
+taskList.innerHTML =
+"<p>No Task Available</p>";
+
+return;
+
+}
+
 
 tasks.forEach((item)=>{
 
-
-let task=item.data();
-
+const task =
+item.data();
 
 
 taskList.innerHTML += `
 
-
 <div class="task-box">
 
-
-<h3>${task.name}</h3>
-
-
-<p>
-Price: Rs ${task.price}
-</p>
-
+<h3>
+${task.name || "Task"}
+</h3>
 
 <p>
-Commission: Rs ${task.commission}
+Price: Rs ${Number(task.price || 0)}
 </p>
 
+<p>
+Commission: Rs ${Number(task.commission || 0)}
+</p>
 
-<button class="task-btn"
-onclick="completeTask('${item.id}','${task.commission}')">
+<p>
+${task.description || ""}
+</p>
+
+<button
+class="task-btn"
+onclick="completeTask(
+'${item.id}',
+'${task.name || "Task"}',
+'${task.price || 0}',
+'${task.commission || 0}'
+)">
 
 Complete Task
 
 </button>
 
-
 </div>
-
 
 `;
 
-
-
 });
 
+}catch(error){
+
+taskList.innerHTML =
+"<p>Error loading tasks.</p>";
+
+}
 
 }
 
 
 
+window.completeTask =
+async function(
+taskId,
+taskName,
+price,
+commission
+){
 
-window.completeTask = async function(id,commission){
-
-
-
-const userRef=doc(db,"users",currentUserId);
-
-
-const userSnap=await getDoc(userRef);
-
-
-let data=userSnap.data();
+try{
 
 
-
-let newBalance =
-Number(data.balance) + Number(commission);
-
+const userRef =
+doc(db,"users",currentUserId);
 
 
-let newCommission =
-Number(data.commission) + Number(commission);
+const userSnap =
+await getDoc(userRef);
 
 
+if(!userSnap.exists()){
 
-let completed =
-Number(data.completed || 0) + 1;
+alert("User account not found");
+
+return;
+
+}
+
+
+const user =
+userSnap.data();
+
+
+const oldBalance =
+Number(user.balance || 0);
+
+
+const oldCommission =
+Number(user.commission || 0);
+
+
+const oldCompleted =
+Number(user.completed || 0);
+
+
+const taskCommission =
+Number(commission || 0);
+
+
+const newBalance =
+oldBalance + taskCommission;
+
+
+const newCommission =
+oldCommission + taskCommission;
+
+
+const newCompleted =
+oldCompleted + 1;
 
 
 
@@ -453,24 +505,61 @@ balance:newBalance,
 
 commission:newCommission,
 
-completed:completed
+completed:newCompleted
 
 });
 
 
 
-alert("Task Completed Successfully");
+await addDoc(
+collection(db,"orders"),
+{
+
+uid:currentUserId,
+
+name:user.name || "",
+
+email:user.email || "",
+
+taskId:taskId,
+
+taskName:taskName,
+
+price:Number(price || 0),
+
+commission:taskCommission,
+
+status:"Completed",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+
+
+alert(
+"Task Completed Successfully!"
+);
 
 
 location.reload();
 
 
+}catch(error){
+
+alert(
+"Error: " + error.message
+);
+
 }
 
+};
 
 
 </script>
 
 
 </body>
+
 </html>
