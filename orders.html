@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Orders - EliteTask Pro</title>
+<title>My Orders - EliteTask Pro</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -24,90 +27,231 @@ background:#111827;
 color:white;
 padding:18px;
 border-radius:15px;
-font-size:20px;
+font-size:21px;
 font-weight:bold;
 }
 
-.order{
+.card{
 background:white;
 margin-top:15px;
-padding:20px;
+padding:18px;
 border-radius:15px;
 box-shadow:0 3px 10px #ddd;
 }
 
+.order{
+border-bottom:1px solid #eee;
+padding-bottom:15px;
+margin-bottom:15px;
+}
+
+.order:last-child{
+border-bottom:none;
+margin-bottom:0;
+}
+
 .order h3{
 color:#2563eb;
-margin-bottom:12px;
+margin-bottom:8px;
 }
 
 .info{
-margin:8px 0;
+margin-top:7px;
 color:#555;
+font-size:14px;
 }
 
-.btn{
-width:100%;
-border:none;
-background:#2563eb;
-color:white;
-padding:14px;
-border-radius:12px;
-font-size:16px;
-margin-top:15px;
+.status{
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:20px;
+background:#dcfce7;
+color:#166534;
+font-size:13px;
+font-weight:bold;
+}
+
+.empty{
+text-align:center;
+color:#777;
+padding:20px;
 }
 
 .back{
 display:block;
 margin-top:20px;
-text-align:center;
+background:#2563eb;
+color:white;
 text-decoration:none;
-color:#2563eb;
+text-align:center;
+padding:14px;
+border-radius:12px;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="header">
 📦 My Orders
 </div>
 
 
-<div class="order">
 
-<h3>Order #001</h3>
+<div class="card">
 
-<p class="info">👕 Product: Premium Shirt</p>
+<div id="ordersList">
 
-<p class="info">💰 Order Price: Rs 500</p>
+Loading Orders...
 
-<p class="info">⭐ Commission: Rs 50</p>
-
-<button class="btn" onclick="completeTask()">
-Complete Task
-</button>
+</div>
 
 </div>
 
 
-<a class="back" href="dashboard.html">
+
+<a href="dashboard.html" class="back">
 ⬅ Back to Dashboard
 </a>
 
 
-<script>
 
-function completeTask(){
+<script type="module">
 
-alert("Task Completed Successfully! Commission Added.");
+import { auth, db } from "./firebase.js";
+
+
+import {
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+collection,
+query,
+where,
+getDocs
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+
+const ordersList =
+document.getElementById("ordersList");
+
+
+
+onAuthStateChanged(auth, async(user)=>{
+
+
+if(!user){
+
+window.location.href="index.html";
+
+return;
 
 }
+
+
+try{
+
+
+const q =
+query(
+collection(db,"orders"),
+where("uid","==",user.uid)
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+ordersList.innerHTML="";
+
+
+if(snapshot.empty){
+
+ordersList.innerHTML=`
+
+<div class="empty">
+
+No completed orders yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+snapshot.forEach((item)=>{
+
+
+const order =
+item.data();
+
+
+ordersList.innerHTML += `
+
+<div class="order">
+
+<h3>
+${order.taskName || "Task"}
+</h3>
+
+<p class="info">
+Task Price: Rs ${Number(order.price || 0)}
+</p>
+
+<p class="info">
+Commission: Rs ${Number(order.commission || 0)}
+</p>
+
+<p class="info">
+Status: ${order.status || "Completed"}
+</p>
+
+<span class="status">
+${order.status || "Completed"}
+</span>
+
+</div>
+
+`;
+
+});
+
+
+}catch(error){
+
+ordersList.innerHTML=`
+
+<div class="empty">
+
+Error loading orders.
+
+</div>
+
+`;
+
+}
+
+});
 
 </script>
 
 
 </body>
+
 </html>
