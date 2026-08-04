@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -45,8 +44,26 @@ color:#555;
 }
 
 .status{
+display:inline-block;
 margin-top:10px;
 font-weight:bold;
+padding:6px 10px;
+border-radius:20px;
+}
+
+.pending{
+background:#fef3c7;
+color:#92400e;
+}
+
+.approved{
+background:#dcfce7;
+color:#166534;
+}
+
+.rejected{
+background:#fee2e2;
+color:#991b1b;
 }
 
 .buttons{
@@ -81,27 +98,22 @@ text-decoration:none;
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-
 <div class="header">
 💰 Withdraw Requests
 </div>
-
 
 <div id="withdrawList">
 Loading Requests...
 </div>
 
-
 <a href="admin.html" class="back">
 ⬅ Back to Admin
 </a>
-
 
 
 <script type="module">
@@ -112,7 +124,7 @@ import {
 collection,
 getDocs,
 doc,
-updateDoc
+runTransaction
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
@@ -123,13 +135,15 @@ document.getElementById("withdrawList");
 
 async function loadWithdraws(){
 
-const data =
+try{
+
+const snapshot =
 await getDocs(collection(db,"withdraws"));
 
 list.innerHTML="";
 
 
-if(data.empty){
+if(snapshot.empty){
 
 list.innerHTML=`
 <div class="card">
@@ -142,11 +156,23 @@ return;
 }
 
 
-data.forEach((item)=>{
+snapshot.forEach((item)=>{
 
 const w=item.data();
 
-const status=w.status || "Pending";
+const status =
+w.status || "Pending";
+
+
+let statusClass="pending";
+
+if(status === "Approved"){
+statusClass="approved";
+}
+
+if(status === "Rejected"){
+statusClass="rejected";
+}
 
 
 let buttons="";
@@ -159,12 +185,12 @@ buttons=`
 <div class="buttons">
 
 <button class="approve"
-onclick="updateStatus('${item.id}','Approved')">
+onclick="approveRequest('${item.id}')">
 Approve
 </button>
 
 <button class="reject"
-onclick="updateStatus('${item.id}','Rejected')">
+onclick="rejectRequest('${item.id}')">
 Reject
 </button>
 
@@ -195,9 +221,13 @@ Amount: Rs ${w.amount || 0}
 Method: ${w.method || ""}
 </p>
 
-<p class="status">
-Status: ${status}
+<p class="info">
+User ID: ${w.uid || ""}
 </p>
+
+<span class="status ${statusClass}">
+${status}
+</span>
 
 ${buttons}
 
@@ -207,23 +237,173 @@ ${buttons}
 
 });
 
+}catch(error){
+
+list.innerHTML=`
+<div class="card">
+Error: ${error.message}
+</div>
+`;
+
+}
+
 }
 
 
-window.updateStatus = async function(id,status){
+
+window.approveRequest = async function(requestId){
+
+const confirmApprove =
+confirm("Approve this withdrawal?");
+
+if(!confirmApprove){
+return;
+}
+
 
 try{
 
-await updateDoc(
-doc(db,"withdraws",id),
-{
-status:status
-}
-);
+await runTransaction(db, async(transaction)=>{
 
-alert("Request " + status);
+const requestRef =
+doc(db,"withdraws",requestId);
+
+const requestSnap =
+await transaction.get(requestRef);
+
+
+if(!requestSnap.exists()){
+throw new Error("Request not found");
+}
+
+
+const request =
+requestSnap.data();
+
+
+if(request.status !== "Pending"){
+throw new Error("This request has already been processed");
+}
+
+
+if(!request.uid){
+throw new Error("User ID missing");
+}
+
+
+const userRef =
+doc(db,"users",request.uid);
+
+const userSnap =
+await transaction.get(userRef);
+
+
+if(!userSnap.exists()){
+throw new Error("User account not found");
+}
+
+
+const user =
+userSnap.data();
+
+
+const balance =
+Number(user.balance || 0);
+
+const amount =
+Number(request.amount || 0);
+
+
+if(amount <= 0){
+throw new Error("Invalid withdrawal amount");
+}
+
+
+if(amount > balance){
+throw new Error("User balance is insufficient");
+}
+
+
+transaction.update(userRef,{
+
+balance: balance - amount
+
+});
+
+
+transaction.update(requestRef,{
+
+status:"Approved"
+
+});
+
+});
+
+
+alert("Withdrawal Approved");
 
 loadWithdraws();
+
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+
+window.rejectRequest = async function(requestId){
+
+const confirmReject =
+confirm("Reject this withdrawal?");
+
+if(!confirmReject){
+return;
+}
+
+
+try{
+
+const requestRef =
+doc(db,"withdraws",requestId);
+
+
+await runTransaction(db, async(transaction)=>{
+
+const requestSnap =
+await transaction.get(requestRef);
+
+
+if(!requestSnap.exists()){
+throw new Error("Request not found");
+}
+
+
+const request =
+requestSnap.data();
+
+
+if(request.status !== "Pending"){
+throw new Error("This request has already been processed");
+}
+
+
+transaction.update(requestRef,{
+
+status:"Rejected"
+
+});
+
+});
+
+
+alert("Withdrawal Rejected");
+
+loadWithdraws();
+
 
 }catch(error){
 
@@ -237,7 +417,6 @@ alert(error.message);
 loadWithdraws();
 
 </script>
-
 
 </body>
 </html>
