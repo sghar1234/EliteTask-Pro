@@ -40,18 +40,20 @@ box-shadow:0 3px 10px #ddd;
 }
 
 .balance{
-font-size:27px;
+font-size:28px;
 font-weight:bold;
 color:#2563eb;
-margin-top:10px;
+margin-top:8px;
 }
 
-input,select{
+input,
+select{
 width:100%;
 padding:13px;
 margin-top:12px;
 border-radius:10px;
 border:1px solid #ddd;
+font-size:15px;
 }
 
 button{
@@ -65,36 +67,23 @@ border-radius:12px;
 font-size:16px;
 }
 
-.request{
-background:#f9fafb;
-padding:15px;
-border-radius:12px;
-margin-top:12px;
-border:1px solid #eee;
+button:disabled{
+opacity:.6;
 }
 
-.status{
-display:inline-block;
-margin-top:10px;
-padding:6px 10px;
-border-radius:20px;
-font-size:13px;
+.message{
+margin-top:12px;
+text-align:center;
+font-size:14px;
 font-weight:bold;
 }
 
-.pending{
-background:#fef3c7;
-color:#92400e;
+.success{
+color:#16a34a;
 }
 
-.approved{
-background:#dcfce7;
-color:#166534;
-}
-
-.rejected{
-background:#fee2e2;
-color:#991b1b;
+.error{
+color:#dc2626;
 }
 
 .back{
@@ -103,6 +92,12 @@ text-align:center;
 margin-top:20px;
 color:#2563eb;
 text-decoration:none;
+}
+
+.note{
+margin-top:10px;
+color:#777;
+font-size:13px;
 }
 
 </style>
@@ -122,9 +117,18 @@ text-decoration:none;
 
 <p>Available Balance</p>
 
-<div class="balance" id="balance">
-Rs 0
+<div
+class="balance"
+id="balance">
+
+Loading...
+
 </div>
+
+
+<p class="note">
+Enter the amount you want to withdraw.
+</p>
 
 
 <select id="method">
@@ -149,6 +153,13 @@ Bank Account
 
 
 <input
+id="account"
+type="text"
+placeholder="Enter Account / Number"
+>
+
+
+<input
 id="amount"
 type="number"
 placeholder="Enter Amount"
@@ -160,62 +171,86 @@ min="1"
 Submit Withdraw Request
 </button>
 
-</div>
 
-
-
-<div class="card">
-
-<h3>
-My Withdraw Requests
-</h3>
-
-<div id="requestList">
-Loading...
+<div
+id="message"
+class="message">
 </div>
 
 </div>
 
 
+<a
+class="back"
+href="dashboard.html">
 
-<a class="back" href="dashboard.html">
 ⬅ Back to Dashboard
+
 </a>
 
 
 
 <script type="module">
 
+
 import { auth, db } from "./firebase.js";
+
 
 import {
 onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
 doc,
 getDoc,
-addDoc,
 collection,
-query,
-where,
-getDocs,
+addDoc,
 serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 
 let currentUser = null;
+
 let currentBalance = 0;
 
 
 
-onAuthStateChanged(auth, async(user)=>{
+const balanceElement =
+document.getElementById("balance");
+
+const methodElement =
+document.getElementById("method");
+
+const accountElement =
+document.getElementById("account");
+
+const amountElement =
+document.getElementById("amount");
+
+const withdrawBtn =
+document.getElementById("withdrawBtn");
+
+const messageElement =
+document.getElementById("message");
+
+
+
+onAuthStateChanged(
+auth,
+async(user)=>{
+
 
 if(!user){
 
-window.location.href="index.html";
+window.location.href =
+"index.html";
+
 return;
 
 }
@@ -224,58 +259,131 @@ return;
 currentUser = user;
 
 
-const userSnap =
-await getDoc(doc(db,"users",user.uid));
-
-
-if(userSnap.exists()){
-
-const data = userSnap.data();
-
-currentBalance = Number(data.balance || 0);
-
-document.getElementById("balance").innerText =
-"Rs " + currentBalance;
-
-}
-
-
-loadRequests();
+await loadBalance();
 
 });
 
 
 
-document.getElementById("withdrawBtn")
-.addEventListener("click", async()=>{
+async function loadBalance(){
 
-if(!currentUser){
+try{
 
-alert("Please login first");
+
+const userRef =
+doc(
+db,
+"users",
+currentUser.uid
+);
+
+
+const userSnap =
+await getDoc(userRef);
+
+
+if(!userSnap.exists()){
+
+balanceElement.innerText =
+"Rs 0";
+
+showMessage(
+"User profile not found.",
+"error"
+);
+
 return;
 
 }
 
 
-const amount =
-Number(document.getElementById("amount").value);
+const data =
+userSnap.data();
+
+
+currentBalance =
+Number(data.balance || 0);
+
+
+balanceElement.innerText =
+"Rs " + currentBalance;
+
+
+}catch(error){
+
+balanceElement.innerText =
+"Rs 0";
+
+showMessage(
+"Unable to load balance.",
+"error"
+);
+
+}
+
+}
+
+
+
+withdrawBtn.addEventListener(
+"click",
+submitWithdraw
+);
+
+
+
+async function submitWithdraw(){
+
+
+messageElement.innerText = "";
+messageElement.className =
+"message";
 
 
 const method =
-document.getElementById("method").value;
+methodElement.value;
 
 
-if(!amount || amount <= 0){
+const account =
+accountElement.value.trim();
 
-alert("Enter a valid amount");
-return;
 
-}
+const amount =
+Number(amountElement.value);
+
 
 
 if(!method){
 
-alert("Select payment method");
+showMessage(
+"Please select a payment method.",
+"error"
+);
+
+return;
+
+}
+
+
+if(!account){
+
+showMessage(
+"Please enter your account number.",
+"error"
+);
+
+return;
+
+}
+
+
+if(!amount || amount <= 0){
+
+showMessage(
+"Please enter a valid amount.",
+"error"
+);
+
 return;
 
 }
@@ -283,144 +391,91 @@ return;
 
 if(amount > currentBalance){
 
-alert("Insufficient balance");
+showMessage(
+"Insufficient balance.",
+"error"
+);
+
 return;
 
 }
 
 
+withdrawBtn.disabled=true;
+
+withdrawBtn.innerText =
+"Submitting...";
+
+
 try{
 
+
 await addDoc(
+
 collection(db,"withdraws"),
+
 {
 
 uid:currentUser.uid,
 
 name:currentUser.displayName || "",
 
-email:currentUser.email,
-
-amount:amount,
+email:currentUser.email || "",
 
 method:method,
+
+account:account,
+
+amount:amount,
 
 status:"Pending",
 
 createdAt:serverTimestamp()
 
 }
+
 );
 
 
-alert("Withdraw Request Submitted Successfully");
+showMessage(
+"Withdraw request submitted successfully ✅",
+"success"
+);
 
 
-document.getElementById("amount").value="";
-document.getElementById("method").value="";
+methodElement.value="";
 
+accountElement.value="";
 
-loadRequests();
+amountElement.value="";
 
 
 }catch(error){
 
-alert(error.message);
-
-}
-
-});
-
-
-
-async function loadRequests(){
-
-if(!currentUser){
-return;
-}
-
-
-const requestList =
-document.getElementById("requestList");
-
-
-try{
-
-
-const q = query(
-collection(db,"withdraws"),
-where("uid","==",currentUser.uid)
+showMessage(
+"Error: " + error.message,
+"error"
 );
 
-
-const snapshot =
-await getDocs(q);
+}
 
 
-requestList.innerHTML="";
+withdrawBtn.disabled=false;
 
-
-if(snapshot.empty){
-
-requestList.innerHTML=
-"<p style='margin-top:12px;color:#777;'>No withdraw requests yet.</p>";
-
-return;
+withdrawBtn.innerText =
+"Submit Withdraw Request";
 
 }
 
 
-snapshot.forEach((item)=>{
 
-const data = item.data();
+function showMessage(text,type){
 
-const status =
-data.status || "Pending";
+messageElement.innerText =
+text;
 
-
-let statusClass="pending";
-
-
-if(status === "Approved"){
-statusClass="approved";
-}
-
-if(status === "Rejected"){
-statusClass="rejected";
-}
-
-
-requestList.innerHTML += `
-
-<div class="request">
-
-<p>
-<strong>Amount:</strong>
-Rs ${data.amount || 0}
-</p>
-
-<p style="margin-top:7px;">
-<strong>Method:</strong>
-${data.method || ""}
-</p>
-
-<span class="status ${statusClass}">
-${status}
-</span>
-
-</div>
-
-`;
-
-});
-
-
-}catch(error){
-
-requestList.innerHTML =
-"<p>Unable to load requests.</p>";
-
-}
+messageElement.className =
+"message " + type;
 
 }
 
