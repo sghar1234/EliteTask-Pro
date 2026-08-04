@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Admin Login</title>
+<title>Admin Login - EliteTask Pro</title>
 
 <style>
 
@@ -19,27 +19,40 @@ font-family:Arial,sans-serif;
 
 body{
 background:#f5f5f5;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
 padding:20px;
 }
 
-.login-box{
-background:white;
+.login-card{
+width:100%;
 max-width:400px;
-margin:80px auto;
+background:white;
 padding:25px;
 border-radius:18px;
 box-shadow:0 4px 15px #ddd;
 }
 
-h1{
+.logo{
 text-align:center;
+font-size:28px;
+margin-bottom:8px;
+}
+
+.title{
+text-align:center;
+font-size:22px;
+font-weight:bold;
 color:#111827;
 }
 
-p{
+.subtitle{
 text-align:center;
-margin-top:8px;
-color:#666;
+color:#777;
+margin-top:7px;
+font-size:14px;
 }
 
 input{
@@ -48,17 +61,39 @@ padding:14px;
 margin-top:15px;
 border:1px solid #ddd;
 border-radius:10px;
+font-size:15px;
+outline:none;
 }
 
 button{
 width:100%;
 padding:14px;
 margin-top:18px;
-background:#111827;
+background:#2563eb;
 color:white;
 border:none;
-border-radius:10px;
+border-radius:12px;
 font-size:16px;
+font-weight:bold;
+}
+
+button:disabled{
+opacity:.6;
+}
+
+.message{
+margin-top:15px;
+text-align:center;
+font-size:14px;
+font-weight:bold;
+}
+
+.error{
+color:#dc2626;
+}
+
+.success{
+color:#16a34a;
 }
 
 </style>
@@ -69,17 +104,26 @@ font-size:16px;
 <body>
 
 
-<div class="login-box">
+<div class="login-card">
 
-<h1>EliteTask Pro</h1>
+<div class="logo">
+⚙️
+</div>
 
-<p>Admin Login</p>
+<div class="title">
+EliteTask Pro
+</div>
+
+<div class="subtitle">
+Admin Panel Login
+</div>
 
 
 <input
 id="email"
 type="email"
 placeholder="Admin Email"
+autocomplete="email"
 >
 
 
@@ -87,12 +131,19 @@ placeholder="Admin Email"
 id="password"
 type="password"
 placeholder="Password"
+autocomplete="current-password"
 >
 
 
 <button id="loginBtn">
-Admin Login
+Login as Admin
 </button>
+
+
+<div
+id="message"
+class="message">
+</div>
 
 </div>
 
@@ -102,41 +153,97 @@ Admin Login
 
 import { auth, db } from "./firebase.js";
 
+
 import {
 signInWithEmailAndPassword
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
 doc,
 getDoc
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-document.getElementById("loginBtn")
-.addEventListener("click",async()=>{
 
+const emailInput =
+document.getElementById("email");
+
+
+const passwordInput =
+document.getElementById("password");
+
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+
+const message =
+document.getElementById("message");
+
+
+
+loginBtn.addEventListener(
+"click",
+adminLogin
+);
+
+
+
+passwordInput.addEventListener(
+"keydown",
+(event)=>{
+
+if(event.key === "Enter"){
+
+adminLogin();
+
+}
+
+}
+);
+
+
+
+async function adminLogin(){
 
 const email =
-document.getElementById("email").value.trim();
+emailInput.value.trim();
 
 
 const password =
-document.getElementById("password").value;
+passwordInput.value;
+
+
+message.innerText="";
+message.className="message";
 
 
 if(!email || !password){
 
-alert("Enter email and password");
+message.innerText =
+"Please enter email and password.";
+
+message.classList.add("error");
 
 return;
 
 }
 
 
+loginBtn.disabled=true;
+
+loginBtn.innerText="Checking...";
+
+
 try{
 
+
+/* Firebase Authentication login */
 
 const result =
 await signInWithEmailAndPassword(
@@ -146,40 +253,85 @@ password
 );
 
 
+const user =
+result.user;
+
+
+/* Get user's Firestore document */
+
+const userRef =
+doc(db,"users",user.uid);
+
+
 const userSnap =
-await getDoc(
-doc(db,"users",result.user.uid)
-);
+await getDoc(userRef);
 
 
-if(
-!userSnap.exists() ||
-userSnap.data().role !== "admin"
-){
+if(!userSnap.exists()){
 
 await auth.signOut();
 
-alert("You are not authorized as admin.");
-
-return;
+throw new Error(
+"Admin profile not found."
+);
 
 }
 
 
-window.location.href="admin.html";
+const userData =
+userSnap.data();
+
+
+/* Check role */
+
+if(userData.role !== "admin"){
+
+await auth.signOut();
+
+throw new Error(
+"Access denied. This account is not an admin."
+);
+
+}
+
+
+/* Admin verified */
+
+message.innerText =
+"Admin verified. Opening panel...";
+
+message.classList.add("success");
+
+
+setTimeout(()=>{
+
+window.location.href =
+"admin.html";
+
+},500);
 
 
 }catch(error){
 
-alert(error.message);
+console.error(error);
+
+message.innerText =
+error.message;
+
+message.classList.add("error");
+
+loginBtn.disabled=false;
+
+loginBtn.innerText =
+"Login as Admin";
 
 }
 
-
-});
+}
 
 </script>
 
 
 </body>
+
 </html>
