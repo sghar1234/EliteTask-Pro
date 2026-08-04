@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Orders Management - EliteTask Pro</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+padding:15px;
+}
+
+.header{
+background:#111827;
+color:white;
+padding:18px;
+border-radius:15px;
+font-size:21px;
+font-weight:bold;
+}
+
+.card{
+background:white;
+margin-top:15px;
+padding:18px;
+border-radius:15px;
+box-shadow:0 3px 10px #ddd;
+}
+
+.info{
+margin-top:8px;
+color:#555;
+}
+
+.back{
+display:block;
+margin-top:20px;
+text-align:center;
+color:#2563eb;
+text-decoration:none;
+}
+
+.empty{
+text-align:center;
+color:#777;
+padding:20px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+📦 Orders Management
+</div>
+
+
+<div id="ordersList">
+
+Loading Orders...
+
+</div>
+
+
+<a href="admin.html" class="back">
+⬅ Back to Admin
+</a>
+
+
+
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const ordersList =
+document.getElementById("ordersList");
+
+
+async function loadOrders(){
+
+try{
+
+const snapshot =
+await getDocs(collection(db,"orders"));
+
+
+ordersList.innerHTML="";
+
+
+if(snapshot.empty){
+
+ordersList.innerHTML=`
+
+<div class="card empty">
+
+No completed orders yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+snapshot.forEach((item)=>{
+
+const order =
+item.data();
+
+
+ordersList.innerHTML += `
+
+<div class="card">
+
+<h3>
+${order.taskName || "Task"}
+</h3>
+
+<p class="info">
+User: ${order.name || "Unknown"}
+</p>
+
+<p class="info">
+Email: ${order.email || ""}
+</p>
+
+<p class="info">
+Task Price: Rs ${order.price || 0}
+</p>
+
+<p class="info">
+Commission: Rs ${order.commission || 0}
+</p>
+
+<p class="info">
+Status: ${order.status || "Completed"}
+</p>
+
+</div>
+
+`;
+
+});
+
+}catch(error){
+
+ordersList.innerHTML=`
+
+<div class="card">
+
+Error: ${error.message}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+loadOrders();
+
+</script>
+
+
+</body>
+
+</html>
