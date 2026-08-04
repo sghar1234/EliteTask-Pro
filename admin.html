@@ -39,17 +39,24 @@ border-radius:15px;
 box-shadow:0 3px 10px #ddd;
 }
 
-h3{
-color:#2563eb;
+.card h3{
 margin-bottom:15px;
+color:#2563eb;
 }
 
-input,textarea{
+input,
+textarea{
 width:100%;
-padding:12px;
+padding:13px;
 margin-top:10px;
-border:1px solid #ddd;
 border-radius:10px;
+border:1px solid #ddd;
+font-size:15px;
+}
+
+textarea{
+height:90px;
+resize:none;
 }
 
 button{
@@ -58,8 +65,8 @@ background:#2563eb;
 color:white;
 border:none;
 padding:14px;
-margin-top:15px;
 border-radius:12px;
+margin-top:15px;
 font-size:16px;
 }
 
@@ -72,6 +79,17 @@ border-radius:12px;
 margin-top:12px;
 text-align:center;
 text-decoration:none;
+font-size:16px;
+}
+
+.option:active{
+opacity:.8;
+}
+
+.message{
+margin-top:12px;
+text-align:center;
+font-weight:bold;
 }
 
 </style>
@@ -88,48 +106,83 @@ text-decoration:none;
 
 
 
+<!-- ADD TASK -->
+
 <div class="card">
 
-<h3>Add New Task</h3>
+<h3>
+➕ Add New Task
+</h3>
 
 
-<input id="taskName" placeholder="Task Name">
+<input
+id="taskName"
+type="text"
+placeholder="Task Name"
+>
 
 
-<input id="taskPrice" type="number" placeholder="Task Price">
+<input
+id="taskPrice"
+type="number"
+placeholder="Task Price"
+>
 
 
-<input id="taskCommission" type="number" placeholder="Commission">
+<input
+id="taskCommission"
+type="number"
+placeholder="Commission"
+>
 
 
-<textarea id="taskDesc" placeholder="Task Description"></textarea>
+<textarea
+id="taskDesc"
+placeholder="Task Description"
+></textarea>
 
 
-<button id="addTask">
+<button id="addTaskBtn">
 Add Task
 </button>
+
+
+<div
+id="taskMessage"
+class="message">
+</div>
 
 
 </div>
 
 
 
+<!-- ADMIN CONTROLS -->
+
 <div class="card">
 
-<h3>Admin Controls</h3>
+<h3>
+Admin Controls
+</h3>
 
 
-<a class="option" href="users.html">
+<a
+class="option"
+href="users.html">
 👥 Users Management
 </a>
 
 
-<a class="option" href="#">
+<a
+class="option"
+href="orders-admin.html">
 📦 Orders Management
 </a>
 
 
-💰 <a class="option" href="withdraw-admin.html">
+<a
+class="option"
+href="withdraw-admin.html">
 💰 Withdraw Requests
 </a>
 
@@ -138,11 +191,23 @@ Add Task
 
 
 
+<!-- LOGOUT -->
+
+<div class="card">
+
+<button
+id="logoutBtn">
+Logout Admin
+</button>
+
+</div>
+
+
 
 <script type="module">
 
 
-import { db } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 
 
 import {
@@ -150,27 +215,62 @@ collection,
 addDoc,
 serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+import {
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 
-document.getElementById("addTask")
-.addEventListener("click",async()=>{
+const addTaskBtn =
+document.getElementById("addTaskBtn");
 
 
-let name=document.getElementById("taskName").value;
-
-let price=document.getElementById("taskPrice").value;
-
-let commission=document.getElementById("taskCommission").value;
-
-let desc=document.getElementById("taskDesc").value;
+const taskMessage =
+document.getElementById("taskMessage");
 
 
 
-if(!name || !price || !commission){
+addTaskBtn.addEventListener(
+"click",
+async function(){
 
-alert("Fill all fields");
+const name =
+document.getElementById("taskName")
+.value
+.trim();
+
+
+const price =
+document.getElementById("taskPrice")
+.value;
+
+
+const commission =
+document.getElementById("taskCommission")
+.value;
+
+
+const description =
+document.getElementById("taskDesc")
+.value
+.trim();
+
+
+
+if(
+!name ||
+!price ||
+!commission
+){
+
+taskMessage.innerText =
+"Please fill Task Name, Price and Commission.";
 
 return;
 
@@ -178,8 +278,12 @@ return;
 
 
 
-await addDoc(collection(db,"tasks"),{
+try{
 
+
+await addDoc(
+collection(db,"tasks"),
+{
 
 name:name,
 
@@ -187,25 +291,69 @@ price:Number(price),
 
 commission:Number(commission),
 
-description:desc,
+description:description,
 
 createdAt:serverTimestamp()
 
+}
+);
+
+
+taskMessage.innerText =
+"Task Added Successfully ✅";
+
+
+document.getElementById("taskName")
+.value="";
+
+
+document.getElementById("taskPrice")
+.value="";
+
+
+document.getElementById("taskCommission")
+.value="";
+
+
+document.getElementById("taskDesc")
+.value="";
+
+
+}catch(error){
+
+taskMessage.innerText =
+"Error: " + error.message;
+
+}
 
 });
 
 
 
-alert("Task Added Successfully");
+document.getElementById("logoutBtn")
+.addEventListener(
+"click",
+async function(){
 
+try{
+
+await signOut(auth);
+
+window.location.href =
+"admin-login.html";
+
+}catch(error){
+
+alert(error.message);
+
+}
 
 });
-
 
 
 </script>
 
 
-
 </body>
+
 </html>
