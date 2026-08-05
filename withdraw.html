@@ -48,23 +48,33 @@ color:#2563eb;
 margin-top:8px;
 }
 
-.progress-info{
-margin-top:10px;
+.progress{
+margin-top:12px;
+padding:13px;
+background:#eff6ff;
+border-radius:10px;
+color:#1d4ed8;
 font-size:14px;
-color:#666;
+font-weight:bold;
 }
 
-.locked-box{
-margin-top:15px;
-background:#f3f4f6;
-padding:16px;
-border-radius:12px;
-text-align:center;
-color:#555;
+.withdraw-lock{
+margin-top:12px;
+padding:13px;
+background:#fff7ed;
+border-radius:10px;
+color:#c2410c;
+font-size:14px;
+font-weight:bold;
 }
 
-.unlock{
-color:#16a34a;
+.withdraw-ready{
+margin-top:12px;
+padding:13px;
+background:#dcfce7;
+border-radius:10px;
+color:#15803d;
+font-size:14px;
 font-weight:bold;
 }
 
@@ -122,9 +132,6 @@ margin-top:10px;
 color:#777;
 font-size:13px;
 }
-
-
-/* HISTORY */
 
 .history-title{
 font-size:20px;
@@ -188,12 +195,7 @@ background:#fee2e2;
 color:#dc2626;
 }
 
-.history-empty{
-text-align:center;
-padding:20px;
-color:#777;
-}
-
+.history-empty,
 .history-loading{
 text-align:center;
 padding:20px;
@@ -210,8 +212,6 @@ color:#777;
 💰 Withdraw
 </div>
 
-<!-- BALANCE -->
-
 <div class="card">
 
 <p>Available Balance</p>
@@ -225,36 +225,22 @@ Loading...
 </div>
 
 <div
-class="progress-info"
-id="taskInfo">
+class="progress"
+id="progressBox">
 
-Checking task progress...
+Loading task progress...
 
 </div>
 
 <div
-id="lockBox"
-class="locked-box">
-
-Checking withdrawal availability...
+id="withdrawStatus">
 
 </div>
-
-</div>
-
-<!-- WITHDRAW FORM -->
-
-<div
-class="card"
-id="withdrawCard"
-style="display:none;">
-
-<p>
-Withdrawal available for this task milestone.
-</p>
 
 <p class="note">
-You can request one withdrawal for each completed 10-task milestone.
+
+Withdraw sirf har 10 completed tasks ke baad available hoga.
+
 </p>
 
 <select id="method">
@@ -292,18 +278,20 @@ min="1"
 
 >
 
-<button id="withdrawBtn">
+<button
+id="withdrawBtn">
+
 Submit Withdraw Request
+
 </button>
 
 <div
 id="message"
 class="message">
-</div>
 
 </div>
 
-<!-- HISTORY -->
+</div>
 
 <div class="card">
 
@@ -335,16 +323,13 @@ href="dashboard.html">
 
 <script type="module">
 
-
 import { auth, db } from "./firebase.js";
-
 
 import {
 onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
 
 import {
 doc,
@@ -360,30 +345,23 @@ from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-
 let currentUser = null;
 
 let currentBalance = 0;
 
-let completedTasks = 0;
+let currentCompleted = 0;
 
 let currentMilestone = 0;
-
-let withdrawalAvailable = false;
-
 
 
 const balanceElement =
 document.getElementById("balance");
 
-const taskInfoElement =
-document.getElementById("taskInfo");
+const progressBox =
+document.getElementById("progressBox");
 
-const lockBox =
-document.getElementById("lockBox");
-
-const withdrawCard =
-document.getElementById("withdrawCard");
+const withdrawStatus =
+document.getElementById("withdrawStatus");
 
 const methodElement =
 document.getElementById("method");
@@ -404,9 +382,8 @@ const historyList =
 document.getElementById("historyList");
 
 
-
 /* =========================
-   LOGIN CHECK
+   LOGIN
 ========================= */
 
 onAuthStateChanged(
@@ -422,49 +399,23 @@ return;
 
 }
 
-
 currentUser = user;
 
-
-await loadWithdrawPage();
-
-});
-
-
-
-/* =========================
-   LOAD PAGE
-========================= */
-
-async function loadWithdrawPage(){
-
-try{
-
-await loadUserData();
-
-await checkWithdrawalAvailability();
+await loadUser();
 
 await loadHistory();
 
 }
-catch(error){
-
-showMessage(
-"Error: " + error.message,
-"error"
 );
-
-}
-
-}
-
 
 
 /* =========================
    LOAD USER
 ========================= */
 
-async function loadUserData(){
+async function loadUser(){
+
+try{
 
 const userRef =
 doc(
@@ -473,19 +424,22 @@ db,
 currentUser.uid
 );
 
-
 const userSnap =
 await getDoc(userRef);
 
-
 if(!userSnap.exists()){
 
-throw new Error(
-"User profile not found."
+balanceElement.innerText =
+"Rs 0";
+
+showMessage(
+"User profile not found.",
+"error"
 );
 
-}
+return;
 
+}
 
 const data =
 userSnap.data();
@@ -497,59 +451,84 @@ data.balance || 0
 );
 
 
-completedTasks =
+currentCompleted =
 Number(
 data.completed || 0
 );
 
 
+/*
+ * Withdraw milestones:
+ *
+ * 10
+ * 20
+ * 30
+ * 40...
+ */
+
+currentMilestone =
+Math.floor(
+currentCompleted / 10
+) * 10;
+
+
 balanceElement.innerText =
-"Rs " + currentBalance;
+"Rs " +
+currentBalance;
 
 
-taskInfoElement.innerText =
-"Completed Tasks: " +
-completedTasks +
-" / 20";
+updateWithdrawStatus();
+
+
+}
+catch(error){
+
+balanceElement.innerText =
+"Rs 0";
+
+showMessage(
+"Unable to load account.",
+"error"
+);
+
+}
 
 }
 
 
-
 /* =========================
-   CHECK WITHDRAWAL
+   WITHDRAW STATUS
 ========================= */
 
-async function checkWithdrawalAvailability(){
+async function updateWithdrawStatus(){
 
-/*
- * Withdrawal sirf 10, 20, 30...
- * completed tasks par unlock hogi.
- */
+if(currentCompleted < 10){
 
-if(completedTasks < 10){
+const remaining =
+10 - currentCompleted;
 
-withdrawalAvailable = false;
 
-lockBox.innerHTML = `
+progressBox.innerText =
+"📊 Completed: " +
+currentCompleted +
+"/10 tasks";
 
-🔒 <b>Withdrawal Locked</b>
+
+withdrawStatus.innerHTML = `
+
+<div class="withdraw-lock">
+
+🔒 Withdraw Locked
 
 <br><br>
 
-Pehle kam az kam
-<span class="unlock">10 tasks</span>
-complete karo.
+Complete ${remaining} more task(s) to unlock your first withdrawal.
 
-<br><br>
-
-Completed:
-<b>${completedTasks} / 10</b>
+</div>
 
 `;
 
-withdrawCard.style.display =
-"none";
+withdrawBtn.disabled = true;
 
 return;
 
@@ -557,20 +536,19 @@ return;
 
 
 /*
- * Current milestone:
- * 10, 20, 30...
+ * Current milestone
  */
 
-currentMilestone =
-Math.floor(
-completedTasks / 10
-) * 10;
+const milestone =
+currentMilestone;
 
 
 /*
- * Check previous withdrawal
- * for this milestone.
+ * Check whether this milestone
+ * already has pending/approved withdrawal.
  */
+
+try{
 
 const q =
 query(
@@ -589,7 +567,7 @@ currentUser.uid
 where(
 "milestone",
 "==",
-currentMilestone
+milestone
 )
 
 );
@@ -599,16 +577,8 @@ const snapshot =
 await getDocs(q);
 
 
-let milestoneUsed = false;
+let alreadyUsed = false;
 
-
-/*
- * Sirf Pending ya Approved
- * milestone ko used rakhenge.
- *
- * Rejected request dobara
- * allow hogi.
- */
 
 snapshot.forEach(
 (item)=>{
@@ -623,83 +593,88 @@ data.status || ""
 ).toLowerCase();
 
 
+/*
+ * Rejected withdrawal does not
+ * permanently block the milestone.
+ */
+
 if(
 status === "pending" ||
 status === "approved"
 ){
 
-milestoneUsed = true;
+alreadyUsed = true;
 
 }
 
 });
 
 
-if(milestoneUsed){
+progressBox.innerText =
+"📊 Completed: " +
+currentCompleted +
+" tasks";
 
-withdrawalAvailable = false;
 
-lockBox.innerHTML = `
+if(alreadyUsed){
 
-✅ <b>Withdrawal Already Requested</b>
+withdrawStatus.innerHTML = `
 
-<br><br>
+<div class="withdraw-lock">
 
-Milestone:
-<b>${currentMilestone} Tasks</b>
-
-<br><br>
-
-Is 10-task milestone ka
-withdrawal already pending ya approved hai.
+🔒 ${milestone} Tasks Withdrawal Already Used
 
 <br><br>
 
-Next withdrawal:
-<b>${currentMilestone + 10} tasks</b>
-complete karne ke baad.
-
-`;
-
-withdrawCard.style.display =
-"none";
-
-return;
-
-}
-
-
-/*
- * Withdrawal available.
- */
-
-withdrawalAvailable = true;
-
-lockBox.innerHTML = `
-
-<div class="unlock">
-
-✅ Withdrawal Unlocked
+Complete next 10 tasks to unlock another withdrawal.
 
 </div>
 
-<br>
+`;
 
-You completed
-<b>${currentMilestone} tasks</b>.
+withdrawBtn.disabled = true;
+
+}
+else{
+
+withdrawStatus.innerHTML = `
+
+<div class="withdraw-ready">
+
+✅ Withdraw Unlocked
 
 <br><br>
 
-You can submit one withdrawal
-for this milestone.
+You completed ${milestone} tasks.
+
+You can submit your withdrawal now.
+
+</div>
 
 `;
 
-withdrawCard.style.display =
-"block";
+withdrawBtn.disabled = false;
 
 }
 
+}
+catch(error){
+
+withdrawStatus.innerHTML = `
+
+<div class="withdraw-lock">
+
+Unable to check withdrawal status.
+
+</div>
+
+`;
+
+withdrawBtn.disabled = true;
+
+}
+
+}
 
 
 /* =========================
@@ -712,7 +687,6 @@ submitWithdraw
 );
 
 
-
 async function submitWithdraw(){
 
 messageElement.innerText = "";
@@ -722,13 +696,16 @@ messageElement.className =
 
 
 /*
- * Final security check
+ * Double-check task milestone
  */
 
-if(!withdrawalAvailable){
+if(
+currentCompleted < 10 ||
+currentCompleted % 10 !== 0
+){
 
 showMessage(
-"Withdrawal is not available yet.",
+"Withdraw sirf 10, 20, 30... completed tasks par available hai.",
 "error"
 );
 
@@ -775,7 +752,10 @@ return;
 }
 
 
-if(!amount || amount <= 0){
+if(
+!amount ||
+amount <= 0
+){
 
 showMessage(
 "Please enter a valid amount.",
@@ -787,7 +767,9 @@ return;
 }
 
 
-if(amount > currentBalance){
+if(
+amount > currentBalance
+){
 
 showMessage(
 "Insufficient balance.",
@@ -816,10 +798,6 @@ currentUser.uid
 );
 
 
-/*
- * Withdrawal document
- */
-
 const withdrawRef =
 doc(
 collection(
@@ -830,9 +808,7 @@ db,
 
 
 /*
- * Transaction ke andar
- * dobara check karenge ke
- * milestone already use to nahi.
+ * Transaction
  */
 
 await runTransaction(
@@ -846,7 +822,9 @@ userRef
 );
 
 
-if(!userSnap.exists()){
+if(
+!userSnap.exists()
+){
 
 throw new Error(
 "User profile not found."
@@ -871,10 +849,13 @@ userData.completed || 0
 );
 
 
-if(completed < 10){
+if(
+completed < 10 ||
+completed % 10 !== 0
+){
 
 throw new Error(
-"Complete at least 10 tasks first."
+"Withdraw is only available after every 10 completed tasks."
 );
 
 }
@@ -886,20 +867,8 @@ completed / 10
 ) * 10;
 
 
-if(
-milestone !== currentMilestone
-){
-
-throw new Error(
-"Withdrawal milestone changed. Please refresh."
-);
-
-}
-
-
 /*
- * Check existing withdrawal
- * for same milestone.
+ * Check previous withdrawal
  */
 
 const existingQuery =
@@ -926,7 +895,9 @@ milestone
 
 
 const existingSnapshot =
-await getDocs(existingQuery);
+await getDocs(
+existingQuery
+);
 
 
 let alreadyUsed = false;
@@ -935,19 +906,19 @@ let alreadyUsed = false;
 existingSnapshot.forEach(
 (item)=>{
 
-const existingData =
+const oldData =
 item.data();
 
 
-const existingStatus =
+const oldStatus =
 String(
-existingData.status || ""
+oldData.status || ""
 ).toLowerCase();
 
 
 if(
-existingStatus === "pending" ||
-existingStatus === "approved"
+oldStatus === "pending" ||
+oldStatus === "approved"
 ){
 
 alreadyUsed = true;
@@ -960,13 +931,15 @@ alreadyUsed = true;
 if(alreadyUsed){
 
 throw new Error(
-"This milestone withdrawal has already been used."
+"This 10-task withdrawal has already been used."
 );
 
 }
 
 
-if(amount > balance){
+if(
+amount > balance
+){
 
 throw new Error(
 "Insufficient balance."
@@ -980,7 +953,7 @@ balance - amount;
 
 
 /*
- * BALANCE DEDUCT
+ * Balance immediately deduct
  */
 
 transaction.update(
@@ -995,7 +968,7 @@ balance:newBalance
 
 
 /*
- * WITHDRAW REQUEST
+ * Create withdrawal
  */
 
 transaction.set(
@@ -1011,9 +984,7 @@ name:
 userData.name || "",
 
 email:
-userData.email ||
-currentUser.email ||
-"",
+currentUser.email || "",
 
 method:
 method,
@@ -1042,7 +1013,6 @@ serverTimestamp()
 );
 
 
-
 /*
  * Update screen
  */
@@ -1052,36 +1022,8 @@ currentBalance - amount;
 
 
 balanceElement.innerText =
-"Rs " + currentBalance;
-
-
-withdrawalAvailable =
-false;
-
-
-withdrawCard.style.display =
-"none";
-
-
-lockBox.innerHTML = `
-
-✅ <b>Withdrawal Request Submitted</b>
-
-<br><br>
-
-Amount:
-<b>Rs ${amount}</b>
-
-<br><br>
-
-Milestone:
-<b>${currentMilestone} Tasks</b>
-
-<br><br>
-
-Admin approval ka wait karein.
-
-`;
+"Rs " +
+currentBalance;
 
 
 showMessage(
@@ -1097,14 +1039,20 @@ accountElement.value = "";
 amountElement.value = "";
 
 
-await loadHistory();
+/*
+ * Lock this milestone
+ */
 
+await updateWithdrawStatus();
+
+await loadHistory();
 
 }
 catch(error){
 
 showMessage(
-"Error: " + error.message,
+"Error: " +
+error.message,
 "error"
 );
 
@@ -1116,8 +1064,14 @@ withdrawBtn.disabled = false;
 withdrawBtn.innerText =
 "Submit Withdraw Request";
 
-}
 
+/*
+ * Re-check status
+ */
+
+await updateWithdrawStatus();
+
+}
 
 
 /* =========================
@@ -1196,10 +1150,6 @@ data:item.data()
 });
 
 
-/*
- * Newest first
- */
-
 withdrawals.sort(
 (a,b)=>{
 
@@ -1223,11 +1173,14 @@ b.data.createdAt.toMillis()
 
 return timeB - timeA;
 
-});
+}
+
+);
 
 
 withdrawals.forEach(
 (item)=>{
+
 
 const data =
 item.data;
@@ -1250,8 +1203,9 @@ data.account ||
 
 
 const milestone =
-data.milestone ||
-"Not available";
+Number(
+data.milestone || 0
+);
 
 
 const status =
@@ -1266,7 +1220,8 @@ let statusClass =
 
 
 if(
-status.toLowerCase() ===
+status.toLowerCase()
+===
 "approved"
 ){
 
@@ -1277,7 +1232,8 @@ statusClass =
 
 
 if(
-status.toLowerCase() ===
+status.toLowerCase()
+===
 "rejected"
 ){
 
@@ -1299,7 +1255,6 @@ data.createdAt.toDate
 const date =
 data.createdAt.toDate();
 
-
 dateText =
 date.toLocaleString();
 
@@ -1309,7 +1264,6 @@ date.toLocaleString();
 historyList.innerHTML += `
 
 <div class="history-card">
-
 
 <div class="history-amount">
 
@@ -1325,9 +1279,10 @@ Task Milestone
 </span>
 
 <span class="history-value">
-${escapeHtml(
-String(milestone)
-)} Tasks
+
+${milestone}
+Tasks
+
 </span>
 
 </div>
@@ -1340,7 +1295,9 @@ Payment Method
 </span>
 
 <span class="history-value">
+
 ${escapeHtml(method)}
+
 </span>
 
 </div>
@@ -1353,7 +1310,9 @@ Account
 </span>
 
 <span class="history-value">
+
 ${escapeHtml(account)}
+
 </span>
 
 </div>
@@ -1366,7 +1325,9 @@ Date
 </span>
 
 <span class="history-value">
+
 ${escapeHtml(dateText)}
+
 </span>
 
 </div>
@@ -1397,9 +1358,7 @@ Unable to load history.
 
 <br><br>
 
-${escapeHtml(
-error.message
-)}
+${escapeHtml(error.message)}
 
 </div>
 
@@ -1408,7 +1367,6 @@ error.message
 }
 
 }
-
 
 
 /* =========================
@@ -1424,10 +1382,10 @@ messageElement.innerText =
 text;
 
 messageElement.className =
-"message " + type;
+"message " +
+type;
 
 }
-
 
 
 /* =========================
