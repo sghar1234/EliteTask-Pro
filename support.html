@@ -1,523 +1,422 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Support - EliteTask Pro</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<title>Customer Support - EliteTask Pro</title>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-<style>
+    .chat-app {
+      height: 100vh;
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+    .chat-header {
+      background: #075e54;
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
 
-body{
-    background:#f4f6f8;
-    padding:15px;
-    color:#111827;
-}
+    .back-btn {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+    }
 
-.header{
-    background:#111827;
-    color:white;
-    padding:18px;
-    border-radius:15px;
-    text-align:center;
-}
+    .support-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      color: #075e54;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-.header h2{
-    font-size:22px;
-}
+    .header-info {
+      flex: 1;
+    }
 
-.header p{
-    margin-top:5px;
-    font-size:13px;
-    opacity:.8;
-}
+    .header-info h3 {
+      font-size: 17px;
+      margin-bottom: 3px;
+    }
 
-.card{
-    background:white;
-    margin-top:15px;
-    padding:18px;
-    border-radius:15px;
-    box-shadow:0 3px 10px #ddd;
-}
+    .online {
+      font-size: 12px;
+      opacity: 0.9;
+    }
 
-.option{
-    display:block;
-    text-decoration:none;
-    padding:16px;
-    border-radius:12px;
-    margin-top:12px;
-    color:white;
-    text-align:center;
-    font-weight:bold;
-}
+    .chat-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px 10px;
+      background: #e5ddd5;
+      display: flex;
+      flex-direction: column;
+    }
 
-.telegram{
-    background:#229ED9;
-}
+    .welcome {
+      background: #fff3cd;
+      color: #555;
+      padding: 10px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      margin: 5px auto 15px;
+      max-width: 90%;
+    }
 
-.live{
-    background:#2563eb;
-}
+    .message {
+      max-width: 78%;
+      padding: 8px 10px;
+      margin: 4px 0;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
 
-.back{
-    display:block;
-    text-align:center;
-    margin-top:20px;
-    color:#2563eb;
-    text-decoration:none;
-    font-weight:bold;
-}
+    .user-message {
+      align-self: flex-end;
+      background: #dcf8c6;
+      border-top-right-radius: 2px;
+    }
 
-label{
-    display:block;
-    margin-top:14px;
-    font-size:14px;
-    font-weight:bold;
-}
+    .admin-message {
+      align-self: flex-start;
+      background: white;
+      border-top-left-radius: 2px;
+    }
 
-input,
-textarea{
-    width:100%;
-    margin-top:7px;
-    padding:13px;
-    border:1px solid #d1d5db;
-    border-radius:10px;
-    font-size:15px;
-}
+    .message-time {
+      display: block;
+      text-align: right;
+      font-size: 10px;
+      color: #777;
+      margin-top: 3px;
+    }
 
-textarea{
-    min-height:120px;
-    resize:none;
-}
+    .empty {
+      margin: auto;
+      color: #777;
+      text-align: center;
+      font-size: 14px;
+    }
 
-.send{
-    width:100%;
-    margin-top:15px;
-    padding:14px;
-    border:0;
-    border-radius:11px;
-    background:#16a34a;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-}
+    .chat-input-area {
+      background: #f0f0f0;
+      padding: 8px;
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
 
-.send:disabled{
-    opacity:.6;
-}
+    #messageInput {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: white;
+      border-radius: 22px;
+      padding: 12px 15px;
+      font-size: 14px;
+    }
 
-.message{
-    text-align:center;
-    margin-top:12px;
-    font-size:14px;
-    font-weight:bold;
-}
+    #sendBtn {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: #075e54;
+      color: white;
+      font-size: 19px;
+      cursor: pointer;
+    }
 
-.success{
-    color:#16a34a;
-}
+    #sendBtn:disabled {
+      opacity: 0.5;
+    }
 
-.error{
-    color:#dc2626;
-}
-
-.info{
-    margin-top:10px;
-    color:#6b7280;
-    font-size:13px;
-    line-height:1.5;
-}
-
-</style>
-
+    .loading {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="header">
+<div class="chat-app">
 
-<h2>🎧 Customer Support</h2>
+  <div class="chat-header">
+    <a href="dashboard.html" class="back-btn">‹</a>
 
-<p>EliteTask Pro Support Center</p>
+    <div class="support-avatar">
+      CS
+    </div>
 
-</div>
+    <div class="header-info">
+      <h3>EliteTask Pro Support</h3>
+      <div class="online">Customer Service</div>
+    </div>
+  </div>
 
-<!-- TELEGRAM -->
+  <div class="chat-body" id="chatBody">
 
-<div class="card">
+    <div class="welcome">
+      👋 Welcome to EliteTask Pro Customer Support.<br>
+      Send us your message and our support team will reply.
+    </div>
 
-<h3>📲 Telegram Support</h3>
+    <div class="loading" id="loading">
+      Loading messages...
+    </div>
 
-<p class="info">
-For quick support, contact us directly on Telegram.
-</p>
+  </div>
 
-<a
-href="https://t.me/Helpcenter21"
-target="_blank"
-class="option telegram">
+  <div class="chat-input-area">
 
-📲 Open Telegram Support
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Type a message..."
+      autocomplete="off"
+    >
 
-</a>
+    <button id="sendBtn">➤</button>
 
-</div>
-
-<!-- LIVE SUPPORT -->
-
-<div class="card">
-
-<h3>💬 Live Support</h3>
-
-<p class="info">
-Send your message below. Our support team will receive your message.
-</p>
-
-<label>
-Your Name
-</label>
-
-<input
-type="text"
-id="name"
-placeholder="Enter your name"
-
->
-
-<label>
-Message
-</label>
-
-<textarea
-id="message"
-placeholder="Write your message here..."
-></textarea>
-
-<button
-class="send"
-id="sendBtn">
-
-📨 Send Message
-
-</button>
-
-<div
-id="status"
-class="message">
-</div>
+  </div>
 
 </div>
-
-<a
-href="dashboard.html"
-class="back">
-
-⬅ Back to Dashboard
-
-</a>
 
 <script type="module">
 
+  import {
+    auth,
+    db
+  } from "./firebase.js";
 
-import { auth, db } from "./firebase.js";
+  import {
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
+  import {
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-import {
-onAuthStateChanged
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
+  const chatBody = document.getElementById("chatBody");
+  const messageInput = document.getElementById("messageInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const loading = document.getElementById("loading");
 
-import {
-doc,
-getDoc,
-collection,
-addDoc,
-serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+  let currentUser = null;
 
 
-let currentUser = null;
+  onAuthStateChanged(auth, (user) => {
 
+    if (!user) {
+      window.location.href = "index.html";
+      return;
+    }
 
-const nameInput =
-document.getElementById("name");
+    currentUser = user;
 
-const messageInput =
-document.getElementById("message");
+    loadMessages();
 
-const sendBtn =
-document.getElementById("sendBtn");
+  });
 
-const statusBox =
-document.getElementById("status");
 
+  function loadMessages() {
 
-/* =========================
-   LOGIN CHECK
-========================= */
+    const messagesRef = collection(
+      db,
+      "supportChats",
+      currentUser.uid,
+      "messages"
+    );
 
-onAuthStateChanged(
-auth,
-async(user)=>{
+    const messagesQuery = query(
+      messagesRef,
+      orderBy("createdAt", "asc")
+    );
 
-if(!user){
+    onSnapshot(messagesQuery, (snapshot) => {
 
-window.location.href =
-"index.html";
+      loading.style.display = "none";
 
-return;
+      document.querySelectorAll(".chat-message").forEach(el => {
+        el.remove();
+      });
 
-}
+      if (snapshot.empty) {
 
-currentUser = user;
+        const empty = document.createElement("div");
 
+        empty.className = "empty chat-message";
 
-/* LOAD USER NAME */
+        empty.textContent =
+          "No messages yet. Send a message to Customer Support.";
 
-try{
+        chatBody.appendChild(empty);
 
-const userRef =
-doc(
-db,
-"users",
-user.uid
-);
+      }
 
-const userSnap =
-await getDoc(userRef);
+      snapshot.forEach((docSnap) => {
 
-if(userSnap.exists()){
+        const data = docSnap.data();
 
-const data =
-userSnap.data();
+        const messageDiv = document.createElement("div");
 
-nameInput.value =
-data.name || "";
+        messageDiv.className =
+          "message chat-message " +
+          (data.senderId === currentUser.uid
+            ? "user-message"
+            : "admin-message");
 
-}
 
-}
-catch(error){
+        const textDiv = document.createElement("div");
 
-console.log(
-"User data error:",
-error.message
-);
+        textDiv.textContent = data.text;
 
-}
 
-});
+        const timeDiv = document.createElement("span");
 
+        timeDiv.className = "message-time";
 
-/* =========================
-   SEND MESSAGE
-========================= */
+        if (data.createdAt) {
 
-sendBtn.addEventListener(
-"click",
-sendMessage
-);
+          const date = data.createdAt.toDate();
 
+          timeDiv.textContent =
+            date.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit"
+            });
 
-async function sendMessage(){
+        } else {
 
-statusBox.innerText = "";
+          timeDiv.textContent = "Sending...";
 
-statusBox.className =
-"message";
+        }
 
 
-if(!currentUser){
+        messageDiv.appendChild(textDiv);
+        messageDiv.appendChild(timeDiv);
 
-showStatus(
-"Please login first.",
-"error"
-);
+        chatBody.appendChild(messageDiv);
 
-return;
+      });
 
-}
+      chatBody.scrollTop = chatBody.scrollHeight;
 
+    }, (error) => {
 
-const name =
-nameInput.value.trim();
+      loading.textContent =
+        "Unable to load messages: " + error.message;
 
+    });
 
-const message =
-messageInput.value.trim();
+  }
 
 
-if(!name){
+  async function sendMessage() {
 
-showStatus(
-"Please enter your name.",
-"error"
-);
+    const text = messageInput.value.trim();
 
-return;
+    if (!text || !currentUser) {
+      return;
+    }
 
-}
+    sendBtn.disabled = true;
 
+    try {
 
-if(!message){
+      const messagesRef = collection(
+        db,
+        "supportChats",
+        currentUser.uid,
+        "messages"
+      );
 
-showStatus(
-"Please enter your message.",
-"error"
-);
+      await addDoc(messagesRef, {
 
-return;
+        text: text,
 
-}
+        senderId: currentUser.uid,
 
+        senderRole: "user",
 
-if(message.length < 2){
+        createdAt: serverTimestamp()
 
-showStatus(
-"Please write a proper message.",
-"error"
-);
+      });
 
-return;
+      messageInput.value = "";
 
-}
+      messageInput.focus();
 
+    } catch (error) {
 
-sendBtn.disabled = true;
+      alert(
+        "Message failed: " + error.message
+      );
 
-sendBtn.innerText =
-"Sending...";
+    }
 
+    sendBtn.disabled = false;
 
-try{
+  }
 
 
-/* GET USER DATA */
+  sendBtn.addEventListener("click", sendMessage);
 
-const userRef =
-doc(
-db,
-"users",
-currentUser.uid
-);
 
+  messageInput.addEventListener("keydown", (event) => {
 
-const userSnap =
-await getDoc(userRef);
+    if (event.key === "Enter") {
 
+      event.preventDefault();
 
-let email =
-currentUser.email || "";
+      sendMessage();
 
+    }
 
-if(userSnap.exists()){
-
-const userData =
-userSnap.data();
-
-email =
-userData.email ||
-email;
-
-}
-
-
-/* SAVE MESSAGE */
-
-await addDoc(
-
-collection(
-db,
-"supportMessages"
-),
-
-{
-
-uid:
-currentUser.uid,
-
-name:
-name,
-
-email:
-email,
-
-message:
-message,
-
-status:
-"unread",
-
-createdAt:
-serverTimestamp()
-
-}
-
-);
-
-
-showStatus(
-"Message sent successfully ✅",
-"success"
-);
-
-
-messageInput.value = "";
-
-
-}
-catch(error){
-
-showStatus(
-"Message failed: " +
-error.message,
-"error"
-);
-
-}
-
-
-sendBtn.disabled = false;
-
-sendBtn.innerText =
-"📨 Send Message";
-
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-function showStatus(
-text,
-type
-){
-
-statusBox.innerText =
-text;
-
-statusBox.className =
-"message " + type;
-
-}
+  });
 
 </script>
 
 </body>
-
 </html>
+```
