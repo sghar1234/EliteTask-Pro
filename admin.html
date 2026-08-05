@@ -31,11 +31,6 @@ body{
     font-weight:bold;
 }
 
-.header small{
-    font-size:14px;
-    opacity:.8;
-}
-
 .tabs{
     display:flex;
     gap:10px;
@@ -73,10 +68,6 @@ body{
     box-shadow:0 2px 8px #ddd;
 }
 
-.card h3{
-    margin-bottom:4px;
-}
-
 .email{
     color:#666;
     font-size:14px;
@@ -87,7 +78,6 @@ body{
 .info{
     margin-top:8px;
     font-size:15px;
-    word-break:break-word;
 }
 
 .actions{
@@ -100,38 +90,40 @@ button{
     cursor:pointer;
 }
 
-.edit,
-.delete,
-.approve,
+.edit{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+}
+
+.delete{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
+    background:#dc2626;
+    color:white;
+}
+
+.approve{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
+    background:#16a34a;
+    color:white;
+}
+
 .reject{
     flex:1;
     border:0;
     padding:11px;
     border-radius:8px;
+    background:#dc2626;
     color:white;
-    font-weight:bold;
-}
-
-.edit{
-    background:#2563eb;
-}
-
-.delete{
-    background:#dc2626;
-}
-
-.approve{
-    background:#16a34a;
-}
-
-.reject{
-    background:#dc2626;
-}
-
-.approve:disabled,
-.reject:disabled{
-    opacity:.6;
-    cursor:not-allowed;
 }
 
 .editBox{
@@ -172,18 +164,18 @@ button{
 }
 
 .status.pending{
-    background:#fef3c7;
-    color:#92400e;
+    background:#fff3cd;
+    color:#856404;
 }
 
 .status.approved{
-    background:#dcfce7;
-    color:#166534;
+    background:#d4edda;
+    color:#155724;
 }
 
 .status.rejected{
-    background:#fee2e2;
-    color:#991b1b;
+    background:#f8d7da;
+    color:#721c24;
 }
 
 .loading{
@@ -196,12 +188,6 @@ button{
     color:#dc2626;
     padding:15px;
     word-break:break-word;
-}
-
-.empty{
-    text-align:center;
-    padding:20px;
-    color:#777;
 }
 </style>
 
@@ -271,8 +257,7 @@ import {
     getDoc,
     doc,
     updateDoc,
-    deleteDoc,
-    runTransaction
+    deleteDoc
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
@@ -359,7 +344,7 @@ async function loadUsers(){
         if(snap.empty){
 
             usersList.innerHTML =
-            '<div class="card empty">No users found.</div>';
+            '<div class="card">No users found.</div>';
 
             return;
         }
@@ -392,10 +377,10 @@ async function loadUsers(){
 
             <div class="card">
 
-                <h3>👤 ${escapeHTML(name)}</h3>
+                <h3>👤 ${name}</h3>
 
                 <div class="email">
-                    ${escapeHTML(email)}
+                    ${email}
                 </div>
 
                 <div class="info">
@@ -411,7 +396,7 @@ async function loadUsers(){
                 </div>
 
                 <div class="info">
-                    👑 Role: <b>${escapeHTML(role)}</b>
+                    👑 Role: <b>${role}</b>
                 </div>
 
                 <div class="actions">
@@ -479,7 +464,7 @@ async function loadUsers(){
         usersList.innerHTML = `
         <div class="error">
             Users Error:<br><br>
-            ${escapeHTML(error.message)}
+            ${error.message}
         </div>
         `;
 
@@ -539,32 +524,6 @@ window.saveUser = async function(id){
                 "done-"+id
             ).value
         );
-
-
-        if(
-            !Number.isFinite(balance) ||
-            !Number.isFinite(commission) ||
-            !Number.isFinite(completed)
-        ){
-
-            throw new Error(
-                "Please enter valid numbers."
-            );
-
-        }
-
-
-        if(
-            balance < 0 ||
-            commission < 0 ||
-            completed < 0
-        ){
-
-            throw new Error(
-                "Values cannot be negative."
-            );
-
-        }
 
 
         await updateDoc(
@@ -672,7 +631,7 @@ async function loadWithdraws(){
         if(snap.empty){
 
             withdrawList.innerHTML =
-            '<div class="card empty">No withdraw requests.</div>';
+            '<div class="card">No withdraw requests.</div>';
 
             return;
         }
@@ -707,8 +666,9 @@ async function loadWithdraws(){
             "Not provided";
 
             const status =
-            String(w.status || "pending")
-            .toLowerCase();
+            String(
+                w.status || "pending"
+            ).toLowerCase();
 
 
             let statusClass = "pending";
@@ -731,27 +691,27 @@ async function loadWithdraws(){
                 </h3>
 
                 <div class="email">
-                    👤 ${escapeHTML(name)}
+                    👤 ${name}
                 </div>
 
                 <div class="email">
-                    📧 ${escapeHTML(email)}
+                    📧 ${email}
                 </div>
 
                 <div class="info">
-                    🆔 UID: ${escapeHTML(uid)}
+                    🆔 UID: ${uid}
                 </div>
 
                 <div class="info">
-                    💳 Method: ${escapeHTML(method)}
+                    💳 Method: ${method}
                 </div>
 
                 <div class="info">
-                    🏦 Account: ${escapeHTML(account)}
+                    🏦 Account: ${account}
                 </div>
 
                 <div class="status ${statusClass}">
-                    Status: ${escapeHTML(status)}
+                    Status: ${status}
                 </div>
 
                 ${
@@ -763,14 +723,12 @@ async function loadWithdraws(){
 
                         <button
                             class="approve"
-                            id="approve-${item.id}"
                             onclick="approveWithdraw('${item.id}','${uid}',${amount})">
                             ✅ Approve
                         </button>
 
                         <button
                             class="reject"
-                            id="reject-${item.id}"
                             onclick="rejectWithdraw('${item.id}')">
                             ❌ Reject
                         </button>
@@ -794,7 +752,7 @@ async function loadWithdraws(){
         withdrawList.innerHTML = `
         <div class="error">
             Withdraw Error:<br><br>
-            ${escapeHTML(error.message)}
+            ${error.message}
         </div>
         `;
 
@@ -817,7 +775,7 @@ async function(
     if(!uid){
 
         alert(
-            "This withdrawal has no user UID."
+            "User UID not found."
         );
 
         return;
@@ -826,7 +784,7 @@ async function(
 
 
     if(
-        !Number.isFinite(amount) ||
+        !amount ||
         amount <= 0
     ){
 
@@ -852,28 +810,9 @@ async function(
     }
 
 
-    const approveButton =
-    document.getElementById(
-        "approve-"+withdrawId
-    );
-
-    const rejectButton =
-    document.getElementById(
-        "reject-"+withdrawId
-    );
-
-
-    if(approveButton){
-        approveButton.disabled = true;
-        approveButton.innerText = "Processing...";
-    }
-
-    if(rejectButton){
-        rejectButton.disabled = true;
-    }
-
-
     try{
+
+        /* Get user directly */
 
         const userRef =
         doc(
@@ -883,144 +822,78 @@ async function(
         );
 
 
-        const withdrawRef =
-        doc(
-            db,
-            "withdraws",
-            withdrawId
+        const userSnap =
+        await getDoc(
+            userRef
+        );
+
+
+        if(!userSnap.exists()){
+
+            throw new Error(
+                "User profile not found."
+            );
+
+        }
+
+
+        const userData =
+        userSnap.data();
+
+
+        const currentBalance =
+        Number(
+            userData.balance || 0
+        );
+
+
+        if(
+            currentBalance < amount
+        ){
+
+            throw new Error(
+                "Insufficient balance. Current balance: Rs " +
+                currentBalance
+            );
+
+        }
+
+
+        const newBalance =
+        currentBalance - amount;
+
+
+        /*
+         * First deduct balance
+         */
+
+        await updateDoc(
+
+            userRef,
+
+            {
+                balance:newBalance
+            }
+
         );
 
 
         /*
-         * TRANSACTION
-         *
-         * 1. Check withdrawal is still pending.
-         * 2. Read current user balance.
-         * 3. Check sufficient balance.
-         * 4. Deduct amount.
-         * 5. Mark withdrawal approved.
-         *
-         * This prevents the same pending withdrawal
-         * from being approved twice at the same time.
+         * Then approve withdrawal
          */
 
-        await runTransaction(
-            db,
-            async(transaction)=>{
+        await updateDoc(
 
-                const withdrawSnap =
-                await transaction.get(
-                    withdrawRef
-                );
+            doc(
+                db,
+                "withdraws",
+                withdrawId
+            ),
 
-
-                if(!withdrawSnap.exists()){
-
-                    throw new Error(
-                        "Withdrawal request not found."
-                    );
-
-                }
-
-
-                const withdrawData =
-                withdrawSnap.data();
-
-
-                const currentStatus =
-                String(
-                    withdrawData.status ||
-                    "pending"
-                ).toLowerCase();
-
-
-                if(
-                    currentStatus !== "pending"
-                ){
-
-                    throw new Error(
-                        "This withdrawal is already " +
-                        currentStatus +
-                        "."
-                    );
-
-                }
-
-
-                const userSnap =
-                await transaction.get(
-                    userRef
-                );
-
-
-                if(!userSnap.exists()){
-
-                    throw new Error(
-                        "User profile not found."
-                    );
-
-                }
-
-
-                const userData =
-                userSnap.data();
-
-
-                const currentBalance =
-                Number(
-                    userData.balance || 0
-                );
-
-
-                if(
-                    !Number.isFinite(currentBalance)
-                ){
-
-                    throw new Error(
-                        "User balance is invalid."
-                    );
-
-                }
-
-
-                if(
-                    currentBalance < amount
-                ){
-
-                    throw new Error(
-                        "Insufficient balance. User balance is Rs " +
-                        currentBalance
-                    );
-
-                }
-
-
-                const newBalance =
-                currentBalance - amount;
-
-
-                transaction.update(
-
-                    userRef,
-
-                    {
-                        balance:newBalance
-                    }
-
-                );
-
-
-                transaction.update(
-
-                    withdrawRef,
-
-                    {
-                        status:"approved"
-                    }
-
-                );
-
+            {
+                status:"approved"
             }
+
         );
 
 
@@ -1039,16 +912,6 @@ async function(
             "Approve failed: " +
             error.message
         );
-
-
-        if(approveButton){
-            approveButton.disabled = false;
-            approveButton.innerText = "✅ Approve";
-        }
-
-        if(rejectButton){
-            rejectButton.disabled = false;
-        }
 
     }
 
@@ -1073,31 +936,11 @@ async function(id){
     }
 
 
-    const rejectButton =
-    document.getElementById(
-        "reject-"+id
-    );
-
-    const approveButton =
-    document.getElementById(
-        "approve-"+id
-    );
-
-
-    if(rejectButton){
-
-        rejectButton.disabled = true;
-        rejectButton.innerText =
-        "Processing...";
-
-    }
-
-    if(approveButton){
-        approveButton.disabled = true;
-    }
-
-
     try{
+
+        /*
+         * Check current withdrawal
+         */
 
         const withdrawRef =
         doc(
@@ -1106,10 +949,6 @@ async function(id){
             id
         );
 
-
-        /*
-         * Only pending requests can be rejected.
-         */
 
         const withdrawSnap =
         await getDoc(
@@ -1143,8 +982,7 @@ async function(id){
 
             throw new Error(
                 "This withdrawal is already " +
-                currentStatus +
-                "."
+                currentStatus
             );
 
         }
@@ -1176,31 +1014,18 @@ async function(id){
             error.message
         );
 
-
-        if(rejectButton){
-
-            rejectButton.disabled = false;
-            rejectButton.innerText =
-            "❌ Reject";
-
-        }
-
-        if(approveButton){
-            approveButton.disabled = false;
-        }
-
     }
 
 };
 
 
 /* =========================
-   ESCAPE HTML
+   START
 ========================= */
 
-function escapeHTML(value){
+loadUsers();
 
-    return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(
+</script>
+
+</body>
+</html>
