@@ -54,6 +54,7 @@ border-radius:10px;
 background:#2563eb;
 color:white;
 font-weight:bold;
+white-space:nowrap;
 }
 
 .tabs button.active{
@@ -183,7 +184,7 @@ font-weight:bold;
 }
 
 
-/* TASK CARD */
+/* TASK */
 
 .task-image{
 width:100%;
@@ -219,6 +220,9 @@ background:#dc2626;
 color:white;
 font-weight:bold;
 }
+
+
+/* EDIT */
 
 .editBox{
 display:none;
@@ -267,6 +271,91 @@ background:#f8d7da;
 color:#721c24;
 }
 
+
+/* SUPPORT */
+
+.support-message{
+background:#f9fafb;
+padding:13px;
+border-radius:12px;
+margin-top:12px;
+border:1px solid #e5e7eb;
+}
+
+.support-user{
+font-size:16px;
+font-weight:bold;
+}
+
+.support-email{
+font-size:13px;
+color:#777;
+margin-top:5px;
+word-break:break-word;
+}
+
+.support-text{
+margin-top:10px;
+font-size:15px;
+line-height:1.4;
+word-break:break-word;
+}
+
+.support-user-message{
+background:#dbeafe;
+padding:11px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.support-admin-message{
+background:#dcfce7;
+padding:11px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.replyBox{
+margin-top:12px;
+background:#f3f4f6;
+padding:12px;
+border-radius:10px;
+}
+
+.replyBox textarea{
+width:100%;
+min-height:70px;
+padding:11px;
+border:1px solid #ccc;
+border-radius:8px;
+resize:none;
+}
+
+.replyBtn{
+width:100%;
+padding:11px;
+margin-top:8px;
+border:0;
+border-radius:9px;
+background:#16a34a;
+color:white;
+font-weight:bold;
+}
+
+.delete-message{
+width:100%;
+padding:9px;
+margin-top:8px;
+border:0;
+border-radius:8px;
+background:#dc2626;
+color:white;
+font-weight:bold;
+}
+
+
+/* OTHER */
+
 .loading{
 text-align:center;
 padding:20px;
@@ -283,6 +372,12 @@ word-break:break-word;
 text-align:center;
 padding:20px;
 color:#777;
+}
+
+.message{
+margin-top:10px;
+font-size:14px;
+font-weight:bold;
 }
 
 </style>
@@ -333,6 +428,15 @@ id="tasksBtn"
 onclick="showTasks()">
 
 📦 Tasks
+
+</button>
+
+
+<button
+id="supportBtn"
+onclick="showSupport()">
+
+🎧 Support
 
 </button>
 
@@ -388,8 +492,6 @@ Loading Withdraws...
 id="tasksSection"
 class="section">
 
-
-<!-- ADD TASK -->
 
 <div class="card">
 
@@ -495,8 +597,6 @@ class="message">
 
 
 
-<!-- TASK LIST -->
-
 <div class="card">
 
 <div class="form-title">
@@ -521,6 +621,36 @@ Loading Tasks...
 
 
 
+<!-- =========================
+     SUPPORT
+========================= -->
+
+<div
+id="supportSection"
+class="section">
+
+<div class="card">
+
+<div class="form-title">
+
+🎧 Customer Support
+
+</div>
+
+<div id="supportList">
+
+<div class="loading">
+Loading Messages...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
 <script type="module">
 
 
@@ -536,8 +666,7 @@ doc,
 addDoc,
 updateDoc,
 deleteDoc,
-query,
-orderBy
+serverTimestamp
 
 }
 
@@ -561,10 +690,15 @@ document.getElementById(
 "tasksList"
 );
 
+const supportList =
+document.getElementById(
+"supportList"
+);
+
 
 
 /* =========================
-   TAB HELPER
+   HIDE SECTIONS
 ========================= */
 
 function hideAllSections(){
@@ -573,9 +707,11 @@ document
 .querySelectorAll(".section")
 .forEach(
 (section)=>{
+
 section.classList.remove(
 "active"
 );
+
 }
 );
 
@@ -584,9 +720,11 @@ document
 .querySelectorAll(".tabs button")
 .forEach(
 (button)=>{
+
 button.classList.remove(
 "active"
 );
+
 }
 );
 
@@ -595,7 +733,7 @@ button.classList.remove(
 
 
 /* =========================
-   SHOW USERS
+   USERS
 ========================= */
 
 window.showUsers =
@@ -625,7 +763,7 @@ loadUsers();
 
 
 /* =========================
-   SHOW WITHDRAWS
+   WITHDRAWS
 ========================= */
 
 window.showWithdraws =
@@ -655,7 +793,7 @@ loadWithdraws();
 
 
 /* =========================
-   SHOW TASKS
+   TASKS
 ========================= */
 
 window.showTasks =
@@ -685,6 +823,36 @@ loadTasks();
 
 
 /* =========================
+   SUPPORT
+========================= */
+
+window.showSupport =
+function(){
+
+hideAllSections();
+
+
+document
+.getElementById(
+"supportSection"
+)
+.classList.add("active");
+
+
+document
+.getElementById(
+"supportBtn"
+)
+.classList.add("active");
+
+
+loadSupport();
+
+};
+
+
+
+/* =========================
    LOAD USERS
 ========================= */
 
@@ -695,7 +863,6 @@ usersList.innerHTML =
 
 
 try{
-
 
 const snap =
 await getDocs(
@@ -721,7 +888,6 @@ return;
 
 snap.forEach(
 (item)=>{
-
 
 const u =
 item.data();
@@ -768,29 +934,24 @@ usersList.innerHTML += `
 👤 ${escapeHtml(name)}
 </h3>
 
-
 <div class="email">
 ${escapeHtml(email)}
 </div>
-
 
 <div class="info">
 💰 Balance:
 <b>Rs ${balance}</b>
 </div>
 
-
 <div class="info">
 💵 Commission:
 <b>Rs ${commission}</b>
 </div>
 
-
 <div class="info">
 ✅ Completed:
 <b>${completed}</b>
 </div>
-
 
 <div class="info">
 👑 Role:
@@ -823,7 +984,6 @@ onclick="deleteUser('${item.id}')">
 <div
 class="editBox"
 id="edit-${item.id}">
-
 
 <label>
 Balance
@@ -900,7 +1060,7 @@ error.message
 
 
 /* =========================
-   OPEN USER EDIT
+   EDIT USER
 ========================= */
 
 window.openEdit =
@@ -939,7 +1099,6 @@ async function(id){
 
 try{
 
-
 const balance =
 Number(
 document.getElementById(
@@ -974,14 +1133,11 @@ id
 
 {
 
-balance:
-balance,
+balance:balance,
 
-commission:
-commission,
+commission:commission,
 
-completed:
-completed
+completed:completed
 
 }
 
@@ -1029,7 +1185,6 @@ return;
 
 try{
 
-
 await deleteDoc(
 
 doc(
@@ -1074,7 +1229,6 @@ withdrawList.innerHTML =
 
 try{
 
-
 const snap =
 await getDocs(
 collection(
@@ -1099,7 +1253,6 @@ return;
 
 snap.forEach(
 (item)=>{
-
 
 const w =
 item.data();
@@ -1147,9 +1300,7 @@ let statusClass =
 "pending";
 
 
-if(
-status === "approved"
-){
+if(status === "approved"){
 
 statusClass =
 "approved";
@@ -1157,9 +1308,7 @@ statusClass =
 }
 
 
-if(
-status === "rejected"
-){
+if(status === "rejected"){
 
 statusClass =
 "rejected";
@@ -1175,34 +1324,28 @@ withdrawList.innerHTML += `
 💸 Rs ${amount}
 </h3>
 
-
 <div class="email">
 👤 ${escapeHtml(name)}
 </div>
 
-
 <div class="email">
 📧 ${escapeHtml(email)}
 </div>
-
 
 <div class="info">
 🆔 UID:
 ${escapeHtml(uid)}
 </div>
 
-
 <div class="info">
 💳 Method:
 ${escapeHtml(method)}
 </div>
 
-
 <div class="info">
 🏦 Account:
 ${escapeHtml(account)}
 </div>
-
 
 <div
 class="status ${statusClass}">
@@ -1280,7 +1423,7 @@ error.message
 
 
 /* =========================
-   APPROVE
+   APPROVE WITHDRAW
 ========================= */
 
 window.approveWithdraw =
@@ -1298,7 +1441,6 @@ return;
 
 
 try{
-
 
 await updateDoc(
 
@@ -1337,7 +1479,7 @@ error.message
 
 
 /* =========================
-   REJECT
+   REJECT WITHDRAW
 ========================= */
 
 window.rejectWithdraw =
@@ -1361,7 +1503,6 @@ return;
 
 
 try{
-
 
 const userRef =
 doc(
@@ -1626,10 +1767,6 @@ addButton.innerText =
 try{
 
 
-/*
- * Check duplicate task number
- */
-
 const existing =
 await getDocs(
 collection(
@@ -1680,11 +1817,6 @@ order +
 }
 
 
-
-/*
- * Add task
- */
-
 await addDoc(
 
 collection(
@@ -1694,29 +1826,21 @@ db,
 
 {
 
-order:
-order,
+order:order,
 
-taskNumber:
-order,
+taskNumber:order,
 
-name:
-name,
+name:name,
 
-price:
-price,
+price:price,
 
-commission:
-commission,
+commission:commission,
 
-image:
-image,
+image:image,
 
-description:
-description,
+description:description,
 
-createdAt:
-new Date()
+createdAt:new Date()
 
 }
 
@@ -1726,16 +1850,13 @@ new Date()
 message.innerText =
 "✅ Task published successfully.";
 
-
 message.style.color =
 "#16a34a";
 
 
 clearTaskForm();
 
-
 await loadTasks();
-
 
 }
 catch(error){
@@ -1743,7 +1864,6 @@ catch(error){
 message.innerText =
 "Error: " +
 error.message;
-
 
 message.style.color =
 "#dc2626";
@@ -1761,7 +1881,7 @@ addButton.innerText =
 
 
 /* =========================
-   CLEAR TASK FORM
+   CLEAR TASK
 ========================= */
 
 window.clearTaskForm =
@@ -1771,26 +1891,21 @@ document.getElementById(
 "taskOrder"
 ).value = "";
 
-
 document.getElementById(
 "taskName"
 ).value = "";
-
 
 document.getElementById(
 "taskPrice"
 ).value = "";
 
-
 document.getElementById(
 "taskCommission"
 ).value = "";
 
-
 document.getElementById(
 "taskImage"
 ).value = "";
-
 
 document.getElementById(
 "taskDescription"
@@ -1811,7 +1926,6 @@ tasksList.innerHTML =
 
 
 try{
-
 
 const snap =
 await getDocs(
@@ -1881,7 +1995,6 @@ return orderA - orderB;
 tasks.forEach(
 (item)=>{
 
-
 const task =
 item.data;
 
@@ -1903,7 +2016,6 @@ task.image ||
 tasksList.innerHTML += `
 
 <div class="card">
-
 
 ${
 image
@@ -1982,7 +2094,6 @@ onclick="deleteTask('${item.id}')">
 
 </button>
 
-
 </div>
 
 `;
@@ -2034,7 +2145,6 @@ return;
 
 try{
 
-
 await deleteDoc(
 
 doc(
@@ -2068,35 +2178,40 @@ error.message
 
 
 /* =========================
-   ESCAPE HTML
+   LOAD SUPPORT
 ========================= */
 
-function escapeHtml(text){
+async function loadSupport(){
 
-const div =
-document.createElement(
-"div"
+supportList.innerHTML =
+'<div class="loading">Loading Messages...</div>';
+
+
+try{
+
+const snap =
+await getDocs(
+collection(
+db,
+"supportMessages"
+)
 );
 
-div.textContent =
-String(text || "");
 
-return div.innerHTML;
+supportList.innerHTML = "";
+
+
+if(snap.empty){
+
+supportList.innerHTML =
+'<div class="empty">No support messages yet.</div>';
+
+return;
 
 }
 
 
-
-/* =========================
-   START
-========================= */
-
-loadUsers();
-
-</script>
+const messages = [];
 
 
-</body>
-
-</html>
-```
+sn
