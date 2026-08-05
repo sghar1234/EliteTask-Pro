@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -108,10 +109,15 @@ background:white;
 padding:15px;
 border-radius:12px;
 margin-top:10px;
+box-shadow:0 2px 6px #eee;
 }
 
 .task-box h3{
 margin-bottom:8px;
+}
+
+.task-box p{
+margin-top:6px;
 }
 
 .task-btn{
@@ -122,15 +128,68 @@ background:#2563eb;
 color:white;
 border:none;
 border-radius:10px;
+font-weight:bold;
+}
+
+.locked{
+background:#f3f4f6;
+border:1px solid #ddd;
+color:#777;
+}
+
+.locked .task-btn{
+background:#9ca3af;
+cursor:not-allowed;
+}
+
+.task-number{
+font-size:13px;
+color:#666;
+margin-bottom:6px;
+}
+
+.progress{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-top:12px;
+}
+
+.progress-bar{
+width:100%;
+height:10px;
+background:#e5e7eb;
+border-radius:10px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.progress-fill{
+height:100%;
+background:#2563eb;
+width:0%;
+}
+
+.unlock{
+margin-top:10px;
+font-size:14px;
+font-weight:bold;
+}
+
+.reward-box{
+margin-top:12px;
+background:#ecfdf5;
+padding:12px;
+border-radius:10px;
+color:#166534;
+font-weight:bold;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="topbar">
 
@@ -143,8 +202,6 @@ Customer Service
 </a>
 
 </div>
-
-
 
 <div class="card">
 
@@ -160,8 +217,6 @@ Loading...
 
 </div>
 
-
-
 <div class="card">
 
 <p>My Balance</p>
@@ -171,8 +226,6 @@ Rs 0
 </div>
 
 </div>
-
-
 
 <div class="stats">
 
@@ -186,7 +239,6 @@ Rs 0
 
 </div>
 
-
 <div class="stat">
 
 <h3 id="commission">
@@ -197,10 +249,9 @@ Rs 0
 
 </div>
 
-
 <div class="stat">
 
-<h3>
+<h3 id="pending">
 0
 </h3>
 
@@ -208,10 +259,9 @@ Rs 0
 
 </div>
 
-
 <div class="stat">
 
-<h3>
+<h3 id="userIdShort">
 User
 </h3>
 
@@ -220,8 +270,6 @@ User
 </div>
 
 </div>
-
-
 
 <div class="menu">
 
@@ -243,21 +291,49 @@ User
 
 </div>
 
-
-
 <div class="task">
 
 <h3>
 Today's Tasks
 </h3>
 
+<div class="progress">
+
+<div>
+Task Progress:
+<b id="progressText">
+0 / 20
+</b>
+</div>
+
+<div class="progress-bar">
+
+<div
+id="progressFill"
+class="progress-fill">
+</div>
+
+</div>
+
+<div
+id="unlockMessage"
+class="unlock">
+Task 1 is ready to start.
+</div>
+
+<div
+id="rewardMessage">
+</div>
+
+</div>
+
 <div id="taskList">
+
 Loading Tasks...
-</div>
 
 </div>
 
-
+</div>
 
 <script type="module">
 
@@ -278,16 +354,23 @@ updateDoc,
 collection,
 getDocs,
 addDoc,
+query,
+where,
 serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-
 let currentUserId = "";
 
+let currentUserData = {};
 
+
+
+/* =========================
+   AUTH
+========================= */
 
 onAuthStateChanged(auth, async(user)=>{
 
@@ -303,57 +386,112 @@ return;
 currentUserId = user.uid;
 
 
+try{
+
 const userRef =
-doc(db,"users",user.uid);
+doc(
+db,
+"users",
+user.uid
+);
 
 
 const userSnap =
 await getDoc(userRef);
 
 
-if(userSnap.exists()){
+if(!userSnap.exists()){
 
-const data =
-userSnap.data();
+alert(
+"User account not found."
+);
 
-
-document.getElementById("userName")
-.innerText =
-data.name || "User";
-
-
-document.getElementById("userEmail")
-.innerText =
-data.email || "";
-
-
-document.getElementById("userId")
-.innerText =
-"ID: " + user.uid.substring(0,8);
-
-
-document.getElementById("balance")
-.innerText =
-"Rs " + Number(data.balance || 0);
-
-
-document.getElementById("commission")
-.innerText =
-"Rs " + Number(data.commission || 0);
-
-
-document.getElementById("completed")
-.innerText =
-Number(data.completed || 0);
+return;
 
 }
 
 
-loadTasks();
+currentUserData =
+userSnap.data();
+
+
+document
+.getElementById("userName")
+.innerText =
+currentUserData.name || "User";
+
+
+document
+.getElementById("userEmail")
+.innerText =
+currentUserData.email || "";
+
+
+const shortId =
+user.uid.substring(0,8);
+
+
+document
+.getElementById("userId")
+.innerText =
+"ID: " + shortId;
+
+
+document
+.getElementById("userIdShort")
+.innerText =
+shortId;
+
+
+document
+.getElementById("balance")
+.innerText =
+"Rs " +
+Number(
+currentUserData.balance || 0
+);
+
+
+document
+.getElementById("commission")
+.innerText =
+"Rs " +
+Number(
+currentUserData.commission || 0
+);
+
+
+const completed =
+Number(
+currentUserData.completed || 0
+);
+
+
+document
+.getElementById("completed")
+.innerText =
+completed;
+
+
+await loadTasks();
+
+}
+catch(error){
+
+alert(
+"Dashboard Error: " +
+error.message
+);
+
+}
 
 });
 
 
+
+/* =========================
+   LOAD TASKS
+========================= */
 
 async function loadTasks(){
 
@@ -363,61 +501,227 @@ document.getElementById("taskList");
 
 try{
 
-const tasks =
+
+/*
+ * User ke completed count ko
+ * current progress maana jayega.
+ */
+
+const completed =
+Number(
+currentUserData.completed || 0
+);
+
+
+const progress =
+Math.min(
+completed,
+20
+);
+
+
+document
+.getElementById("progressText")
+.innerText =
+progress + " / 20";
+
+
+document
+.getElementById("progressFill")
+.style.width =
+(
+(progress / 20) * 100
+) + "%";
+
+
+updateUnlockMessage(progress);
+
+
+
+const tasksSnap =
 await getDocs(
 collection(db,"tasks")
 );
 
 
-taskList.innerHTML="";
-
-
-if(tasks.empty){
+if(tasksSnap.empty){
 
 taskList.innerHTML =
-"<p>No Task Available</p>";
+`
+<div class="task-box">
+
+<p>
+No tasks available right now.
+</p>
+
+</div>
+`;
 
 return;
 
 }
 
 
-tasks.forEach((item)=>{
+/*
+ * Tasks ko taskNumber ke hisaab se
+ * sort karenge.
+ *
+ * Agar taskNumber missing ho to
+ * createdAt / ID fallback rahega.
+ */
 
-const task =
+const tasks = [];
+
+
+tasksSnap.forEach((item)=>{
+
+const data =
 item.data();
 
+
+tasks.push({
+
+id:item.id,
+
+...data
+
+});
+
+});
+
+
+tasks.sort((a,b)=>{
+
+const aNumber =
+Number(
+a.taskNumber || 999999
+);
+
+const bNumber =
+Number(
+b.taskNumber || 999999
+);
+
+
+if(
+aNumber !== bNumber
+){
+
+return aNumber - bNumber;
+
+}
+
+
+return a.id.localeCompare(
+b.id
+);
+
+});
+
+
+
+taskList.innerHTML = "";
+
+
+/*
+ * Sirf pehle 20 tasks use honge.
+ */
+
+const first20 =
+tasks.slice(0,20);
+
+
+first20.forEach((task,index)=>{
+
+const taskNumber =
+Number(
+task.taskNumber || (index + 1)
+);
+
+
+/*
+ * Task sequentially unlock hoga.
+ *
+ * completed = 0
+ * => Task 1 unlocked
+ *
+ * completed = 1
+ * => Task 2 unlocked
+ */
+
+const unlocked =
+taskNumber <= completed + 1;
+
+
+const price =
+Number(
+task.price || 0
+);
+
+
+const commission =
+Number(
+task.commission || 0
+);
+
+
+if(unlocked){
 
 taskList.innerHTML += `
 
 <div class="task-box">
 
+<div class="task-number">
+Task ${taskNumber} of 20
+</div>
+
 <h3>
-${task.name || "Task"}
+${escapeHtml(
+task.name || "Task"
+)}
 </h3>
 
 <p>
-Price: Rs ${Number(task.price || 0)}
+Price:
+<b>
+Rs ${price}
+</b>
 </p>
 
 <p>
-Commission: Rs ${Number(task.commission || 0)}
+Commission:
+<b>
+Rs ${commission}
+</b>
 </p>
 
+${
+task.description
+?
+`
 <p>
-${task.description || ""}
+${escapeHtml(
+task.description
+)}
 </p>
+`
+:
+""
+}
 
 <button
 class="task-btn"
 onclick="completeTask(
-'${item.id}',
-'${task.name || "Task"}',
-'${task.price || 0}',
-'${task.commission || 0}'
+'${task.id}',
+'${escapeAttribute(
+task.name || "Task"
+)}',
+${price},
+${commission},
+${taskNumber}
 )">
 
-Complete Task
+✅ Complete Task
 
 </button>
 
@@ -425,32 +729,190 @@ Complete Task
 
 `;
 
+}
+else{
+
+taskList.innerHTML += `
+
+<div class="task-box locked">
+
+<div class="task-number">
+Task ${taskNumber} of 20
+</div>
+
+<h3>
+🔒 ${escapeHtml(
+task.name || "Task"
+)}
+</h3>
+
+<p>
+This task is locked.
+</p>
+
+<p>
+Complete Task ${completed + 1}
+first.
+</p>
+
+<button
+class="task-btn"
+disabled>
+
+🔒 Locked
+
+</button>
+
+</div>
+
+`;
+
+}
+
 });
 
-}catch(error){
 
-taskList.innerHTML =
-"<p>Error loading tasks.</p>";
+/*
+ * Agar 20 tasks complete ho gaye.
+ */
+
+if(
+completed >= 20
+){
+
+document
+.getElementById("unlockMessage")
+.innerText =
+"🎉 All 20 tasks completed!";
+
+}
+
+}
+catch(error){
+
+taskList.innerHTML = `
+<div class="task-box">
+
+<p>
+Error loading tasks.
+</p>
+
+<p>
+${escapeHtml(
+error.message
+)}
+</p>
+
+</div>
+`;
 
 }
 
 }
 
 
+
+/* =========================
+   UNLOCK MESSAGE
+========================= */
+
+function updateUnlockMessage(
+completed
+){
+
+const message =
+document.getElementById(
+"unlockMessage"
+);
+
+
+const rewardMessage =
+document.getElementById(
+"rewardMessage"
+);
+
+
+if(completed >= 20){
+
+message.innerText =
+"🎉 All 20 tasks completed!";
+
+rewardMessage.innerHTML = `
+
+<div class="reward-box">
+
+✅ First milestone: 10 tasks completed<br>
+✅ Second milestone: 20 tasks completed<br><br>
+
+You have completed all available tasks.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if(completed >= 10){
+
+message.innerText =
+"🎉 First 10 tasks completed. Tasks 11–20 are now available.";
+
+rewardMessage.innerHTML = `
+
+<div class="reward-box">
+
+✅ First milestone reached: 10 tasks completed.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+message.innerText =
+"🔓 Complete Task " +
+(completed + 1) +
+" to unlock the next task.";
+
+rewardMessage.innerHTML = "";
+
+}
+
+
+
+/* =========================
+   COMPLETE TASK
+========================= */
 
 window.completeTask =
 async function(
 taskId,
 taskName,
 price,
-commission
+commission,
+taskNumber
 ){
 
 try{
 
 
+/*
+ * Current user dobara Firebase se
+ * read karte hain.
+ */
+
 const userRef =
-doc(db,"users",currentUserId);
+doc(
+db,
+"users",
+currentUserId
+);
 
 
 const userSnap =
@@ -459,7 +921,9 @@ await getDoc(userRef);
 
 if(!userSnap.exists()){
 
-alert("User account not found");
+alert(
+"User account not found."
+);
 
 return;
 
@@ -470,36 +934,114 @@ const user =
 userSnap.data();
 
 
+const oldCompleted =
+Number(
+user.completed || 0
+);
+
+
+/*
+ * Security check:
+ * Sirf next task complete ho sakta hai.
+ */
+
+if(
+Number(taskNumber) !==
+oldCompleted + 1
+){
+
+alert(
+"Please complete the tasks in order."
+);
+
+return;
+
+}
+
+
+/*
+ * Duplicate task check.
+ */
+
+const ordersQuery =
+query(
+
+collection(db,"orders"),
+
+where(
+"uid",
+"==",
+currentUserId
+),
+
+where(
+"taskId",
+"==",
+taskId
+)
+
+);
+
+
+const ordersSnap =
+await getDocs(
+ordersQuery
+);
+
+
+if(!ordersSnap.empty){
+
+alert(
+"This task has already been completed."
+);
+
+return;
+
+}
+
+
 const oldBalance =
-Number(user.balance || 0);
+Number(
+user.balance || 0
+);
 
 
 const oldCommission =
-Number(user.commission || 0);
-
-
-const oldCompleted =
-Number(user.completed || 0);
+Number(
+user.commission || 0
+);
 
 
 const taskCommission =
-Number(commission || 0);
+Number(
+commission || 0
+);
 
 
 const newBalance =
-oldBalance + taskCommission;
+oldBalance +
+taskCommission;
 
 
 const newCommission =
-oldCommission + taskCommission;
+oldCommission +
+taskCommission;
 
 
 const newCompleted =
-oldCompleted + 1;
+oldCompleted +
+1;
 
 
+/*
+ * User progress update.
+ */
 
-await updateDoc(userRef,{
+await updateDoc(
+
+userRef,
+
+{
 
 balance:newBalance,
 
@@ -507,12 +1049,19 @@ commission:newCommission,
 
 completed:newCompleted
 
-});
+}
+
+);
 
 
+/*
+ * Order record.
+ */
 
 await addDoc(
+
 collection(db,"orders"),
+
 {
 
 uid:currentUserId,
@@ -522,6 +1071,8 @@ name:user.name || "",
 email:user.email || "",
 
 taskId:taskId,
+
+taskNumber:Number(taskNumber),
 
 taskName:taskName,
 
@@ -534,22 +1085,47 @@ status:"Completed",
 createdAt:serverTimestamp()
 
 }
+
 );
 
+
+/*
+ * Updated local data.
+ */
+
+currentUserData = {
+
+...user,
+
+balance:newBalance,
+
+commission:newCommission,
+
+completed:newCompleted
+
+};
 
 
 alert(
-"Task Completed Successfully!"
+"Task " +
+taskNumber +
+" Completed Successfully!"
 );
 
+
+/*
+ * Dashboard reload.
+ */
 
 location.reload();
 
 
-}catch(error){
+}
+catch(error){
 
 alert(
-"Error: " + error.message
+"Error: " +
+error.message
 );
 
 }
@@ -557,8 +1133,38 @@ alert(
 };
 
 
-</script>
 
+/* =========================
+   HTML SAFETY
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return String(value)
+
+.replaceAll("\\","\\\\")
+.replaceAll("'","\\'");
+
+}
+
+</script>
 
 </body>
 
