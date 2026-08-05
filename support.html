@@ -1,280 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Customer Support - EliteTask Pro</title>
+<title>Customer Support - EliteTask Pro</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      color: #222;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    .page {
-      max-width: 600px;
-      margin: auto;
-      min-height: 100vh;
-      background: #f4f6f9;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#222;
+}
 
-    /* HEADER */
+.container{
+  max-width:600px;
+  min-height:100vh;
+  margin:auto;
+  background:#f5f7fb;
+}
 
-    .header {
-      background: linear-gradient(135deg, #0d6efd, #174ea6);
-      color: white;
-      padding: 18px;
-      border-radius: 0 0 22px 22px;
-    }
+/* HEADER */
 
-    .top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+.header{
+  background:linear-gradient(135deg,#1769e0,#0d47a1);
+  color:white;
+  padding:18px;
+  border-radius:0 0 24px 24px;
+}
 
-    .back {
-      color: white;
-      text-decoration: none;
-      font-size: 28px;
-    }
+.header-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .top h2 {
-      font-size: 20px;
-    }
+.back{
+  color:white;
+  text-decoration:none;
+  font-size:30px;
+}
 
-    .status {
-      margin-top: 8px;
-      margin-left: 40px;
-      font-size: 13px;
-      opacity: .9;
-    }
+.header h2{
+  font-size:20px;
+}
 
-    /* CONTENT */
+.header p{
+  margin-top:7px;
+  margin-left:42px;
+  font-size:13px;
+  opacity:.9;
+}
 
-    .content {
-      padding: 15px;
-    }
+/* CONTENT */
 
-    .welcome-card {
-      background: white;
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.07);
-      margin-bottom: 15px;
-    }
+.content{
+  padding:18px;
+}
 
-    .welcome-card h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
+.welcome{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
 
-    .welcome-card p {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.welcome-icon{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  background:#e8f0ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+  margin-bottom:14px;
+}
 
-    /* TELEGRAM */
+.welcome h3{
+  font-size:20px;
+  margin-bottom:8px;
+}
 
-    .telegram {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #e8f5ff;
-      border: 1px solid #cce9ff;
-      padding: 14px;
-      border-radius: 14px;
-      margin-top: 15px;
-    }
+.welcome p{
+  color:#777;
+  font-size:14px;
+  line-height:1.6;
+}
 
-    .telegram-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+/* OPTIONS */
 
-    .telegram-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #229ed9;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
+.options{
+  margin-top:18px;
+}
 
-    .telegram-text strong {
-      display: block;
-      font-size: 14px;
-    }
+.option{
+  background:white;
+  border-radius:16px;
+  padding:17px;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  text-decoration:none;
+  color:#222;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  border:1px solid #eee;
+}
 
-    .telegram-text span {
-      color: #777;
-      font-size: 12px;
-    }
+.option-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+  flex-shrink:0;
+}
 
-    .telegram-btn {
-      background: #229ed9;
-      color: white;
-      text-decoration: none;
-      padding: 9px 13px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: bold;
-    }
+.chat-icon{
+  background:#e8f1ff;
+}
 
-    /* LIVE CHAT */
+.telegram-icon{
+  background:#e4f6ff;
+}
 
-    .chat-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,.07);
-      margin-top: 15px;
-    }
+.option-info{
+  flex:1;
+}
 
-    .chat-title {
-      padding: 15px;
-      border-bottom: 1px solid #eee;
-    }
+.option-info strong{
+  display:block;
+  font-size:16px;
+  margin-bottom:4px;
+}
 
-    .chat-title h3 {
-      font-size: 17px;
-    }
+.option-info span{
+  font-size:12px;
+  color:#888;
+}
 
-    .chat-title p {
-      font-size: 12px;
-      color: #777;
-      margin-top: 4px;
-    }
+.arrow{
+  font-size:24px;
+  color:#aaa;
+}
 
-    /* MESSAGES */
+/* NOTE */
 
-    #messages {
-      min-height: 280px;
-      max-height: 420px;
-      overflow-y: auto;
-      padding: 14px;
-      background: #f8f9fb;
-    }
+.note{
+  text-align:center;
+  color:#999;
+  font-size:12px;
+  margin-top:22px;
+  line-height:1.5;
+}
 
-    .empty {
-      text-align: center;
-      color: #999;
-      padding: 80px 20px;
-      font-size: 13px;
-    }
-
-    .message {
-      max-width: 80%;
-      margin-bottom: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      line-height: 1.45;
-      word-break: break-word;
-    }
-
-    .user {
-      margin-left: auto;
-      background: #0d6efd;
-      color: white;
-      border-bottom-right-radius: 3px;
-    }
-
-    .admin {
-      margin-right: auto;
-      background: white;
-      color: #222;
-      border: 1px solid #eee;
-      border-bottom-left-radius: 3px;
-    }
-
-    .time {
-      display: block;
-      font-size: 9px;
-      opacity: .7;
-      text-align: right;
-      margin-top: 5px;
-    }
-
-    /* INPUT */
-
-    .input-area {
-      display: flex;
-      gap: 8px;
-      padding: 10px;
-      background: white;
-      border-top: 1px solid #eee;
-    }
-
-    #messageInput {
-      flex: 1;
-      border: 1px solid #ddd;
-      border-radius: 22px;
-      padding: 12px 15px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    #sendBtn {
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: 50%;
-      background: #0d6efd;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-
-    #sendBtn:disabled {
-      opacity: .5;
-    }
-
-    .note {
-      text-align: center;
-      color: #999;
-      font-size: 11px;
-      padding: 10px;
-      background: white;
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="container">
 
   <!-- HEADER -->
 
   <div class="header">
 
-    <div class="top">
+    <div class="header-top">
 
       <a href="dashboard.html" class="back">‹</a>
 
-      <div>
-        <h2>Customer Support</h2>
-      </div>
+      <h2>Customer Support</h2>
 
     </div>
 
-    <div class="status">
-      ● Our support team is here to help
-    </div>
+    <p>We're here to help you</p>
 
   </div>
 
@@ -283,359 +192,93 @@
 
     <!-- WELCOME -->
 
-    <div class="welcome-card">
+    <div class="welcome">
+
+      <div class="welcome-icon">
+        💬
+      </div>
 
       <h3>How can we help you?</h3>
 
       <p>
-        If you have any problem with your account, tasks,
-        orders or withdrawal, send us a message below.
-        Our support team will reply here.
+        Have a question or facing a problem?
+        Contact our support team and we'll be
+        happy to help you.
       </p>
-
-
-      <!-- TELEGRAM -->
-
-      <div class="telegram">
-
-        <div class="telegram-left">
-
-          <div class="telegram-icon">
-            ✈
-          </div>
-
-          <div class="telegram-text">
-
-            <strong>Telegram Support</strong>
-
-            <span>Contact us on Telegram</span>
-
-          </div>
-
-        </div>
-
-        <a
-          href="https://t.me/Helpcenter21"
-          target="_blank"
-          class="telegram-btn"
-        >
-          Open
-        </a>
-
-      </div>
 
     </div>
 
 
-    <!-- LIVE CHAT -->
+    <!-- OPTIONS -->
 
-    <div class="chat-card">
+    <div class="options">
 
-      <div class="chat-title">
+      <!-- CONTINUE CHAT -->
 
-        <h3>💬 Continue Chat</h3>
+      <a href="chat.html" class="option">
 
-        <p>
-          Your conversation with Customer Support
-        </p>
-
-      </div>
-
-
-      <div id="messages">
-
-        <div class="empty" id="emptyMessage">
-          No messages yet.<br>
-          Start a conversation with Customer Support.
+        <div class="option-icon chat-icon">
+          💬
         </div>
 
-      </div>
+        <div class="option-info">
+
+          <strong>Continue Chat</strong>
+
+          <span>
+            Chat directly with Customer Support
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </a>
 
 
-      <div class="input-area">
+      <!-- TELEGRAM -->
 
-        <input
-          type="text"
-          id="messageInput"
-          placeholder="Type your message..."
-          autocomplete="off"
-        >
+      <a
+        href="https://t.me/Helpcenter21"
+        target="_blank"
+        class="option"
+      >
 
-        <button id="sendBtn">
-          ➤
-        </button>
+        <div class="option-icon telegram-icon">
+          ✈️
+        </div>
 
-      </div>
+        <div class="option-info">
+
+          <strong>Telegram Support</strong>
+
+          <span>
+            Contact us through Telegram
+          </span>
+
+        </div>
+
+        <div class="arrow">
+          ›
+        </div>
+
+      </a>
+
+    </div>
 
 
-      <div class="note">
-        Messages are saved securely and will remain in your chat.
-      </div>
+    <div class="note">
+
+      Customer Support is available to assist you
+      with your account, tasks and withdrawals.
 
     </div>
 
   </div>
 
 </div>
-
-
-<script type="module">
-
-  import {
-    auth,
-    db
-  } from "./firebase.js";
-
-  import {
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
-  import {
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-
-  const messagesBox =
-    document.getElementById("messages");
-
-  const messageInput =
-    document.getElementById("messageInput");
-
-  const sendBtn =
-    document.getElementById("sendBtn");
-
-  const emptyMessage =
-    document.getElementById("emptyMessage");
-
-
-  let currentUser = null;
-
-
-  /* LOGIN CHECK */
-
-  onAuthStateChanged(auth, (user) => {
-
-    if (!user) {
-
-      window.location.href = "index.html";
-
-      return;
-    }
-
-    currentUser = user;
-
-    loadChat();
-
-  });
-
-
-  /* LOAD CONTINUOUS CHAT */
-
-  function loadChat() {
-
-    const messagesRef = collection(
-      db,
-      "supportChats",
-      currentUser.uid,
-      "messages"
-    );
-
-
-    const chatQuery = query(
-      messagesRef,
-      orderBy("createdAt", "asc")
-    );
-
-
-    onSnapshot(
-      chatQuery,
-      (snapshot) => {
-
-        messagesBox
-          .querySelectorAll(".message")
-          .forEach((msg) => msg.remove());
-
-
-        if (snapshot.empty) {
-
-          emptyMessage.style.display = "block";
-
-        } else {
-
-          emptyMessage.style.display = "none";
-
-        }
-
-
-        snapshot.forEach((doc) => {
-
-          const data = doc.data();
-
-          const message =
-            document.createElement("div");
-
-
-          message.className =
-            "message " +
-            (data.senderRole === "admin"
-              ? "admin"
-              : "user");
-
-
-          const text =
-            document.createElement("div");
-
-          text.textContent =
-            data.text;
-
-
-          const time =
-            document.createElement("span");
-
-          time.className = "time";
-
-
-          if (data.createdAt) {
-
-            const date =
-              data.createdAt.toDate();
-
-
-            time.textContent =
-              date.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit"
-              });
-
-          } else {
-
-            time.textContent = "Sending...";
-
-          }
-
-
-          message.appendChild(text);
-
-          message.appendChild(time);
-
-          messagesBox.appendChild(message);
-
-        });
-
-
-        messagesBox.scrollTop =
-          messagesBox.scrollHeight;
-
-      },
-
-      (error) => {
-
-        console.error(error);
-
-        emptyMessage.textContent =
-          "Unable to load chat.";
-
-      }
-
-    );
-
-  }
-
-
-  /* SEND MESSAGE */
-
-  async function sendMessage() {
-
-    const text =
-      messageInput.value.trim();
-
-
-    if (!text || !currentUser) {
-      return;
-    }
-
-
-    sendBtn.disabled = true;
-
-
-    try {
-
-      const messagesRef =
-        collection(
-          db,
-          "supportChats",
-          currentUser.uid,
-          "messages"
-        );
-
-
-      await addDoc(messagesRef, {
-
-        text: text,
-
-        senderId:
-          currentUser.uid,
-
-        senderRole:
-          "user",
-
-        createdAt:
-          serverTimestamp()
-
-      });
-
-
-      messageInput.value = "";
-
-      messageInput.focus();
-
-
-    } catch (error) {
-
-      alert(
-        "Message failed: " +
-        error.message
-      );
-
-    }
-
-
-    sendBtn.disabled = false;
-
-  }
-
-
-  /* BUTTON */
-
-  sendBtn.addEventListener(
-    "click",
-    sendMessage
-  );
-
-
-  /* ENTER */
-
-  messageInput.addEventListener(
-    "keydown",
-    (event) => {
-
-      if (event.key === "Enter") {
-
-        event.preventDefault();
-
-        sendMessage();
-
-      }
-
-    }
-  );
-
-</script>
 
 </body>
 </html>
