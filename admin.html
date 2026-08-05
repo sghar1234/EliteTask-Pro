@@ -4,55 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin Panel - EliteTask Pro</title>
+<title>EliteTask Pro - Admin</title>
 
 <style>
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
     font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f5f5f5;
+    background:#f4f6f8;
     padding:15px;
-    color:#111827;
+    color:#111;
 }
 
 .header{
     background:#111827;
     color:white;
-    padding:20px;
-    border-radius:16px;
-    font-size:24px;
-    font-weight:bold;
+    padding:18px;
+    border-radius:14px;
     text-align:center;
+    font-size:22px;
+    font-weight:bold;
 }
 
-.menu{
+.tabs{
     display:flex;
     gap:10px;
     margin-top:15px;
 }
 
-.menu button{
+.tabs button{
     flex:1;
-    border:none;
-    padding:14px 8px;
-    border-radius:12px;
-    font-size:14px;
-    font-weight:bold;
-    color:white;
+    padding:13px;
+    border:0;
+    border-radius:10px;
     background:#2563eb;
+    color:white;
+    font-weight:bold;
 }
 
-.menu button.active{
+.tabs button.active{
     background:#111827;
 }
 
 .section{
     display:none;
+    margin-top:15px;
 }
 
 .section.active{
@@ -61,176 +61,117 @@ body{
 
 .card{
     background:white;
-    margin-top:15px;
     padding:15px;
-    border-radius:15px;
-    box-shadow:0 3px 10px #ddd;
+    margin-bottom:12px;
+    border-radius:14px;
+    box-shadow:0 2px 8px #ddd;
 }
 
-.user-card,
-.withdraw-card{
-    background:white;
-    margin-top:12px;
-    padding:17px;
-    border-radius:13px;
-    border:1px solid #eee;
-}
-
-.user-name{
-    font-size:19px;
-    font-weight:bold;
-}
-
-.email,
-.info{
-    margin-top:7px;
+.email{
     color:#666;
     font-size:14px;
+    margin-top:6px;
     word-break:break-word;
 }
 
-.id{
-    margin-top:7px;
-    color:#777;
-    font-size:11px;
-    word-break:break-all;
+.info{
+    margin-top:8px;
+    font-size:15px;
 }
 
-.row{
-    display:flex;
-    justify-content:space-between;
-    padding:11px 0;
-    border-bottom:1px solid #eee;
-}
-
-.label{
-    color:#666;
-}
-
-.value{
-    font-weight:bold;
-}
-
-.buttons{
+.actions{
     display:flex;
     gap:8px;
-    margin-top:15px;
+    margin-top:14px;
 }
 
 button{
-    border:none;
-    color:white;
-    padding:12px;
-    border-radius:9px;
-    font-weight:bold;
     cursor:pointer;
 }
 
-.edit-btn{
+.edit{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
     background:#2563eb;
-    flex:1;
+    color:white;
 }
 
-.delete-btn{
+.delete{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
     background:#dc2626;
-    flex:1;
+    color:white;
 }
 
-.approve-btn{
+.approve{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
     background:#16a34a;
-    flex:1;
+    color:white;
 }
 
-.reject-btn{
+.reject{
+    flex:1;
+    border:0;
+    padding:11px;
+    border-radius:8px;
     background:#dc2626;
-    flex:1;
+    color:white;
 }
 
-.save-btn{
-    background:#16a34a;
-    width:100%;
-    margin-top:10px;
-}
-
-.cancel-btn{
-    background:#6b7280;
-    width:100%;
-    margin-top:8px;
-}
-
-.edit-box{
+.editBox{
     display:none;
-    margin-top:15px;
-    padding:14px;
+    margin-top:12px;
     background:#f3f4f6;
-    border-radius:12px;
+    padding:12px;
+    border-radius:10px;
 }
 
-.edit-box label{
-    display:block;
-    font-size:13px;
-    color:#555;
-    margin-top:9px;
-}
-
-.edit-box input{
+.editBox input{
     width:100%;
     padding:11px;
-    margin-top:5px;
+    margin-top:6px;
+    margin-bottom:8px;
     border:1px solid #ccc;
     border-radius:8px;
-    background:white;
+}
+
+.save{
+    width:100%;
+    padding:11px;
+    border:0;
+    border-radius:8px;
+    background:#16a34a;
+    color:white;
+    font-weight:bold;
 }
 
 .status{
     display:inline-block;
     margin-top:10px;
-    padding:7px 12px;
-    border-radius:20px;
-    background:#f3f4f6;
+    padding:6px 10px;
+    border-radius:15px;
+    background:#eee;
     font-size:13px;
     font-weight:bold;
 }
 
-.pending{
-    color:#d97706;
-}
-
-.approved{
-    color:#16a34a;
-}
-
-.rejected{
-    color:#dc2626;
-}
-
 .loading{
     text-align:center;
-    color:#777;
     padding:20px;
-}
-
-.empty{
-    text-align:center;
     color:#777;
-    padding:20px;
 }
 
 .error{
-    text-align:center;
     color:#dc2626;
-    padding:20px;
-}
-
-.refresh{
-    width:100%;
-    background:#111827;
-    margin-top:12px;
-}
-
-.small-title{
-    font-size:18px;
-    font-weight:bold;
+    padding:15px;
+    word-break:break-word;
 }
 </style>
 </head>
@@ -238,71 +179,49 @@ button{
 <body>
 
 <div class="header">
-    ⚙️ EliteTask Pro<br>
-    <span style="font-size:15px;">Admin Panel</span>
+    EliteTask Pro<br>
+    <small>Admin Panel</small>
 </div>
 
-<div class="menu">
+<div class="tabs">
 
     <button
-        id="usersTab"
+        id="usersBtn"
         class="active"
-        onclick="showSection('users')">
+        onclick="showUsers()">
         👥 Users
     </button>
 
     <button
-        id="withdrawTab"
-        onclick="showSection('withdraws')">
+        id="withdrawBtn"
+        onclick="showWithdraws()">
         💸 Withdraws
     </button>
 
 </div>
 
 
-<!-- ================= USERS ================= -->
+<!-- USERS -->
 
 <div id="usersSection" class="section active">
 
-    <div class="card">
-
-        <div class="small-title">
-            👥 Users Management
+    <div id="usersList">
+        <div class="loading">
+            Loading Users...
         </div>
-
-        <div id="usersList">
-            <div class="loading">
-                Loading Users...
-            </div>
-        </div>
-
     </div>
 
 </div>
 
 
-<!-- ================= WITHDRAWS ================= -->
+<!-- WITHDRAWS -->
 
-<div id="withdrawsSection" class="section">
+<div id="withdrawSection" class="section">
 
-    <div class="card">
-
-        <div class="small-title">
-            💸 Withdraw Requests
+    <div id="withdrawList">
+        <div class="loading">
+            Loading Withdraws...
         </div>
-
-        <button
-            class="refresh"
-            onclick="loadWithdraws()">
-            🔄 Refresh Requests
-        </button>
-
-        <div id="withdrawsList">
-            <div class="loading">
-                Loading Withdraw Requests...
-            </div>
-        </div>
-
     </div>
 
 </div>
@@ -315,71 +234,70 @@ import { db } from "./firebase.js";
 import {
     collection,
     getDocs,
-    updateDoc,
-    deleteDoc,
     doc,
-    runTransaction
+    updateDoc,
+    deleteDoc
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 const usersList =
 document.getElementById("usersList");
 
-const withdrawsList =
-document.getElementById("withdrawsList");
+const withdrawList =
+document.getElementById("withdrawList");
 
 
 /* =========================
-   SECTION SWITCH
+   SHOW USERS
 ========================= */
 
-window.showSection = function(section){
+window.showUsers = function(){
+
+    document
+    .getElementById("usersSection")
+    .classList.add("active");
+
+    document
+    .getElementById("withdrawSection")
+    .classList.remove("active");
+
+    document
+    .getElementById("usersBtn")
+    .classList.add("active");
+
+    document
+    .getElementById("withdrawBtn")
+    .classList.remove("active");
+
+    loadUsers();
+
+};
+
+
+/* =========================
+   SHOW WITHDRAWS
+========================= */
+
+window.showWithdraws = function(){
 
     document
     .getElementById("usersSection")
     .classList.remove("active");
 
     document
-    .getElementById("withdrawsSection")
+    .getElementById("withdrawSection")
+    .classList.add("active");
+
+    document
+    .getElementById("usersBtn")
     .classList.remove("active");
 
     document
-    .getElementById("usersTab")
-    .classList.remove("active");
+    .getElementById("withdrawBtn")
+    .classList.add("active");
 
-    document
-    .getElementById("withdrawTab")
-    .classList.remove("active");
-
-
-    if(section === "users"){
-
-        document
-        .getElementById("usersSection")
-        .classList.add("active");
-
-        document
-        .getElementById("usersTab")
-        .classList.add("active");
-
-    }
-
-
-    if(section === "withdraws"){
-
-        document
-        .getElementById("withdrawsSection")
-        .classList.add("active");
-
-        document
-        .getElementById("withdrawTab")
-        .classList.add("active");
-
-        loadWithdraws();
-
-    }
+    loadWithdraws();
 
 };
 
@@ -390,135 +308,87 @@ window.showSection = function(section){
 
 async function loadUsers(){
 
+    usersList.innerHTML =
+    '<div class="loading">Loading Users...</div>';
+
     try{
 
-        const snapshot =
+        const snap =
         await getDocs(
             collection(db,"users")
         );
 
+        usersList.innerHTML = "";
 
-        usersList.innerHTML="";
+        if(snap.empty){
 
-
-        if(snapshot.empty){
-
-            usersList.innerHTML=`
-                <div class="empty">
-                    No users found.
-                </div>
-            `;
+            usersList.innerHTML =
+            '<div class="card">No users found.</div>';
 
             return;
         }
 
 
-        snapshot.forEach((item)=>{
+        snap.forEach((item)=>{
 
-            const user =
-            item.data();
-
+            const u = item.data();
 
             const name =
-            user.name || "User";
-
+            u.name || "User";
 
             const email =
-            user.email || "";
-
+            u.email || "";
 
             const balance =
-            Number(user.balance || 0);
-
+            Number(u.balance || 0);
 
             const commission =
-            Number(user.commission || 0);
-
+            Number(u.commission || 0);
 
             const completed =
-            Number(user.completed || 0);
-
+            Number(u.completed || 0);
 
             const role =
-            user.role || "user";
+            u.role || "user";
 
 
             usersList.innerHTML += `
 
-            <div class="user-card"
-                 id="card-${item.id}">
+            <div class="card">
 
-                <div class="user-name">
-                    👤 ${escapeHtml(name)}
-                </div>
+                <h3>👤 ${name}</h3>
 
                 <div class="email">
-                    📧 ${escapeHtml(email)}
+                    ${email}
                 </div>
 
-                <div class="id">
-                    🆔 ${escapeHtml(item.id)}
+                <div class="info">
+                    💰 Balance: <b>Rs ${balance}</b>
                 </div>
 
-
-                <div class="row">
-                    <span class="label">
-                        Balance
-                    </span>
-
-                    <span class="value">
-                        Rs ${balance}
-                    </span>
+                <div class="info">
+                    💵 Commission: <b>Rs ${commission}</b>
                 </div>
 
-
-                <div class="row">
-                    <span class="label">
-                        Commission
-                    </span>
-
-                    <span class="value">
-                        Rs ${commission}
-                    </span>
+                <div class="info">
+                    ✅ Completed: <b>${completed}</b>
                 </div>
 
-
-                <div class="row">
-                    <span class="label">
-                        Completed Tasks
-                    </span>
-
-                    <span class="value">
-                        ${completed}
-                    </span>
+                <div class="info">
+                    👑 Role: <b>${role}</b>
                 </div>
 
-
-                <div class="row">
-                    <span class="label">
-                        Role
-                    </span>
-
-                    <span class="value">
-                        ${escapeHtml(role)}
-                    </span>
-                </div>
-
-
-                <div class="buttons">
+                <div class="actions">
 
                     <button
-                        class="edit-btn"
-                        onclick="showEdit('${item.id}')">
+                        class="edit"
+                        onclick="openEdit('${item.id}')">
                         ✏️ Edit
                     </button>
 
                     <button
-                        class="delete-btn"
-                        onclick="deleteUser(
-                            '${item.id}',
-                            '${escapeJs(email)}'
-                        )">
+                        class="delete"
+                        onclick="deleteUser('${item.id}')">
                         🗑️ Delete
                     </button>
 
@@ -526,53 +396,37 @@ async function loadUsers(){
 
 
                 <div
-                    class="edit-box"
+                    class="editBox"
                     id="edit-${item.id}">
 
-                    <label>
-                        Balance
-                    </label>
+                    <label>Balance</label>
 
                     <input
                         type="number"
-                        id="balance-${item.id}"
-                        value="${balance}"
-                        min="0">
+                        id="bal-${item.id}"
+                        value="${balance}">
 
 
-                    <label>
-                        Commission
-                    </label>
+                    <label>Commission</label>
 
                     <input
                         type="number"
-                        id="commission-${item.id}"
-                        value="${commission}"
-                        min="0">
+                        id="com-${item.id}"
+                        value="${commission}">
 
 
-                    <label>
-                        Completed Tasks
-                    </label>
+                    <label>Completed</label>
 
                     <input
                         type="number"
-                        id="completed-${item.id}"
-                        value="${completed}"
-                        min="0">
+                        id="done-${item.id}"
+                        value="${completed}">
 
 
                     <button
-                        class="save-btn"
+                        class="save"
                         onclick="saveUser('${item.id}')">
-                        💾 Save Changes
-                    </button>
-
-
-                    <button
-                        class="cancel-btn"
-                        onclick="hideEdit('${item.id}')">
-                        Cancel
+                        💾 Save
                     </button>
 
                 </div>
@@ -583,21 +437,14 @@ async function loadUsers(){
 
         });
 
+    }
+    catch(error){
 
-    }catch(error){
-
-        usersList.innerHTML=`
-
-            <div class="error">
-
-                Error loading users:
-
-                <br><br>
-
-                ${escapeHtml(error.message)}
-
-            </div>
-
+        usersList.innerHTML = `
+        <div class="error">
+            Users Error:<br><br>
+            ${error.message}
+        </div>
         `;
 
     }
@@ -606,40 +453,27 @@ async function loadUsers(){
 
 
 /* =========================
-   EDIT USER
+   OPEN EDIT
 ========================= */
 
-window.showEdit = function(id){
+window.openEdit = function(id){
 
     const box =
     document.getElementById(
         "edit-"+id
     );
 
-    if(box){
-
-        box.style.display="block";
-
-    }
-
-};
-
-
-window.hideEdit = function(id){
-
-    const box =
-    document.getElementById(
-        "edit-"+id
-    );
-
-    if(box){
-
-        box.style.display="none";
-
-    }
+    box.style.display =
+    box.style.display === "block"
+    ? "none"
+    : "block";
 
 };
 
+
+/* =========================
+   SAVE USER
+========================= */
 
 window.saveUser = async function(id){
 
@@ -648,40 +482,23 @@ window.saveUser = async function(id){
         const balance =
         Number(
             document.getElementById(
-                "balance-"+id
+                "bal-"+id
             ).value
         );
-
 
         const commission =
         Number(
             document.getElementById(
-                "commission-"+id
+                "com-"+id
             ).value
         );
-
 
         const completed =
         Number(
             document.getElementById(
-                "completed-"+id
+                "done-"+id
             ).value
         );
-
-
-        if(
-            balance < 0 ||
-            commission < 0 ||
-            completed < 0
-        ){
-
-            alert(
-                "Values cannot be negative."
-            );
-
-            return;
-
-        }
 
 
         await updateDoc(
@@ -701,14 +518,12 @@ window.saveUser = async function(id){
         );
 
 
-        alert(
-            "User updated successfully!"
-        );
-
+        alert("User updated successfully");
 
         loadUsers();
 
-    }catch(error){
+    }
+    catch(error){
 
         alert(
             "Update failed: " +
@@ -724,17 +539,13 @@ window.saveUser = async function(id){
    DELETE USER
 ========================= */
 
-window.deleteUser =
-async function(id,email){
+window.deleteUser = async function(id){
 
-    const confirmDelete =
-    confirm(
-        "Delete this user record?\n\n" +
-        "Email: " + email
-    );
-
-
-    if(!confirmDelete){
+    if(
+        !confirm(
+            "Delete this user?"
+        )
+    ){
 
         return;
 
@@ -753,13 +564,13 @@ async function(id,email){
 
 
         alert(
-            "User record deleted successfully."
+            "User deleted"
         );
-
 
         loadUsers();
 
-    }catch(error){
+    }
+    catch(error){
 
         alert(
             "Delete failed: " +
@@ -777,162 +588,111 @@ async function(id,email){
 
 async function loadWithdraws(){
 
-    withdrawsList.innerHTML=`
-        <div class="loading">
-            Loading Withdraw Requests...
-        </div>
-    `;
+    withdrawList.innerHTML =
+    '<div class="loading">Loading Withdraws...</div>';
 
 
     try{
 
-        const snapshot =
+        const snap =
         await getDocs(
             collection(db,"withdraws")
         );
 
 
-        withdrawsList.innerHTML="";
+        withdrawList.innerHTML = "";
 
 
-        if(snapshot.empty){
+        if(snap.empty){
 
-            withdrawsList.innerHTML=`
-
-                <div class="empty">
-                    No withdraw requests found.
-                </div>
-
-            `;
+            withdrawList.innerHTML =
+            '<div class="card">No withdraw requests.</div>';
 
             return;
-
         }
 
 
-        let count = 0;
+        snap.forEach((item)=>{
 
-
-        snapshot.forEach((item)=>{
-
-            const data =
+            const w =
             item.data();
 
 
             const amount =
-            Number(data.amount || 0);
-
-
-            const status =
-            String(
-                data.status || "pending"
-            ).toLowerCase();
-
+            Number(w.amount || 0);
 
             const name =
-            data.name || "User";
-
+            w.name || "User";
 
             const email =
-            data.email || "";
-
+            w.email || "";
 
             const uid =
-            data.uid || "";
-
+            w.uid || "";
 
             const method =
-            data.method ||
-            data.paymentMethod ||
+            w.method ||
+            w.paymentMethod ||
             "Not provided";
-
 
             const account =
-            data.account ||
-            data.accountNumber ||
-            data.wallet ||
+            w.account ||
+            w.accountNumber ||
             "Not provided";
 
-
-            let statusClass =
+            const status =
+            w.status ||
             "pending";
 
 
-            if(status === "approved"){
-                statusClass="approved";
-            }
+            withdrawList.innerHTML += `
 
+            <div class="card">
 
-            if(
-                status === "rejected" ||
-                status === "failed"
-            ){
-                statusClass="rejected";
-            }
-
-
-            withdrawsList.innerHTML += `
-
-            <div class="withdraw-card">
-
-                <div class="user-name">
+                <h3>
                     💸 Rs ${amount}
-                </div>
-
-
-                <div class="email">
-                    👤 ${escapeHtml(name)}
-                </div>
-
+                </h3>
 
                 <div class="email">
-                    📧 ${escapeHtml(email)}
+                    👤 ${name}
                 </div>
 
-
-                <div class="id">
-                    🆔 ${escapeHtml(uid)}
+                <div class="email">
+                    📧 ${email}
                 </div>
-
 
                 <div class="info">
-                    💳 Method:
-                    ${escapeHtml(String(method))}
+                    🆔 UID: ${uid}
                 </div>
-
 
                 <div class="info">
-                    🏦 Account:
-                    ${escapeHtml(String(account))}
+                    💳 Method: ${method}
                 </div>
 
-
-                <div class="status ${statusClass}">
-                    Status: ${escapeHtml(status)}
+                <div class="info">
+                    🏦 Account: ${account}
                 </div>
 
+                <div class="status">
+                    Status: ${status}
+                </div>
 
                 ${
-                    status === "pending"
+                    status.toLowerCase() === "pending"
                     ?
                     `
 
-                    <div class="buttons">
+                    <div class="actions">
 
                         <button
-                            class="approve-btn"
-                            onclick="approveWithdraw(
-                                '${item.id}'
-                            )">
+                            class="approve"
+                            onclick="approveWithdraw('${item.id}','${uid}',${amount})">
                             ✅ Approve
                         </button>
 
-
                         <button
-                            class="reject-btn"
-                            onclick="rejectWithdraw(
-                                '${item.id}'
-                            )">
+                            class="reject"
+                            onclick="rejectWithdraw('${item.id}')">
                             ❌ Reject
                         </button>
 
@@ -940,46 +700,23 @@ async function loadWithdraws(){
 
                     `
                     :
-                    ``
+                    ""
                 }
 
             </div>
 
             `;
 
-
-            count++;
-
         });
 
+    }
+    catch(error){
 
-        if(count === 0){
-
-            withdrawsList.innerHTML=`
-
-                <div class="empty">
-                    No requests found.
-                </div>
-
-            `;
-
-        }
-
-
-    }catch(error){
-
-        withdrawsList.innerHTML=`
-
-            <div class="error">
-
-                Error loading requests:
-
-                <br><br>
-
-                ${escapeHtml(error.message)}
-
-            </div>
-
+        withdrawList.innerHTML = `
+        <div class="error">
+            Withdraw Error:<br><br>
+            ${error.message}
+        </div>
         `;
 
     }
@@ -988,19 +725,23 @@ async function loadWithdraws(){
 
 
 /* =========================
-   APPROVE WITHDRAW
+   APPROVE
 ========================= */
 
 window.approveWithdraw =
-async function(withdrawId){
+async function(
+    withdrawId,
+    uid,
+    amount
+){
 
-    const yes =
-    confirm(
-        "Approve this withdrawal?"
-    );
-
-
-    if(!yes){
+    if(
+        !confirm(
+            "Approve Rs " +
+            amount +
+            " withdrawal?"
+        )
+    ){
 
         return;
 
@@ -1009,162 +750,98 @@ async function(withdrawId){
 
     try{
 
-        await runTransaction(
+        const userRef =
+        doc(
             db,
-            async(transaction)=>{
-
-                const withdrawRef =
-                doc(
-                    db,
-                    "withdraws",
-                    withdrawId
-                );
+            "users",
+            uid
+        );
 
 
-                const withdrawSnap =
-                await transaction.get(
-                    withdrawRef
-                );
+        const withdrawRef =
+        doc(
+            db,
+            "withdraws",
+            withdrawId
+        );
 
 
-                if(!withdrawSnap.exists()){
-
-                    throw new Error(
-                        "Withdraw request not found."
-                    );
-
-                }
+        const userSnap =
+        await getDocs(
+            collection(db,"users")
+        );
 
 
-                const withdraw =
-                withdrawSnap.data();
+        let currentBalance = null;
 
 
-                const currentStatus =
-                String(
-                    withdraw.status ||
-                    "pending"
-                ).toLowerCase();
+        userSnap.forEach((item)=>{
 
+            if(item.id === uid){
 
-                if(
-                    currentStatus !==
-                    "pending"
-                ){
-
-                    throw new Error(
-                        "This request is already processed."
-                    );
-
-                }
-
-
-                const uid =
-                withdraw.uid;
-
-
-                const amount =
+                currentBalance =
                 Number(
-                    withdraw.amount || 0
-                );
-
-
-                if(!uid){
-
-                    throw new Error(
-                        "User UID is missing."
-                    );
-
-                }
-
-
-                if(
-                    !amount ||
-                    amount <= 0
-                ){
-
-                    throw new Error(
-                        "Invalid withdrawal amount."
-                    );
-
-                }
-
-
-                const userRef =
-                doc(
-                    db,
-                    "users",
-                    uid
-                );
-
-
-                const userSnap =
-                await transaction.get(
-                    userRef
-                );
-
-
-                if(!userSnap.exists()){
-
-                    throw new Error(
-                        "User profile not found."
-                    );
-
-                }
-
-
-                const user =
-                userSnap.data();
-
-
-                const balance =
-                Number(
-                    user.balance || 0
-                );
-
-
-                if(balance < amount){
-
-                    throw new Error(
-                        "Insufficient balance."
-                    );
-
-                }
-
-
-                const newBalance =
-                balance - amount;
-
-
-                transaction.update(
-                    userRef,
-                    {
-                        balance:newBalance
-                    }
-                );
-
-
-                transaction.update(
-                    withdrawRef,
-                    {
-                        status:"approved"
-                    }
+                    item.data().balance || 0
                 );
 
             }
+
+        });
+
+
+        if(currentBalance === null){
+
+            throw new Error(
+                "User profile not found"
+            );
+
+        }
+
+
+        if(
+            currentBalance < amount
+        ){
+
+            throw new Error(
+                "Insufficient balance"
+            );
+
+        }
+
+
+        await updateDoc(
+
+            userRef,
+
+            {
+                balance:
+                currentBalance - amount
+            }
+
+        );
+
+
+        await updateDoc(
+
+            withdrawRef,
+
+            {
+                status:"approved"
+            }
+
         );
 
 
         alert(
-            "Withdrawal approved successfully."
+            "Withdrawal Approved"
         );
 
 
         loadWithdraws();
         loadUsers();
 
-
-    }catch(error){
+    }
+    catch(error){
 
         alert(
             "Approve failed: " +
@@ -1177,16 +854,67 @@ async function(withdrawId){
 
 
 /* =========================
-   REJECT WITHDRAW
+   REJECT
 ========================= */
 
 window.rejectWithdraw =
-async function(withdrawId){
+async function(id){
 
-    const yes =
-    confirm(
-        "Reject this withdrawal?"
-    );
+    if(
+        !confirm(
+            "Reject this withdrawal?"
+        )
+    ){
+
+        return;
+
+    }
 
 
-    if(!y
+    try{
+
+        await updateDoc(
+
+            doc(
+                db,
+                "withdraws",
+                id
+            ),
+
+            {
+                status:"rejected"
+            }
+
+        );
+
+
+        alert(
+            "Withdrawal Rejected"
+        );
+
+
+        loadWithdraws();
+
+    }
+    catch(error){
+
+        alert(
+            "Reject failed: " +
+            error.message
+        );
+
+    }
+
+};
+
+
+/* =========================
+   START
+========================= */
+
+loadUsers();
+
+</script>
+
+</body>
+</html>
