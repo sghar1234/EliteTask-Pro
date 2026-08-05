@@ -1,0 +1,598 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Customer Chat - Admin</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f3f5f9;
+}
+
+.chat-app{
+max-width:600px;
+height:100vh;
+margin:auto;
+background:white;
+display:flex;
+flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+background:#111827;
+color:white;
+padding:15px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.back{
+color:white;
+text-decoration:none;
+font-size:29px;
+}
+
+.avatar{
+width:43px;
+height:43px;
+border-radius:50%;
+background:#2563eb;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+.user-info{
+flex:1;
+}
+
+.user-info h3{
+font-size:16px;
+}
+
+.user-info p{
+font-size:11px;
+margin-top:4px;
+opacity:.75;
+}
+
+/* MESSAGES */
+
+.messages{
+flex:1;
+overflow-y:auto;
+padding:15px;
+background:#f5f7fa;
+}
+
+.message{
+max-width:78%;
+padding:10px 12px;
+margin-bottom:10px;
+border-radius:13px;
+font-size:14px;
+line-height:1.45;
+word-break:break-word;
+}
+
+.user-message{
+margin-right:auto;
+background:white;
+border:1px solid #e5e5e5;
+border-bottom-left-radius:3px;
+}
+
+.admin-message{
+margin-left:auto;
+background:#2563eb;
+color:white;
+border-bottom-right-radius:3px;
+}
+
+.time{
+display:block;
+font-size:9px;
+text-align:right;
+margin-top:5px;
+opacity:.65;
+}
+
+.empty{
+text-align:center;
+color:#999;
+font-size:13px;
+padding:70px 20px;
+}
+
+/* INPUT */
+
+.input-area{
+display:flex;
+gap:8px;
+padding:10px;
+border-top:1px solid #eee;
+background:white;
+}
+
+#messageInput{
+flex:1;
+border:1px solid #ddd;
+border-radius:22px;
+padding:12px 15px;
+outline:none;
+font-size:14px;
+}
+
+#sendBtn{
+width:45px;
+height:45px;
+border:none;
+border-radius:50%;
+background:#2563eb;
+color:white;
+font-size:18px;
+}
+
+#sendBtn:disabled{
+opacity:.5;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="chat-app">
+
+
+<div class="header">
+
+<a href="users.html" class="back">
+‹
+</a>
+
+
+<div class="avatar">
+👤
+</div>
+
+
+<div class="user-info">
+
+<h3 id="userName">
+User
+</h3>
+
+<p>
+Customer Support Chat
+</p>
+
+</div>
+
+</div>
+
+
+<div class="messages" id="messages">
+
+<div class="empty" id="empty">
+No messages yet.
+</div>
+
+</div>
+
+
+<div class="input-area">
+
+<input
+id="messageInput"
+type="text"
+placeholder="Type your reply..."
+autocomplete="off"
+>
+
+<button id="sendBtn">
+➤
+</button>
+
+</div>
+
+
+</div>
+
+
+<script type="module">
+
+import {
+auth,
+db
+}
+from "./firebase.js";
+
+
+import {
+onAuthStateChanged
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+serverTimestamp
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+/* GET USER FROM URL */
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+
+const userId =
+params.get("uid");
+
+
+const userName =
+params.get("name") || "User";
+
+
+document.getElementById(
+"userName"
+).textContent =
+userName;
+
+
+const messagesBox =
+document.getElementById(
+"messages"
+);
+
+
+const input =
+document.getElementById(
+"messageInput"
+);
+
+
+const sendBtn =
+document.getElementById(
+"sendBtn"
+);
+
+
+const empty =
+document.getElementById(
+"empty"
+);
+
+
+let adminUser = null;
+
+
+/* CHECK ADMIN LOGIN */
+
+onAuthStateChanged(
+auth,
+(user)=>{
+
+if(!user){
+
+window.location.href =
+"admin-login.html";
+
+return;
+
+}
+
+adminUser = user;
+
+loadChat();
+
+});
+
+
+/* USER ID CHECK */
+
+if(!userId){
+
+alert("User not found.");
+
+window.location.href =
+"users.html";
+
+}
+
+
+/* LOAD CHAT */
+
+function loadChat(){
+
+const messagesRef =
+collection(
+db,
+"supportChats",
+userId,
+"messages"
+);
+
+
+const chatQuery =
+query(
+messagesRef,
+orderBy(
+"createdAt",
+"asc"
+)
+);
+
+
+onSnapshot(
+chatQuery,
+(snapshot)=>{
+
+
+document
+.querySelectorAll(
+".message"
+)
+.forEach(
+(el)=>{
+el.remove();
+}
+);
+
+
+if(snapshot.empty){
+
+empty.style.display =
+"block";
+
+}else{
+
+empty.style.display =
+"none";
+
+}
+
+
+snapshot.forEach(
+(doc)=>{
+
+
+const data =
+doc.data();
+
+
+const message =
+document.createElement(
+"div"
+);
+
+
+if(
+data.senderRole === "admin"
+){
+
+message.className =
+"message admin-message";
+
+}else{
+
+message.className =
+"message user-message";
+
+}
+
+
+const text =
+document.createElement(
+"div"
+);
+
+
+text.textContent =
+data.text;
+
+
+const time =
+document.createElement(
+"span"
+);
+
+
+time.className =
+"time";
+
+
+if(data.createdAt){
+
+time.textContent =
+data.createdAt
+.toDate()
+.toLocaleTimeString(
+[],
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}else{
+
+time.textContent =
+"Sending...";
+
+}
+
+
+message.appendChild(
+text
+);
+
+message.appendChild(
+time
+);
+
+messagesBox.appendChild(
+message
+);
+
+
+});
+
+
+messagesBox.scrollTop =
+messagesBox.scrollHeight;
+
+
+},
+(error)=>{
+
+console.error(error);
+
+empty.textContent =
+"Unable to load chat: " +
+error.message;
+
+}
+);
+
+}
+
+
+/* ADMIN SEND REPLY */
+
+async function sendMessage(){
+
+const text =
+input.value.trim();
+
+
+if(
+!text ||
+!adminUser ||
+!userId
+){
+
+return;
+
+}
+
+
+sendBtn.disabled =
+true;
+
+
+try{
+
+
+const messagesRef =
+collection(
+db,
+"supportChats",
+userId,
+"messages"
+);
+
+
+await addDoc(
+messagesRef,
+{
+
+text:text,
+
+senderId:
+adminUser.uid,
+
+senderRole:
+"admin",
+
+createdAt:
+serverTimestamp()
+
+}
+);
+
+
+input.value = "";
+
+input.focus();
+
+
+}catch(error){
+
+alert(
+"Reply failed: " +
+error.message
+);
+
+}
+
+
+sendBtn.disabled =
+false;
+
+}
+
+
+/* SEND BUTTON */
+
+sendBtn.addEventListener(
+"click",
+sendMessage
+);
+
+
+/* ENTER SEND */
+
+input.addEventListener(
+"keydown",
+(event)=>{
+
+if(
+event.key === "Enter"
+){
+
+event.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+</script>
+
+
+</body>
+
+</html>
+```
