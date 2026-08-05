@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,6 +48,27 @@ color:#2563eb;
 margin-top:8px;
 }
 
+.progress{
+margin-top:12px;
+padding:12px;
+background:#eff6ff;
+border-radius:10px;
+color:#1d4ed8;
+font-size:14px;
+font-weight:bold;
+line-height:1.5;
+}
+
+.locked{
+background:#fef2f2;
+color:#dc2626;
+}
+
+.unlocked{
+background:#f0fdf4;
+color:#15803d;
+}
+
 input,
 select{
 width:100%;
@@ -71,6 +93,7 @@ font-weight:bold;
 
 button:disabled{
 opacity:.6;
+cursor:not-allowed;
 }
 
 .message{
@@ -207,8 +230,17 @@ Loading...
 </div>
 
 
+<div
+id="withdrawProgress"
+class="progress">
+
+Checking withdrawal eligibility...
+
+</div>
+
+
 <p class="note">
-Enter the amount you want to withdraw.
+Withdrawal is available after every 10 completed tasks.
 </p>
 
 
@@ -249,7 +281,9 @@ min="1"
 
 
 <button id="withdrawBtn">
+
 Submit Withdraw Request
+
 </button>
 
 
@@ -327,10 +361,19 @@ let currentUser = null;
 
 let currentBalance = 0;
 
+let completedTasks = 0;
+
+let withdrawalUsed = 0;
+
+let availableWithdrawals = 0;
+
 
 
 const balanceElement =
 document.getElementById("balance");
+
+const progressElement =
+document.getElementById("withdrawProgress");
 
 const methodElement =
 document.getElementById("method");
@@ -374,7 +417,7 @@ return;
 currentUser = user;
 
 
-await loadBalance();
+await loadUserData();
 
 await loadHistory();
 
@@ -383,13 +426,12 @@ await loadHistory();
 
 
 /* =========================
-   LOAD BALANCE
+   LOAD USER DATA
 ========================= */
 
-async function loadBalance(){
+async function loadUserData(){
 
 try{
-
 
 const userRef =
 doc(
@@ -408,10 +450,13 @@ if(!userSnap.exists()){
 balanceElement.innerText =
 "Rs 0";
 
-showMessage(
-"User profile not found.",
-"error"
-);
+progressElement.innerText =
+"User profile not found.";
+
+progressElement.className =
+"progress locked";
+
+withdrawBtn.disabled = true;
 
 return;
 
@@ -428,8 +473,69 @@ data.balance || 0
 );
 
 
+completedTasks =
+Number(
+data.completed || 0
+);
+
+
+/*
+ * withdrawUsed ka matlab:
+ * kitni withdrawal opportunities
+ * already use ho chuki hain.
+ *
+ * Agar field pehle nahi hai
+ * to 0 se start hogi.
+ */
+
+withdrawalUsed =
+Number(
+data.withdrawalUsed || 0
+);
+
+
+/*
+ * Har 10 completed tasks par
+ * 1 withdrawal opportunity.
+ *
+ * Example:
+ *
+ * 0-9  = 0
+ * 10-19 = 1
+ * 20-29 = 2
+ * 30-39 = 3
+ */
+
+const totalMilestones =
+Math.floor(
+completedTasks / 10
+);
+
+
+/*
+ * Available withdrawal opportunities
+ */
+
+availableWithdrawals =
+totalMilestones -
+withdrawalUsed;
+
+
+if(
+availableWithdrawals < 0
+){
+
+availableWithdrawals = 0;
+
+}
+
+
 balanceElement.innerText =
 "Rs " + currentBalance;
+
+
+
+updateWithdrawalStatus();
 
 
 }
@@ -438,10 +544,86 @@ catch(error){
 balanceElement.innerText =
 "Rs 0";
 
+progressElement.innerText =
+"Unable to load account.";
+
+progressElement.className =
+"progress locked";
+
+withdrawBtn.disabled = true;
+
 showMessage(
-"Unable to load balance.",
+"Unable to load account.",
 "error"
 );
+
+}
+
+}
+
+
+
+/* =========================
+   WITHDRAW STATUS
+========================= */
+
+function updateWithdrawalStatus(){
+
+
+if(
+availableWithdrawals > 0
+){
+
+progressElement.className =
+"progress unlocked";
+
+
+progressElement.innerHTML =
+
+"✅ Withdrawal Unlocked<br>" +
+
+"Completed Tasks: " +
+completedTasks +
+"<br>" +
+
+"Available Withdrawals: " +
+availableWithdrawals;
+
+
+withdrawBtn.disabled = false;
+
+
+}
+else{
+
+
+progressElement.className =
+"progress locked";
+
+
+const nextMilestone =
+(Math.floor(completedTasks / 10) + 1) * 10;
+
+
+const remaining =
+nextMilestone -
+completedTasks;
+
+
+progressElement.innerHTML =
+
+"🔒 Withdrawal Locked<br>" +
+
+"Completed Tasks: " +
+completedTasks +
+"<br>" +
+
+"Complete " +
+remaining +
+" more task(s) to unlock next withdrawal";
+
+
+withdrawBtn.disabled = true;
 
 }
 
@@ -467,6 +649,20 @@ messageElement.innerText = "";
 
 messageElement.className =
 "message";
+
+
+if(
+availableWithdrawals <= 0
+){
+
+showMessage(
+"Complete 10 tasks to unlock withdrawal.",
+"error"
+);
+
+return;
+
+}
 
 
 const method =
@@ -589,6 +785,44 @@ userData.balance || 0
 );
 
 
+const completed =
+Number(
+userData.completed || 0
+);
+
+
+const used =
+Number(
+userData.withdrawalUsed || 0
+);
+
+
+/*
+ * Check milestone again
+ * inside transaction.
+ */
+
+const totalMilestones =
+Math.floor(
+completed / 10
+);
+
+
+const available =
+totalMilestones - used;
+
+
+if(
+available <= 0
+){
+
+throw new Error(
+"Withdrawal is locked. Complete more tasks."
+);
+
+}
+
+
 if(amount > balance){
 
 throw new Error(
@@ -602,22 +836,31 @@ const newBalance =
 balance - amount;
 
 
+const newUsed =
+used + 1;
 
-/* BALANCE DEDUCT */
+
+
+/*
+ * Balance deduct
+ */
 
 transaction.update(
 
 userRef,
 
 {
-balance:newBalance
+balance:newBalance,
+withdrawalUsed:newUsed
 }
 
 );
 
 
 
-/* WITHDRAW REQUEST */
+/*
+ * Withdraw request
+ */
 
 transaction.set(
 
@@ -646,6 +889,12 @@ amount,
 status:
 "Pending",
 
+milestone:
+used + 1,
+
+completedAtRequest:
+completed,
+
 createdAt:
 serverTimestamp()
 
@@ -665,9 +914,19 @@ currentBalance =
 currentBalance - amount;
 
 
+withdrawalUsed =
+withdrawalUsed + 1;
+
+
+availableWithdrawals =
+availableWithdrawals - 1;
+
+
 balanceElement.innerText =
 "Rs " + currentBalance;
 
+
+updateWithdrawalStatus();
 
 
 showMessage(
@@ -700,7 +959,14 @@ showMessage(
 }
 
 
+if(
+availableWithdrawals > 0
+){
+
 withdrawBtn.disabled = false;
+
+}
+
 
 withdrawBtn.innerText =
 "Submit Withdraw Request";
@@ -943,6 +1209,19 @@ ${escapeHtml(account)}
 <div class="history-row">
 
 <span class="history-label">
+Milestone
+</span>
+
+<span class="history-value">
+10 Tasks × ${Number(data.milestone || 1)}
+</span>
+
+</div>
+
+
+<div class="history-row">
+
+<span class="history-label">
 Date
 </span>
 
@@ -1034,3 +1313,4 @@ return div.innerHTML;
 </body>
 
 </html>
+```
