@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -103,6 +104,10 @@ text-align:center;
 font-weight:bold;
 }
 
+.menu a.locked{
+background:#9ca3af;
+}
+
 .task{
 background:#fff7ed;
 padding:15px;
@@ -110,12 +115,49 @@ border-radius:12px;
 margin-top:15px;
 }
 
+.task-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+.progress{
+background:#e5e7eb;
+height:9px;
+border-radius:10px;
+margin-top:12px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+background:#2563eb;
+width:0%;
+transition:.3s;
+}
+
 .task-box{
 background:white;
 padding:15px;
 border-radius:12px;
-margin-top:10px;
+margin-top:12px;
 box-shadow:0 2px 7px #ddd;
+}
+
+.task-number{
+display:inline-block;
+background:#2563eb;
+color:white;
+padding:5px 9px;
+border-radius:15px;
+font-size:12px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.task-box h3{
+margin-bottom:8px;
 }
 
 .task-image{
@@ -126,31 +168,15 @@ border-radius:10px;
 margin-bottom:12px;
 }
 
-.task-number{
-display:inline-block;
-background:#2563eb;
-color:white;
-padding:5px 10px;
-border-radius:15px;
-font-size:12px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.task-box h3{
-margin-bottom:8px;
-font-size:19px;
-}
-
 .task-info{
-margin-top:7px;
-font-size:14px;
+margin-top:8px;
+font-size:15px;
 }
 
 .task-btn{
 width:100%;
 padding:13px;
-margin-top:14px;
+margin-top:15px;
 background:#16a34a;
 color:white;
 border:none;
@@ -159,44 +185,44 @@ font-weight:bold;
 font-size:15px;
 }
 
-.locked{
-background:#f3f4f6;
+.task-btn:disabled{
+opacity:.6;
+}
+
+.message{
+text-align:center;
 padding:15px;
-border-radius:12px;
-margin-top:10px;
-text-align:center;
-color:#777;
+color:#666;
 }
 
-.withdraw-notice{
-background:#dcfce7;
-color:#166534;
-padding:13px;
-border-radius:10px;
-margin-top:12px;
+.success{
+color:#16a34a;
 font-weight:bold;
-text-align:center;
 }
 
-.no-task{
+.locked-box{
+background:#f3f4f6;
+padding:18px;
+border-radius:12px;
 text-align:center;
-padding:20px;
-color:#777;
+color:#555;
+margin-top:12px;
 }
 
-.loading{
+.history-link{
+display:block;
+margin-top:12px;
 text-align:center;
-padding:20px;
-color:#777;
+color:#2563eb;
+text-decoration:none;
+font-weight:bold;
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <div class="topbar">
 
@@ -209,8 +235,6 @@ Customer Service
 </a>
 
 </div>
-
-
 
 <!-- USER -->
 
@@ -228,8 +252,6 @@ Loading...
 
 </div>
 
-
-
 <!-- BALANCE -->
 
 <div class="card">
@@ -246,8 +268,6 @@ Rs 0
 
 </div>
 
-
-
 <!-- STATS -->
 
 <div class="stats">
@@ -262,7 +282,6 @@ Rs 0
 
 </div>
 
-
 <div class="stat">
 
 <h3 id="commission">
@@ -273,31 +292,27 @@ Rs 0
 
 </div>
 
-
 <div class="stat">
 
 <h3 id="remaining">
 20
 </h3>
 
-<p>Tasks Remaining</p>
+<p>Tasks Left</p>
 
 </div>
-
 
 <div class="stat">
 
-<h3 id="round">
-1
+<h3 id="withdrawStatus">
+🔒
 </h3>
 
-<p>Current Round</p>
+<p>Withdraw</p>
 
 </div>
 
 </div>
-
-
 
 <!-- MENU -->
 
@@ -307,16 +322,17 @@ Rs 0
 📦 Orders / History
 </a>
 
+<a
+id="withdrawLink"
+href="withdraw.html">
 
-<a href="withdraw.html">
 💰 Withdraw
-</a>
 
+</a>
 
 <a href="profile.html">
 👤 Profile
 </a>
-
 
 <a href="support.html">
 🎧 Customer Service
@@ -324,27 +340,40 @@ Rs 0
 
 </div>
 
-
-
 <!-- TASK -->
 
 <div class="task">
 
+<div class="task-header">
+
 <h3>
-📦 Current Task
+Today's Task
 </h3>
+
+<strong id="taskProgress">
+0 / 20
+</strong>
+
+</div>
+
+<div class="progress">
+
+<div
+id="progressBar"
+class="progress-bar">
+</div>
+
+</div>
 
 <div id="taskList">
 
-<div class="loading">
+<div class="message">
 Loading Task...
 </div>
 
 </div>
 
 </div>
-
-
 
 <script type="module">
 
@@ -362,18 +391,26 @@ from
 import {
 doc,
 getDoc,
-updateDoc,
 collection,
 getDocs,
-addDoc,
-serverTimestamp
+query,
+where,
+writeBatch
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+let currentUser = null;
 
-let currentUserId = "";
+let currentTask = null;
+
+let completedTaskIds = new Set();
+
+
+const TOTAL_TASKS = 20;
+
+const WITHDRAW_UNLOCK = 10;
 
 
 
@@ -385,7 +422,6 @@ onAuthStateChanged(
 auth,
 async(user)=>{
 
-
 if(!user){
 
 window.location.href =
@@ -396,15 +432,53 @@ return;
 }
 
 
-currentUserId =
-user.uid;
+currentUser = user;
 
+
+await loadDashboard();
+
+});
+
+
+
+/* =========================
+   LOAD DASHBOARD
+========================= */
+
+async function loadDashboard(){
+
+try{
 
 await loadUser();
 
-await loadTasks();
+await loadCompletedTasks();
 
-});
+await loadNextTask();
+
+}
+catch(error){
+
+document.getElementById(
+"taskList"
+).innerHTML = `
+
+<div class="message">
+
+Error loading dashboard.
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+
+`;
+
+}
+
+}
 
 
 
@@ -414,15 +488,11 @@ await loadTasks();
 
 async function loadUser(){
 
-
-try{
-
-
 const userRef =
 doc(
 db,
 "users",
-currentUserId
+currentUser.uid
 );
 
 
@@ -432,17 +502,33 @@ await getDoc(userRef);
 
 if(!userSnap.exists()){
 
-alert(
-"User account not found."
+throw new Error(
+"User profile not found."
 );
-
-return;
 
 }
 
 
 const data =
 userSnap.data();
+
+
+const completed =
+Number(
+data.completed || 0
+);
+
+
+const commission =
+Number(
+data.commission || 0
+);
+
+
+const balance =
+Number(
+data.balance || 0
+);
 
 
 document.getElementById(
@@ -454,41 +540,27 @@ data.name || "User";
 document.getElementById(
 "userEmail"
 ).innerText =
-data.email || "";
+data.email || currentUser.email || "";
 
 
 document.getElementById(
 "userId"
 ).innerText =
 "ID: " +
-currentUserId.substring(0,8);
+currentUser.uid.substring(0,8);
 
 
 document.getElementById(
 "balance"
 ).innerText =
-"Rs " +
-Number(
-data.balance || 0
-);
+"Rs " + balance;
 
 
 document.getElementById(
 "commission"
 ).innerText =
-"Rs " +
-Number(
-data.commission || 0
-);
+"Rs " + commission;
 
-
-const completed =
-Number(
-data.completed || 0
-);
-
-
-/* COMPLETED */
 
 document.getElementById(
 "completed"
@@ -496,11 +568,9 @@ document.getElementById(
 completed;
 
 
-/* REMAINING */
-
 const remaining =
 Math.max(
-20 - completed,
+TOTAL_TASKS - completed,
 0
 );
 
@@ -511,28 +581,65 @@ document.getElementById(
 remaining;
 
 
-/* ROUND */
+document.getElementById(
+"taskProgress"
+).innerText =
+Math.min(completed,TOTAL_TASKS)
++
+" / "
++
+TOTAL_TASKS;
 
-const currentRound =
-completed < 10
-?
-1
-:
-2;
+
+const percentage =
+Math.min(
+(completed / TOTAL_TASKS) * 100,
+100
+);
 
 
 document.getElementById(
-"round"
-).innerText =
-currentRound;
+"progressBar"
+).style.width =
+percentage + "%";
 
+
+const withdrawStatus =
+document.getElementById(
+"withdrawStatus"
+);
+
+
+const withdrawLink =
+document.getElementById(
+"withdrawLink"
+);
+
+
+if(completed >= WITHDRAW_UNLOCK){
+
+withdrawStatus.innerText =
+"✅";
+
+withdrawLink.classList.remove(
+"locked"
+);
+
+withdrawLink.innerText =
+"💰 Withdraw";
 
 }
-catch(error){
+else{
 
-console.log(
-error
+withdrawStatus.innerText =
+"🔒";
+
+withdrawLink.classList.add(
+"locked"
 );
+
+withdrawLink.innerText =
+"🔒 Withdraw (10 Tasks Required)";
 
 }
 
@@ -541,11 +648,71 @@ error
 
 
 /* =========================
-   LOAD CURRENT TASK
+   LOAD COMPLETED TASKS
 ========================= */
 
-async function loadTasks(){
+async function loadCompletedTasks(){
 
+completedTaskIds =
+new Set();
+
+
+const ordersQuery =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
+
+
+const snapshot =
+await getDocs(
+ordersQuery
+);
+
+
+snapshot.forEach(
+(item)=>{
+
+const data =
+item.data();
+
+
+if(
+data.taskId &&
+String(
+data.status || ""
+).toLowerCase()
+===
+"completed"
+){
+
+completedTaskIds.add(
+String(data.taskId)
+);
+
+}
+
+});
+
+}
+
+
+
+/* =========================
+   LOAD NEXT TASK
+========================= */
+
+async function loadNextTask(){
 
 const taskList =
 document.getElementById(
@@ -555,90 +722,12 @@ document.getElementById(
 
 taskList.innerHTML = `
 
-<div class="loading">
-Loading Task...
+<div class="message">
+Loading next task...
 </div>
 
 `;
 
-
-try{
-
-
-/*
- * USER DATA
- */
-
-const userSnap =
-await getDoc(
-doc(
-db,
-"users",
-currentUserId
-)
-);
-
-
-if(!userSnap.exists()){
-
-taskList.innerHTML = `
-
-<div class="no-task">
-User profile not found.
-</div>
-
-`;
-
-return;
-
-}
-
-
-const user =
-userSnap.data();
-
-
-const completed =
-Number(
-user.completed || 0
-);
-
-
-
-/*
- * MAX 20 TASKS
- */
-
-if(completed >= 20){
-
-taskList.innerHTML = `
-
-<div class="withdraw-notice">
-
-🎉 All 20 Tasks Completed!
-
-<br><br>
-
-Your second withdrawal
-is now available.
-
-<br><br>
-
-Go to Withdraw.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-
-/*
- * GET TASKS
- */
 
 const snapshot =
 await getDocs(
@@ -647,6 +736,23 @@ db,
 "tasks"
 )
 );
+
+
+if(snapshot.empty){
+
+taskList.innerHTML = `
+
+<div class="locked-box">
+
+No tasks are available yet.
+
+</div>
+
+`;
+
+return;
+
+}
 
 
 const tasks = [];
@@ -668,15 +774,6 @@ data.number ||
 );
 
 
-/*
- * ONLY TASK 1-20
- */
-
-if(
-order >= 1 &&
-order <= 20
-){
-
 tasks.push({
 
 id:item.id,
@@ -687,14 +784,11 @@ order:order
 
 });
 
-}
-
 });
 
 
-
 /*
- * SORT TASKS
+ * Tasks ko order ke mutabiq sort
  */
 
 tasks.sort(
@@ -703,37 +797,48 @@ a.order - b.order
 );
 
 
-
 /*
- * CURRENT TASK NUMBER
+ * Sirf pehla incomplete task
  */
 
-const nextTaskNumber =
-completed + 1;
+let nextTask = null;
 
 
+for(
+const task of tasks
+){
 
-/*
- * FIND ONLY NEXT TASK
- */
+if(
+!completedTaskIds.has(
+String(task.id)
+)
+){
 
-const currentTask =
-tasks.find(
-(task)=>
-task.order ===
-nextTaskNumber
-);
+nextTask = task;
+
+break;
+
+}
+
+}
 
 
+if(!nextTask){
 
-if(!currentTask){
+currentTask = null;
+
 
 taskList.innerHTML = `
 
-<div class="no-task">
+<div class="locked-box">
 
-Task ${nextTaskNumber}
-abhi admin ne publish nahi kiya.
+<div class="success">
+🎉 All 20 Tasks Completed!
+</div>
+
+<br>
+
+Aap ne tamam available tasks complete kar liye hain.
 
 </div>
 
@@ -744,87 +849,29 @@ return;
 }
 
 
+currentTask =
+nextTask;
+
 
 const task =
-currentTask.data;
+nextTask.data;
 
 
+const order =
+nextTask.order;
 
-const image =
-task.image || "";
-
-
-
-/*
- * WITHDRAW MESSAGE
- *
- * After task 10
- */
-
-let withdrawNotice = "";
-
-
-if(
-completed === 9
-){
-
-withdrawNotice = `
-
-<div class="withdraw-notice">
-
-🎯 Ye Task 10 hai.
-
-<br>
-
-Task 10 complete karne ke baad
-Withdraw unlock ho jayega.
-
-</div>
-
-`;
-
-}
-
-
-if(
-completed === 19
-){
-
-withdrawNotice = `
-
-<div class="withdraw-notice">
-
-🎯 Ye Task 20 hai.
-
-<br>
-
-Task 20 complete karne ke baad
-second Withdraw unlock ho jayega.
-
-</div>
-
-`;
-
-}
-
-
-
-/*
- * SHOW CURRENT TASK ONLY
- */
 
 taskList.innerHTML = `
 
 <div class="task-box">
 
-
 ${
-image
+task.image
 ?
 `
 
 <img
-src="${escapeHtml(image)}"
+src="${escapeHtml(task.image)}"
 class="task-image"
 onerror="this.style.display='none'"
 >
@@ -837,7 +884,7 @@ onerror="this.style.display='none'"
 
 <div class="task-number">
 
-TASK ${currentTask.order} / 20
+TASK ${order}
 
 </div>
 
@@ -845,8 +892,7 @@ TASK ${currentTask.order} / 20
 <h3>
 
 ${escapeHtml(
-task.name ||
-"Task"
+task.name || "Task"
 )}
 
 </h3>
@@ -855,7 +901,6 @@ task.name ||
 <div class="task-info">
 
 💰 Price:
-
 <b>
 Rs ${Number(
 task.price || 0
@@ -868,7 +913,6 @@ task.price || 0
 <div class="task-info">
 
 💵 Commission:
-
 <b>
 Rs ${Number(
 task.commission || 0
@@ -881,7 +925,6 @@ task.commission || 0
 <div class="task-info">
 
 📝
-
 ${escapeHtml(
 task.description ||
 "No description"
@@ -891,167 +934,166 @@ task.description ||
 
 
 <button
-class="task-btn"
-onclick="completeTask(
-'${currentTask.id}',
-'${escapeHtml(task.name || "Task")}',
-${Number(task.price || 0)},
-${Number(task.commission || 0)},
-${currentTask.order}
-)">
+id="completeTaskBtn"
+class="task-btn">
 
 ✅ Complete Task
 
 </button>
 
-
-${withdrawNotice}
-
-
 </div>
 
 `;
 
 
-
-}
-catch(error){
-
-taskList.innerHTML = `
-
-<div class="no-task">
-
-Error loading task.
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-`;
-
-}
+document
+.getElementById(
+"completeTaskBtn"
+)
+.addEventListener(
+"click",
+completeCurrentTask
+);
 
 }
 
 
 
 /* =========================
-   COMPLETE TASK
+   COMPLETE CURRENT TASK
 ========================= */
 
-window.completeTask =
-async function(
-taskId,
-taskName,
-price,
-commission,
-taskOrder
-){
+async function completeCurrentTask(){
+
+if(!currentTask){
+
+return;
+
+}
+
+
+const button =
+document.getElementById(
+"completeTaskBtn"
+);
+
+
+button.disabled = true;
+
+button.innerText =
+"Completing...";
 
 
 try{
 
+const task =
+currentTask.data;
 
-/*
- * USER
- */
+const taskId =
+currentTask.id;
+
+const taskName =
+task.name || "Task";
+
+const price =
+Number(
+task.price || 0
+);
+
+const taskCommission =
+Number(
+task.commission || 0
+);
+
 
 const userRef =
 doc(
 db,
 "users",
-currentUserId
+currentUser.uid
 );
 
 
+/*
+ * Orders mein duplicate check
+ */
+
+const existingQuery =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+),
+
+where(
+"taskId",
+"==",
+taskId
+)
+
+);
+
+
+const existingSnapshot =
+await getDocs(
+existingQuery
+);
+
+
+if(!existingSnapshot.empty){
+
+throw new Error(
+"This task has already been completed."
+);
+
+}
+
+
+/*
+ * User + order ko ek batch mein save
+ */
+
 const userSnap =
-await getDoc(userRef);
+await getDoc(
+userRef
+);
 
 
 if(!userSnap.exists()){
 
-alert(
-"User account not found."
+throw new Error(
+"User profile not found."
 );
-
-return;
 
 }
 
 
-const user =
+const userData =
 userSnap.data();
-
-
-const oldCompleted =
-Number(
-user.completed || 0
-);
-
-
-/*
- * SECURITY
- *
- * User must complete tasks
- * in exact order.
- */
-
-const expectedTask =
-oldCompleted + 1;
-
-
-if(
-Number(taskOrder)
-!==
-expectedTask
-){
-
-alert(
-"Please complete tasks in order."
-);
-
-return;
-
-}
-
-
-/*
- * MAX 20
- */
-
-if(
-oldCompleted >= 20
-){
-
-alert(
-"All 20 tasks are already completed."
-);
-
-return;
-
-}
-
 
 
 const oldBalance =
 Number(
-user.balance || 0
+userData.balance || 0
 );
 
 
 const oldCommission =
 Number(
-user.commission || 0
+userData.commission || 0
 );
 
 
-const taskCommission =
+const oldCompleted =
 Number(
-commission || 0
+userData.completed || 0
 );
 
 
@@ -1066,15 +1108,24 @@ taskCommission;
 
 
 const newCompleted =
-oldCompleted + 1;
+oldCompleted +
+1;
 
 
+const orderRef =
+doc(
+collection(
+db,
+"orders"
+)
+);
 
-/*
- * UPDATE USER
- */
 
-await updateDoc(
+const batch =
+writeBatch(db);
+
+
+batch.update(
 
 userRef,
 
@@ -1094,40 +1145,31 @@ newCompleted
 );
 
 
+batch.set(
 
-/*
- * ORDER HISTORY
- */
-
-await addDoc(
-
-collection(
-db,
-"orders"
-),
+orderRef,
 
 {
 
 uid:
-currentUserId,
+currentUser.uid,
 
 name:
-user.name || "",
+userData.name || "",
 
 email:
-user.email || "",
+userData.email ||
+currentUser.email ||
+"",
 
 taskId:
 taskId,
-
-taskNumber:
-Number(taskOrder),
 
 taskName:
 taskName,
 
 price:
-Number(price || 0),
+price,
 
 commission:
 taskCommission,
@@ -1136,69 +1178,106 @@ status:
 "Completed",
 
 createdAt:
-serverTimestamp()
+new Date()
 
 }
 
 );
 
+
+await batch.commit();
+
+
+alert(
+"Task Completed Successfully! ✅"
+);
 
 
 /*
- * SUCCESS
+ * Page ko reload nahi karte.
+ * Seedha next task show hoga.
  */
 
-if(
-newCompleted === 10
-){
-
-alert(
-"Task 10 Completed Successfully!\n\n" +
-"🎉 Withdraw is now unlocked."
-);
-
-}
-else if(
-newCompleted === 20
-){
-
-alert(
-"Task 20 Completed Successfully!\n\n" +
-"🎉 Second Withdraw is now unlocked."
-);
-
-}
-else{
-
-alert(
-"Task " +
-newCompleted +
-" Completed Successfully!"
-);
-
-}
-
-
-/*
- * REFRESH
- */
-
-await loadUser();
-
-await loadTasks();
-
+await loadDashboard();
 
 }
 catch(error){
 
 alert(
-"Error: " +
+"Task complete failed: " +
 error.message
+);
+
+button.disabled = false;
+
+button.innerText =
+"✅ Complete Task";
+
+}
+
+}
+
+
+
+/* =========================
+   WITHDRAW LOCK
+========================= */
+
+document
+.getElementById(
+"withdrawLink"
+)
+.addEventListener(
+"click",
+async function(event){
+
+const userRef =
+doc(
+db,
+"users",
+currentUser.uid
+);
+
+
+const userSnap =
+await getDoc(userRef);
+
+
+if(!userSnap.exists()){
+
+event.preventDefault();
+
+alert(
+"User profile not found."
+);
+
+return;
+
+}
+
+
+const completed =
+Number(
+userSnap.data().completed || 0
+);
+
+
+if(
+completed < WITHDRAW_UNLOCK
+){
+
+event.preventDefault();
+
+alert(
+"Withdraw unlock hone ke liye pehle 10 tasks complete karo.\n\n" +
+"Completed: " +
+completed +
+" / 10"
 );
 
 }
 
-}
+});
 
 
 
@@ -1214,17 +1293,13 @@ document.createElement(
 );
 
 div.textContent =
-String(
-text || ""
-);
+String(text || "");
 
 return div.innerHTML;
 
 }
 
-
 </script>
-
 
 </body>
 
