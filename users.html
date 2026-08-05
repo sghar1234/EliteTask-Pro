@@ -51,26 +51,20 @@ font-size:14px;
 }
 
 .actions{
-display:flex;
-gap:10px;
 margin-top:15px;
 }
 
 .chat-btn{
-flex:1;
+display:block;
+width:100%;
 background:#16a34a;
 color:white;
-border:none;
 padding:13px;
 border-radius:10px;
+text-align:center;
+text-decoration:none;
 font-size:15px;
 font-weight:bold;
-text-decoration:none;
-text-align:center;
-}
-
-.chat-btn:active{
-opacity:.8;
 }
 
 .back{
@@ -80,6 +74,21 @@ text-align:center;
 text-decoration:none;
 color:#2563eb;
 padding:12px;
+}
+
+.status{
+background:white;
+margin-top:15px;
+padding:18px;
+border-radius:15px;
+text-align:center;
+color:#777;
+}
+
+.error{
+color:#dc2626;
+text-align:left;
+line-height:1.5;
 }
 
 </style>
@@ -97,7 +106,9 @@ padding:12px;
 
 <div id="usersList">
 
+<div class="status">
 Loading Users...
+</div>
 
 </div>
 
@@ -109,9 +120,7 @@ Loading Users...
 
 <script type="module">
 
-
 import { db } from "./firebase.js";
-
 
 import {
 collection,
@@ -125,59 +134,61 @@ const usersList =
 document.getElementById("usersList");
 
 
+async function loadUsers(){
+
 try{
 
-
-const users =
+const snapshot =
 await getDocs(
 collection(db,"users")
 );
 
 
-usersList.innerHTML="";
+if(snapshot.empty){
 
-
-if(users.empty){
-
-usersList.innerHTML=`
-<div class="user-card">
+usersList.innerHTML = `
+<div class="status">
 No users found.
 </div>
 `;
 
+return;
+
 }
 
 
-users.forEach((item)=>{
+usersList.innerHTML = "";
 
 
-let user =
-item.data();
+snapshot.forEach((docSnap)=>{
 
+const user =
+docSnap.data();
 
 const userId =
-item.id;
-
+docSnap.id;
 
 const name =
 user.name || "User";
 
-
 const email =
 user.email || "No email";
 
-
 const balance =
-user.balance || 0;
-
+user.balance ?? 0;
 
 const commission =
-user.commission || 0;
+user.commission ?? 0;
 
 
-usersList.innerHTML += `
+const card =
+document.createElement("div");
 
-<div class="user-card">
+card.className =
+"user-card";
+
+
+card.innerHTML = `
 
 <h3>
 👤 ${escapeHtml(name)}
@@ -196,7 +207,9 @@ Commission: Rs ${commission}
 </p>
 
 <p class="info">
-ID: ${userId.substring(0,8)}
+ID: ${escapeHtml(
+userId.substring(0,8)
+)}
 </p>
 
 <div class="actions">
@@ -210,26 +223,39 @@ href="admin-chat.html?uid=${encodeURIComponent(userId)}&name=${encodeURIComponen
 
 </div>
 
-</div>
-
 `;
+
+
+usersList.appendChild(card);
 
 });
 
 
 }catch(error){
 
-usersList.innerHTML=`
+console.error(error);
 
-<div class="user-card">
 
-<p style="color:red;">
-Error loading users:
-</p>
+usersList.innerHTML = `
 
-<p class="info">
+<div class="status">
+
+<div class="error">
+
+<strong>
+Firebase Error
+</strong>
+
+<br><br>
+
 ${escapeHtml(error.message)}
-</p>
+
+<br><br>
+
+Code:
+${escapeHtml(error.code || "unknown")}
+
+</div>
 
 </div>
 
@@ -237,8 +263,8 @@ ${escapeHtml(error.message)}
 
 }
 
+}
 
-/* SECURITY FOR DISPLAYED TEXT */
 
 function escapeHtml(text){
 
@@ -250,6 +276,9 @@ return String(text)
 .replace(/'/g,"&#039;");
 
 }
+
+
+loadUsers();
 
 </script>
 
