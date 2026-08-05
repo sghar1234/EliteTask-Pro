@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -47,9 +47,8 @@ overflow-x:auto;
 }
 
 .tabs button{
-flex:1;
-min-width:90px;
-padding:13px 8px;
+min-width:100px;
+padding:13px 10px;
 border:0;
 border-radius:10px;
 background:#2563eb;
@@ -76,10 +75,6 @@ padding:15px;
 margin-bottom:12px;
 border-radius:14px;
 box-shadow:0 2px 8px #ddd;
-}
-
-.card h3{
-margin-bottom:8px;
 }
 
 .email{
@@ -133,6 +128,98 @@ background:#16a34a;
 background:#dc2626;
 }
 
+
+/* FORM */
+
+.form-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:12px;
+}
+
+label{
+display:block;
+margin-top:10px;
+font-size:14px;
+font-weight:bold;
+}
+
+input,
+textarea{
+width:100%;
+padding:12px;
+margin-top:6px;
+border:1px solid #d1d5db;
+border-radius:9px;
+font-size:15px;
+}
+
+textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.addBtn{
+width:100%;
+padding:13px;
+margin-top:15px;
+border:0;
+border-radius:10px;
+background:#16a34a;
+color:white;
+font-weight:bold;
+font-size:16px;
+}
+
+.clearBtn{
+width:100%;
+padding:11px;
+margin-top:8px;
+border:0;
+border-radius:10px;
+background:#6b7280;
+color:white;
+font-weight:bold;
+}
+
+
+/* TASK CARD */
+
+.task-image{
+width:100%;
+max-height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:12px;
+}
+
+.task-number{
+display:inline-block;
+background:#2563eb;
+color:white;
+padding:5px 9px;
+border-radius:15px;
+font-size:12px;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+.task-name{
+font-size:18px;
+font-weight:bold;
+}
+
+.task-delete{
+width:100%;
+padding:11px;
+margin-top:12px;
+border:0;
+border-radius:9px;
+background:#dc2626;
+color:white;
+font-weight:bold;
+}
+
 .editBox{
 display:none;
 margin-top:12px;
@@ -141,24 +228,19 @@ padding:12px;
 border-radius:10px;
 }
 
-.editBox input{
+.saveTask{
 width:100%;
 padding:11px;
-margin-top:6px;
-margin-bottom:8px;
-border:1px solid #ccc;
-border-radius:8px;
-}
-
-.save{
-width:100%;
-padding:11px;
+margin-top:10px;
 border:0;
-border-radius:8px;
-background:#16a34a;
+border-radius:9px;
+background:#2563eb;
 color:white;
 font-weight:bold;
 }
+
+
+/* STATUS */
 
 .status{
 display:inline-block;
@@ -197,130 +279,33 @@ padding:15px;
 word-break:break-word;
 }
 
-
-/* =========================
-   TASK FORM
-========================= */
-
-.form-card{
-background:white;
-padding:16px;
-border-radius:14px;
-box-shadow:0 2px 8px #ddd;
-margin-bottom:15px;
-}
-
-.form-card h3{
-margin-bottom:15px;
-}
-
-.form-group{
-margin-bottom:12px;
-}
-
-.form-group label{
-display:block;
-font-weight:bold;
-font-size:14px;
-margin-bottom:6px;
-}
-
-.form-group input,
-.form-group textarea{
-width:100%;
-padding:12px;
-border:1px solid #d1d5db;
-border-radius:9px;
-font-size:15px;
-outline:none;
-}
-
-.form-group textarea{
-min-height:90px;
-resize:vertical;
-}
-
-.add-task{
-width:100%;
-padding:13px;
-border:0;
-border-radius:10px;
-background:#16a34a;
-color:white;
-font-weight:bold;
-font-size:15px;
-}
-
-.clear-task{
-width:100%;
-padding:11px;
-border:0;
-border-radius:10px;
-background:#6b7280;
-color:white;
-font-weight:bold;
-margin-top:8px;
-}
-
-.task-number{
-display:inline-block;
-background:#111827;
-color:white;
-padding:5px 9px;
-border-radius:8px;
-font-size:13px;
-font-weight:bold;
-}
-
-.task-image{
-width:100%;
-max-height:180px;
-object-fit:cover;
-border-radius:10px;
-margin-top:10px;
-}
-
-.task-actions{
-margin-top:12px;
-}
-
-.delete-task{
-width:100%;
-padding:11px;
-border:0;
-border-radius:8px;
-background:#dc2626;
-color:white;
-font-weight:bold;
-}
-
-.notice{
-background:#eff6ff;
-color:#1e40af;
-padding:12px;
-border-radius:10px;
-font-size:14px;
-line-height:1.5;
-margin-bottom:12px;
+.empty{
+text-align:center;
+padding:20px;
+color:#777;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="header">
 
-EliteTask Pro<br>
+EliteTask Pro
+
+<br>
 
 <small>Admin Panel</small>
 
 </div>
 
-<!-- =========================
-     TABS
-========================= -->
+
+
+<!-- TABS -->
 
 <div class="tabs">
 
@@ -333,6 +318,7 @@ onclick="showUsers()">
 
 </button>
 
+
 <button
 id="withdrawBtn"
 onclick="showWithdraws()">
@@ -340,6 +326,7 @@ onclick="showWithdraws()">
 💸 Withdraws
 
 </button>
+
 
 <button
 id="tasksBtn"
@@ -350,6 +337,8 @@ onclick="showTasks()">
 </button>
 
 </div>
+
+
 
 <!-- =========================
      USERS
@@ -369,6 +358,8 @@ Loading Users...
 
 </div>
 
+
+
 <!-- =========================
      WITHDRAWS
 ========================= -->
@@ -387,6 +378,8 @@ Loading Withdraws...
 
 </div>
 
+
+
 <!-- =========================
      TASKS
 ========================= -->
@@ -395,79 +388,75 @@ Loading Withdraws...
 id="tasksSection"
 class="section">
 
-<div class="notice">
-
-📌 Yahan maximum <b>20 tasks</b> bana sakte ho. <br>
-🔓 User ko Task 1 se start karwaya jayega. <br>
-✅ Har task complete hone ke baad next task unlock hoga.
-
-</div>
 
 <!-- ADD TASK -->
 
-<div class="form-card">
+<div class="card">
 
-<h3>
+<div class="form-title">
+
 ➕ Add New Task
-</h3>
-
-<div class="form-group">
-
-<label>
-Task Number
-</label>
-
-<input
-type="number"
-id="taskNumber"
-min="1"
-max="20"
-placeholder="Example: 1">
 
 </div>
 
-<div class="form-group">
+
+<label>
+Task Number / Order
+</label>
+
+<input
+id="taskOrder"
+type="number"
+min="1"
+placeholder="Example: 1"
+>
+
 
 <label>
 Task Name
 </label>
 
 <input
-type="text"
 id="taskName"
-placeholder="Example: Product Review">
+type="text"
+placeholder="Example: Amazon Order"
+>
 
-</div>
-
-<div class="form-group">
 
 <label>
-Price
+Task Price
 </label>
 
 <input
-type="number"
 id="taskPrice"
+type="number"
 min="0"
-placeholder="Example: 1000">
+placeholder="Example: 500"
+>
 
-</div>
-
-<div class="form-group">
 
 <label>
-Commission / Reward
+Commission
 </label>
 
 <input
-type="number"
 id="taskCommission"
+type="number"
 min="0"
-placeholder="Example: 100">
+placeholder="Example: 50"
+>
 
-</div>
 
-<div class="form-group">
+<label>
+Image URL
+</label>
+
+<input
+id="taskImage"
+type="text"
+placeholder="https://example.com/image.jpg"
+>
+
 
 <label>
 Description
@@ -475,42 +464,47 @@ Description
 
 <textarea
 id="taskDescription"
-placeholder="Task description..."></textarea>
+placeholder="Enter task description">
+</textarea>
 
-</div>
-
-<div class="form-group">
-
-<label>
-Image URL (Optional)
-</label>
-
-<input
-type="text"
-id="taskImage"
-placeholder="https://example.com/image.jpg">
-
-</div>
 
 <button
-class="add-task"
-onclick="addTask()">
+class="addBtn"
+id="addTaskBtn">
 
 ➕ Publish Task
 
 </button>
 
+
 <button
-class="clear-task"
+class="clearBtn"
 onclick="clearTaskForm()">
 
-Clear
+Clear Form
 
 </button>
 
+
+<div
+id="taskMessage"
+class="message">
 </div>
 
+</div>
+
+
+
 <!-- TASK LIST -->
+
+<div class="card">
+
+<div class="form-title">
+
+📦 Published Tasks
+
+</div>
+
 
 <div id="tasksList">
 
@@ -521,6 +515,11 @@ Loading Tasks...
 </div>
 
 </div>
+
+
+</div>
+
+
 
 <script type="module">
 
@@ -534,12 +533,11 @@ collection,
 getDocs,
 getDoc,
 doc,
+addDoc,
 updateDoc,
 deleteDoc,
-addDoc,
 query,
-where,
-serverTimestamp
+orderBy
 
 }
 
@@ -553,12 +551,10 @@ document.getElementById(
 "usersList"
 );
 
-
 const withdrawList =
 document.getElementById(
 "withdrawList"
 );
-
 
 const tasksList =
 document.getElementById(
@@ -574,29 +570,25 @@ document.getElementById(
 function hideAllSections(){
 
 document
-.getElementById("usersSection")
-.classList.remove("active");
-
-document
-.getElementById("withdrawSection")
-.classList.remove("active");
-
-document
-.getElementById("tasksSection")
-.classList.remove("active");
+.querySelectorAll(".section")
+.forEach(
+(section)=>{
+section.classList.remove(
+"active"
+);
+}
+);
 
 
 document
-.getElementById("usersBtn")
-.classList.remove("active");
-
-document
-.getElementById("withdrawBtn")
-.classList.remove("active");
-
-document
-.getElementById("tasksBtn")
-.classList.remove("active");
+.querySelectorAll(".tabs button")
+.forEach(
+(button)=>{
+button.classList.remove(
+"active"
+);
+}
+);
 
 }
 
@@ -613,12 +605,16 @@ hideAllSections();
 
 
 document
-.getElementById("usersSection")
+.getElementById(
+"usersSection"
+)
 .classList.add("active");
 
 
 document
-.getElementById("usersBtn")
+.getElementById(
+"usersBtn"
+)
 .classList.add("active");
 
 
@@ -639,12 +635,16 @@ hideAllSections();
 
 
 document
-.getElementById("withdrawSection")
+.getElementById(
+"withdrawSection"
+)
 .classList.add("active");
 
 
 document
-.getElementById("withdrawBtn")
+.getElementById(
+"withdrawBtn"
+)
 .classList.add("active");
 
 
@@ -665,12 +665,16 @@ hideAllSections();
 
 
 document
-.getElementById("tasksSection")
+.getElementById(
+"tasksSection"
+)
 .classList.add("active");
 
 
 document
-.getElementById("tasksBtn")
+.getElementById(
+"tasksBtn"
+)
 .classList.add("active");
 
 
@@ -692,9 +696,13 @@ usersList.innerHTML =
 
 try{
 
+
 const snap =
 await getDocs(
-collection(db,"users")
+collection(
+db,
+"users"
+)
 );
 
 
@@ -704,25 +712,29 @@ usersList.innerHTML = "";
 if(snap.empty){
 
 usersList.innerHTML =
-'<div class="card">No users found.</div>';
+'<div class="empty">No users found.</div>';
 
 return;
 
 }
 
 
-snap.forEach((item)=>{
+snap.forEach(
+(item)=>{
+
 
 const u =
 item.data();
 
 
 const name =
-u.name || "User";
+u.name ||
+"User";
 
 
 const email =
-u.email || "";
+u.email ||
+"";
 
 
 const balance =
@@ -744,7 +756,8 @@ u.completed || 0
 
 
 const role =
-u.role || "user";
+u.role ||
+"user";
 
 
 usersList.innerHTML += `
@@ -755,24 +768,29 @@ usersList.innerHTML += `
 👤 ${escapeHtml(name)}
 </h3>
 
+
 <div class="email">
 ${escapeHtml(email)}
 </div>
+
 
 <div class="info">
 💰 Balance:
 <b>Rs ${balance}</b>
 </div>
 
+
 <div class="info">
 💵 Commission:
 <b>Rs ${commission}</b>
 </div>
 
+
 <div class="info">
 ✅ Completed:
 <b>${completed}</b>
 </div>
+
 
 <div class="info">
 👑 Role:
@@ -802,10 +820,10 @@ onclick="deleteUser('${item.id}')">
 </div>
 
 
-
 <div
 class="editBox"
 id="edit-${item.id}">
+
 
 <label>
 Balance
@@ -814,7 +832,8 @@ Balance
 <input
 type="number"
 id="bal-${item.id}"
-value="${balance}">
+value="${balance}"
+>
 
 
 <label>
@@ -824,7 +843,8 @@ Commission
 <input
 type="number"
 id="com-${item.id}"
-value="${commission}">
+value="${commission}"
+>
 
 
 <label>
@@ -834,14 +854,15 @@ Completed
 <input
 type="number"
 id="done-${item.id}"
-value="${completed}">
+value="${completed}"
+>
 
 
 <button
-class="save"
+class="saveTask"
 onclick="saveUser('${item.id}')">
 
-💾 Save
+💾 Save User
 
 </button>
 
@@ -864,7 +885,9 @@ Users Error:
 
 <br><br>
 
-${escapeHtml(error.message)}
+${escapeHtml(
+error.message
+)}
 
 </div>
 
@@ -877,7 +900,7 @@ ${escapeHtml(error.message)}
 
 
 /* =========================
-   OPEN EDIT
+   OPEN USER EDIT
 ========================= */
 
 window.openEdit =
@@ -885,7 +908,7 @@ function(id){
 
 const box =
 document.getElementById(
-"edit-"+id
+"edit-" + id
 );
 
 
@@ -898,8 +921,10 @@ return;
 
 box.style.display =
 box.style.display === "block"
-? "none"
-: "block";
+?
+"none"
+:
+"block";
 
 };
 
@@ -914,10 +939,11 @@ async function(id){
 
 try{
 
+
 const balance =
 Number(
 document.getElementById(
-"bal-"+id
+"bal-" + id
 ).value
 );
 
@@ -925,7 +951,7 @@ document.getElementById(
 const commission =
 Number(
 document.getElementById(
-"com-"+id
+"com-" + id
 ).value
 );
 
@@ -933,22 +959,9 @@ document.getElementById(
 const completed =
 Number(
 document.getElementById(
-"done-"+id
+"done-" + id
 ).value
 );
-
-
-if(balance < 0 ||
-commission < 0 ||
-completed < 0){
-
-alert(
-"Values cannot be negative."
-);
-
-return;
-
-}
 
 
 await updateDoc(
@@ -961,11 +974,14 @@ id
 
 {
 
-balance:balance,
+balance:
+balance,
 
-commission:commission,
+commission:
+commission,
 
-completed:completed
+completed:
+completed
 
 }
 
@@ -973,7 +989,7 @@ completed:completed
 
 
 alert(
-"User updated successfully."
+"User updated successfully"
 );
 
 
@@ -1013,6 +1029,7 @@ return;
 
 try{
 
+
 await deleteDoc(
 
 doc(
@@ -1025,7 +1042,7 @@ id
 
 
 alert(
-"User deleted."
+"User deleted"
 );
 
 
@@ -1057,9 +1074,13 @@ withdrawList.innerHTML =
 
 try{
 
+
 const snap =
 await getDocs(
-collection(db,"withdraws")
+collection(
+db,
+"withdraws"
+)
 );
 
 
@@ -1069,14 +1090,16 @@ withdrawList.innerHTML = "";
 if(snap.empty){
 
 withdrawList.innerHTML =
-'<div class="card">No withdraw requests.</div>';
+'<div class="empty">No withdraw requests.</div>';
 
 return;
 
 }
 
 
-snap.forEach((item)=>{
+snap.forEach(
+(item)=>{
+
 
 const w =
 item.data();
@@ -1089,32 +1112,34 @@ w.amount || 0
 
 
 const name =
-w.name || "User";
+w.name ||
+"User";
 
 
 const email =
-w.email || "";
+w.email ||
+"";
 
 
 const uid =
-w.uid || "";
+w.uid ||
+"";
 
 
 const method =
 w.method ||
-w.paymentMethod ||
 "Not provided";
 
 
 const account =
 w.account ||
-w.accountNumber ||
 "Not provided";
 
 
 const status =
 String(
-w.status || "pending"
+w.status ||
+"pending"
 ).toLowerCase();
 
 
@@ -1122,7 +1147,9 @@ let statusClass =
 "pending";
 
 
-if(status === "approved"){
+if(
+status === "approved"
+){
 
 statusClass =
 "approved";
@@ -1130,7 +1157,9 @@ statusClass =
 }
 
 
-if(status === "rejected"){
+if(
+status === "rejected"
+){
 
 statusClass =
 "rejected";
@@ -1146,52 +1175,54 @@ withdrawList.innerHTML += `
 💸 Rs ${amount}
 </h3>
 
+
 <div class="email">
 👤 ${escapeHtml(name)}
 </div>
+
 
 <div class="email">
 📧 ${escapeHtml(email)}
 </div>
 
+
 <div class="info">
-🆔 UID: ${escapeHtml(uid)}
+🆔 UID:
+${escapeHtml(uid)}
 </div>
+
 
 <div class="info">
 💳 Method:
 ${escapeHtml(method)}
 </div>
 
+
 <div class="info">
 🏦 Account:
 ${escapeHtml(account)}
 </div>
 
+
 <div
 class="status ${statusClass}">
 
 Status:
-${status}
+${escapeHtml(status)}
 
 </div>
 
 
 ${
 status === "pending"
-
 ?
-
 `
 
 <div class="actions">
 
 <button
 class="approve"
-onclick="approveWithdraw(
-'${item.id}',
-'${uid}'
-)">
+onclick="approveWithdraw('${item.id}')">
 
 ✅ Approve
 
@@ -1213,11 +1244,8 @@ ${amount}
 </div>
 
 `
-
 :
-
 ""
-
 }
 
 </div>
@@ -1237,7 +1265,9 @@ Withdraw Error:
 
 <br><br>
 
-${escapeHtml(error.message)}
+${escapeHtml(
+error.message
+)}
 
 </div>
 
@@ -1250,14 +1280,11 @@ ${escapeHtml(error.message)}
 
 
 /* =========================
-   APPROVE WITHDRAW
+   APPROVE
 ========================= */
 
 window.approveWithdraw =
-async function(
-withdrawId,
-uid
-){
+async function(id){
 
 if(
 !confirm(
@@ -1272,74 +1299,28 @@ return;
 
 try{
 
-const withdrawRef =
-doc(
-db,
-"withdraws",
-withdrawId
-);
-
-
-const withdrawSnap =
-await getDoc(
-withdrawRef
-);
-
-
-if(!withdrawSnap.exists()){
-
-throw new Error(
-"Withdrawal request not found."
-);
-
-}
-
-
-const data =
-withdrawSnap.data();
-
-
-const status =
-String(
-data.status || "pending"
-).toLowerCase();
-
-
-if(status !== "pending"){
-
-throw new Error(
-"This withdrawal is already " +
-status
-);
-
-}
-
-
-/*
- * Balance already minus ho chuka hai.
- * Approve par dobara minus nahi hoga.
- */
 
 await updateDoc(
 
-withdrawRef,
+doc(
+db,
+"withdraws",
+id
+),
 
 {
-
 status:"approved"
-
 }
 
 );
 
 
 alert(
-"Withdrawal Approved Successfully."
+"Withdrawal Approved Successfully"
 );
 
 
 loadWithdraws();
-loadUsers();
 
 }
 catch(error){
@@ -1356,7 +1337,7 @@ error.message
 
 
 /* =========================
-   REJECT WITHDRAW
+   REJECT
 ========================= */
 
 window.rejectWithdraw =
@@ -1370,7 +1351,7 @@ if(
 !confirm(
 "Reject this withdrawal and refund Rs " +
 amount +
-" to the user?"
+"?"
 )
 ){
 
@@ -1381,60 +1362,6 @@ return;
 
 try{
 
-const withdrawRef =
-doc(
-db,
-"withdraws",
-withdrawId
-);
-
-
-const withdrawSnap =
-await getDoc(
-withdrawRef
-);
-
-
-if(!withdrawSnap.exists()){
-
-throw new Error(
-"Withdrawal request not found."
-);
-
-}
-
-
-const withdrawData =
-withdrawSnap.data();
-
-
-const currentStatus =
-String(
-withdrawData.status ||
-"pending"
-).toLowerCase();
-
-
-if(
-currentStatus !== "pending"
-){
-
-throw new Error(
-"This withdrawal is already " +
-currentStatus
-);
-
-}
-
-
-if(!uid){
-
-throw new Error(
-"User UID not found."
-);
-
-}
-
 
 const userRef =
 doc(
@@ -1444,46 +1371,84 @@ uid
 );
 
 
+const withdrawRef =
+doc(
+db,
+"withdraws",
+withdrawId
+);
+
+
 const userSnap =
 await getDoc(
 userRef
 );
 
 
-if(!userSnap.exists()){
-
-throw new Error(
-"User profile not found."
-);
-
-}
-
-
-const userData =
-userSnap.data();
-
-
-const currentBalance =
-Number(
-userData.balance || 0
-);
-
-
-const refundAmount =
-Number(
-amount || 0
+const withdrawSnap =
+await getDoc(
+withdrawRef
 );
 
 
 if(
-refundAmount <= 0
+!userSnap.exists()
 ){
 
 throw new Error(
-"Invalid withdrawal amount."
+"User not found."
 );
 
 }
+
+
+if(
+!withdrawSnap.exists()
+){
+
+throw new Error(
+"Withdrawal not found."
+);
+
+}
+
+
+const user =
+userSnap.data();
+
+
+const withdrawal =
+withdrawSnap.data();
+
+
+const status =
+String(
+withdrawal.status ||
+"pending"
+).toLowerCase();
+
+
+if(
+status !== "pending"
+){
+
+throw new Error(
+"This withdrawal is already " +
+status
+);
+
+}
+
+
+const oldBalance =
+Number(
+user.balance || 0
+);
+
+
+const newBalance =
+oldBalance +
+Number(amount || 0);
 
 
 await updateDoc(
@@ -1491,11 +1456,7 @@ await updateDoc(
 userRef,
 
 {
-
-balance:
-currentBalance +
-refundAmount
-
+balance:newBalance
 }
 
 );
@@ -1506,24 +1467,18 @@ await updateDoc(
 withdrawRef,
 
 {
-
 status:"rejected"
-
 }
 
 );
 
 
 alert(
-"Withdrawal Rejected.\n\n" +
-"Rs " +
-refundAmount +
-" refunded to user balance."
+"Withdrawal rejected and amount refunded."
 );
 
 
 loadWithdraws();
-loadUsers();
 
 }
 catch(error){
@@ -1543,15 +1498,23 @@ error.message
    ADD TASK
 ========================= */
 
-window.addTask =
-async function(){
+document
+.getElementById(
+"addTaskBtn"
+)
+.addEventListener(
+"click",
+addTask
+);
 
-try{
 
-const taskNumber =
+
+async function addTask(){
+
+const order =
 Number(
 document.getElementById(
-"taskNumber"
+"taskOrder"
 ).value
 );
 
@@ -1578,32 +1541,34 @@ document.getElementById(
 );
 
 
-const description =
-document.getElementById(
-"taskDescription"
-).value.trim();
-
-
 const image =
 document.getElementById(
 "taskImage"
 ).value.trim();
 
 
+const description =
+document.getElementById(
+"taskDescription"
+).value.trim();
 
-/*
- * Validation
- */
+
+const message =
+document.getElementById(
+"taskMessage"
+);
+
+
+message.innerText = "";
+
 
 if(
-!taskNumber ||
-taskNumber < 1 ||
-taskNumber > 20
+!order ||
+order < 1
 ){
 
-alert(
-"Task Number 1 se 20 ke darmiyan hona chahiye."
-);
+message.innerText =
+"Task number enter karo.";
 
 return;
 
@@ -1612,59 +1577,89 @@ return;
 
 if(!name){
 
-alert(
-"Task name enter karo."
-);
+message.innerText =
+"Task name enter karo.";
 
 return;
 
 }
 
 
-if(price < 0){
+if(
+price < 0 ||
+isNaN(price)
+){
 
-alert(
-"Price invalid hai."
-);
+message.innerText =
+"Valid price enter karo.";
+
+return;
+
+}
+
+
+if(
+commission < 0 ||
+isNaN(commission)
+){
+
+message.innerText =
+"Valid commission enter karo.";
 
 return;
 
 }
 
 
-if(commission < 0){
-
-alert(
-"Commission invalid hai."
+const addButton =
+document.getElementById(
+"addTaskBtn"
 );
 
-return;
 
-}
+addButton.disabled = true;
+
+addButton.innerText =
+"Publishing...";
+
+
+try{
 
 
 /*
- * Check duplicate task number.
+ * Check duplicate task number
  */
 
-const existingSnap =
+const existing =
 await getDocs(
-collection(db,"tasks")
+collection(
+db,
+"tasks"
+)
 );
 
 
 let duplicate = false;
 
 
-existingSnap.forEach((item)=>{
+existing.forEach(
+(item)=>{
 
 const data =
 item.data();
 
 
+const existingOrder =
+Number(
+data.order ||
+data.taskNumber ||
+data.number ||
+0
+);
+
+
 if(
-Number(data.taskNumber) ===
-taskNumber
+existingOrder === order
 ){
 
 duplicate = true;
@@ -1676,71 +1671,92 @@ duplicate = true;
 
 if(duplicate){
 
-alert(
-"Task " +
-taskNumber +
+throw new Error(
+"Task number " +
+order +
 " already exists."
 );
-
-return;
 
 }
 
 
+
 /*
- * Save task.
+ * Add task
  */
 
 await addDoc(
 
-collection(db,"tasks"),
+collection(
+db,
+"tasks"
+),
 
 {
 
-taskNumber:taskNumber,
+order:
+order,
 
-name:name,
+taskNumber:
+order,
 
-price:price,
+name:
+name,
 
-commission:commission,
+price:
+price,
 
-description:description,
+commission:
+commission,
 
-image:image,
+image:
+image,
 
-active:true,
+description:
+description,
 
 createdAt:
-serverTimestamp()
+new Date()
 
 }
 
 );
 
 
-alert(
-"Task " +
-taskNumber +
-" published successfully."
-);
+message.innerText =
+"✅ Task published successfully.";
+
+
+message.style.color =
+"#16a34a";
 
 
 clearTaskForm();
 
-loadTasks();
+
+await loadTasks();
+
 
 }
 catch(error){
 
-alert(
-"Task save failed: " +
-error.message
-);
+message.innerText =
+"Error: " +
+error.message;
+
+
+message.style.color =
+"#dc2626";
 
 }
 
-};
+
+addButton.disabled = false;
+
+addButton.innerText =
+"➕ Publish Task";
+
+}
 
 
 
@@ -1752,7 +1768,7 @@ window.clearTaskForm =
 function(){
 
 document.getElementById(
-"taskNumber"
+"taskOrder"
 ).value = "";
 
 
@@ -1772,12 +1788,12 @@ document.getElementById(
 
 
 document.getElementById(
-"taskDescription"
+"taskImage"
 ).value = "";
 
 
 document.getElementById(
-"taskImage"
+"taskDescription"
 ).value = "";
 
 };
@@ -1796,29 +1812,23 @@ tasksList.innerHTML =
 
 try{
 
+
 const snap =
 await getDocs(
-collection(db,"tasks")
+collection(
+db,
+"tasks"
+)
 );
+
+
+tasksList.innerHTML = "";
 
 
 if(snap.empty){
 
-tasksList.innerHTML = `
-
-<div class="card">
-
-<h3>
-📦 No Tasks
-</h3>
-
-<p>
-Abhi koi task publish nahi hua.
-</p>
-
-</div>
-
-`;
+tasksList.innerHTML =
+'<div class="empty">No tasks published yet.</div>';
 
 return;
 
@@ -1828,45 +1838,66 @@ return;
 const tasks = [];
 
 
-snap.forEach((item)=>{
+snap.forEach(
+(item)=>{
 
 tasks.push({
 
 id:item.id,
 
-...item.data()
+data:item.data()
 
 });
 
 });
 
 
-tasks.sort((a,b)=>{
+tasks.sort(
+(a,b)=>{
 
-return Number(
-a.taskNumber || 999
-)
--
+const orderA =
 Number(
-b.taskNumber || 999
+a.data.order ||
+a.data.taskNumber ||
+a.data.number ||
+999999
 );
 
+
+const orderB =
+Number(
+b.data.order ||
+b.data.taskNumber ||
+b.data.number ||
+999999
+);
+
+
+return orderA - orderB;
+
 });
 
 
-tasksList.innerHTML = "";
+tasks.forEach(
+(item)=>{
 
 
-tasks.forEach((task)=>{
+const task =
+item.data;
 
-const number =
+
+const order =
 Number(
-task.taskNumber || 0
+task.order ||
+task.taskNumber ||
+task.number ||
+0
 );
 
 
 const image =
-task.image || "";
+task.image ||
+"";
 
 
 tasksList.innerHTML += `
@@ -1874,41 +1905,38 @@ tasksList.innerHTML += `
 <div class="card">
 
 
-<span class="task-number">
-
-Task ${number}
-
-</span>
-
-
-<h3 style="margin-top:10px;">
-
-${escapeHtml(
-task.name || "Task"
-)}
-
-</h3>
-
-
 ${
 image
-
 ?
-
 `
 
 <img
-src="${escapeAttribute(image)}"
+src="${escapeHtml(image)}"
 class="task-image"
-onerror="this.style.display='none'">
+onerror="this.style.display='none'"
+>
 
 `
-
 :
-
 ""
-
 }
+
+
+<div class="task-number">
+
+TASK ${order}
+
+</div>
+
+
+<div class="task-name">
+
+${escapeHtml(
+task.name ||
+"Task"
+)}
+
+</div>
 
 
 <div class="info">
@@ -1935,42 +1963,24 @@ task.commission || 0
 </div>
 
 
-${
-task.description
-
-?
-
-`
-
 <div class="info">
 
 📝
 ${escapeHtml(
-task.description
+task.description ||
+"No description"
 )}
 
 </div>
 
-`
-
-:
-
-""
-
-}
-
-
-<div class="task-actions">
 
 <button
-class="delete-task"
-onclick="deleteTask('${task.id}')">
+class="task-delete"
+onclick="deleteTask('${item.id}')">
 
-🗑️ Delete Task ${number}
+🗑️ Delete Task
 
 </button>
-
-</div>
 
 
 </div>
@@ -2013,7 +2023,7 @@ async function(id){
 
 if(
 !confirm(
-"Delete this task?"
+"Delete this task permanently?"
 )
 ){
 
@@ -2023,6 +2033,7 @@ return;
 
 
 try{
+
 
 await deleteDoc(
 
@@ -2036,7 +2047,7 @@ id
 
 
 alert(
-"Task deleted."
+"Task deleted successfully."
 );
 
 
@@ -2046,7 +2057,7 @@ loadTasks();
 catch(error){
 
 alert(
-"Task delete failed: " +
+"Delete failed: " +
 error.message
 );
 
@@ -2060,30 +2071,17 @@ error.message
    ESCAPE HTML
 ========================= */
 
-function escapeHtml(value){
+function escapeHtml(text){
 
-return String(value)
+const div =
+document.createElement(
+"div"
+);
 
-.replaceAll("&","&amp;")
+div.textContent =
+String(text || "");
 
-.replaceAll("<","&lt;")
-
-.replaceAll(">","&gt;")
-
-.replaceAll('"',"&quot;")
-
-.replaceAll("'","&#039;");
-
-}
-
-
-function escapeAttribute(value){
-
-return String(value)
-
-.replaceAll("\\","\\\\")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+return div.innerHTML;
 
 }
 
@@ -2097,6 +2095,8 @@ loadUsers();
 
 </script>
 
+
 </body>
 
 </html>
+```
