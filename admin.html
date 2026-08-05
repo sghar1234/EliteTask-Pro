@@ -4,60 +4,64 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Admin</title>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>EliteTask Pro Admin</title>
 
 <style>
 
 *{
-box-sizing:border-box;
 margin:0;
 padding:0;
+box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f6f8;
+background:#f3f4f6;
 padding:15px;
-color:#111;
+color:#111827;
 }
 
 .header{
 background:#111827;
 color:white;
-padding:18px;
-border-radius:14px;
-text-align:center;
+padding:20px;
+border-radius:16px;
 font-size:22px;
 font-weight:bold;
 }
 
-.header small{
-font-size:14px;
-opacity:.8;
+.sub{
+font-size:13px;
+font-weight:normal;
+opacity:.7;
+margin-top:5px;
 }
 
 .tabs{
-display:flex;
-gap:8px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
 margin-top:15px;
-overflow-x:auto;
 }
 
-.tabs button{
-min-width:100px;
-padding:13px 10px;
-border:0;
-border-radius:10px;
+.tab{
+background:white;
+border:none;
+padding:14px 8px;
+border-radius:12px;
+font-size:14px;
+font-weight:bold;
+box-shadow:0 2px 8px #ddd;
+color:#374151;
+}
+
+.tab.active{
 background:#2563eb;
 color:white;
-font-weight:bold;
-white-space:nowrap;
-}
-
-.tabs button.active{
-background:#111827;
 }
 
 .section{
@@ -71,312 +75,241 @@ display:block;
 
 .card{
 background:white;
-padding:15px;
-margin-bottom:12px;
-border-radius:14px;
-box-shadow:0 2px 8px #ddd;
+padding:18px;
+border-radius:15px;
+margin-top:12px;
+box-shadow:0 3px 10px #ddd;
 }
 
-.email{
-color:#666;
-font-size:14px;
-margin-top:6px;
-word-break:break-word;
-}
-
-.info{
-margin-top:8px;
-font-size:15px;
-word-break:break-word;
-}
-
-.actions{
-display:flex;
-gap:8px;
-margin-top:14px;
-}
-
-button{
-cursor:pointer;
-}
-
-.edit,
-.delete,
-.approve,
-.reject{
-flex:1;
-border:0;
-padding:11px;
-border-radius:8px;
-color:white;
-font-weight:bold;
-}
-
-.edit{
-background:#2563eb;
-}
-
-.delete{
-background:#dc2626;
-}
-
-.approve{
-background:#16a34a;
-}
-
-.reject{
-background:#dc2626;
-}
-
-
-/* FORM */
-
-.form-title{
-font-size:20px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-label{
-display:block;
-margin-top:10px;
-font-size:14px;
-font-weight:bold;
+.card h3{
+color:#2563eb;
+margin-bottom:10px;
 }
 
 input,
 textarea{
 width:100%;
-padding:12px;
-margin-top:6px;
-border:1px solid #d1d5db;
-border-radius:9px;
+padding:13px;
+margin-top:8px;
+border:1px solid #ddd;
+border-radius:10px;
 font-size:15px;
+outline:none;
 }
 
 textarea{
-min-height:90px;
-resize:vertical;
+height:90px;
+resize:none;
 }
 
-.addBtn{
+button{
+border:none;
+cursor:pointer;
+}
+
+.primary{
 width:100%;
-padding:13px;
-margin-top:15px;
-border:0;
-border-radius:10px;
+background:#2563eb;
+color:white;
+padding:14px;
+border-radius:11px;
+font-size:15px;
+font-weight:bold;
+margin-top:12px;
+}
+
+.loading{
+background:white;
+padding:20px;
+border-radius:12px;
+text-align:center;
+color:#6b7280;
+}
+
+.empty{
+background:white;
+padding:20px;
+border-radius:12px;
+text-align:center;
+color:#6b7280;
+}
+
+.error{
+background:#fee2e2;
+color:#b91c1c;
+padding:15px;
+border-radius:12px;
+margin-top:12px;
+word-break:break-word;
+}
+
+.info{
+margin-top:8px;
+color:#4b5563;
+font-size:14px;
+}
+
+.email{
+color:#6b7280;
+font-size:13px;
+margin-top:5px;
+word-break:break-word;
+}
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.edit{
+background:#f59e0b;
+color:white;
+padding:12px;
+border-radius:9px;
+font-weight:bold;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+padding:12px;
+border-radius:9px;
+font-weight:bold;
+}
+
+.chat{
+display:block;
 background:#16a34a;
 color:white;
-font-weight:bold;
-font-size:16px;
-}
-
-.clearBtn{
-width:100%;
-padding:11px;
-margin-top:8px;
-border:0;
+padding:13px;
 border-radius:10px;
-background:#6b7280;
-color:white;
+text-align:center;
+text-decoration:none;
+font-weight:bold;
+margin-top:10px;
+}
+
+.editBox{
+display:none;
+margin-top:12px;
+padding:12px;
+background:#f9fafb;
+border-radius:10px;
+}
+
+.editBox label{
+display:block;
+margin-top:8px;
+font-size:13px;
 font-weight:bold;
 }
 
-
-/* TASK */
+.save{
+width:100%;
+background:#16a34a;
+color:white;
+padding:12px;
+border-radius:9px;
+margin-top:10px;
+font-weight:bold;
+}
 
 .task-image{
 width:100%;
-max-height:180px;
+max-height:200px;
 object-fit:cover;
 border-radius:10px;
 margin-bottom:12px;
 }
 
 .task-number{
-display:inline-block;
-background:#2563eb;
-color:white;
-padding:5px 9px;
-border-radius:15px;
 font-size:12px;
+color:#6b7280;
 font-weight:bold;
-margin-bottom:8px;
 }
 
 .task-name{
 font-size:18px;
 font-weight:bold;
+margin-top:5px;
 }
 
 .task-delete{
 width:100%;
-padding:11px;
-margin-top:12px;
-border:0;
-border-radius:9px;
 background:#dc2626;
 color:white;
-font-weight:bold;
-}
-
-
-/* EDIT */
-
-.editBox{
-display:none;
-margin-top:12px;
-background:#f3f4f6;
 padding:12px;
-border-radius:10px;
-}
-
-.saveTask{
-width:100%;
-padding:11px;
-margin-top:10px;
-border:0;
 border-radius:9px;
-background:#2563eb;
-color:white;
+margin-top:12px;
 font-weight:bold;
 }
-
-
-/* STATUS */
 
 .status{
 display:inline-block;
-margin-top:10px;
 padding:6px 10px;
-border-radius:15px;
-background:#eee;
-font-size:13px;
+border-radius:20px;
+font-size:12px;
+font-weight:bold;
+margin-top:10px;
+background:#fef3c7;
+color:#92400e;
+}
+
+.approve{
+width:100%;
+background:#16a34a;
+color:white;
+padding:12px;
+border-radius:9px;
+margin-top:10px;
 font-weight:bold;
 }
 
-.status.pending{
-background:#fff3cd;
-color:#856404;
+.reject{
+width:100%;
+background:#dc2626;
+color:white;
+padding:12px;
+border-radius:9px;
+margin-top:8px;
+font-weight:bold;
 }
-
-.status.approved{
-background:#d4edda;
-color:#155724;
-}
-
-.status.rejected{
-background:#f8d7da;
-color:#721c24;
-}
-
-
-/* SUPPORT */
 
 .support-message{
-background:#f9fafb;
-padding:13px;
+background:white;
+padding:16px;
 border-radius:12px;
-margin-top:12px;
-border:1px solid #e5e7eb;
+margin-top:10px;
+box-shadow:0 2px 7px #ddd;
 }
 
 .support-user{
-font-size:16px;
 font-weight:bold;
+color:#2563eb;
 }
 
 .support-email{
-font-size:13px;
-color:#777;
-margin-top:5px;
-word-break:break-word;
+font-size:12px;
+color:#6b7280;
+margin-top:4px;
 }
 
 .support-text{
 margin-top:10px;
+line-height:1.5;
+}
+
+.logout{
+width:100%;
+background:#111827;
+color:white;
+padding:14px;
+border-radius:11px;
 font-size:15px;
-line-height:1.4;
-word-break:break-word;
-}
-
-.support-user-message{
-background:#dbeafe;
-padding:11px;
-border-radius:10px;
-margin-top:10px;
-}
-
-.support-admin-message{
-background:#dcfce7;
-padding:11px;
-border-radius:10px;
-margin-top:10px;
-}
-
-.replyBox{
-margin-top:12px;
-background:#f3f4f6;
-padding:12px;
-border-radius:10px;
-}
-
-.replyBox textarea{
-width:100%;
-min-height:70px;
-padding:11px;
-border:1px solid #ccc;
-border-radius:8px;
-resize:none;
-}
-
-.replyBtn{
-width:100%;
-padding:11px;
-margin-top:8px;
-border:0;
-border-radius:9px;
-background:#16a34a;
-color:white;
 font-weight:bold;
-}
-
-.delete-message{
-width:100%;
-padding:9px;
-margin-top:8px;
-border:0;
-border-radius:8px;
-background:#dc2626;
-color:white;
-font-weight:bold;
-}
-
-
-/* OTHER */
-
-.loading{
-text-align:center;
-padding:20px;
-color:#777;
-}
-
-.error{
-color:#dc2626;
-padding:15px;
-word-break:break-word;
-}
-
-.empty{
-text-align:center;
-padding:20px;
-color:#777;
-}
-
-.message{
-margin-top:10px;
-font-size:14px;
-font-weight:bold;
+margin-top:15px;
 }
 
 </style>
@@ -389,24 +322,31 @@ font-weight:bold;
 
 <div class="header">
 
-EliteTask Pro
+⚙️ EliteTask Pro Admin
 
-<br>
-
-<small>Admin Panel</small>
+<div class="sub">
+Admin Control Panel
+</div>
 
 </div>
 
 
 
-<!-- TABS -->
+<div id="authStatus"
+class="loading">
+
+Checking Admin Login...
+
+</div>
+
+
 
 <div class="tabs">
 
 <button
-id="usersBtn"
-class="active"
-onclick="showUsers()">
+id="usersTab"
+class="tab active"
+onclick="showSection('users')">
 
 👥 Users
 
@@ -414,17 +354,9 @@ onclick="showUsers()">
 
 
 <button
-id="withdrawBtn"
-onclick="showWithdraws()">
-
-💸 Withdraws
-
-</button>
-
-
-<button
-id="tasksBtn"
-onclick="showTasks()">
+id="tasksTab"
+class="tab"
+onclick="showSection('tasks')">
 
 📦 Tasks
 
@@ -432,8 +364,19 @@ onclick="showTasks()">
 
 
 <button
-id="supportBtn"
-onclick="showSupport()">
+id="withdrawTab"
+class="tab"
+onclick="showSection('withdraw')">
+
+💰 Withdraw
+
+</button>
+
+
+<button
+id="supportTab"
+class="tab"
+onclick="showSection('support')">
 
 🎧 Support
 
@@ -443,9 +386,7 @@ onclick="showSupport()">
 
 
 
-<!-- =========================
-     USERS
-========================= -->
+<!-- USERS -->
 
 <div
 id="usersSection"
@@ -463,29 +404,7 @@ Loading Users...
 
 
 
-<!-- =========================
-     WITHDRAWS
-========================= -->
-
-<div
-id="withdrawSection"
-class="section">
-
-<div id="withdrawList">
-
-<div class="loading">
-Loading Withdraws...
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- =========================
-     TASKS
-========================= -->
+<!-- TASKS -->
 
 <div
 id="tasksSection"
@@ -494,115 +413,63 @@ class="section">
 
 <div class="card">
 
-<div class="form-title">
-
+<h3>
 ➕ Add New Task
+</h3>
 
-</div>
-
-
-<label>
-Task Number / Order
-</label>
 
 <input
 id="taskOrder"
 type="number"
-min="1"
-placeholder="Example: 1"
->
+placeholder="Task Number">
 
-
-<label>
-Task Name
-</label>
 
 <input
 id="taskName"
 type="text"
-placeholder="Example: Amazon Order"
->
+placeholder="Task Name">
 
-
-<label>
-Task Price
-</label>
 
 <input
 id="taskPrice"
 type="number"
-min="0"
-placeholder="Example: 500"
->
+placeholder="Task Price">
 
-
-<label>
-Commission
-</label>
 
 <input
 id="taskCommission"
 type="number"
-min="0"
-placeholder="Example: 50"
->
+placeholder="Commission">
 
-
-<label>
-Image URL
-</label>
 
 <input
 id="taskImage"
 type="text"
-placeholder="https://example.com/image.jpg"
->
+placeholder="Image URL (optional)">
 
-
-<label>
-Description
-</label>
 
 <textarea
 id="taskDescription"
-placeholder="Enter task description">
+placeholder="Task Description">
 </textarea>
 
 
 <button
-class="addBtn"
-id="addTaskBtn">
+id="addTaskBtn"
+class="primary">
 
-➕ Publish Task
-
-</button>
-
-
-<button
-class="clearBtn"
-onclick="clearTaskForm()">
-
-Clear Form
+➕ Add Task
 
 </button>
 
 
 <div
 id="taskMessage"
-class="message">
+style="margin-top:10px;text-align:center;">
 </div>
 
 </div>
 
-
-
-<div class="card">
-
-<div class="form-title">
-
-📦 Published Tasks
-
-</div>
 
 
 <div id="tasksList">
@@ -613,6 +480,24 @@ Loading Tasks...
 
 </div>
 
+
+</div>
+
+
+
+<!-- WITHDRAW -->
+
+<div
+id="withdrawSection"
+class="section">
+
+
+<div id="withdrawList">
+
+<div class="loading">
+Loading Withdraw Requests...
+</div>
+
 </div>
 
 
@@ -620,44 +505,68 @@ Loading Tasks...
 
 
 
-<!-- =========================
-     SUPPORT
-========================= -->
+<!-- SUPPORT -->
 
 <div
 id="supportSection"
 class="section">
 
+
 <div class="card">
 
-<div class="form-title">
-
+<h3>
 🎧 Customer Support
+</h3>
+
+<p class="info">
+Users ke support messages yahan show honge.
+</p>
 
 </div>
+
 
 <div id="supportList">
 
 <div class="loading">
-Loading Messages...
+Loading Support...
 </div>
 
 </div>
 
-</div>
 
 </div>
+
+
+
+<button
+id="logoutBtn"
+class="logout">
+
+🚪 Logout Admin
+
+</button>
 
 
 
 <script type="module">
 
 
-import { db } from "./firebase.js";
+import {
+auth,
+db
+}
+from "./firebase.js";
 
 
 import {
+onAuthStateChanged,
+signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
+
+import {
 collection,
 getDocs,
 getDoc,
@@ -666,27 +575,42 @@ addDoc,
 updateDoc,
 deleteDoc,
 serverTimestamp
-
 }
-
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+
+/* ADMIN UID */
+
+const ADMIN_UID =
+"BLmacTdfuBVlQ0eEJWsQidnexY02";
+
+
+let adminReady = false;
+
+
+
+/* ELEMENTS */
+
+const authStatus =
+document.getElementById(
+"authStatus"
+);
 
 const usersList =
 document.getElementById(
 "usersList"
 );
 
-const withdrawList =
-document.getElementById(
-"withdrawList"
-);
-
 const tasksList =
 document.getElementById(
 "tasksList"
+);
+
+const withdrawList =
+document.getElementById(
+"withdrawList"
 );
 
 const supportList =
@@ -697,171 +621,225 @@ document.getElementById(
 
 
 /* =========================
-   HIDE SECTIONS
+AUTH
 ========================= */
 
-function hideAllSections(){
 
-document
-.querySelectorAll(".section")
-.forEach(
-(section)=>{
-
-section.classList.remove(
-"active"
-);
-
-}
-);
+onAuthStateChanged(
+auth,
+async(user)=>{
 
 
-document
-.querySelectorAll(".tabs button")
-.forEach(
-(button)=>{
+if(!user){
 
-button.classList.remove(
-"active"
-);
+authStatus.innerHTML = `
+<div class="error">
+Admin login not found.
+<br><br>
+<a href="admin-login.html">
+Go to Admin Login
+</a>
+</div>
+`;
+
+return;
 
 }
-);
+
+
+if(
+user.uid !== ADMIN_UID
+){
+
+authStatus.innerHTML = `
+<div class="error">
+Access Denied.
+<br><br>
+This account is not the Admin account.
+</div>
+`;
+
+return;
 
 }
+
+
+adminReady = true;
+
+
+authStatus.innerHTML = `
+<div class="card"
+style="margin-top:0;color:#16a34a;">
+✅ Admin Logged In
+</div>
+`;
+
+
+/* LOAD FIRST TAB */
+
+loadUsers();
+
+});
 
 
 
 /* =========================
-   USERS
+SECTION SWITCH
 ========================= */
 
-window.showUsers =
-function(){
 
-hideAllSections();
+window.showSection =
+async function(section){
 
+
+if(!adminReady){
+
+return;
+
+}
+
+
+document
+.querySelectorAll(".section")
+.forEach(
+el =>
+el.classList.remove(
+"active"
+)
+);
+
+
+document
+.querySelectorAll(".tab")
+.forEach(
+el =>
+el.classList.remove(
+"active"
+)
+);
+
+
+if(
+section === "users"
+){
 
 document
 .getElementById(
 "usersSection"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 document
 .getElementById(
-"usersBtn"
+"usersTab"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 loadUsers();
 
-};
+}
 
 
-
-/* =========================
-   WITHDRAWS
-========================= */
-
-window.showWithdraws =
-function(){
-
-hideAllSections();
-
-
-document
-.getElementById(
-"withdrawSection"
-)
-.classList.add("active");
-
-
-document
-.getElementById(
-"withdrawBtn"
-)
-.classList.add("active");
-
-
-loadWithdraws();
-
-};
-
-
-
-/* =========================
-   TASKS
-========================= */
-
-window.showTasks =
-function(){
-
-hideAllSections();
-
+if(
+section === "tasks"
+){
 
 document
 .getElementById(
 "tasksSection"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 document
 .getElementById(
-"tasksBtn"
+"tasksTab"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 loadTasks();
 
-};
+}
 
 
+if(
+section === "withdraw"
+){
 
-/* =========================
-   SUPPORT
-========================= */
+document
+.getElementById(
+"withdrawSection"
+)
+.classList.add(
+"active"
+);
 
-window.showSupport =
-function(){
+document
+.getElementById(
+"withdrawTab"
+)
+.classList.add(
+"active"
+);
 
-hideAllSections();
+loadWithdraws();
 
+}
+
+
+if(
+section === "support"
+){
 
 document
 .getElementById(
 "supportSection"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 document
 .getElementById(
-"supportBtn"
+"supportTab"
 )
-.classList.add("active");
-
+.classList.add(
+"active"
+);
 
 loadSupport();
+
+}
 
 };
 
 
 
 /* =========================
-   LOAD USERS
+USERS
 ========================= */
+
 
 async function loadUsers(){
 
+
 usersList.innerHTML =
-'<div class="loading">Loading Users...</div>';
+`
+<div class="loading">
+Loading Users...
+</div>
+`;
 
 
 try{
+
 
 const snap =
 await getDocs(
@@ -875,10 +853,16 @@ db,
 usersList.innerHTML = "";
 
 
-if(snap.empty){
+if(
+snap.empty
+){
 
 usersList.innerHTML =
-'<div class="empty">No users found.</div>';
+`
+<div class="empty">
+No users found.
+</div>
+`;
 
 return;
 
@@ -888,18 +872,21 @@ return;
 snap.forEach(
 (item)=>{
 
+
 const u =
 item.data();
 
 
+const id =
+item.id;
+
+
 const name =
-u.name ||
-"User";
+u.name || "User";
 
 
 const email =
-u.email ||
-"";
+u.email || "No email";
 
 
 const balance =
@@ -920,14 +907,17 @@ u.completed || 0
 );
 
 
-const role =
-u.role ||
-"user";
+const card =
+document.createElement(
+"div"
+);
 
 
-usersList.innerHTML += `
+card.className =
+"card";
 
-<div class="card">
+
+card.innerHTML = `
 
 <h3>
 👤 ${escapeHtml(name)}
@@ -952,26 +942,19 @@ ${escapeHtml(email)}
 <b>${completed}</b>
 </div>
 
-<div class="info">
-👑 Role:
-<b>${escapeHtml(role)}</b>
-</div>
-
-
 <div class="actions">
 
 <button
 class="edit"
-onclick="openEdit('${item.id}')">
+onclick="editUser('${id}')">
 
 ✏️ Edit
 
 </button>
 
-
 <button
 class="delete"
-onclick="deleteUser('${item.id}')">
+onclick="deleteUser('${id}')">
 
 🗑️ Delete
 
@@ -981,18 +964,17 @@ onclick="deleteUser('${item.id}')">
 
 
 <div
-class="editBox"
-id="edit-${item.id}">
+id="editBox-${id}"
+class="editBox">
 
 <label>
 Balance
 </label>
 
 <input
+id="balance-${id}"
 type="number"
-id="bal-${item.id}"
-value="${balance}"
->
+value="${balance}">
 
 
 <label>
@@ -1000,10 +982,9 @@ Commission
 </label>
 
 <input
+id="commission-${id}"
 type="number"
-id="com-${item.id}"
-value="${commission}"
->
+value="${commission}">
 
 
 <label>
@@ -1011,36 +992,51 @@ Completed
 </label>
 
 <input
+id="completed-${id}"
 type="number"
-id="done-${item.id}"
-value="${completed}"
->
+value="${completed}">
 
 
 <button
-class="saveTask"
-onclick="saveUser('${item.id}')">
+class="save"
+onclick="saveUser('${id}')">
 
-💾 Save User
+💾 Save Changes
 
 </button>
 
 </div>
 
-</div>
+
+<a
+class="chat"
+href="admin-chat.html?uid=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}">
+
+💬 Chat with User
+
+</a>
 
 `;
 
+
+usersList.appendChild(
+card
+);
+
 });
 
-}
-catch(error){
 
-usersList.innerHTML = `
 
+}catch(error){
+
+
+usersList.innerHTML =
+`
 <div class="error">
 
-Users Error:
+<strong>
+Firebase Error
+</strong>
 
 <br><br>
 
@@ -1048,8 +1044,14 @@ ${escapeHtml(
 error.message
 )}
 
-</div>
+<br><br>
 
+Code:
+${escapeHtml(
+error.code || ""
+)}
+
+</div>
 `;
 
 }
@@ -1058,50 +1060,50 @@ error.message
 
 
 
-/* =========================
-   EDIT USER
-========================= */
+/* EDIT USER */
 
-window.openEdit =
+
+window.editUser =
 function(id){
 
 const box =
 document.getElementById(
-"edit-" + id
+"editBox-" + id
 );
 
 
-if(!box){
-
-return;
-
-}
-
+if(
+box.style.display ===
+"block"
+){
 
 box.style.display =
-box.style.display === "block"
-?
-"none"
-:
+"none";
+
+}else{
+
+box.style.display =
 "block";
+
+}
 
 };
 
 
 
-/* =========================
-   SAVE USER
-========================= */
+/* SAVE USER */
+
 
 window.saveUser =
 async function(id){
 
 try{
 
+
 const balance =
 Number(
 document.getElementById(
-"bal-" + id
+"balance-" + id
 ).value
 );
 
@@ -1109,7 +1111,7 @@ document.getElementById(
 const commission =
 Number(
 document.getElementById(
-"com-" + id
+"commission-" + id
 ).value
 );
 
@@ -1117,7 +1119,7 @@ document.getElementById(
 const completed =
 Number(
 document.getElementById(
-"done-" + id
+"completed-" + id
 ).value
 );
 
@@ -1131,30 +1133,26 @@ id
 ),
 
 {
-
-balance:balance,
-
-commission:commission,
-
-completed:completed
-
+balance,
+commission,
+completed
 }
 
 );
 
 
 alert(
-"User updated successfully"
+"User updated successfully ✅"
 );
 
 
 loadUsers();
 
-}
-catch(error){
+
+}catch(error){
 
 alert(
-"Update failed: " +
+"Update Error: " +
 error.message
 );
 
@@ -1164,12 +1162,12 @@ error.message
 
 
 
-/* =========================
-   DELETE USER
-========================= */
+/* DELETE USER */
+
 
 window.deleteUser =
 async function(id){
+
 
 if(
 !confirm(
@@ -1184,29 +1182,28 @@ return;
 
 try{
 
-await deleteDoc(
 
+await deleteDoc(
 doc(
 db,
 "users",
 id
 )
-
 );
 
 
 alert(
-"User deleted"
+"User deleted successfully."
 );
 
 
 loadUsers();
 
-}
-catch(error){
+
+}catch(error){
 
 alert(
-"Delete failed: " +
+"Delete Error: " +
 error.message
 );
 
@@ -1217,426 +1214,9 @@ error.message
 
 
 /* =========================
-   LOAD WITHDRAWS
+TASKS
 ========================= */
 
-async function loadWithdraws(){
-
-withdrawList.innerHTML =
-'<div class="loading">Loading Withdraws...</div>';
-
-
-try{
-
-const snap =
-await getDocs(
-collection(
-db,
-"withdraws"
-)
-);
-
-
-withdrawList.innerHTML = "";
-
-
-if(snap.empty){
-
-withdrawList.innerHTML =
-'<div class="empty">No withdraw requests.</div>';
-
-return;
-
-}
-
-
-snap.forEach(
-(item)=>{
-
-const w =
-item.data();
-
-
-const amount =
-Number(
-w.amount || 0
-);
-
-
-const name =
-w.name ||
-"User";
-
-
-const email =
-w.email ||
-"";
-
-
-const uid =
-w.uid ||
-"";
-
-
-const method =
-w.method ||
-"Not provided";
-
-
-const account =
-w.account ||
-"Not provided";
-
-
-const status =
-String(
-w.status ||
-"pending"
-).toLowerCase();
-
-
-let statusClass =
-"pending";
-
-
-if(status === "approved"){
-
-statusClass =
-"approved";
-
-}
-
-
-if(status === "rejected"){
-
-statusClass =
-"rejected";
-
-}
-
-
-withdrawList.innerHTML += `
-
-<div class="card">
-
-<h3>
-💸 Rs ${amount}
-</h3>
-
-<div class="email">
-👤 ${escapeHtml(name)}
-</div>
-
-<div class="email">
-📧 ${escapeHtml(email)}
-</div>
-
-<div class="info">
-🆔 UID:
-${escapeHtml(uid)}
-</div>
-
-<div class="info">
-💳 Method:
-${escapeHtml(method)}
-</div>
-
-<div class="info">
-🏦 Account:
-${escapeHtml(account)}
-</div>
-
-<div
-class="status ${statusClass}">
-
-Status:
-${escapeHtml(status)}
-
-</div>
-
-
-${
-status === "pending"
-?
-`
-
-<div class="actions">
-
-<button
-class="approve"
-onclick="approveWithdraw('${item.id}')">
-
-✅ Approve
-
-</button>
-
-
-<button
-class="reject"
-onclick="rejectWithdraw(
-'${item.id}',
-'${uid}',
-${amount}
-)">
-
-❌ Reject
-
-</button>
-
-</div>
-
-`
-:
-""
-}
-
-</div>
-
-`;
-
-});
-
-}
-catch(error){
-
-withdrawList.innerHTML = `
-
-<div class="error">
-
-Withdraw Error:
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-`;
-
-}
-
-}
-
-
-
-/* =========================
-   APPROVE WITHDRAW
-========================= */
-
-window.approveWithdraw =
-async function(id){
-
-if(
-!confirm(
-"Approve this withdrawal?"
-)
-){
-
-return;
-
-}
-
-
-try{
-
-await updateDoc(
-
-doc(
-db,
-"withdraws",
-id
-),
-
-{
-status:"approved"
-}
-
-);
-
-
-alert(
-"Withdrawal Approved Successfully"
-);
-
-
-loadWithdraws();
-
-}
-catch(error){
-
-alert(
-"Approve failed: " +
-error.message
-);
-
-}
-
-};
-
-
-
-/* =========================
-   REJECT WITHDRAW
-========================= */
-
-window.rejectWithdraw =
-async function(
-withdrawId,
-uid,
-amount
-){
-
-if(
-!confirm(
-"Reject this withdrawal and refund Rs " +
-amount +
-"?"
-)
-){
-
-return;
-
-}
-
-
-try{
-
-const userRef =
-doc(
-db,
-"users",
-uid
-);
-
-
-const withdrawRef =
-doc(
-db,
-"withdraws",
-withdrawId
-);
-
-
-const userSnap =
-await getDoc(
-userRef
-);
-
-
-const withdrawSnap =
-await getDoc(
-withdrawRef
-);
-
-
-if(
-!userSnap.exists()
-){
-
-throw new Error(
-"User not found."
-);
-
-}
-
-
-if(
-!withdrawSnap.exists()
-){
-
-throw new Error(
-"Withdrawal not found."
-);
-
-}
-
-
-const user =
-userSnap.data();
-
-
-const withdrawal =
-withdrawSnap.data();
-
-
-const status =
-String(
-withdrawal.status ||
-"pending"
-).toLowerCase();
-
-
-if(
-status !== "pending"
-){
-
-throw new Error(
-"This withdrawal is already " +
-status
-);
-
-}
-
-
-const oldBalance =
-Number(
-user.balance || 0
-);
-
-
-const newBalance =
-oldBalance +
-Number(amount || 0);
-
-
-await updateDoc(
-
-userRef,
-
-{
-balance:newBalance
-}
-
-);
-
-
-await updateDoc(
-
-withdrawRef,
-
-{
-status:"rejected"
-}
-
-);
-
-
-alert(
-"Withdrawal rejected and amount refunded."
-);
-
-
-loadWithdraws();
-
-}
-catch(error){
-
-alert(
-"Reject failed: " +
-error.message
-);
-
-}
-
-};
-
-
-
-/* =========================
-   ADD TASK
-========================= */
 
 document
 .getElementById(
@@ -1650,6 +1230,7 @@ addTask
 
 
 async function addTask(){
+
 
 const order =
 Number(
@@ -1693,127 +1274,26 @@ document.getElementById(
 ).value.trim();
 
 
-const message =
+const msg =
 document.getElementById(
 "taskMessage"
 );
 
 
-message.innerText = "";
-
-
 if(
 !order ||
-order < 1
+!name
 ){
 
-message.innerText =
-"Task number enter karo.";
+msg.innerText =
+"Task number and name required.";
 
 return;
 
 }
-
-
-if(!name){
-
-message.innerText =
-"Task name enter karo.";
-
-return;
-
-}
-
-
-if(
-price < 0 ||
-isNaN(price)
-){
-
-message.innerText =
-"Valid price enter karo.";
-
-return;
-
-}
-
-
-if(
-commission < 0 ||
-isNaN(commission)
-){
-
-message.innerText =
-"Valid commission enter karo.";
-
-return;
-
-}
-
-
-const addButton =
-document.getElementById(
-"addTaskBtn"
-);
-
-
-addButton.disabled = true;
-
-addButton.innerText =
-"Publishing...";
 
 
 try{
-
-
-const existing =
-await getDocs(
-collection(
-db,
-"tasks"
-)
-);
-
-
-let duplicate = false;
-
-
-existing.forEach(
-(item)=>{
-
-const data =
-item.data();
-
-
-const existingOrder =
-Number(
-data.order ||
-data.taskNumber ||
-data.number ||
-0
-);
-
-
-if(
-existingOrder === order
-){
-
-duplicate = true;
-
-}
-
-});
-
-
-if(duplicate){
-
-throw new Error(
-"Task number " +
-order +
-" already exists."
-);
-
-}
 
 
 await addDoc(
@@ -1824,67 +1304,25 @@ db,
 ),
 
 {
-
-order:order,
-
-taskNumber:order,
-
-name:name,
-
-price:price,
-
-commission:commission,
-
-image:image,
-
-description:description,
-
-createdAt:new Date()
-
+order,
+name,
+price,
+commission,
+image,
+description,
+createdAt:
+serverTimestamp()
 }
 
 );
 
 
-message.innerText =
-"✅ Task published successfully.";
+msg.innerText =
+"Task added successfully ✅";
 
-message.style.color =
+msg.style.color =
 "#16a34a";
 
-
-clearTaskForm();
-
-await loadTasks();
-
-}
-catch(error){
-
-message.innerText =
-"Error: " +
-error.message;
-
-message.style.color =
-"#dc2626";
-
-}
-
-
-addButton.disabled = false;
-
-addButton.innerText =
-"➕ Publish Task";
-
-}
-
-
-
-/* =========================
-   CLEAR TASK
-========================= */
-
-window.clearTaskForm =
-function(){
 
 document.getElementById(
 "taskOrder"
@@ -1910,21 +1348,41 @@ document.getElementById(
 "taskDescription"
 ).value = "";
 
-};
+
+loadTasks();
+
+
+}catch(error){
+
+msg.innerText =
+"Error: " +
+error.message;
+
+msg.style.color =
+"#dc2626";
+
+}
+
+}
 
 
 
-/* =========================
-   LOAD TASKS
-========================= */
+/* LOAD TASKS */
+
 
 async function loadTasks(){
 
+
 tasksList.innerHTML =
-'<div class="loading">Loading Tasks...</div>';
+`
+<div class="loading">
+Loading Tasks...
+</div>
+`;
 
 
 try{
+
 
 const snap =
 await getDocs(
@@ -1938,10 +1396,16 @@ db,
 tasksList.innerHTML = "";
 
 
-if(snap.empty){
+if(
+snap.empty
+){
 
 tasksList.innerHTML =
-'<div class="empty">No tasks published yet.</div>';
+`
+<div class="empty">
+No tasks found.
+</div>
+`;
 
 return;
 
@@ -1955,135 +1419,80 @@ snap.forEach(
 (item)=>{
 
 tasks.push({
-
 id:item.id,
-
 data:item.data()
-
 });
 
 });
 
 
 tasks.sort(
-(a,b)=>{
-
-const orderA =
+(a,b)=>
 Number(
-a.data.order ||
-a.data.taskNumber ||
-a.data.number ||
-999999
-);
-
-
-const orderB =
+a.data.order || 0
+)
+-
 Number(
-b.data.order ||
-b.data.taskNumber ||
-b.data.number ||
-999999
+b.data.order || 0
+)
 );
-
-
-return orderA - orderB;
-
-});
 
 
 tasks.forEach(
 (item)=>{
 
-const task =
+
+const t =
 item.data;
 
 
-const order =
-Number(
-task.order ||
-task.taskNumber ||
-task.number ||
-0
+const card =
+document.createElement(
+"div"
 );
 
 
-const image =
-task.image ||
-"";
+card.className =
+"card";
 
 
-tasksList.innerHTML += `
-
-<div class="card">
+card.innerHTML = `
 
 ${
-image
+t.image
 ?
-`
-
-<img
-src="${escapeHtml(image)}"
+`<img
 class="task-image"
-onerror="this.style.display='none'"
->
-
-`
+src="${escapeHtml(t.image)}">`
 :
 ""
 }
 
-
 <div class="task-number">
-
-TASK ${order}
-
+TASK ${Number(t.order || 0)}
 </div>
-
 
 <div class="task-name">
-
 ${escapeHtml(
-task.name ||
-"Task"
+t.name || "Task"
 )}
-
 </div>
 
-
 <div class="info">
-
 💰 Price:
-<b>
-Rs ${Number(
-task.price || 0
-)}
-</b>
-
+<b>Rs ${Number(t.price || 0)}</b>
 </div>
 
-
 <div class="info">
-
 💵 Commission:
-<b>
-Rs ${Number(
-task.commission || 0
-)}
-</b>
-
+<b>Rs ${Number(t.commission || 0)}</b>
 </div>
-
 
 <div class="info">
-
-📝
-${escapeHtml(
-task.description ||
-"No description"
+📝 ${escapeHtml(
+t.description || ""
 )}
-
 </div>
-
 
 <button
 class="task-delete"
@@ -2093,20 +1502,25 @@ onclick="deleteTask('${item.id}')">
 
 </button>
 
-</div>
-
 `;
+
+
+tasksList.appendChild(
+card
+);
 
 });
 
-}
-catch(error){
 
-tasksList.innerHTML = `
+}catch(error){
 
+tasksList.innerHTML =
+`
 <div class="error">
 
-Tasks Error:
+<strong>
+Task Error
+</strong>
 
 <br><br>
 
@@ -2115,7 +1529,6 @@ error.message
 )}
 
 </div>
-
 `;
 
 }
@@ -2124,16 +1537,16 @@ error.message
 
 
 
-/* =========================
-   DELETE TASK
-========================= */
+/* DELETE TASK */
+
 
 window.deleteTask =
 async function(id){
 
+
 if(
 !confirm(
-"Delete this task permanently?"
+"Delete this task?"
 )
 ){
 
@@ -2144,14 +1557,13 @@ return;
 
 try{
 
-await deleteDoc(
 
+await deleteDoc(
 doc(
 db,
 "tasks",
 id
 )
-
 );
 
 
@@ -2162,11 +1574,11 @@ alert(
 
 loadTasks();
 
-}
-catch(error){
+
+}catch(error){
 
 alert(
-"Delete failed: " +
+"Delete Error: " +
 error.message
 );
 
@@ -2177,16 +1589,379 @@ error.message
 
 
 /* =========================
-   LOAD SUPPORT
+WITHDRAWS
 ========================= */
 
-async function loadSupport(){
 
-supportList.innerHTML =
-'<div class="loading">Loading Messages...</div>';
+async function loadWithdraws(){
+
+
+withdrawList.innerHTML =
+`
+<div class="loading">
+Loading Withdraw Requests...
+</div>
+`;
 
 
 try{
+
+
+const snap =
+await getDocs(
+collection(
+db,
+"withdraws"
+)
+);
+
+
+withdrawList.innerHTML = "";
+
+
+if(
+snap.empty
+){
+
+withdrawList.innerHTML =
+`
+<div class="empty">
+No Withdraw Requests.
+</div>
+`;
+
+return;
+
+}
+
+
+snap.forEach(
+(item)=>{
+
+
+const w =
+item.data();
+
+
+const amount =
+Number(
+w.amount || 0
+);
+
+
+const name =
+w.name || "User";
+
+
+const email =
+w.email || "";
+
+
+const method =
+w.method || "";
+
+
+const account =
+w.account ||
+w.accountNumber ||
+w.number ||
+"";
+
+
+const uid =
+w.userId ||
+w.uid ||
+"";
+
+
+const status =
+String(
+w.status ||
+"pending"
+).toLowerCase();
+
+
+const card =
+document.createElement(
+"div"
+);
+
+
+card.className =
+"card";
+
+
+card.innerHTML = `
+
+<h3>
+💰 Rs ${amount}
+</h3>
+
+<div class="info">
+👤 ${escapeHtml(name)}
+</div>
+
+<div class="email">
+${escapeHtml(email)}
+</div>
+
+<div class="info">
+💳 Method:
+${escapeHtml(method)}
+</div>
+
+<div class="info">
+📱 Account:
+${escapeHtml(account)}
+</div>
+
+<div class="status">
+${escapeHtml(status)}
+</div>
+
+`;
+
+
+if(
+status ===
+"pending"
+){
+
+
+const approve =
+document.createElement(
+"button"
+);
+
+
+approve.className =
+"approve";
+
+
+approve.innerText =
+"✅ Approve";
+
+
+approve.onclick =
+async()=>{
+
+await updateDoc(
+
+doc(
+db,
+"withdraws",
+item.id
+),
+
+{
+status:
+"approved"
+}
+
+);
+
+alert(
+"Withdrawal approved."
+);
+
+loadWithdraws();
+
+};
+
+
+card.appendChild(
+approve
+);
+
+
+const reject =
+document.createElement(
+"button"
+);
+
+
+reject.className =
+"reject";
+
+
+reject.innerText =
+"❌ Reject";
+
+
+reject.onclick =
+async()=>{
+
+await rejectWithdraw(
+item.id,
+uid,
+amount
+);
+
+};
+
+
+card.appendChild(
+reject
+);
+
+}
+
+
+withdrawList.appendChild(
+card
+);
+
+});
+
+
+}catch(error){
+
+withdrawList.innerHTML =
+`
+<div class="error">
+
+<strong>
+Withdraw Error
+</strong>
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+`;
+
+}
+
+}
+
+
+
+/* REJECT WITHDRAW */
+
+
+async function rejectWithdraw(
+withdrawId,
+uid,
+amount
+){
+
+
+if(
+!confirm(
+"Reject this withdrawal?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+
+if(uid){
+
+const userRef =
+doc(
+db,
+"users",
+uid
+);
+
+
+const userSnap =
+await getDoc(
+userRef
+);
+
+
+if(
+userSnap.exists()
+){
+
+const user =
+userSnap.data();
+
+
+const oldBalance =
+Number(
+user.balance || 0
+);
+
+
+await updateDoc(
+userRef,
+{
+balance:
+oldBalance +
+Number(amount || 0)
+}
+);
+
+}
+
+}
+
+
+await updateDoc(
+
+doc(
+db,
+"withdraws",
+withdrawId
+),
+
+{
+status:
+"rejected"
+}
+
+);
+
+
+alert(
+"Withdrawal rejected."
+);
+
+
+loadWithdraws();
+
+
+}catch(error){
+
+alert(
+"Reject Error: " +
+error.message
+);
+
+}
+
+}
+
+
+
+/* =========================
+SUPPORT
+========================= */
+
+
+async function loadSupport(){
+
+
+supportList.innerHTML =
+`
+<div class="loading">
+Loading Support...
+</div>
+`;
+
+
+try{
+
 
 const snap =
 await getDocs(
@@ -2200,17 +1975,173 @@ db,
 supportList.innerHTML = "";
 
 
-if(snap.empty){
+if(
+snap.empty
+){
 
 supportList.innerHTML =
-'<div class="empty">No support messages yet.</div>';
+`
+<div class="empty">
+No support messages found.
+</div>
+`;
 
 return;
 
 }
 
 
-const messages = [];
+snap.forEach(
+(item)=>{
 
 
-sn
+const m =
+item.data();
+
+
+const card =
+document.createElement(
+"div"
+);
+
+
+card.className =
+"support-message";
+
+
+card.innerHTML = `
+
+<div class="support-user">
+👤 ${escapeHtml(
+m.name || "User"
+)}
+</div>
+
+<div class="support-email">
+${escapeHtml(
+m.email || ""
+)}
+</div>
+
+<div class="support-text">
+${escapeHtml(
+m.message ||
+m.text ||
+"No message"
+)}
+</div>
+
+`;
+
+
+supportList.appendChild(
+card
+);
+
+});
+
+
+}catch(error){
+
+supportList.innerHTML =
+`
+<div class="error">
+
+<strong>
+Support Error
+</strong>
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+`;
+
+}
+
+}
+
+
+
+/* =========================
+LOGOUT
+========================= */
+
+
+document
+.getElementById(
+"logoutBtn"
+)
+.addEventListener(
+"click",
+async()=>{
+
+
+try{
+
+
+await signOut(auth);
+
+
+window.location.href =
+"admin-login.html";
+
+
+}catch(error){
+
+alert(
+error.message
+);
+
+}
+
+});
+
+
+
+/* =========================
+ESCAPE
+========================= */
+
+
+function escapeHtml(text){
+
+return String(text)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+```
