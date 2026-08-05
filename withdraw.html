@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,25 +47,56 @@ color:#2563eb;
 margin-top:8px;
 }
 
-.progress{
-margin-top:12px;
-padding:12px;
-background:#eff6ff;
-border-radius:10px;
-color:#1d4ed8;
-font-size:14px;
+.progress-box{
+margin-top:15px;
+background:#f3f4f6;
+padding:15px;
+border-radius:12px;
+}
+
+.progress-title{
 font-weight:bold;
+}
+
+.progress-bar{
+height:10px;
+background:#ddd;
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:#22c55e;
+}
+
+.rule{
+margin-top:10px;
+font-size:14px;
+color:#555;
 line-height:1.5;
 }
 
-.locked{
-background:#fef2f2;
-color:#dc2626;
+.lock-box{
+margin-top:15px;
+padding:15px;
+background:#fff7ed;
+border-radius:12px;
+color:#92400e;
+font-weight:bold;
+text-align:center;
 }
 
-.unlocked{
-background:#f0fdf4;
-color:#15803d;
+.unlock-box{
+margin-top:15px;
+padding:15px;
+background:#ecfdf5;
+border-radius:12px;
+color:#166534;
+font-weight:bold;
+text-align:center;
 }
 
 input,
@@ -93,7 +123,6 @@ font-weight:bold;
 
 button:disabled{
 opacity:.6;
-cursor:not-allowed;
 }
 
 .message{
@@ -123,10 +152,8 @@ text-decoration:none;
 margin-top:10px;
 color:#777;
 font-size:13px;
+line-height:1.5;
 }
-
-
-/* HISTORY */
 
 .history-title{
 font-size:20px;
@@ -215,8 +242,6 @@ color:#777;
 </div>
 
 
-<!-- BALANCE + WITHDRAW -->
-
 <div class="card">
 
 <p>Available Balance</p>
@@ -230,17 +255,58 @@ Loading...
 </div>
 
 
-<div
-id="withdrawProgress"
-class="progress">
+<div class="progress-box">
 
-Checking withdrawal eligibility...
+<div class="progress-title">
+Task Progress
+</div>
+
+<div
+style="margin-top:7px;"
+id="taskProgressText">
+
+Loading...
 
 </div>
 
 
-<p class="note">
-Withdrawal is available after every 10 completed tasks.
+<div class="progress-bar">
+
+<div
+id="progressFill"
+class="progress-fill">
+</div>
+
+</div>
+
+</div>
+
+
+<div id="withdrawStatus"></div>
+
+
+<p class="rule">
+
+• First withdrawal: <b>10 completed tasks</b><br>
+
+• Second withdrawal: <b>20 completed tasks</b><br>
+
+• Withdrawal is available only after the required task milestone.
+
+</p>
+
+</div>
+
+
+
+<!-- WITHDRAW FORM -->
+
+<div
+class="card"
+id="withdrawCard">
+
+<p>
+Withdrawal Request
 </p>
 
 
@@ -290,12 +356,14 @@ Submit Withdraw Request
 <div
 id="message"
 class="message">
-</div>
 
 </div>
 
+</div>
 
-<!-- WITHDRAW HISTORY -->
+
+
+<!-- HISTORY -->
 
 <div class="card">
 
@@ -363,17 +431,12 @@ let currentBalance = 0;
 
 let completedTasks = 0;
 
-let withdrawalUsed = 0;
-
-let availableWithdrawals = 0;
+let withdrawalStage = 0;
 
 
 
 const balanceElement =
 document.getElementById("balance");
-
-const progressElement =
-document.getElementById("withdrawProgress");
 
 const methodElement =
 document.getElementById("method");
@@ -392,6 +455,19 @@ document.getElementById("message");
 
 const historyList =
 document.getElementById("historyList");
+
+const withdrawStatus =
+document.getElementById("withdrawStatus");
+
+const taskProgressText =
+document.getElementById(
+"taskProgressText"
+);
+
+const progressFill =
+document.getElementById(
+"progressFill"
+);
 
 
 
@@ -419,7 +495,7 @@ currentUser = user;
 
 await loadUserData();
 
-await loadHistory();
+await loadWithdrawHistory();
 
 });
 
@@ -432,6 +508,7 @@ await loadHistory();
 async function loadUserData(){
 
 try{
+
 
 const userRef =
 doc(
@@ -450,92 +527,44 @@ if(!userSnap.exists()){
 balanceElement.innerText =
 "Rs 0";
 
-progressElement.innerText =
-"User profile not found.";
-
-progressElement.className =
-"progress locked";
-
-withdrawBtn.disabled = true;
+showMessage(
+"User profile not found.",
+"error"
+);
 
 return;
 
 }
 
 
-const data =
+const userData =
 userSnap.data();
 
 
 currentBalance =
 Number(
-data.balance || 0
+userData.balance || 0
 );
 
+
+/*
+Current completed value.
+*/
 
 completedTasks =
 Number(
-data.completed || 0
+userData.completed || 0
 );
-
-
-/*
- * withdrawUsed ka matlab:
- * kitni withdrawal opportunities
- * already use ho chuki hain.
- *
- * Agar field pehle nahi hai
- * to 0 se start hogi.
- */
-
-withdrawalUsed =
-Number(
-data.withdrawalUsed || 0
-);
-
-
-/*
- * Har 10 completed tasks par
- * 1 withdrawal opportunity.
- *
- * Example:
- *
- * 0-9  = 0
- * 10-19 = 1
- * 20-29 = 2
- * 30-39 = 3
- */
-
-const totalMilestones =
-Math.floor(
-completedTasks / 10
-);
-
-
-/*
- * Available withdrawal opportunities
- */
-
-availableWithdrawals =
-totalMilestones -
-withdrawalUsed;
-
-
-if(
-availableWithdrawals < 0
-){
-
-availableWithdrawals = 0;
-
-}
 
 
 balanceElement.innerText =
 "Rs " + currentBalance;
 
 
+await calculateWithdrawalStage();
 
-updateWithdrawalStatus();
+
+updateProgressDisplay();
 
 
 }
@@ -544,16 +573,8 @@ catch(error){
 balanceElement.innerText =
 "Rs 0";
 
-progressElement.innerText =
-"Unable to load account.";
-
-progressElement.className =
-"progress locked";
-
-withdrawBtn.disabled = true;
-
 showMessage(
-"Unable to load account.",
+"Unable to load account data.",
 "error"
 );
 
@@ -564,68 +585,447 @@ showMessage(
 
 
 /* =========================
-   WITHDRAW STATUS
+   LOAD WITHDRAWALS
 ========================= */
 
-function updateWithdrawalStatus(){
+async function loadWithdrawHistory(){
+
+try{
+
+
+const q =
+query(
+
+collection(
+db,
+"withdraws"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+const withdrawals = [];
+
+
+snapshot.forEach(
+(item)=>{
+
+withdrawals.push({
+
+id:item.id,
+
+data:item.data()
+
+});
+
+});
+
+
+/*
+Sort newest first.
+*/
+
+withdrawals.sort(
+(a,b)=>{
+
+const timeA =
+a.data.createdAt &&
+a.data.createdAt.toMillis
+?
+a.data.createdAt.toMillis()
+:
+0;
+
+
+const timeB =
+b.data.createdAt &&
+b.data.createdAt.toMillis
+?
+b.data.createdAt.toMillis()
+:
+0;
+
+
+return timeB - timeA;
+
+});
+
+
+/*
+Determine stage from existing
+withdrawals.
+
+Pending and approved withdrawals
+count as used stages.
+
+Rejected withdrawals do not
+permanently consume the stage.
+*/
+
+let usedStage1 = false;
+
+let usedStage2 = false;
+
+
+withdrawals.forEach(
+(item)=>{
+
+const data =
+item.data;
+
+
+const status =
+String(
+data.status || "Pending"
+).toLowerCase();
 
 
 if(
-availableWithdrawals > 0
+status === "pending" ||
+status === "approved"
 ){
 
-progressElement.className =
-"progress unlocked";
+const stage =
+Number(
+data.stage || 0
+);
 
 
-progressElement.innerHTML =
+if(stage === 1){
 
-"✅ Withdrawal Unlocked<br>" +
+usedStage1 = true;
 
-"Completed Tasks: " +
+}
+
+
+if(stage === 2){
+
+usedStage2 = true;
+
+}
+
+}
+
+});
+
+
+/*
+Fallback for old withdrawal
+records that don't have stage.
+*/
+
+const activeOldWithdrawals =
+withdrawals.filter(
+item=>{
+
+const status =
+String(
+item.data.status || "Pending"
+).toLowerCase();
+
+return(
+status === "pending" ||
+status === "approved"
+);
+
+});
+
+
+if(
+activeOldWithdrawals.length >= 1 &&
+!usedStage1
+){
+
+usedStage1 = true;
+
+}
+
+
+if(
+activeOldWithdrawals.length >= 2 &&
+!usedStage2
+){
+
+usedStage2 = true;
+
+}
+
+
+withdrawalStage = 0;
+
+
+/*
+First withdrawal.
+*/
+
+if(
+completedTasks >= 10 &&
+!usedStage1
+){
+
+withdrawalStage = 1;
+
+}
+
+
+/*
+Second withdrawal.
+*/
+
+if(
+completedTasks >= 20 &&
+usedStage1 &&
+!usedStage2
+){
+
+withdrawalStage = 2;
+
+}
+
+
+updateWithdrawalUI();
+
+
+renderHistory(
+withdrawals
+);
+
+
+}
+catch(error){
+
+historyList.innerHTML = `
+
+<div class="history-empty">
+
+Unable to load history.
+
+<br><br>
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+/* =========================
+   CALCULATE STAGE
+========================= */
+
+async function calculateWithdrawalStage(){
+
+/*
+History function handles exact
+withdrawal stage logic.
+*/
+
+}
+
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function updateProgressDisplay(){
+
+const percentage =
+Math.min(
+Math.round(
+(completedTasks / 20) * 100
+),
+100
+);
+
+
+taskProgressText.innerText =
 completedTasks +
-"<br>" +
+" / 20 tasks completed";
 
-"Available Withdrawals: " +
-availableWithdrawals;
 
+progressFill.style.width =
+percentage + "%";
+
+}
+
+
+
+/* =========================
+   WITHDRAWAL UI
+========================= */
+
+function updateWithdrawalUI(){
+
+
+withdrawStatus.innerHTML = "";
+
+
+/*
+FIRST WITHDRAWAL
+*/
+
+if(
+withdrawalStage === 1
+){
+
+withdrawStatus.innerHTML = `
+
+<div class="unlock-box">
+
+✅ First withdrawal is available.
+
+<br>
+
+You have completed
+${completedTasks}
+tasks.
+
+</div>
+
+`;
 
 withdrawBtn.disabled = false;
 
+return;
 
 }
-else{
 
 
-progressElement.className =
-"progress locked";
+/*
+SECOND WITHDRAWAL
+*/
+
+if(
+withdrawalStage === 2
+){
+
+withdrawStatus.innerHTML = `
+
+<div class="unlock-box">
+
+✅ Second withdrawal is available.
+
+<br>
+
+You have completed all 20 tasks.
+
+</div>
+
+`;
+
+withdrawBtn.disabled = false;
+
+return;
+
+}
 
 
-const nextMilestone =
-(Math.floor(completedTasks / 10) + 1) * 10;
+/*
+20 tasks complete but second
+withdrawal already used.
+*/
 
+if(
+completedTasks >= 20
+){
 
-const remaining =
-nextMilestone -
-completedTasks;
+withdrawStatus.innerHTML = `
 
+<div class="lock-box">
 
-progressElement.innerHTML =
+✅ 20 tasks completed.
 
-"🔒 Withdrawal Locked<br>" +
+<br>
 
-"Completed Tasks: " +
-completedTasks +
-"<br>" +
+All available withdrawal stages
+have already been used.
 
-"Complete " +
-remaining +
-" more task(s) to unlock next withdrawal";
+</div>
 
+`;
 
 withdrawBtn.disabled = true;
 
+return;
+
 }
+
+
+/*
+Between 10 and 19 but first
+withdrawal already used.
+*/
+
+if(
+completedTasks >= 10
+){
+
+const remaining =
+20 - completedTasks;
+
+
+withdrawStatus.innerHTML = `
+
+<div class="lock-box">
+
+🔒 First withdrawal already used.
+
+<br>
+
+Complete ${remaining} more task(s)
+to unlock the second withdrawal.
+
+</div>
+
+`;
+
+withdrawBtn.disabled = true;
+
+return;
+
+}
+
+
+/*
+Less than 10.
+*/
+
+const remaining =
+10 - completedTasks;
+
+
+withdrawStatus.innerHTML = `
+
+<div class="lock-box">
+
+🔒 Withdrawal Locked
+
+<br>
+
+Complete ${remaining} more task(s)
+to unlock your first withdrawal.
+
+</div>
+
+`;
+
+withdrawBtn.disabled = true;
 
 }
 
@@ -651,12 +1051,23 @@ messageElement.className =
 "message";
 
 
+/*
+Re-check user data before
+creating request.
+*/
+
+await loadUserData();
+
+await loadWithdrawHistory();
+
+
 if(
-availableWithdrawals <= 0
+withdrawalStage !== 1 &&
+withdrawalStage !== 2
 ){
 
 showMessage(
-"Complete 10 tasks to unlock withdrawal.",
+"Withdrawal is currently locked.",
 "error"
 );
 
@@ -677,7 +1088,6 @@ const amount =
 Number(
 amountElement.value
 );
-
 
 
 if(!method){
@@ -754,6 +1164,9 @@ db,
 );
 
 
+const stageBeingUsed =
+withdrawalStage;
+
 
 await runTransaction(
 db,
@@ -791,33 +1204,25 @@ userData.completed || 0
 );
 
 
-const used =
-Number(
-userData.withdrawalUsed || 0
-);
-
-
-/*
- * Check milestone again
- * inside transaction.
- */
-
-const totalMilestones =
-Math.floor(
-completed / 10
-);
-
-
-const available =
-totalMilestones - used;
-
-
 if(
-available <= 0
+stageBeingUsed === 1 &&
+completed < 10
 ){
 
 throw new Error(
-"Withdrawal is locked. Complete more tasks."
+"First withdrawal requires 10 completed tasks."
+);
+
+}
+
+
+if(
+stageBeingUsed === 2 &&
+completed < 20
+){
+
+throw new Error(
+"Second withdrawal requires 20 completed tasks."
 );
 
 }
@@ -836,31 +1241,25 @@ const newBalance =
 balance - amount;
 
 
-const newUsed =
-used + 1;
-
-
-
 /*
- * Balance deduct
- */
+Balance is deducted when
+withdrawal is submitted.
+*/
 
 transaction.update(
 
 userRef,
 
 {
-balance:newBalance,
-withdrawalUsed:newUsed
+balance:newBalance
 }
 
 );
 
 
-
 /*
- * Withdraw request
- */
+Create withdrawal request.
+*/
 
 transaction.set(
 
@@ -886,14 +1285,14 @@ account,
 amount:
 amount,
 
+stage:
+stageBeingUsed,
+
+completedTasks:
+completed,
+
 status:
 "Pending",
-
-milestone:
-used + 1,
-
-completedAtRequest:
-completed,
 
 createdAt:
 serverTimestamp()
@@ -907,30 +1306,20 @@ serverTimestamp()
 );
 
 
-
-/* UPDATE SCREEN */
+/*
+Update screen.
+*/
 
 currentBalance =
 currentBalance - amount;
-
-
-withdrawalUsed =
-withdrawalUsed + 1;
-
-
-availableWithdrawals =
-availableWithdrawals - 1;
 
 
 balanceElement.innerText =
 "Rs " + currentBalance;
 
 
-updateWithdrawalStatus();
-
-
 showMessage(
-"Withdraw request submitted successfully ✅",
+"Withdrawal request submitted successfully ✅",
 "success"
 );
 
@@ -942,31 +1331,28 @@ accountElement.value = "";
 amountElement.value = "";
 
 
+/*
+Reload everything.
+*/
 
-/* REFRESH HISTORY */
+await loadUserData();
 
-await loadHistory();
+await loadWithdrawHistory();
 
 
 }
 catch(error){
 
 showMessage(
-"Error: " + error.message,
+"Error: " +
+error.message,
 "error"
 );
 
 }
 
 
-if(
-availableWithdrawals > 0
-){
-
 withdrawBtn.disabled = false;
-
-}
-
 
 withdrawBtn.innerText =
 "Submit Withdraw Request";
@@ -976,50 +1362,17 @@ withdrawBtn.innerText =
 
 
 /* =========================
-   LOAD WITHDRAW HISTORY
+   RENDER HISTORY
 ========================= */
 
-async function loadHistory(){
-
-
-historyList.innerHTML = `
-
-<div class="history-loading">
-Loading History...
-</div>
-
-`;
-
-
-try{
-
-
-const q =
-query(
-
-collection(
-db,
-"withdraws"
-),
-
-where(
-"uid",
-"==",
-currentUser.uid
-)
-
-);
-
-
-
-const snapshot =
-await getDocs(q);
-
+function renderHistory(
+withdrawals
+){
 
 historyList.innerHTML = "";
 
 
-if(snapshot.empty){
+if(withdrawals.length === 0){
 
 historyList.innerHTML = `
 
@@ -1034,58 +1387,6 @@ No withdrawal history yet.
 return;
 
 }
-
-
-
-/* Convert documents to array */
-
-const withdrawals = [];
-
-
-snapshot.forEach(
-(item)=>{
-
-withdrawals.push({
-
-id:item.id,
-
-data:item.data()
-
-});
-
-});
-
-
-
-/* Newest first */
-
-withdrawals.sort(
-(a,b)=>{
-
-const timeA =
-a.data.createdAt &&
-a.data.createdAt.toMillis
-?
-a.data.createdAt.toMillis()
-:
-0;
-
-
-const timeB =
-b.data.createdAt &&
-b.data.createdAt.toMillis
-?
-b.data.createdAt.toMillis()
-:
-0;
-
-
-return timeB - timeA;
-
-}
-
-);
-
 
 
 withdrawals.forEach(
@@ -1112,10 +1413,15 @@ data.account ||
 "Not provided";
 
 
+const stage =
+Number(
+data.stage || 0
+);
+
+
 const status =
 String(
-data.status ||
-"Pending"
+data.status || "Pending"
 );
 
 
@@ -1124,8 +1430,7 @@ let statusClass =
 
 
 if(
-status.toLowerCase()
-===
+status.toLowerCase() ===
 "approved"
 ){
 
@@ -1136,8 +1441,7 @@ statusClass =
 
 
 if(
-status.toLowerCase()
-===
+status.toLowerCase() ===
 "rejected"
 ){
 
@@ -1145,7 +1449,6 @@ statusClass =
 "rejected";
 
 }
-
 
 
 let dateText =
@@ -1167,15 +1470,26 @@ date.toLocaleString();
 }
 
 
-
 historyList.innerHTML += `
 
 <div class="history-card">
 
-
 <div class="history-amount">
 
 Rs ${amount}
+
+</div>
+
+
+<div class="history-row">
+
+<span class="history-label">
+Withdrawal Stage
+</span>
+
+<span class="history-value">
+${stage ? "Stage " + stage : "Withdrawal"}
+</span>
 
 </div>
 
@@ -1209,19 +1523,6 @@ ${escapeHtml(account)}
 <div class="history-row">
 
 <span class="history-label">
-Milestone
-</span>
-
-<span class="history-value">
-10 Tasks × ${Number(data.milestone || 1)}
-</span>
-
-</div>
-
-
-<div class="history-row">
-
-<span class="history-label">
 Date
 </span>
 
@@ -1239,34 +1540,11 @@ ${escapeHtml(status)}
 
 </div>
 
-
 </div>
 
 `;
 
 });
-
-
-
-}
-catch(error){
-
-
-historyList.innerHTML = `
-
-<div class="history-empty">
-
-Unable to load history.
-
-<br><br>
-
-${escapeHtml(error.message)}
-
-</div>
-
-`;
-
-}
 
 }
 
@@ -1292,7 +1570,7 @@ messageElement.className =
 
 
 /* =========================
-   SECURITY DISPLAY
+   ESCAPE HTML
 ========================= */
 
 function escapeHtml(text){
@@ -1309,8 +1587,6 @@ return div.innerHTML;
 
 </script>
 
-
 </body>
 
 </html>
-```
