@@ -2,14 +2,12 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Withdraw - EliteTask Pro</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -99,37 +97,26 @@ margin-top:10px;
 color:#777;
 font-size:13px;
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <div class="header">
 💰 Withdraw
 </div>
 
-
 <div class="card">
 
 <p>Available Balance</p>
 
-<div
-class="balance"
-id="balance">
-
+<div class="balance" id="balance">
 Loading...
-
 </div>
-
 
 <p class="note">
 Enter the amount you want to withdraw.
 </p>
-
 
 <select id="method">
 
@@ -151,13 +138,11 @@ Bank Account
 
 </select>
 
-
 <input
 id="account"
 type="text"
 placeholder="Enter Account / Number"
 >
-
 
 <input
 id="amount"
@@ -166,35 +151,22 @@ placeholder="Enter Amount"
 min="1"
 >
 
-
 <button id="withdrawBtn">
 Submit Withdraw Request
 </button>
 
-
-<div
-id="message"
-class="message">
-</div>
+<div id="message" class="message"></div>
 
 </div>
 
-
-<a
-class="back"
-href="dashboard.html">
-
+<a class="back" href="dashboard.html">
 ⬅ Back to Dashboard
-
 </a>
-
 
 
 <script type="module">
 
-
 import { auth, db } from "./firebase.js";
-
 
 import {
 onAuthStateChanged
@@ -202,23 +174,19 @@ onAuthStateChanged
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
-
 import {
 doc,
 getDoc,
 collection,
-addDoc,
+runTransaction,
 serverTimestamp
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-
 let currentUser = null;
-
 let currentBalance = 0;
-
 
 
 const balanceElement =
@@ -240,35 +208,27 @@ const messageElement =
 document.getElementById("message");
 
 
-
 onAuthStateChanged(
 auth,
 async(user)=>{
 
-
 if(!user){
 
-window.location.href =
-"index.html";
-
+window.location.href = "index.html";
 return;
 
 }
 
-
 currentUser = user;
-
 
 await loadBalance();
 
 });
 
 
-
 async function loadBalance(){
 
 try{
-
 
 const userRef =
 doc(
@@ -277,15 +237,12 @@ db,
 currentUser.uid
 );
 
-
 const userSnap =
 await getDoc(userRef);
 
-
 if(!userSnap.exists()){
 
-balanceElement.innerText =
-"Rs 0";
+balanceElement.innerText = "Rs 0";
 
 showMessage(
 "User profile not found.",
@@ -296,23 +253,19 @@ return;
 
 }
 
-
 const data =
 userSnap.data();
-
 
 currentBalance =
 Number(data.balance || 0);
 
-
 balanceElement.innerText =
 "Rs " + currentBalance;
 
+}
+catch(error){
 
-}catch(error){
-
-balanceElement.innerText =
-"Rs 0";
+balanceElement.innerText = "Rs 0";
 
 showMessage(
 "Unable to load balance.",
@@ -324,33 +277,26 @@ showMessage(
 }
 
 
-
 withdrawBtn.addEventListener(
 "click",
 submitWithdraw
 );
 
 
-
 async function submitWithdraw(){
 
-
 messageElement.innerText = "";
-messageElement.className =
-"message";
+messageElement.className = "message";
 
 
 const method =
 methodElement.value;
 
-
 const account =
 accountElement.value.trim();
 
-
 const amount =
 Number(amountElement.value);
-
 
 
 if(!method){
@@ -401,7 +347,7 @@ return;
 }
 
 
-withdrawBtn.disabled=true;
+withdrawBtn.disabled = true;
 
 withdrawBtn.innerText =
 "Submitting...";
@@ -409,16 +355,79 @@ withdrawBtn.innerText =
 
 try{
 
+const userRef =
+doc(
+db,
+"users",
+currentUser.uid
+);
 
-await addDoc(
 
-collection(db,"withdraws"),
+const withdrawRef =
+doc(
+collection(db,"withdraws")
+);
 
+
+await runTransaction(
+db,
+async(transaction)=>{
+
+const userSnap =
+await transaction.get(userRef);
+
+
+if(!userSnap.exists()){
+
+throw new Error(
+"User profile not found."
+);
+
+}
+
+
+const userData =
+userSnap.data();
+
+
+const balance =
+Number(
+userData.balance || 0
+);
+
+
+if(amount > balance){
+
+throw new Error(
+"Insufficient balance."
+);
+
+}
+
+
+const newBalance =
+balance - amount;
+
+
+/* Balance immediately deduct */
+
+transaction.update(
+userRef,
+{
+balance:newBalance
+}
+);
+
+
+/* Create withdrawal request */
+
+transaction.set(
+withdrawRef,
 {
 
 uid:currentUser.uid,
 
-name:currentUser.displayName || "",
+name:userData.name || "",
 
 email:currentUser.email || "",
 
@@ -433,8 +442,17 @@ status:"Pending",
 createdAt:serverTimestamp()
 
 }
-
 );
+
+}
+);
+
+
+currentBalance =
+currentBalance - amount;
+
+balanceElement.innerText =
+"Rs " + currentBalance;
 
 
 showMessage(
@@ -443,14 +461,15 @@ showMessage(
 );
 
 
-methodElement.value="";
+methodElement.value = "";
 
-accountElement.value="";
+accountElement.value = "";
 
-amountElement.value="";
+amountElement.value = "";
 
 
-}catch(error){
+}
+catch(error){
 
 showMessage(
 "Error: " + error.message,
@@ -460,7 +479,7 @@ showMessage(
 }
 
 
-withdrawBtn.disabled=false;
+withdrawBtn.disabled = false;
 
 withdrawBtn.innerText =
 "Submit Withdraw Request";
@@ -468,11 +487,9 @@ withdrawBtn.innerText =
 }
 
 
-
 function showMessage(text,type){
 
-messageElement.innerText =
-text;
+messageElement.innerText = text;
 
 messageElement.className =
 "message " + type;
@@ -481,7 +498,5 @@ messageElement.className =
 
 </script>
 
-
 </body>
-
 </html>
