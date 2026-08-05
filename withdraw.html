@@ -2,12 +2,14 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Withdraw - EliteTask Pro</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -18,6 +20,7 @@ font-family:Arial,sans-serif;
 body{
 background:#f5f5f5;
 padding:15px;
+color:#111827;
 }
 
 .header{
@@ -63,6 +66,7 @@ color:white;
 border:none;
 border-radius:12px;
 font-size:16px;
+font-weight:bold;
 }
 
 button:disabled{
@@ -97,26 +101,116 @@ margin-top:10px;
 color:#777;
 font-size:13px;
 }
+
+
+/* HISTORY */
+
+.history-title{
+font-size:20px;
+font-weight:bold;
+margin-bottom:5px;
+}
+
+.history-card{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+padding:15px;
+margin-top:12px;
+border-radius:12px;
+}
+
+.history-amount{
+font-size:20px;
+font-weight:bold;
+color:#111827;
+}
+
+.history-row{
+display:flex;
+justify-content:space-between;
+gap:10px;
+margin-top:8px;
+font-size:14px;
+}
+
+.history-label{
+color:#777;
+}
+
+.history-value{
+font-weight:bold;
+text-align:right;
+word-break:break-word;
+}
+
+.status{
+display:inline-block;
+margin-top:12px;
+padding:7px 12px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+}
+
+.pending{
+background:#fef3c7;
+color:#b45309;
+}
+
+.approved{
+background:#dcfce7;
+color:#15803d;
+}
+
+.rejected{
+background:#fee2e2;
+color:#dc2626;
+}
+
+.history-empty{
+text-align:center;
+padding:20px;
+color:#777;
+}
+
+.history-loading{
+text-align:center;
+padding:20px;
+color:#777;
+}
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <div class="header">
 💰 Withdraw
 </div>
 
+
+<!-- BALANCE + WITHDRAW -->
+
 <div class="card">
 
 <p>Available Balance</p>
 
-<div class="balance" id="balance">
+<div
+class="balance"
+id="balance">
+
 Loading...
+
 </div>
+
 
 <p class="note">
 Enter the amount you want to withdraw.
 </p>
+
 
 <select id="method">
 
@@ -138,11 +232,13 @@ Bank Account
 
 </select>
 
+
 <input
 id="account"
 type="text"
 placeholder="Enter Account / Number"
 >
+
 
 <input
 id="amount"
@@ -151,22 +247,59 @@ placeholder="Enter Amount"
 min="1"
 >
 
+
 <button id="withdrawBtn">
 Submit Withdraw Request
 </button>
 
-<div id="message" class="message"></div>
+
+<div
+id="message"
+class="message">
+</div>
 
 </div>
 
-<a class="back" href="dashboard.html">
+
+<!-- WITHDRAW HISTORY -->
+
+<div class="card">
+
+<div class="history-title">
+📋 Withdraw History
+</div>
+
+<p class="note">
+Your previous withdrawal requests
+</p>
+
+
+<div id="historyList">
+
+<div class="history-loading">
+Loading History...
+</div>
+
+</div>
+
+</div>
+
+
+<a
+class="back"
+href="dashboard.html">
+
 ⬅ Back to Dashboard
+
 </a>
+
 
 
 <script type="module">
 
+
 import { auth, db } from "./firebase.js";
+
 
 import {
 onAuthStateChanged
@@ -174,10 +307,14 @@ onAuthStateChanged
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
+
 import {
 doc,
 getDoc,
 collection,
+query,
+where,
+getDocs,
 runTransaction,
 serverTimestamp
 }
@@ -185,8 +322,11 @@ from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+
 let currentUser = null;
+
 let currentBalance = 0;
+
 
 
 const balanceElement =
@@ -207,28 +347,49 @@ document.getElementById("withdrawBtn");
 const messageElement =
 document.getElementById("message");
 
+const historyList =
+document.getElementById("historyList");
+
+
+
+/* =========================
+   LOGIN CHECK
+========================= */
 
 onAuthStateChanged(
 auth,
 async(user)=>{
 
+
 if(!user){
 
-window.location.href = "index.html";
+window.location.href =
+"index.html";
+
 return;
 
 }
 
+
 currentUser = user;
 
+
 await loadBalance();
+
+await loadHistory();
 
 });
 
 
+
+/* =========================
+   LOAD BALANCE
+========================= */
+
 async function loadBalance(){
 
 try{
+
 
 const userRef =
 doc(
@@ -237,12 +398,15 @@ db,
 currentUser.uid
 );
 
+
 const userSnap =
 await getDoc(userRef);
 
+
 if(!userSnap.exists()){
 
-balanceElement.innerText = "Rs 0";
+balanceElement.innerText =
+"Rs 0";
 
 showMessage(
 "User profile not found.",
@@ -253,19 +417,26 @@ return;
 
 }
 
+
 const data =
 userSnap.data();
 
+
 currentBalance =
-Number(data.balance || 0);
+Number(
+data.balance || 0
+);
+
 
 balanceElement.innerText =
 "Rs " + currentBalance;
 
+
 }
 catch(error){
 
-balanceElement.innerText = "Rs 0";
+balanceElement.innerText =
+"Rs 0";
 
 showMessage(
 "Unable to load balance.",
@@ -277,26 +448,40 @@ showMessage(
 }
 
 
+
+/* =========================
+   SUBMIT WITHDRAW
+========================= */
+
 withdrawBtn.addEventListener(
 "click",
 submitWithdraw
 );
 
 
+
 async function submitWithdraw(){
 
+
 messageElement.innerText = "";
-messageElement.className = "message";
+
+messageElement.className =
+"message";
 
 
 const method =
 methodElement.value;
 
+
 const account =
 accountElement.value.trim();
 
+
 const amount =
-Number(amountElement.value);
+Number(
+amountElement.value
+);
+
 
 
 if(!method){
@@ -355,6 +540,7 @@ withdrawBtn.innerText =
 
 try{
 
+
 const userRef =
 doc(
 db,
@@ -365,16 +551,23 @@ currentUser.uid
 
 const withdrawRef =
 doc(
-collection(db,"withdraws")
+collection(
+db,
+"withdraws"
+)
 );
+
 
 
 await runTransaction(
 db,
 async(transaction)=>{
 
+
 const userSnap =
-await transaction.get(userRef);
+await transaction.get(
+userRef
+);
 
 
 if(!userSnap.exists()){
@@ -409,50 +602,72 @@ const newBalance =
 balance - amount;
 
 
-/* Balance immediately deduct */
+
+/* BALANCE DEDUCT */
 
 transaction.update(
+
 userRef,
+
 {
 balance:newBalance
 }
+
 );
 
 
-/* Create withdrawal request */
+
+/* WITHDRAW REQUEST */
 
 transaction.set(
+
 withdrawRef,
+
 {
 
-uid:currentUser.uid,
+uid:
+currentUser.uid,
 
-name:userData.name || "",
+name:
+userData.name || "",
 
-email:currentUser.email || "",
+email:
+currentUser.email || "",
 
-method:method,
+method:
+method,
 
-account:account,
+account:
+account,
 
-amount:amount,
+amount:
+amount,
 
-status:"Pending",
+status:
+"Pending",
 
-createdAt:serverTimestamp()
+createdAt:
+serverTimestamp()
 
 }
+
 );
 
 }
+
 );
 
+
+
+/* UPDATE SCREEN */
 
 currentBalance =
 currentBalance - amount;
 
+
 balanceElement.innerText =
 "Rs " + currentBalance;
+
 
 
 showMessage(
@@ -466,6 +681,12 @@ methodElement.value = "";
 accountElement.value = "";
 
 amountElement.value = "";
+
+
+
+/* REFRESH HISTORY */
+
+await loadHistory();
 
 
 }
@@ -487,16 +708,329 @@ withdrawBtn.innerText =
 }
 
 
-function showMessage(text,type){
 
-messageElement.innerText = text;
+/* =========================
+   LOAD WITHDRAW HISTORY
+========================= */
+
+async function loadHistory(){
+
+
+historyList.innerHTML = `
+
+<div class="history-loading">
+Loading History...
+</div>
+
+`;
+
+
+try{
+
+
+const q =
+query(
+
+collection(
+db,
+"withdraws"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
+
+
+
+const snapshot =
+await getDocs(q);
+
+
+historyList.innerHTML = "";
+
+
+if(snapshot.empty){
+
+historyList.innerHTML = `
+
+<div class="history-empty">
+
+No withdrawal history yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+/* Convert documents to array */
+
+const withdrawals = [];
+
+
+snapshot.forEach(
+(item)=>{
+
+withdrawals.push({
+
+id:item.id,
+
+data:item.data()
+
+});
+
+});
+
+
+
+/* Newest first */
+
+withdrawals.sort(
+(a,b)=>{
+
+const timeA =
+a.data.createdAt &&
+a.data.createdAt.toMillis
+?
+a.data.createdAt.toMillis()
+:
+0;
+
+
+const timeB =
+b.data.createdAt &&
+b.data.createdAt.toMillis
+?
+b.data.createdAt.toMillis()
+:
+0;
+
+
+return timeB - timeA;
+
+}
+
+);
+
+
+
+withdrawals.forEach(
+(item)=>{
+
+
+const data =
+item.data;
+
+
+const amount =
+Number(
+data.amount || 0
+);
+
+
+const method =
+data.method ||
+"Not provided";
+
+
+const account =
+data.account ||
+"Not provided";
+
+
+const status =
+String(
+data.status ||
+"Pending"
+);
+
+
+let statusClass =
+"pending";
+
+
+if(
+status.toLowerCase()
+===
+"approved"
+){
+
+statusClass =
+"approved";
+
+}
+
+
+if(
+status.toLowerCase()
+===
+"rejected"
+){
+
+statusClass =
+"rejected";
+
+}
+
+
+
+let dateText =
+"Date not available";
+
+
+if(
+data.createdAt &&
+data.createdAt.toDate
+){
+
+const date =
+data.createdAt.toDate();
+
+
+dateText =
+date.toLocaleString();
+
+}
+
+
+
+historyList.innerHTML += `
+
+<div class="history-card">
+
+
+<div class="history-amount">
+
+Rs ${amount}
+
+</div>
+
+
+<div class="history-row">
+
+<span class="history-label">
+Payment Method
+</span>
+
+<span class="history-value">
+${escapeHtml(method)}
+</span>
+
+</div>
+
+
+<div class="history-row">
+
+<span class="history-label">
+Account
+</span>
+
+<span class="history-value">
+${escapeHtml(account)}
+</span>
+
+</div>
+
+
+<div class="history-row">
+
+<span class="history-label">
+Date
+</span>
+
+<span class="history-value">
+${escapeHtml(dateText)}
+</span>
+
+</div>
+
+
+<div
+class="status ${statusClass}">
+
+${escapeHtml(status)}
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+
+
+}
+catch(error){
+
+
+historyList.innerHTML = `
+
+<div class="history-empty">
+
+Unable to load history.
+
+<br><br>
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(
+text,
+type
+){
+
+messageElement.innerText =
+text;
 
 messageElement.className =
 "message " + type;
 
 }
 
+
+
+/* =========================
+   SECURITY DISPLAY
+========================= */
+
+function escapeHtml(text){
+
+const div =
+document.createElement("div");
+
+div.textContent =
+String(text || "");
+
+return div.innerHTML;
+
+}
+
 </script>
 
+
 </body>
+
 </html>
