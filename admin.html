@@ -1,317 +1,683 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EliteTask Pro - Admin</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f4f6f8;
-    padding:15px;
-    color:#111;
+background:#f4f6f8;
+padding:15px;
+color:#111;
 }
 
 .header{
-    background:#111827;
-    color:white;
-    padding:18px;
-    border-radius:14px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
+background:#111827;
+color:white;
+padding:18px;
+border-radius:14px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
 }
 
 .header small{
-    font-size:14px;
-    opacity:.8;
+font-size:14px;
+opacity:.8;
 }
 
 .tabs{
-    display:flex;
-    gap:10px;
-    margin-top:15px;
+display:flex;
+gap:8px;
+margin-top:15px;
+overflow-x:auto;
 }
 
 .tabs button{
-    flex:1;
-    padding:13px;
-    border:0;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-    font-weight:bold;
+flex:1;
+min-width:90px;
+padding:13px 8px;
+border:0;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:bold;
 }
 
 .tabs button.active{
-    background:#111827;
+background:#111827;
 }
 
 .section{
-    display:none;
-    margin-top:15px;
+display:none;
+margin-top:15px;
 }
 
 .section.active{
-    display:block;
+display:block;
 }
 
 .card{
-    background:white;
-    padding:15px;
-    margin-bottom:12px;
-    border-radius:14px;
-    box-shadow:0 2px 8px #ddd;
+background:white;
+padding:15px;
+margin-bottom:12px;
+border-radius:14px;
+box-shadow:0 2px 8px #ddd;
+}
+
+.card h3{
+margin-bottom:8px;
 }
 
 .email{
-    color:#666;
-    font-size:14px;
-    margin-top:6px;
-    word-break:break-word;
+color:#666;
+font-size:14px;
+margin-top:6px;
+word-break:break-word;
 }
 
 .info{
-    margin-top:8px;
-    font-size:15px;
-    word-break:break-word;
+margin-top:8px;
+font-size:15px;
+word-break:break-word;
 }
 
 .actions{
-    display:flex;
-    gap:8px;
-    margin-top:14px;
+display:flex;
+gap:8px;
+margin-top:14px;
 }
 
 button{
-    cursor:pointer;
+cursor:pointer;
 }
 
 .edit,
 .delete,
 .approve,
 .reject{
-    flex:1;
-    border:0;
-    padding:11px;
-    border-radius:8px;
-    color:white;
-    font-weight:bold;
+flex:1;
+border:0;
+padding:11px;
+border-radius:8px;
+color:white;
+font-weight:bold;
 }
 
 .edit{
-    background:#2563eb;
+background:#2563eb;
 }
 
 .delete{
-    background:#dc2626;
+background:#dc2626;
 }
 
 .approve{
-    background:#16a34a;
+background:#16a34a;
 }
 
 .reject{
-    background:#dc2626;
+background:#dc2626;
 }
 
 .editBox{
-    display:none;
-    margin-top:12px;
-    background:#f3f4f6;
-    padding:12px;
-    border-radius:10px;
+display:none;
+margin-top:12px;
+background:#f3f4f6;
+padding:12px;
+border-radius:10px;
 }
 
 .editBox input{
-    width:100%;
-    padding:11px;
-    margin-top:6px;
-    margin-bottom:8px;
-    border:1px solid #ccc;
-    border-radius:8px;
+width:100%;
+padding:11px;
+margin-top:6px;
+margin-bottom:8px;
+border:1px solid #ccc;
+border-radius:8px;
 }
 
 .save{
-    width:100%;
-    padding:11px;
-    border:0;
-    border-radius:8px;
-    background:#16a34a;
-    color:white;
-    font-weight:bold;
+width:100%;
+padding:11px;
+border:0;
+border-radius:8px;
+background:#16a34a;
+color:white;
+font-weight:bold;
 }
 
 .status{
-    display:inline-block;
-    margin-top:10px;
-    padding:6px 10px;
-    border-radius:15px;
-    background:#eee;
-    font-size:13px;
-    font-weight:bold;
+display:inline-block;
+margin-top:10px;
+padding:6px 10px;
+border-radius:15px;
+background:#eee;
+font-size:13px;
+font-weight:bold;
 }
 
 .status.pending{
-    background:#fff3cd;
-    color:#856404;
+background:#fff3cd;
+color:#856404;
 }
 
 .status.approved{
-    background:#d4edda;
-    color:#155724;
+background:#d4edda;
+color:#155724;
 }
 
 .status.rejected{
-    background:#f8d7da;
-    color:#721c24;
+background:#f8d7da;
+color:#721c24;
 }
 
 .loading{
-    text-align:center;
-    padding:20px;
-    color:#777;
+text-align:center;
+padding:20px;
+color:#777;
 }
 
 .error{
-    color:#dc2626;
-    padding:15px;
-    word-break:break-word;
+color:#dc2626;
+padding:15px;
+word-break:break-word;
 }
+
+
+/* =========================
+   TASK FORM
+========================= */
+
+.form-card{
+background:white;
+padding:16px;
+border-radius:14px;
+box-shadow:0 2px 8px #ddd;
+margin-bottom:15px;
+}
+
+.form-card h3{
+margin-bottom:15px;
+}
+
+.form-group{
+margin-bottom:12px;
+}
+
+.form-group label{
+display:block;
+font-weight:bold;
+font-size:14px;
+margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+width:100%;
+padding:12px;
+border:1px solid #d1d5db;
+border-radius:9px;
+font-size:15px;
+outline:none;
+}
+
+.form-group textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.add-task{
+width:100%;
+padding:13px;
+border:0;
+border-radius:10px;
+background:#16a34a;
+color:white;
+font-weight:bold;
+font-size:15px;
+}
+
+.clear-task{
+width:100%;
+padding:11px;
+border:0;
+border-radius:10px;
+background:#6b7280;
+color:white;
+font-weight:bold;
+margin-top:8px;
+}
+
+.task-number{
+display:inline-block;
+background:#111827;
+color:white;
+padding:5px 9px;
+border-radius:8px;
+font-size:13px;
+font-weight:bold;
+}
+
+.task-image{
+width:100%;
+max-height:180px;
+object-fit:cover;
+border-radius:10px;
+margin-top:10px;
+}
+
+.task-actions{
+margin-top:12px;
+}
+
+.delete-task{
+width:100%;
+padding:11px;
+border:0;
+border-radius:8px;
+background:#dc2626;
+color:white;
+font-weight:bold;
+}
+
+.notice{
+background:#eff6ff;
+color:#1e40af;
+padding:12px;
+border-radius:10px;
+font-size:14px;
+line-height:1.5;
+margin-bottom:12px;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="header">
-    EliteTask Pro<br>
-    <small>Admin Panel</small>
+
+EliteTask Pro<br>
+
+<small>Admin Panel</small>
+
 </div>
+
+<!-- =========================
+     TABS
+========================= -->
 
 <div class="tabs">
 
-    <button
-        id="usersBtn"
-        class="active"
-        onclick="showUsers()">
-        👥 Users
-    </button>
+<button
+id="usersBtn"
+class="active"
+onclick="showUsers()">
 
-    <button
-        id="withdrawBtn"
-        onclick="showWithdraws()">
-        💸 Withdraws
-    </button>
+👥 Users
 
-</div>
+</button>
 
+<button
+id="withdrawBtn"
+onclick="showWithdraws()">
 
-<!-- USERS -->
+💸 Withdraws
 
-<div id="usersSection" class="section active">
+</button>
 
-    <div id="usersList">
-        <div class="loading">
-            Loading Users...
-        </div>
-    </div>
+<button
+id="tasksBtn"
+onclick="showTasks()">
 
-</div>
+📦 Tasks
 
-
-<!-- WITHDRAWS -->
-
-<div id="withdrawSection" class="section">
-
-    <div id="withdrawList">
-        <div class="loading">
-            Loading Withdraws...
-        </div>
-    </div>
+</button>
 
 </div>
 
+<!-- =========================
+     USERS
+========================= -->
+
+<div
+id="usersSection"
+class="section active">
+
+<div id="usersList">
+
+<div class="loading">
+Loading Users...
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+     WITHDRAWS
+========================= -->
+
+<div
+id="withdrawSection"
+class="section">
+
+<div id="withdrawList">
+
+<div class="loading">
+Loading Withdraws...
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+     TASKS
+========================= -->
+
+<div
+id="tasksSection"
+class="section">
+
+<div class="notice">
+
+📌 Yahan maximum <b>20 tasks</b> bana sakte ho. <br>
+🔓 User ko Task 1 se start karwaya jayega. <br>
+✅ Har task complete hone ke baad next task unlock hoga.
+
+</div>
+
+<!-- ADD TASK -->
+
+<div class="form-card">
+
+<h3>
+➕ Add New Task
+</h3>
+
+<div class="form-group">
+
+<label>
+Task Number
+</label>
+
+<input
+type="number"
+id="taskNumber"
+min="1"
+max="20"
+placeholder="Example: 1">
+
+</div>
+
+<div class="form-group">
+
+<label>
+Task Name
+</label>
+
+<input
+type="text"
+id="taskName"
+placeholder="Example: Product Review">
+
+</div>
+
+<div class="form-group">
+
+<label>
+Price
+</label>
+
+<input
+type="number"
+id="taskPrice"
+min="0"
+placeholder="Example: 1000">
+
+</div>
+
+<div class="form-group">
+
+<label>
+Commission / Reward
+</label>
+
+<input
+type="number"
+id="taskCommission"
+min="0"
+placeholder="Example: 100">
+
+</div>
+
+<div class="form-group">
+
+<label>
+Description
+</label>
+
+<textarea
+id="taskDescription"
+placeholder="Task description..."></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>
+Image URL (Optional)
+</label>
+
+<input
+type="text"
+id="taskImage"
+placeholder="https://example.com/image.jpg">
+
+</div>
+
+<button
+class="add-task"
+onclick="addTask()">
+
+➕ Publish Task
+
+</button>
+
+<button
+class="clear-task"
+onclick="clearTaskForm()">
+
+Clear
+
+</button>
+
+</div>
+
+<!-- TASK LIST -->
+
+<div id="tasksList">
+
+<div class="loading">
+Loading Tasks...
+</div>
+
+</div>
+
+</div>
 
 <script type="module">
 
+
 import { db } from "./firebase.js";
 
+
 import {
-    collection,
-    getDocs,
-    getDoc,
-    doc,
-    updateDoc,
-    deleteDoc
+
+collection,
+getDocs,
+getDoc,
+doc,
+updateDoc,
+deleteDoc,
+addDoc,
+query,
+where,
+serverTimestamp
+
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
 
 
 const usersList =
-document.getElementById("usersList");
+document.getElementById(
+"usersList"
+);
+
 
 const withdrawList =
-document.getElementById("withdrawList");
+document.getElementById(
+"withdrawList"
+);
+
+
+const tasksList =
+document.getElementById(
+"tasksList"
+);
+
+
+
+/* =========================
+   TAB HELPER
+========================= */
+
+function hideAllSections(){
+
+document
+.getElementById("usersSection")
+.classList.remove("active");
+
+document
+.getElementById("withdrawSection")
+.classList.remove("active");
+
+document
+.getElementById("tasksSection")
+.classList.remove("active");
+
+
+document
+.getElementById("usersBtn")
+.classList.remove("active");
+
+document
+.getElementById("withdrawBtn")
+.classList.remove("active");
+
+document
+.getElementById("tasksBtn")
+.classList.remove("active");
+
+}
+
 
 
 /* =========================
    SHOW USERS
 ========================= */
 
-window.showUsers = function(){
+window.showUsers =
+function(){
 
-    document
-    .getElementById("usersSection")
-    .classList.add("active");
+hideAllSections();
 
-    document
-    .getElementById("withdrawSection")
-    .classList.remove("active");
 
-    document
-    .getElementById("usersBtn")
-    .classList.add("active");
+document
+.getElementById("usersSection")
+.classList.add("active");
 
-    document
-    .getElementById("withdrawBtn")
-    .classList.remove("active");
 
-    loadUsers();
+document
+.getElementById("usersBtn")
+.classList.add("active");
+
+
+loadUsers();
+
 };
+
 
 
 /* =========================
    SHOW WITHDRAWS
 ========================= */
 
-window.showWithdraws = function(){
+window.showWithdraws =
+function(){
 
-    document
-    .getElementById("usersSection")
-    .classList.remove("active");
+hideAllSections();
 
-    document
-    .getElementById("withdrawSection")
-    .classList.add("active");
 
-    document
-    .getElementById("usersBtn")
-    .classList.remove("active");
+document
+.getElementById("withdrawSection")
+.classList.add("active");
 
-    document
-    .getElementById("withdrawBtn")
-    .classList.add("active");
 
-    loadWithdraws();
+document
+.getElementById("withdrawBtn")
+.classList.add("active");
+
+
+loadWithdraws();
+
 };
+
+
+
+/* =========================
+   SHOW TASKS
+========================= */
+
+window.showTasks =
+function(){
+
+hideAllSections();
+
+
+document
+.getElementById("tasksSection")
+.classList.add("active");
+
+
+document
+.getElementById("tasksBtn")
+.classList.add("active");
+
+
+loadTasks();
+
+};
+
 
 
 /* =========================
@@ -320,265 +686,363 @@ window.showWithdraws = function(){
 
 async function loadUsers(){
 
-    usersList.innerHTML =
-    '<div class="loading">Loading Users...</div>';
-
-    try{
-
-        const snap =
-        await getDocs(
-            collection(db,"users")
-        );
-
-        usersList.innerHTML = "";
-
-        if(snap.empty){
-
-            usersList.innerHTML =
-            '<div class="card">No users found.</div>';
-
-            return;
-        }
-
-        snap.forEach((item)=>{
-
-            const u = item.data();
-
-            const name =
-            u.name || "User";
-
-            const email =
-            u.email || "";
-
-            const balance =
-            Number(u.balance || 0);
-
-            const commission =
-            Number(u.commission || 0);
-
-            const completed =
-            Number(u.completed || 0);
-
-            const role =
-            u.role || "user";
+usersList.innerHTML =
+'<div class="loading">Loading Users...</div>';
 
 
-            usersList.innerHTML += `
+try{
 
-            <div class="card">
+const snap =
+await getDocs(
+collection(db,"users")
+);
 
-                <h3>👤 ${name}</h3>
 
-                <div class="email">
-                    ${email}
-                </div>
+usersList.innerHTML = "";
 
-                <div class="info">
-                    💰 Balance: <b>Rs ${balance}</b>
-                </div>
 
-                <div class="info">
-                    💵 Commission: <b>Rs ${commission}</b>
-                </div>
+if(snap.empty){
 
-                <div class="info">
-                    ✅ Completed: <b>${completed}</b>
-                </div>
+usersList.innerHTML =
+'<div class="card">No users found.</div>';
 
-                <div class="info">
-                    👑 Role: <b>${role}</b>
-                </div>
+return;
 
-                <div class="actions">
-
-                    <button
-                        class="edit"
-                        onclick="openEdit('${item.id}')">
-                        ✏️ Edit
-                    </button>
-
-                    <button
-                        class="delete"
-                        onclick="deleteUser('${item.id}')">
-                        🗑️ Delete
-                    </button>
-
-                </div>
-
-                <div
-                    class="editBox"
-                    id="edit-${item.id}">
-
-                    <label>Balance</label>
-
-                    <input
-                        type="number"
-                        id="bal-${item.id}"
-                        value="${balance}">
-
-                    <label>Commission</label>
-
-                    <input
-                        type="number"
-                        id="com-${item.id}"
-                        value="${commission}">
-
-                    <label>Completed</label>
-
-                    <input
-                        type="number"
-                        id="done-${item.id}"
-                        value="${completed}">
-
-                    <button
-                        class="save"
-                        onclick="saveUser('${item.id}')">
-                        💾 Save
-                    </button>
-
-                </div>
-
-            </div>
-
-            `;
-
-        });
-
-    }
-    catch(error){
-
-        usersList.innerHTML = `
-        <div class="error">
-            Users Error:<br><br>
-            ${error.message}
-        </div>
-        `;
-    }
 }
+
+
+snap.forEach((item)=>{
+
+const u =
+item.data();
+
+
+const name =
+u.name || "User";
+
+
+const email =
+u.email || "";
+
+
+const balance =
+Number(
+u.balance || 0
+);
+
+
+const commission =
+Number(
+u.commission || 0
+);
+
+
+const completed =
+Number(
+u.completed || 0
+);
+
+
+const role =
+u.role || "user";
+
+
+usersList.innerHTML += `
+
+<div class="card">
+
+<h3>
+👤 ${escapeHtml(name)}
+</h3>
+
+<div class="email">
+${escapeHtml(email)}
+</div>
+
+<div class="info">
+💰 Balance:
+<b>Rs ${balance}</b>
+</div>
+
+<div class="info">
+💵 Commission:
+<b>Rs ${commission}</b>
+</div>
+
+<div class="info">
+✅ Completed:
+<b>${completed}</b>
+</div>
+
+<div class="info">
+👑 Role:
+<b>${escapeHtml(role)}</b>
+</div>
+
+
+<div class="actions">
+
+<button
+class="edit"
+onclick="openEdit('${item.id}')">
+
+✏️ Edit
+
+</button>
+
+
+<button
+class="delete"
+onclick="deleteUser('${item.id}')">
+
+🗑️ Delete
+
+</button>
+
+</div>
+
+
+
+<div
+class="editBox"
+id="edit-${item.id}">
+
+<label>
+Balance
+</label>
+
+<input
+type="number"
+id="bal-${item.id}"
+value="${balance}">
+
+
+<label>
+Commission
+</label>
+
+<input
+type="number"
+id="com-${item.id}"
+value="${commission}">
+
+
+<label>
+Completed
+</label>
+
+<input
+type="number"
+id="done-${item.id}"
+value="${completed}">
+
+
+<button
+class="save"
+onclick="saveUser('${item.id}')">
+
+💾 Save
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+catch(error){
+
+usersList.innerHTML = `
+
+<div class="error">
+
+Users Error:
+
+<br><br>
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
 
 
 /* =========================
    OPEN EDIT
 ========================= */
 
-window.openEdit = function(id){
+window.openEdit =
+function(id){
 
-    const box =
-    document.getElementById(
-        "edit-"+id
-    );
+const box =
+document.getElementById(
+"edit-"+id
+);
 
-    if(!box){
-        return;
-    }
 
-    box.style.display =
-    box.style.display === "block"
-    ? "none"
-    : "block";
+if(!box){
+
+return;
+
+}
+
+
+box.style.display =
+box.style.display === "block"
+? "none"
+: "block";
+
 };
+
 
 
 /* =========================
    SAVE USER
 ========================= */
 
-window.saveUser = async function(id){
+window.saveUser =
+async function(id){
 
-    try{
+try{
 
-        const balance =
-        Number(
-            document.getElementById(
-                "bal-"+id
-            ).value
-        );
+const balance =
+Number(
+document.getElementById(
+"bal-"+id
+).value
+);
 
-        const commission =
-        Number(
-            document.getElementById(
-                "com-"+id
-            ).value
-        );
 
-        const completed =
-        Number(
-            document.getElementById(
-                "done-"+id
-            ).value
-        );
+const commission =
+Number(
+document.getElementById(
+"com-"+id
+).value
+);
 
-        await updateDoc(
 
-            doc(
-                db,
-                "users",
-                id
-            ),
+const completed =
+Number(
+document.getElementById(
+"done-"+id
+).value
+);
 
-            {
-                balance:balance,
-                commission:commission,
-                completed:completed
-            }
-        );
 
-        alert(
-            "User updated successfully"
-        );
+if(balance < 0 ||
+commission < 0 ||
+completed < 0){
 
-        loadUsers();
+alert(
+"Values cannot be negative."
+);
 
-    }
-    catch(error){
+return;
 
-        alert(
-            "Update failed: " +
-            error.message
-        );
-    }
+}
+
+
+await updateDoc(
+
+doc(
+db,
+"users",
+id
+),
+
+{
+
+balance:balance,
+
+commission:commission,
+
+completed:completed
+
+}
+
+);
+
+
+alert(
+"User updated successfully."
+);
+
+
+loadUsers();
+
+}
+catch(error){
+
+alert(
+"Update failed: " +
+error.message
+);
+
+}
+
 };
+
 
 
 /* =========================
    DELETE USER
 ========================= */
 
-window.deleteUser = async function(id){
+window.deleteUser =
+async function(id){
 
-    if(
-        !confirm(
-            "Delete this user?"
-        )
-    ){
-        return;
-    }
+if(
+!confirm(
+"Delete this user?"
+)
+){
 
-    try{
+return;
 
-        await deleteDoc(
-            doc(
-                db,
-                "users",
-                id
-            )
-        );
+}
 
-        alert(
-            "User deleted"
-        );
 
-        loadUsers();
+try{
 
-    }
-    catch(error){
+await deleteDoc(
 
-        alert(
-            "Delete failed: " +
-            error.message
-        );
-    }
+doc(
+db,
+"users",
+id
+)
+
+);
+
+
+alert(
+"User deleted."
+);
+
+
+loadUsers();
+
+}
+catch(error){
+
+alert(
+"Delete failed: " +
+error.message
+);
+
+}
+
 };
+
 
 
 /* =========================
@@ -587,439 +1051,1042 @@ window.deleteUser = async function(id){
 
 async function loadWithdraws(){
 
-    withdrawList.innerHTML =
-    '<div class="loading">Loading Withdraws...</div>';
-
-    try{
-
-        const snap =
-        await getDocs(
-            collection(db,"withdraws")
-        );
-
-        withdrawList.innerHTML = "";
-
-        if(snap.empty){
-
-            withdrawList.innerHTML =
-            '<div class="card">No withdraw requests.</div>';
-
-            return;
-        }
+withdrawList.innerHTML =
+'<div class="loading">Loading Withdraws...</div>';
 
 
-        snap.forEach((item)=>{
+try{
 
-            const w =
-            item.data();
-
-            const amount =
-            Number(w.amount || 0);
-
-            const name =
-            w.name || "User";
-
-            const email =
-            w.email || "";
-
-            const uid =
-            w.uid || "";
-
-            const method =
-            w.method ||
-            w.paymentMethod ||
-            "Not provided";
-
-            const account =
-            w.account ||
-            w.accountNumber ||
-            "Not provided";
-
-            const status =
-            String(
-                w.status || "pending"
-            ).toLowerCase();
+const snap =
+await getDocs(
+collection(db,"withdraws")
+);
 
 
-            let statusClass =
-            "pending";
-
-            if(status === "approved"){
-                statusClass = "approved";
-            }
-
-            if(status === "rejected"){
-                statusClass = "rejected";
-            }
+withdrawList.innerHTML = "";
 
 
-            withdrawList.innerHTML += `
+if(snap.empty){
 
-            <div class="card">
+withdrawList.innerHTML =
+'<div class="card">No withdraw requests.</div>';
 
-                <h3>
-                    💸 Rs ${amount}
-                </h3>
+return;
 
-                <div class="email">
-                    👤 ${name}
-                </div>
-
-                <div class="email">
-                    📧 ${email}
-                </div>
-
-                <div class="info">
-                    🆔 UID: ${uid}
-                </div>
-
-                <div class="info">
-                    💳 Method: ${method}
-                </div>
-
-                <div class="info">
-                    🏦 Account: ${account}
-                </div>
-
-                <div class="status ${statusClass}">
-                    Status: ${status}
-                </div>
-
-                ${
-                    status === "pending"
-                    ?
-                    `
-
-                    <div class="actions">
-
-                        <button
-                            class="approve"
-                            onclick="approveWithdraw(
-                                '${item.id}',
-                                '${uid}'
-                            )">
-                            ✅ Approve
-                        </button>
-
-                        <button
-                            class="reject"
-                            onclick="rejectWithdraw(
-                                '${item.id}',
-                                '${uid}',
-                                ${amount}
-                            )">
-                            ❌ Reject
-                        </button>
-
-                    </div>
-
-                    `
-                    :
-                    ""
-                }
-
-            </div>
-
-            `;
-
-        });
-
-    }
-    catch(error){
-
-        withdrawList.innerHTML = `
-        <div class="error">
-            Withdraw Error:<br><br>
-            ${error.message}
-        </div>
-        `;
-    }
 }
 
 
+snap.forEach((item)=>{
+
+const w =
+item.data();
+
+
+const amount =
+Number(
+w.amount || 0
+);
+
+
+const name =
+w.name || "User";
+
+
+const email =
+w.email || "";
+
+
+const uid =
+w.uid || "";
+
+
+const method =
+w.method ||
+w.paymentMethod ||
+"Not provided";
+
+
+const account =
+w.account ||
+w.accountNumber ||
+"Not provided";
+
+
+const status =
+String(
+w.status || "pending"
+).toLowerCase();
+
+
+let statusClass =
+"pending";
+
+
+if(status === "approved"){
+
+statusClass =
+"approved";
+
+}
+
+
+if(status === "rejected"){
+
+statusClass =
+"rejected";
+
+}
+
+
+withdrawList.innerHTML += `
+
+<div class="card">
+
+<h3>
+💸 Rs ${amount}
+</h3>
+
+<div class="email">
+👤 ${escapeHtml(name)}
+</div>
+
+<div class="email">
+📧 ${escapeHtml(email)}
+</div>
+
+<div class="info">
+🆔 UID: ${escapeHtml(uid)}
+</div>
+
+<div class="info">
+💳 Method:
+${escapeHtml(method)}
+</div>
+
+<div class="info">
+🏦 Account:
+${escapeHtml(account)}
+</div>
+
+<div
+class="status ${statusClass}">
+
+Status:
+${status}
+
+</div>
+
+
+${
+status === "pending"
+
+?
+
+`
+
+<div class="actions">
+
+<button
+class="approve"
+onclick="approveWithdraw(
+'${item.id}',
+'${uid}'
+)">
+
+✅ Approve
+
+</button>
+
+
+<button
+class="reject"
+onclick="rejectWithdraw(
+'${item.id}',
+'${uid}',
+${amount}
+)">
+
+❌ Reject
+
+</button>
+
+</div>
+
+`
+
+:
+
+""
+
+}
+
+</div>
+
+`;
+
+});
+
+}
+catch(error){
+
+withdrawList.innerHTML = `
+
+<div class="error">
+
+Withdraw Error:
+
+<br><br>
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
 /* =========================
-   APPROVE
-   IMPORTANT:
-   BALANCE IS NOT DEDUCTED HERE
+   APPROVE WITHDRAW
 ========================= */
 
 window.approveWithdraw =
 async function(
-    withdrawId,
-    uid
+withdrawId,
+uid
 ){
 
-    if(
-        !confirm(
-            "Approve this withdrawal?"
-        )
-    ){
-        return;
-    }
+if(
+!confirm(
+"Approve this withdrawal?"
+)
+){
+
+return;
+
+}
 
 
-    try{
+try{
 
-        const withdrawRef =
-        doc(
-            db,
-            "withdraws",
-            withdrawId
-        );
-
-
-        const withdrawSnap =
-        await getDoc(
-            withdrawRef
-        );
+const withdrawRef =
+doc(
+db,
+"withdraws",
+withdrawId
+);
 
 
-        if(!withdrawSnap.exists()){
-
-            throw new Error(
-                "Withdrawal request not found."
-            );
-        }
+const withdrawSnap =
+await getDoc(
+withdrawRef
+);
 
 
-        const withdrawData =
-        withdrawSnap.data();
+if(!withdrawSnap.exists()){
+
+throw new Error(
+"Withdrawal request not found."
+);
+
+}
 
 
-        const currentStatus =
-        String(
-            withdrawData.status ||
-            "pending"
-        ).toLowerCase();
+const data =
+withdrawSnap.data();
 
 
-        if(
-            currentStatus !== "pending"
-        ){
-
-            throw new Error(
-                "This withdrawal is already " +
-                currentStatus
-            );
-        }
+const status =
+String(
+data.status || "pending"
+).toLowerCase();
 
 
-        /*
-         * IMPORTANT:
-         *
-         * User ka balance withdraw ke waqt
-         * already minus ho chuka hai.
-         *
-         * Is liye Approve par balance ko
-         * dobara minus NAHI karna.
-         */
+if(status !== "pending"){
 
-        await updateDoc(
+throw new Error(
+"This withdrawal is already " +
+status
+);
 
-            withdrawRef,
-
-            {
-                status:"approved"
-            }
-        );
+}
 
 
-        alert(
-            "Withdrawal Approved Successfully"
-        );
+/*
+ * Balance already minus ho chuka hai.
+ * Approve par dobara minus nahi hoga.
+ */
+
+await updateDoc(
+
+withdrawRef,
+
+{
+
+status:"approved"
+
+}
+
+);
 
 
-        loadWithdraws();
-        loadUsers();
+alert(
+"Withdrawal Approved Successfully."
+);
 
-    }
-    catch(error){
 
-        alert(
-            "Approve failed: " +
-            error.message
-        );
-    }
+loadWithdraws();
+loadUsers();
+
+}
+catch(error){
+
+alert(
+"Approve failed: " +
+error.message
+);
+
+}
+
 };
 
 
+
 /* =========================
-   REJECT
-   BALANCE REFUND
+   REJECT WITHDRAW
 ========================= */
 
 window.rejectWithdraw =
 async function(
-    withdrawId,
-    uid,
-    amount
+withdrawId,
+uid,
+amount
 ){
 
-    if(
-        !confirm(
-            "Reject this withdrawal and refund Rs " +
-            amount +
-            " to the user?"
-        )
-    ){
-        return;
-    }
+if(
+!confirm(
+"Reject this withdrawal and refund Rs " +
+amount +
+" to the user?"
+)
+){
+
+return;
+
+}
 
 
-    try{
+try{
 
-        const withdrawRef =
-        doc(
-            db,
-            "withdraws",
-            withdrawId
-        );
-
-
-        const withdrawSnap =
-        await getDoc(
-            withdrawRef
-        );
+const withdrawRef =
+doc(
+db,
+"withdraws",
+withdrawId
+);
 
 
-        if(!withdrawSnap.exists()){
-
-            throw new Error(
-                "Withdrawal request not found."
-            );
-        }
+const withdrawSnap =
+await getDoc(
+withdrawRef
+);
 
 
-        const withdrawData =
-        withdrawSnap.data();
+if(!withdrawSnap.exists()){
+
+throw new Error(
+"Withdrawal request not found."
+);
+
+}
 
 
-        const currentStatus =
-        String(
-            withdrawData.status ||
-            "pending"
-        ).toLowerCase();
+const withdrawData =
+withdrawSnap.data();
 
 
-        if(
-            currentStatus !== "pending"
-        ){
-
-            throw new Error(
-                "This withdrawal is already " +
-                currentStatus
-            );
-        }
+const currentStatus =
+String(
+withdrawData.status ||
+"pending"
+).toLowerCase();
 
 
-        if(!uid){
+if(
+currentStatus !== "pending"
+){
 
-            throw new Error(
-                "User UID not found."
-            );
-        }
+throw new Error(
+"This withdrawal is already " +
+currentStatus
+);
 
-
-        const userRef =
-        doc(
-            db,
-            "users",
-            uid
-        );
+}
 
 
-        const userSnap =
-        await getDoc(
-            userRef
-        );
+if(!uid){
+
+throw new Error(
+"User UID not found."
+);
+
+}
 
 
-        if(!userSnap.exists()){
-
-            throw new Error(
-                "User profile not found."
-            );
-        }
-
-
-        const userData =
-        userSnap.data();
+const userRef =
+doc(
+db,
+"users",
+uid
+);
 
 
-        const currentBalance =
-        Number(
-            userData.balance || 0
-        );
+const userSnap =
+await getDoc(
+userRef
+);
 
 
-        const refundAmount =
-        Number(amount || 0);
+if(!userSnap.exists()){
+
+throw new Error(
+"User profile not found."
+);
+
+}
 
 
-        if(
-            refundAmount <= 0
-        ){
-
-            throw new Error(
-                "Invalid withdrawal amount."
-            );
-        }
+const userData =
+userSnap.data();
 
 
-        const newBalance =
-        currentBalance +
-        refundAmount;
+const currentBalance =
+Number(
+userData.balance || 0
+);
 
 
-        /*
-         * Reject hone par amount
-         * user ke balance mein wapas.
-         */
-
-        await updateDoc(
-
-            userRef,
-
-            {
-                balance:newBalance
-            }
-        );
+const refundAmount =
+Number(
+amount || 0
+);
 
 
-        /*
-         * Ab withdrawal rejected.
-         */
+if(
+refundAmount <= 0
+){
 
-        await updateDoc(
+throw new Error(
+"Invalid withdrawal amount."
+);
 
-            withdrawRef,
-
-            {
-                status:"rejected"
-            }
-        );
+}
 
 
-        alert(
-            "Withdrawal Rejected\n\n" +
-            "Rs " +
-            refundAmount +
-            " refunded to user balance."
-        );
+await updateDoc(
+
+userRef,
+
+{
+
+balance:
+currentBalance +
+refundAmount
+
+}
+
+);
 
 
-        loadWithdraws();
-        loadUsers();
+await updateDoc(
 
-    }
-    catch(error){
+withdrawRef,
 
-        alert(
-            "Reject failed: " +
-            error.message
-        );
-    }
+{
+
+status:"rejected"
+
+}
+
+);
+
+
+alert(
+"Withdrawal Rejected.\n\n" +
+"Rs " +
+refundAmount +
+" refunded to user balance."
+);
+
+
+loadWithdraws();
+loadUsers();
+
+}
+catch(error){
+
+alert(
+"Reject failed: " +
+error.message
+);
+
+}
+
 };
+
+
+
+/* =========================
+   ADD TASK
+========================= */
+
+window.addTask =
+async function(){
+
+try{
+
+const taskNumber =
+Number(
+document.getElementById(
+"taskNumber"
+).value
+);
+
+
+const name =
+document.getElementById(
+"taskName"
+).value.trim();
+
+
+const price =
+Number(
+document.getElementById(
+"taskPrice"
+).value
+);
+
+
+const commission =
+Number(
+document.getElementById(
+"taskCommission"
+).value
+);
+
+
+const description =
+document.getElementById(
+"taskDescription"
+).value.trim();
+
+
+const image =
+document.getElementById(
+"taskImage"
+).value.trim();
+
+
+
+/*
+ * Validation
+ */
+
+if(
+!taskNumber ||
+taskNumber < 1 ||
+taskNumber > 20
+){
+
+alert(
+"Task Number 1 se 20 ke darmiyan hona chahiye."
+);
+
+return;
+
+}
+
+
+if(!name){
+
+alert(
+"Task name enter karo."
+);
+
+return;
+
+}
+
+
+if(price < 0){
+
+alert(
+"Price invalid hai."
+);
+
+return;
+
+}
+
+
+if(commission < 0){
+
+alert(
+"Commission invalid hai."
+);
+
+return;
+
+}
+
+
+/*
+ * Check duplicate task number.
+ */
+
+const existingSnap =
+await getDocs(
+collection(db,"tasks")
+);
+
+
+let duplicate = false;
+
+
+existingSnap.forEach((item)=>{
+
+const data =
+item.data();
+
+
+if(
+Number(data.taskNumber) ===
+taskNumber
+){
+
+duplicate = true;
+
+}
+
+});
+
+
+if(duplicate){
+
+alert(
+"Task " +
+taskNumber +
+" already exists."
+);
+
+return;
+
+}
+
+
+/*
+ * Save task.
+ */
+
+await addDoc(
+
+collection(db,"tasks"),
+
+{
+
+taskNumber:taskNumber,
+
+name:name,
+
+price:price,
+
+commission:commission,
+
+description:description,
+
+image:image,
+
+active:true,
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+alert(
+"Task " +
+taskNumber +
+" published successfully."
+);
+
+
+clearTaskForm();
+
+loadTasks();
+
+}
+catch(error){
+
+alert(
+"Task save failed: " +
+error.message
+);
+
+}
+
+};
+
+
+
+/* =========================
+   CLEAR TASK FORM
+========================= */
+
+window.clearTaskForm =
+function(){
+
+document.getElementById(
+"taskNumber"
+).value = "";
+
+
+document.getElementById(
+"taskName"
+).value = "";
+
+
+document.getElementById(
+"taskPrice"
+).value = "";
+
+
+document.getElementById(
+"taskCommission"
+).value = "";
+
+
+document.getElementById(
+"taskDescription"
+).value = "";
+
+
+document.getElementById(
+"taskImage"
+).value = "";
+
+};
+
+
+
+/* =========================
+   LOAD TASKS
+========================= */
+
+async function loadTasks(){
+
+tasksList.innerHTML =
+'<div class="loading">Loading Tasks...</div>';
+
+
+try{
+
+const snap =
+await getDocs(
+collection(db,"tasks")
+);
+
+
+if(snap.empty){
+
+tasksList.innerHTML = `
+
+<div class="card">
+
+<h3>
+📦 No Tasks
+</h3>
+
+<p>
+Abhi koi task publish nahi hua.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const tasks = [];
+
+
+snap.forEach((item)=>{
+
+tasks.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+});
+
+
+tasks.sort((a,b)=>{
+
+return Number(
+a.taskNumber || 999
+)
+-
+Number(
+b.taskNumber || 999
+);
+
+});
+
+
+tasksList.innerHTML = "";
+
+
+tasks.forEach((task)=>{
+
+const number =
+Number(
+task.taskNumber || 0
+);
+
+
+const image =
+task.image || "";
+
+
+tasksList.innerHTML += `
+
+<div class="card">
+
+
+<span class="task-number">
+
+Task ${number}
+
+</span>
+
+
+<h3 style="margin-top:10px;">
+
+${escapeHtml(
+task.name || "Task"
+)}
+
+</h3>
+
+
+${
+image
+
+?
+
+`
+
+<img
+src="${escapeAttribute(image)}"
+class="task-image"
+onerror="this.style.display='none'">
+
+`
+
+:
+
+""
+
+}
+
+
+<div class="info">
+
+💰 Price:
+<b>
+Rs ${Number(
+task.price || 0
+)}
+</b>
+
+</div>
+
+
+<div class="info">
+
+💵 Commission:
+<b>
+Rs ${Number(
+task.commission || 0
+)}
+</b>
+
+</div>
+
+
+${
+task.description
+
+?
+
+`
+
+<div class="info">
+
+📝
+${escapeHtml(
+task.description
+)}
+
+</div>
+
+`
+
+:
+
+""
+
+}
+
+
+<div class="task-actions">
+
+<button
+class="delete-task"
+onclick="deleteTask('${task.id}')">
+
+🗑️ Delete Task ${number}
+
+</button>
+
+</div>
+
+
+</div>
+
+`;
+
+});
+
+}
+catch(error){
+
+tasksList.innerHTML = `
+
+<div class="error">
+
+Tasks Error:
+
+<br><br>
+
+${escapeHtml(
+error.message
+)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+/* =========================
+   DELETE TASK
+========================= */
+
+window.deleteTask =
+async function(id){
+
+if(
+!confirm(
+"Delete this task?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"tasks",
+id
+)
+
+);
+
+
+alert(
+"Task deleted."
+);
+
+
+loadTasks();
+
+}
+catch(error){
+
+alert(
+"Task delete failed: " +
+error.message
+);
+
+}
+
+};
+
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value){
+
+return String(value)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(value){
+
+return String(value)
+
+.replaceAll("\\","\\\\")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
 
 
 /* =========================
@@ -1031,4 +2098,5 @@ loadUsers();
 </script>
 
 </body>
+
 </html>
