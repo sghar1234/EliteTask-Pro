@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -29,6 +28,11 @@ body{
     text-align:center;
     font-size:22px;
     font-weight:bold;
+}
+
+.header small{
+    font-size:14px;
+    opacity:.8;
 }
 
 .tabs{
@@ -78,6 +82,7 @@ body{
 .info{
     margin-top:8px;
     font-size:15px;
+    word-break:break-word;
 }
 
 .actions{
@@ -90,40 +95,32 @@ button{
     cursor:pointer;
 }
 
-.edit{
-    flex:1;
-    border:0;
-    padding:11px;
-    border-radius:8px;
-    background:#2563eb;
-    color:white;
-}
-
-.delete{
-    flex:1;
-    border:0;
-    padding:11px;
-    border-radius:8px;
-    background:#dc2626;
-    color:white;
-}
-
-.approve{
-    flex:1;
-    border:0;
-    padding:11px;
-    border-radius:8px;
-    background:#16a34a;
-    color:white;
-}
-
+.edit,
+.delete,
+.approve,
 .reject{
     flex:1;
     border:0;
     padding:11px;
     border-radius:8px;
-    background:#dc2626;
     color:white;
+    font-weight:bold;
+}
+
+.edit{
+    background:#2563eb;
+}
+
+.delete{
+    background:#dc2626;
+}
+
+.approve{
+    background:#16a34a;
+}
+
+.reject{
+    background:#dc2626;
 }
 
 .editBox{
@@ -190,7 +187,6 @@ button{
     word-break:break-word;
 }
 </style>
-
 </head>
 
 <body>
@@ -202,50 +198,47 @@ button{
 
 <div class="tabs">
 
-```
-<button
-    id="usersBtn"
-    class="active"
-    onclick="showUsers()">
-    👥 Users
-</button>
+    <button
+        id="usersBtn"
+        class="active"
+        onclick="showUsers()">
+        👥 Users
+    </button>
 
-<button
-    id="withdrawBtn"
-    onclick="showWithdraws()">
-    💸 Withdraws
-</button>
-```
+    <button
+        id="withdrawBtn"
+        onclick="showWithdraws()">
+        💸 Withdraws
+    </button>
 
 </div>
+
 
 <!-- USERS -->
 
 <div id="usersSection" class="section active">
 
-```
-<div id="usersList">
-    <div class="loading">
-        Loading Users...
+    <div id="usersList">
+        <div class="loading">
+            Loading Users...
+        </div>
     </div>
-</div>
-```
 
 </div>
+
 
 <!-- WITHDRAWS -->
 
 <div id="withdrawSection" class="section">
 
-```
-<div id="withdrawList">
-    <div class="loading">
-        Loading Withdraws...
+    <div id="withdrawList">
+        <div class="loading">
+            Loading Withdraws...
+        </div>
     </div>
-</div>
-```
 
 </div>
+
 
 <script type="module">
 
@@ -292,7 +285,6 @@ window.showUsers = function(){
     .classList.remove("active");
 
     loadUsers();
-
 };
 
 
@@ -319,7 +311,6 @@ window.showWithdraws = function(){
     .classList.add("active");
 
     loadWithdraws();
-
 };
 
 
@@ -348,7 +339,6 @@ async function loadUsers(){
 
             return;
         }
-
 
         snap.forEach((item)=>{
 
@@ -415,7 +405,6 @@ async function loadUsers(){
 
                 </div>
 
-
                 <div
                     class="editBox"
                     id="edit-${item.id}">
@@ -427,7 +416,6 @@ async function loadUsers(){
                         id="bal-${item.id}"
                         value="${balance}">
 
-
                     <label>Commission</label>
 
                     <input
@@ -435,14 +423,12 @@ async function loadUsers(){
                         id="com-${item.id}"
                         value="${commission}">
 
-
                     <label>Completed</label>
 
                     <input
                         type="number"
                         id="done-${item.id}"
                         value="${completed}">
-
 
                     <button
                         class="save"
@@ -467,9 +453,7 @@ async function loadUsers(){
             ${error.message}
         </div>
         `;
-
     }
-
 }
 
 
@@ -492,7 +476,6 @@ window.openEdit = function(id){
     box.style.display === "block"
     ? "none"
     : "block";
-
 };
 
 
@@ -525,7 +508,6 @@ window.saveUser = async function(id){
             ).value
         );
 
-
         await updateDoc(
 
             doc(
@@ -539,11 +521,11 @@ window.saveUser = async function(id){
                 commission:commission,
                 completed:completed
             }
-
         );
 
-
-        alert("User updated successfully");
+        alert(
+            "User updated successfully"
+        );
 
         loadUsers();
 
@@ -554,9 +536,7 @@ window.saveUser = async function(id){
             "Update failed: " +
             error.message
         );
-
     }
-
 };
 
 
@@ -571,11 +551,8 @@ window.deleteUser = async function(id){
             "Delete this user?"
         )
     ){
-
         return;
-
     }
-
 
     try{
 
@@ -586,7 +563,6 @@ window.deleteUser = async function(id){
                 id
             )
         );
-
 
         alert(
             "User deleted"
@@ -601,9 +577,7 @@ window.deleteUser = async function(id){
             "Delete failed: " +
             error.message
         );
-
     }
-
 };
 
 
@@ -616,7 +590,6 @@ async function loadWithdraws(){
     withdrawList.innerHTML =
     '<div class="loading">Loading Withdraws...</div>';
 
-
     try{
 
         const snap =
@@ -624,9 +597,7 @@ async function loadWithdraws(){
             collection(db,"withdraws")
         );
 
-
         withdrawList.innerHTML = "";
-
 
         if(snap.empty){
 
@@ -641,7 +612,6 @@ async function loadWithdraws(){
 
             const w =
             item.data();
-
 
             const amount =
             Number(w.amount || 0);
@@ -671,7 +641,8 @@ async function loadWithdraws(){
             ).toLowerCase();
 
 
-            let statusClass = "pending";
+            let statusClass =
+            "pending";
 
             if(status === "approved"){
                 statusClass = "approved";
@@ -723,13 +694,20 @@ async function loadWithdraws(){
 
                         <button
                             class="approve"
-                            onclick="approveWithdraw('${item.id}','${uid}',${amount})">
+                            onclick="approveWithdraw(
+                                '${item.id}',
+                                '${uid}'
+                            )">
                             ✅ Approve
                         </button>
 
                         <button
                             class="reject"
-                            onclick="rejectWithdraw('${item.id}')">
+                            onclick="rejectWithdraw(
+                                '${item.id}',
+                                '${uid}',
+                                ${amount}
+                            )">
                             ❌ Reject
                         </button>
 
@@ -755,198 +733,38 @@ async function loadWithdraws(){
             ${error.message}
         </div>
         `;
-
     }
-
 }
 
 
 /* =========================
-   APPROVE WITHDRAW
+   APPROVE
+   IMPORTANT:
+   BALANCE IS NOT DEDUCTED HERE
 ========================= */
 
 window.approveWithdraw =
 async function(
     withdrawId,
-    uid,
-    amount
+    uid
 ){
 
-    if(!uid){
-
-        alert(
-            "User UID not found."
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !amount ||
-        amount <= 0
-    ){
-
-        alert(
-            "Invalid withdrawal amount."
-        );
-
-        return;
-
-    }
-
-
     if(
         !confirm(
-            "Approve Rs " +
-            amount +
-            " withdrawal?"
+            "Approve this withdrawal?"
         )
     ){
-
         return;
-
     }
 
 
     try{
-
-        /* Get user directly */
-
-        const userRef =
-        doc(
-            db,
-            "users",
-            uid
-        );
-
-
-        const userSnap =
-        await getDoc(
-            userRef
-        );
-
-
-        if(!userSnap.exists()){
-
-            throw new Error(
-                "User profile not found."
-            );
-
-        }
-
-
-        const userData =
-        userSnap.data();
-
-
-        const currentBalance =
-        Number(
-            userData.balance || 0
-        );
-
-
-        if(
-            currentBalance < amount
-        ){
-
-            throw new Error(
-                "Insufficient balance. Current balance: Rs " +
-                currentBalance
-            );
-
-        }
-
-
-        const newBalance =
-        currentBalance - amount;
-
-
-        /*
-         * First deduct balance
-         */
-
-        await updateDoc(
-
-            userRef,
-
-            {
-                balance:newBalance
-            }
-
-        );
-
-
-        /*
-         * Then approve withdrawal
-         */
-
-        await updateDoc(
-
-            doc(
-                db,
-                "withdraws",
-                withdrawId
-            ),
-
-            {
-                status:"approved"
-            }
-
-        );
-
-
-        alert(
-            "Withdrawal Approved Successfully"
-        );
-
-
-        loadWithdraws();
-        loadUsers();
-
-    }
-    catch(error){
-
-        alert(
-            "Approve failed: " +
-            error.message
-        );
-
-    }
-
-};
-
-
-/* =========================
-   REJECT WITHDRAW
-========================= */
-
-window.rejectWithdraw =
-async function(id){
-
-    if(
-        !confirm(
-            "Reject this withdrawal?"
-        )
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        /*
-         * Check current withdrawal
-         */
 
         const withdrawRef =
         doc(
             db,
             "withdraws",
-            id
+            withdrawId
         );
 
 
@@ -961,7 +779,6 @@ async function(id){
             throw new Error(
                 "Withdrawal request not found."
             );
-
         }
 
 
@@ -984,9 +801,194 @@ async function(id){
                 "This withdrawal is already " +
                 currentStatus
             );
-
         }
 
+
+        /*
+         * IMPORTANT:
+         *
+         * User ka balance withdraw ke waqt
+         * already minus ho chuka hai.
+         *
+         * Is liye Approve par balance ko
+         * dobara minus NAHI karna.
+         */
+
+        await updateDoc(
+
+            withdrawRef,
+
+            {
+                status:"approved"
+            }
+        );
+
+
+        alert(
+            "Withdrawal Approved Successfully"
+        );
+
+
+        loadWithdraws();
+        loadUsers();
+
+    }
+    catch(error){
+
+        alert(
+            "Approve failed: " +
+            error.message
+        );
+    }
+};
+
+
+/* =========================
+   REJECT
+   BALANCE REFUND
+========================= */
+
+window.rejectWithdraw =
+async function(
+    withdrawId,
+    uid,
+    amount
+){
+
+    if(
+        !confirm(
+            "Reject this withdrawal and refund Rs " +
+            amount +
+            " to the user?"
+        )
+    ){
+        return;
+    }
+
+
+    try{
+
+        const withdrawRef =
+        doc(
+            db,
+            "withdraws",
+            withdrawId
+        );
+
+
+        const withdrawSnap =
+        await getDoc(
+            withdrawRef
+        );
+
+
+        if(!withdrawSnap.exists()){
+
+            throw new Error(
+                "Withdrawal request not found."
+            );
+        }
+
+
+        const withdrawData =
+        withdrawSnap.data();
+
+
+        const currentStatus =
+        String(
+            withdrawData.status ||
+            "pending"
+        ).toLowerCase();
+
+
+        if(
+            currentStatus !== "pending"
+        ){
+
+            throw new Error(
+                "This withdrawal is already " +
+                currentStatus
+            );
+        }
+
+
+        if(!uid){
+
+            throw new Error(
+                "User UID not found."
+            );
+        }
+
+
+        const userRef =
+        doc(
+            db,
+            "users",
+            uid
+        );
+
+
+        const userSnap =
+        await getDoc(
+            userRef
+        );
+
+
+        if(!userSnap.exists()){
+
+            throw new Error(
+                "User profile not found."
+            );
+        }
+
+
+        const userData =
+        userSnap.data();
+
+
+        const currentBalance =
+        Number(
+            userData.balance || 0
+        );
+
+
+        const refundAmount =
+        Number(amount || 0);
+
+
+        if(
+            refundAmount <= 0
+        ){
+
+            throw new Error(
+                "Invalid withdrawal amount."
+            );
+        }
+
+
+        const newBalance =
+        currentBalance +
+        refundAmount;
+
+
+        /*
+         * Reject hone par amount
+         * user ke balance mein wapas.
+         */
+
+        await updateDoc(
+
+            userRef,
+
+            {
+                balance:newBalance
+            }
+        );
+
+
+        /*
+         * Ab withdrawal rejected.
+         */
 
         await updateDoc(
 
@@ -995,16 +997,19 @@ async function(id){
             {
                 status:"rejected"
             }
-
         );
 
 
         alert(
-            "Withdrawal Rejected"
+            "Withdrawal Rejected\n\n" +
+            "Rs " +
+            refundAmount +
+            " refunded to user balance."
         );
 
 
         loadWithdraws();
+        loadUsers();
 
     }
     catch(error){
@@ -1013,9 +1018,7 @@ async function(id){
             "Reject failed: " +
             error.message
         );
-
     }
-
 };
 
 
