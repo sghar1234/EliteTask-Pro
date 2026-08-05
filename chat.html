@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Live Chat - EliteTask Pro</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f3f5f9;
+}
+
+.chat-app{
+  max-width:600px;
+  height:100vh;
+  margin:auto;
+  background:white;
+  display:flex;
+  flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+  background:linear-gradient(135deg,#1769e0,#0d47a1);
+  color:white;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.back{
+  color:white;
+  text-decoration:none;
+  font-size:30px;
+}
+
+.avatar{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  background:white;
+  color:#1769e0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.header-info{
+  flex:1;
+}
+
+.header-info h3{
+  font-size:16px;
+}
+
+.header-info p{
+  font-size:11px;
+  margin-top:4px;
+  opacity:.9;
+}
+
+/* CHAT */
+
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+  background:#f5f7fa;
+}
+
+.welcome{
+  background:white;
+  border:1px solid #eee;
+  border-radius:12px;
+  padding:13px;
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin-bottom:15px;
+}
+
+.message{
+  max-width:78%;
+  padding:10px 12px;
+  margin-bottom:10px;
+  border-radius:13px;
+  font-size:14px;
+  line-height:1.45;
+  word-break:break-word;
+}
+
+.user{
+  margin-left:auto;
+  background:#1769e0;
+  color:white;
+  border-bottom-right-radius:3px;
+}
+
+.admin{
+  margin-right:auto;
+  background:white;
+  color:#222;
+  border:1px solid #e5e5e5;
+  border-bottom-left-radius:3px;
+}
+
+.time{
+  display:block;
+  font-size:9px;
+  text-align:right;
+  margin-top:5px;
+  opacity:.65;
+}
+
+.empty{
+  text-align:center;
+  color:#999;
+  font-size:13px;
+  padding:60px 20px;
+}
+
+/* INPUT */
+
+.input-area{
+  padding:10px;
+  display:flex;
+  gap:8px;
+  border-top:1px solid #eee;
+  background:white;
+}
+
+#messageInput{
+  flex:1;
+  border:1px solid #ddd;
+  outline:none;
+  border-radius:22px;
+  padding:12px 15px;
+  font-size:14px;
+}
+
+#sendBtn{
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:50%;
+  background:#1769e0;
+  color:white;
+  font-size:18px;
+}
+
+#sendBtn:disabled{
+  opacity:.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-app">
+
+  <div class="header">
+
+    <a href="support.html" class="back">‹</a>
+
+    <div class="avatar">
+      CS
+    </div>
+
+    <div class="header-info">
+      <h3>EliteTask Pro Support</h3>
+      <p>Customer Support</p>
+    </div>
+
+  </div>
+
+
+  <div class="messages" id="messages">
+
+    <div class="welcome">
+      👋 Welcome to Customer Support.<br>
+      Send your message below and our support team will reply.
+    </div>
+
+    <div class="empty" id="empty">
+      Start a conversation with Customer Support.
+    </div>
+
+  </div>
+
+
+  <div class="input-area">
+
+    <input
+      type="text"
+      id="messageInput"
+      placeholder="Type your message..."
+      autocomplete="off"
+    >
+
+    <button id="sendBtn">
+      ➤
+    </button>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+  auth,
+  db
+} from "./firebase.js";
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const messagesBox =
+  document.getElementById("messages");
+
+const input =
+  document.getElementById("messageInput");
+
+const sendBtn =
+  document.getElementById("sendBtn");
+
+const empty =
+  document.getElementById("empty");
+
+let currentUser = null;
+
+
+/* USER LOGIN */
+
+onAuthStateChanged(auth, (user) => {
+
+  if(!user){
+
+    window.location.href = "index.html";
+
+    return;
+  }
+
+  currentUser = user;
+
+  loadMessages();
+
+});
+
+
+/* LOAD CHAT */
+
+function loadMessages(){
+
+  const messagesRef = collection(
+    db,
+    "supportChats",
+    currentUser.uid,
+    "messages"
+  );
+
+
+  const messagesQuery = query(
+    messagesRef,
+    orderBy("createdAt","asc")
+  );
+
+
+  onSnapshot(messagesQuery, (snapshot) => {
+
+    document
+      .querySelectorAll(".message")
+      .forEach(el => el.remove());
+
+
+    if(snapshot.empty){
+
+      empty.style.display = "block";
+
+    }else{
+
+      empty.style.display = "none";
+
+    }
+
+
+    snapshot.forEach((doc) => {
+
+      const data = doc.data();
+
+      const message =
+        document.createElement("div");
+
+
+      message.className =
+        "message " +
+        (data.senderRole === "admin"
+          ? "admin"
+          : "user");
+
+
+      const text =
+        document.createElement("div");
+
+      text.textContent =
+        data.text;
+
+
+      const time =
+        document.createElement("span");
+
+      time.className = "time";
+
+
+      if(data.createdAt){
+
+        time.textContent =
+          data.createdAt.toDate()
+          .toLocaleTimeString([],{
+            hour:"2-digit",
+            minute:"2-digit"
+          });
+
+      }else{
+
+        time.textContent = "Sending...";
+
+      }
+
+
+      message.appendChild(text);
+      message.appendChild(time);
+
+      messagesBox.appendChild(message);
+
+    });
+
+
+    messagesBox.scrollTop =
+      messagesBox.scrollHeight;
+
+  });
+
+}
+
+
+/* SEND */
+
+async function sendMessage(){
+
+  const text =
+    input.value.trim();
+
+
+  if(!text || !currentUser){
+    return;
+  }
+
+
+  sendBtn.disabled = true;
+
+
+  try{
+
+    const messagesRef =
+      collection(
+        db,
+        "supportChats",
+        currentUser.uid,
+        "messages"
+      );
+
+
+    await addDoc(messagesRef,{
+
+      text:text,
+
+      senderId:
+        currentUser.uid,
+
+      senderRole:
+        "user",
+
+      createdAt:
+        serverTimestamp()
+
+    });
+
+
+    input.value = "";
+
+    input.focus();
+
+
+  }catch(error){
+
+    alert(
+      "Message failed: " +
+      error.message
+    );
+
+  }
+
+
+  sendBtn.disabled = false;
+
+}
+
+
+sendBtn.addEventListener(
+  "click",
+  sendMessage
+);
+
+
+input.addEventListener(
+  "keydown",
+  (event)=>{
+
+    if(event.key === "Enter"){
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
+```
