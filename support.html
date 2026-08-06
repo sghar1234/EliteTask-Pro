@@ -1,285 +1,763 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Customer Support - EliteTask Pro</title>
+<title>EliteTask Pro - Customer Service</title>
 
 <style>
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#222;
+    background:#f4f7fb;
+    color:#172033;
+    padding-bottom:85px;
 }
 
+/* TOP BAR */
+
+.topbar{
+    height:70px;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 17px;
+    color:white;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+.back-btn{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    text-decoration:none;
+    font-size:22px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.logo-text{
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* MAIN */
+
 .container{
-  max-width:600px;
-  min-height:100vh;
-  margin:auto;
-  background:#f5f7fb;
+    max-width:600px;
+    margin:auto;
+    padding:18px 15px;
 }
 
 /* HEADER */
 
-.header{
-  background:linear-gradient(135deg,#1769e0,#0d47a1);
-  color:white;
-  padding:18px;
-  border-radius:0 0 24px 24px;
+.service-header{
+    text-align:center;
+    margin:10px 0 20px;
 }
 
-.header-top{
-  display:flex;
-  align-items:center;
-  gap:12px;
+.service-icon{
+    width:72px;
+    height:72px;
+    margin:auto;
+    border-radius:22px;
+    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    box-shadow:0 10px 25px rgba(20,120,237,.25);
 }
 
-.back{
-  color:white;
-  text-decoration:none;
-  font-size:30px;
+.service-header h2{
+    margin-top:13px;
+    font-size:22px;
 }
 
-.header h2{
-  font-size:20px;
+.service-header p{
+    margin-top:6px;
+    color:#8490a0;
+    font-size:13px;
 }
 
-.header p{
-  margin-top:7px;
-  margin-left:42px;
-  font-size:13px;
-  opacity:.9;
+/* SUPPORT CARD */
+
+.support-card{
+    background:white;
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 5px 20px rgba(20,40,80,.07);
+    margin-bottom:15px;
 }
 
-/* CONTENT */
-
-.content{
-  padding:18px;
+.support-card h3{
+    font-size:16px;
+    margin-bottom:7px;
 }
 
-.welcome{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 4px 15px rgba(0,0,0,.06);
+.support-card p{
+    font-size:12px;
+    color:#8992a2;
+    line-height:1.5;
 }
 
-.welcome-icon{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#e8f0ff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:27px;
-  margin-bottom:14px;
+/* CHAT */
+
+.chat-box{
+    background:#f8faff;
+    border-radius:17px;
+    padding:15px;
+    min-height:160px;
+    max-height:320px;
+    overflow-y:auto;
+    margin-bottom:12px;
 }
 
-.welcome h3{
-  font-size:20px;
-  margin-bottom:8px;
+.message{
+    max-width:82%;
+    padding:11px 13px;
+    border-radius:14px;
+    margin-bottom:9px;
+    font-size:12px;
+    line-height:1.4;
 }
 
-.welcome p{
-  color:#777;
-  font-size:14px;
-  line-height:1.6;
+.admin-message{
+    background:white;
+    color:#4b5565;
+    border-bottom-left-radius:4px;
 }
 
-/* OPTIONS */
-
-.options{
-  margin-top:18px;
+.user-message{
+    background:#1478ed;
+    color:white;
+    margin-left:auto;
+    border-bottom-right-radius:4px;
 }
 
-.option{
-  background:white;
-  border-radius:16px;
-  padding:17px;
-  margin-bottom:12px;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  text-decoration:none;
-  color:#222;
-  box-shadow:0 3px 12px rgba(0,0,0,.06);
-  border:1px solid #eee;
+.time{
+    font-size:9px;
+    opacity:.55;
+    margin-top:4px;
 }
 
-.option-icon{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  flex-shrink:0;
+/* INPUT */
+
+.message-area{
+    display:flex;
+    gap:8px;
 }
 
-.chat-icon{
-  background:#e8f1ff;
+.message-input{
+    flex:1;
+    border:1px solid #e2e7ef;
+    border-radius:13px;
+    padding:13px;
+    outline:none;
+    font-size:13px;
+    background:#fff;
 }
 
-.telegram-icon{
-  background:#e4f6ff;
+.send-btn{
+    width:50px;
+    border:none;
+    border-radius:13px;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    color:white;
+    font-size:20px;
 }
 
-.option-info{
-  flex:1;
+/* QUICK HELP */
+
+.quick-title{
+    margin:20px 2px 12px;
+    font-size:17px;
 }
 
-.option-info strong{
-  display:block;
-  font-size:16px;
-  margin-bottom:4px;
+.quick-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
 }
 
-.option-info span{
-  font-size:12px;
-  color:#888;
+.quick-btn{
+    border:none;
+    background:white;
+    border-radius:17px;
+    padding:17px 10px;
+    box-shadow:0 5px 18px rgba(20,40,80,.06);
+    text-align:center;
+    color:#172033;
 }
 
-.arrow{
-  font-size:24px;
-  color:#aaa;
+.quick-btn div{
+    font-size:23px;
+    margin-bottom:7px;
 }
 
-/* NOTE */
+.quick-btn span{
+    font-size:11px;
+}
 
-.note{
-  text-align:center;
-  color:#999;
-  font-size:12px;
-  margin-top:22px;
-  line-height:1.5;
+/* BOTTOM BAR */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:73px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -5px 25px rgba(0,0,0,.10);
+    z-index:1000;
+    border-top:1px solid #edf0f5;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#8992a2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    width:25%;
+    font-size:10px;
+}
+
+.nav-item span{
+    font-size:21px;
+}
+
+.nav-item.active{
+    color:#1677e8;
+    font-weight:bold;
+}
+
+.nav-center{
+    width:55px;
+    height:55px;
+    margin-top:-25px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 20px rgba(20,120,237,.35);
+    border:5px solid #f4f7fb;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
 
-  <!-- HEADER -->
+<!-- TOP BAR -->
 
-  <div class="header">
+<div class="topbar">
 
-    <div class="header-top">
+    <a href="dashboard.html" class="back-btn">
+        ←
+    </a>
 
-      <a href="dashboard.html" class="back">‹</a>
+    <div class="logo-area">
 
-      <h2>Customer Support</h2>
+        <div class="logo">
+            ET
+        </div>
+
+        <div class="logo-text">
+            EliteTask Pro
+        </div>
 
     </div>
-
-    <p>We're here to help you</p>
-
-  </div>
-
-
-  <div class="content">
-
-    <!-- WELCOME -->
-
-    <div class="welcome">
-
-      <div class="welcome-icon">
-        💬
-      </div>
-
-      <h3>How can we help you?</h3>
-
-      <p>
-        Have a question or facing a problem?
-        Contact our support team and we'll be
-        happy to help you.
-      </p>
-
-    </div>
-
-
-    <!-- OPTIONS -->
-
-    <div class="options">
-
-      <!-- CONTINUE CHAT -->
-
-      <a href="chat.html" class="option">
-
-        <div class="option-icon chat-icon">
-          💬
-        </div>
-
-        <div class="option-info">
-
-          <strong>Continue Chat</strong>
-
-          <span>
-            Chat directly with Customer Support
-          </span>
-
-        </div>
-
-        <div class="arrow">
-          ›
-        </div>
-
-      </a>
-
-
-      <!-- TELEGRAM -->
-
-      <a
-        href="https://t.me/Helpcenter21"
-        target="_blank"
-        class="option"
-      >
-
-        <div class="option-icon telegram-icon">
-          ✈️
-        </div>
-
-        <div class="option-info">
-
-          <strong>Telegram Support</strong>
-
-          <span>
-            Contact us through Telegram
-          </span>
-
-        </div>
-
-        <div class="arrow">
-          ›
-        </div>
-
-      </a>
-
-    </div>
-
-
-    <div class="note">
-
-      Customer Support is available to assist you
-      with your account, tasks and withdrawals.
-
-    </div>
-
-  </div>
 
 </div>
 
+
+<div class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="service-header">
+
+        <div class="service-icon">
+            💬
+        </div>
+
+        <h2>
+            Customer Service
+        </h2>
+
+        <p>
+            How can we help you today?
+        </p>
+
+    </div>
+
+
+    <!-- CHAT -->
+
+    <div class="support-card">
+
+        <h3>
+            Live Support
+        </h3>
+
+        <p>
+            Send us your message and our support team will respond.
+        </p>
+
+        <br>
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="message admin-message">
+
+                Hello! Welcome to EliteTask Pro Support. How can we help you?
+
+                <div class="time">
+                    Support
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="message-area">
+
+            <input
+                type="text"
+                id="messageInput"
+                class="message-input"
+                placeholder="Type your message..."
+            >
+
+            <button
+                class="send-btn"
+                id="sendBtn"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK HELP -->
+
+    <h3 class="quick-title">
+        Quick Help
+    </h3>
+
+
+    <div class="quick-grid">
+
+
+        <button
+            class="quick-btn"
+            onclick="sendQuick('I need help with my tasks.')"
+        >
+
+            <div>📦</div>
+
+            <span>
+                Task Help
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="sendQuick('I need help with withdrawal.')"
+        >
+
+            <div>💳</div>
+
+            <span>
+                Withdrawal
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="sendQuick('I have a problem with my account.')"
+        >
+
+            <div>👤</div>
+
+            <span>
+                Account
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-btn"
+            onclick="sendQuick('I need help with my balance.')"
+        >
+
+            <div>💰</div>
+
+            <span>
+                Balance
+            </span>
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- BOTTOM BAR -->
+
+<div class="bottom-nav">
+
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+        <span>⌂</span>
+        Home
+    </a>
+
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+        <span>▣</span>
+        Tasks
+    </a>
+
+
+    <a
+        href="support.html"
+        class="nav-item active"
+    >
+
+        <div class="nav-center">
+            💬
+        </div>
+
+        Support
+
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item"
+    >
+        <span>👤</span>
+        Profile
+    </a>
+
+
+</div>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+    authDomain: "elitetask-pro.firebaseapp.com",
+
+    projectId: "elitetask-pro",
+
+    storageBucket: "elitetask-pro.firebasestorage.app",
+
+    messagingSenderId: "504295275402",
+
+    appId: "1:504295275402:web:8c480445c5510fa645a673"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+let currentUser = null;
+
+
+/* LOGIN CHECK */
+
+onAuthStateChanged(auth, (user) => {
+
+    if(!user){
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+    currentUser = user;
+
+    loadMessages(user.uid);
+
+});
+
+
+/* LOAD MESSAGES */
+
+function loadMessages(uid){
+
+    const chatBox =
+        document.getElementById("chatBox");
+
+
+    const messagesRef =
+        collection(
+            db,
+            "supportMessages"
+        );
+
+
+    const q =
+        query(
+            messagesRef,
+            orderBy("createdAt","asc")
+        );
+
+
+    onSnapshot(q, (snapshot) => {
+
+        chatBox.innerHTML = "";
+
+
+        snapshot.forEach((item) => {
+
+            const data =
+                item.data();
+
+
+            if(data.userId !== uid){
+                return;
+            }
+
+
+            const div =
+                document.createElement("div");
+
+
+            div.className =
+                data.sender === "admin"
+                ? "message admin-message"
+                : "message user-message";
+
+
+            div.textContent =
+                data.message;
+
+
+            chatBox.appendChild(div);
+
+        });
+
+
+        chatBox.scrollTop =
+            chatBox.scrollHeight;
+
+    });
+
+}
+
+
+/* SEND MESSAGE */
+
+async function sendMessage(){
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const message =
+        input.value.trim();
+
+
+    if(!message){
+        return;
+    }
+
+
+    if(!currentUser){
+        return;
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(
+                db,
+                "supportMessages"
+            ),
+            {
+
+                userId:
+                    currentUser.uid,
+
+                email:
+                    currentUser.email || "",
+
+                message:
+                    message,
+
+                sender:
+                    "user",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        input.value = "";
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Message send nahi ho saka."
+        );
+
+    }
+
+}
+
+
+/* SEND BUTTON */
+
+document
+.getElementById("sendBtn")
+.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* ENTER BUTTON */
+
+document
+.getElementById("messageInput")
+.addEventListener(
+    "keydown",
+    (event) => {
+
+        if(event.key === "Enter"){
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* QUICK MESSAGE */
+
+window.sendQuick = function(message){
+
+    document
+        .getElementById("messageInput")
+        .value = message;
+
+    sendMessage();
+
+};
+
+</script>
+
+
 </body>
 </html>
-```
