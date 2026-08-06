@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -8,154 +7,476 @@
 
 <title>EliteTask Pro - Login</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(145deg,#06132e,#0d3975,#1677d2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-wrapper{
+    width:100%;
+    max-width:420px;
+}
+
+/* LOGO */
+
+.brand{
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+}
+
+.logo{
+    width:72px;
+    height:72px;
+    margin:auto;
+    border-radius:22px;
+    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+}
+
+.brand h1{
+    font-size:24px;
+    margin-top:13px;
+}
+
+.brand p{
+    font-size:12px;
+    opacity:.7;
+    margin-top:5px;
+}
+
+/* LOGIN CARD */
+
+.login-card{
+    background:white;
+    border-radius:26px;
+    padding:27px 22px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.login-card h2{
+    text-align:center;
+    font-size:21px;
+    color:#172033;
+}
+
+.subtitle{
+    text-align:center;
+    color:#8992a2;
+    font-size:12px;
+    margin-top:6px;
+    margin-bottom:23px;
+}
+
+/* INPUT */
+
+label{
+    display:block;
+    font-size:12px;
+    color:#596579;
+    margin-bottom:7px;
+}
+
+.input-box{
+    position:relative;
+    margin-bottom:16px;
+}
+
+.input-box span{
+    position:absolute;
+    left:14px;
+    top:15px;
+    font-size:16px;
+}
+
+input{
+    width:100%;
+    height:50px;
+    border:1px solid #e0e6ef;
+    border-radius:13px;
+    padding:0 14px 0 42px;
+    outline:none;
+    font-size:13px;
+    background:#fafcff;
+}
+
+input:focus{
+    border-color:#2588ed;
+    background:white;
+}
+
+/* LOGIN BUTTON */
+
+.login-btn{
+    width:100%;
+    height:51px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 8px 20px rgba(20,120,237,.25);
+}
+
+.login-btn:disabled{
+    opacity:.6;
+}
+
+/* SIGNUP */
+
+.signup{
+    text-align:center;
+    margin-top:20px;
+    font-size:12px;
+    color:#8992a2;
+}
+
+.signup a{
+    color:#1478ed;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* ERROR */
+
+.error{
+    display:none;
+    background:#fff1f1;
+    color:#d83232;
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:14px;
+    font-size:11px;
+    text-align:center;
+}
+
+</style>
 
 </head>
-
 
 <body>
 
 
-<div class="login-box">
-
-<h1>EliteTask Pro</h1>
-
-<p>Welcome Back</p>
+<div class="login-wrapper">
 
 
-<input id="email" type="email" placeholder="Enter Email">
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <div class="logo">
+            ET
+        </div>
+
+        <h1>
+            EliteTask Pro
+        </h1>
+
+        <p>
+            Smart Tasks • Better Earnings
+        </p>
+
+    </div>
 
 
-<input id="password" type="password" placeholder="Enter Password">
+    <!-- LOGIN -->
+
+    <div class="login-card">
+
+        <h2>
+            Welcome Back
+        </h2>
+
+        <div class="subtitle">
+            Login to continue to your account
+        </div>
 
 
-<button id="loginBtn">
-Login
-</button>
+        <div
+            class="error"
+            id="errorBox"
+        ></div>
 
 
-<p>
-New User?
-<a href="signup.html">Create Account</a>
-</p>
+        <label>
+            Email Address
+        </label>
 
+        <div class="input-box">
+
+            <span>
+                📧
+            </span>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <label>
+            Password
+        </label>
+
+        <div class="input-box">
+
+            <span>
+                🔒
+            </span>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+            >
+
+        </div>
+
+
+        <button
+            class="login-btn"
+            id="loginBtn"
+        >
+            Login
+        </button>
+
+
+        <div class="signup">
+
+            Don't have an account?
+
+            <a href="signup.html">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 
 
+<!-- FIREBASE -->
 
 <script type="module">
 
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
-
-import { 
-getAuth,
-signInWithEmailAndPassword
+import {
+    initializeApp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+import {
+    getAuth,
+    signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-authDomain: "elitetask-pro.firebaseapp.com",
+    authDomain: "elitetask-pro.firebaseapp.com",
 
-projectId: "elitetask-pro",
+    projectId: "elitetask-pro",
 
-storageBucket: "elitetask-pro.firebasestorage.app",
+    storageBucket: "elitetask-pro.firebasestorage.app",
 
-messagingSenderId: "504295275402",
+    messagingSenderId: "504295275402",
 
-appId: "1:504295275402:web:cf744a5d4e82c72145a673"
+    appId: "1:504295275402:web:8c480445c5510fa645a673"
 
 };
 
 
-
-const app = initializeApp(firebaseConfig);
-
-
-const auth = getAuth(app);
+const app =
+    initializeApp(firebaseConfig);
 
 
-
-const loginBtn = document.getElementById("loginBtn");
-
-
-
-loginBtn.addEventListener("click", async ()=>{
+const auth =
+    getAuth(app);
 
 
-const email =
-document.getElementById("email").value.trim();
+const emailInput =
+    document.getElementById("email");
 
 
-const password =
-document.getElementById("password").value;
+const passwordInput =
+    document.getElementById("password");
 
 
+const loginBtn =
+    document.getElementById("loginBtn");
 
-if(!email || !password){
 
-alert("Please enter email and password");
+const errorBox =
+    document.getElementById("errorBox");
 
-return;
+
+function showError(message){
+
+    errorBox.textContent =
+        message;
+
+    errorBox.style.display =
+        "block";
 
 }
 
 
+loginBtn.addEventListener(
+    "click",
+    async () => {
 
-try{
-
-
-loginBtn.innerText="Loading...";
-
-loginBtn.disabled=true;
-
+        errorBox.style.display =
+            "none";
 
 
-await signInWithEmailAndPassword(
-auth,
-email,
-password
+        const email =
+            emailInput.value.trim();
+
+
+        const password =
+            passwordInput.value;
+
+
+        if(!email){
+
+            showError(
+                "Email enter karo."
+            );
+
+            return;
+
+        }
+
+
+        if(!password){
+
+            showError(
+                "Password enter karo."
+            );
+
+            return;
+
+        }
+
+
+        loginBtn.disabled =
+            true;
+
+        loginBtn.textContent =
+            "Logging in...";
+
+
+        try{
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+            window.location.href =
+                "dashboard.html";
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+
+            if(
+                error.code ===
+                "auth/invalid-credential"
+            ){
+
+                showError(
+                    "Email ya password ghalat hai."
+                );
+
+            }
+            else if(
+                error.code ===
+                "auth/user-not-found"
+            ){
+
+                showError(
+                    "Ye account mojood nahi."
+                );
+
+            }
+            else if(
+                error.code ===
+                "auth/wrong-password"
+            ){
+
+                showError(
+                    "Password ghalat hai."
+                );
+
+            }
+            else{
+
+                showError(
+                    "Login nahi ho saka. Dobara try karo."
+                );
+
+            }
+
+        }
+
+
+        loginBtn.disabled =
+            false;
+
+        loginBtn.textContent =
+            "Login";
+
+    }
 );
 
 
+passwordInput.addEventListener(
+    "keydown",
+    (event) => {
 
-alert("Login Successful");
+        if(event.key === "Enter"){
 
+            loginBtn.click();
 
-window.location.href="dashboard.html";
+        }
 
-
-
-}catch(error){
-
-
-alert(error.message);
-
-
-loginBtn.innerText="Login";
-
-loginBtn.disabled=false;
-
-
-}
-
-
-
-});
-
-
+    }
+);
 
 </script>
 
-
 </body>
-
 </html>
