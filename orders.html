@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tasks - EliteTask Pro</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Tasks - EliteTask Pro</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -68,6 +74,7 @@ margin-bottom:15px;
 }
 
 .task{
+background:white;
 padding-bottom:20px;
 margin-bottom:20px;
 border-bottom:1px solid #eee;
@@ -121,6 +128,51 @@ border-radius:12px;
 background:#dcfce7;
 color:#166534;
 font-weight:bold;
+line-height:1.5;
+}
+
+.rating{
+margin-top:16px;
+padding:14px;
+background:#f9fafb;
+border-radius:12px;
+}
+
+.ratingTitle{
+text-align:center;
+font-weight:bold;
+color:#374151;
+}
+
+.stars{
+display:flex;
+justify-content:center;
+gap:7px;
+margin-top:8px;
+}
+
+.star{
+font-size:34px;
+color:#d1d5db;
+cursor:pointer;
+user-select:none;
+}
+
+.star.selected{
+color:#f59e0b;
+}
+
+.commentBox{
+width:100%;
+height:90px;
+margin-top:13px;
+padding:12px;
+border:1px solid #ddd;
+border-radius:10px;
+font-size:15px;
+resize:none;
+outline:none;
+background:white;
 }
 
 .completeBtn{
@@ -177,28 +229,55 @@ border-radius:12px;
 font-size:16px;
 font-weight:bold;
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="header">
-📦 Available Tasks
+
+📦 My Tasks
+
 </div>
+
+
 
 <div class="wallet">
 
-<div class="walletBox">
-<p>Balance</p>
-<h2 id="balance">Rs 0</h2>
-</div>
 
 <div class="walletBox">
-<p>Commission</p>
-<h2 id="commission">Rs 0</h2>
-</div>
+
+<p>
+Balance
+</p>
+
+<h2 id="balance">
+Rs 0
+</h2>
 
 </div>
+
+
+<div class="walletBox">
+
+<p>
+Commission
+</p>
+
+<h2 id="commission">
+Rs 0
+</h2>
+
+</div>
+
+
+</div>
+
+
 
 <div class="card">
 
@@ -206,11 +285,16 @@ font-weight:bold;
 📦 Available Tasks
 </div>
 
+
 <div id="tasksList">
+
 Loading Tasks...
+
 </div>
 
 </div>
+
+
 
 <div class="card">
 
@@ -218,25 +302,43 @@ Loading Tasks...
 ✅ Completed Tasks
 </div>
 
+
 <div id="completedList">
+
 Loading Completed Tasks...
-</div>
 
 </div>
 
-<a href="dashboard.html" class="back">
+</div>
+
+
+
+<a
+href="dashboard.html"
+class="back">
+
 ← Back to Dashboard
+
 </a>
+
+
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
+
+import {
+auth,
+db
+}
+from "./firebase.js";
+
 
 import {
 onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
 collection,
@@ -253,36 +355,58 @@ from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+
 const balanceEl =
-document.getElementById("balance");
+document.getElementById(
+"balance"
+);
+
 
 const commissionEl =
-document.getElementById("commission");
+document.getElementById(
+"commission"
+);
+
 
 const tasksList =
-document.getElementById("tasksList");
+document.getElementById(
+"tasksList"
+);
+
 
 const completedList =
-document.getElementById("completedList");
+document.getElementById(
+"completedList"
+);
+
 
 
 let currentUser = null;
+
 
 
 /* =========================
 AUTH
 ========================= */
 
-onAuthStateChanged(auth, async(user)=>{
+
+onAuthStateChanged(
+auth,
+async(user)=>{
+
 
 if(!user){
 
-window.location.href="index.html";
+window.location.href =
+"index.html";
+
 return;
 
 }
 
-currentUser=user;
+
+currentUser = user;
+
 
 try{
 
@@ -290,287 +414,24 @@ await loadAll();
 
 }catch(error){
 
-tasksList.innerHTML=`
+tasksList.innerHTML = `
+
 <div class="error">
-${escapeHtml(error.message)}
-</div>
-`;
 
-}
-
-});
-
-
-/* =========================
-LOAD EVERYTHING
-========================= */
-
-async function loadAll(){
-
-const userRef=
-doc(db,"users",currentUser.uid);
-
-const userSnap=
-await getDoc(userRef);
-
-if(!userSnap.exists()){
-
-throw new Error("User account not found.");
-
-}
-
-const user=
-userSnap.data();
-
-const balance=
-Number(user.balance || 0);
-
-const commission=
-Number(user.commission || 0);
-
-balanceEl.innerText=
-"Rs "+balance;
-
-commissionEl.innerText=
-"Rs "+commission;
-
-
-/* Completed orders */
-
-const orderQuery=
-query(
-collection(db,"orders"),
-where("uid","==",currentUser.uid)
-);
-
-const orderSnap=
-await getDocs(orderQuery);
-
-const completedIds=new Set();
-
-orderSnap.forEach(item=>{
-
-const data=item.data();
-
-if(data.status==="Completed"){
-
-completedIds.add(data.taskId);
-
-}
-
-});
-
-
-/* Tasks */
-
-const taskSnap=
-await getDocs(
-collection(db,"tasks")
-);
-
-const tasks=[];
-
-taskSnap.forEach(item=>{
-
-tasks.push({
-id:item.id,
-data:item.data()
-});
-
-});
-
-
-tasks.sort((a,b)=>
-Number(a.data.order || 0)-
-Number(b.data.order || 0)
-);
-
-
-/* Available */
-
-tasksList.innerHTML="";
-
-let availableCount=0;
-
-tasks.forEach(item=>{
-
-if(completedIds.has(item.id)){
-
-return;
-
-}
-
-renderTask(
-item.id,
-item.data,
-balance,
-commission
-);
-
-availableCount++;
-
-});
-
-
-if(availableCount===0){
-
-tasksList.innerHTML=`
-<div class="empty">
-🎉 All available tasks are completed.
-</div>
-`;
-
-}
-
-
-/* Completed */
-
-completedList.innerHTML="";
-
-let completedCount=0;
-
-orderSnap.forEach(item=>{
-
-const order=item.data();
-
-if(order.status!=="Completed"){
-
-return;
-
-}
-
-completedCount++;
-
-const box=
-document.createElement("div");
-
-box.className="task";
-
-box.innerHTML=`
-
-<div class="taskName">
-${escapeHtml(order.taskName || "Task")}
-</div>
-
-<div class="info">
-💰 Task Price:
-<b>Rs ${Number(order.price || 0)}</b>
-</div>
-
-<div class="info">
-💎 Commission:
-<b>Rs ${Number(order.commission || 0)}</b>
-</div>
-
-<button class="completedBtn" disabled>
-Completed ✅
-</button>
-
-`;
-
-completedList.appendChild(box);
-
-});
-
-
-if(completedCount===0){
-
-completedList.innerHTML=`
-<div class="empty">
-No completed tasks yet.
-</div>
-`;
-
-}
-
-}
-
-
-/* =========================
-TASK CARD
-========================= */
-
-function renderTask(
-id,
-task,
-balance,
-commission
-){
-
-const price=
-Number(task.price || 0);
-
-const taskCommission=
-Number(task.commission || 0);
-
-
-/*
-IMPORTANT:
-Balance + Commission
-both count for next task.
-*/
-
-const available=
-balance+commission;
-
-const required=
-Math.max(0,price-available);
-
-
-const box=
-document.createElement("div");
-
-box.className="task";
-
-
-let image="";
-
-if(task.image){
-
-image=`
-<img
-class="taskImage"
-src="${escapeAttribute(task.image)}"
-alt="Task Image"
-onerror="this.style.display='none'"
->
-`;
-
-}
-
-
-let requirement="";
-
-if(required>0){
-
-requirement=`
-
-<div class="required">
-
-⚠️ Required Deposit:
-<b>Rs ${required}</b>
-
-<br>
-
-Available:
-<b>Rs ${available}</b>
-
-</div>
-
-`;
-
-}else{
-
-requirement=`
-
-<div class="ready">
-
-✅ You have enough available amount for this task.
+Firebase Error
 
 <br><br>
 
-Available:
-Rs ${available}
+${escapeHtml(
+error.message
+)}
+
+<br><br>
+
+Code:
+${escapeHtml(
+error.code || ""
+)}
 
 </div>
 
@@ -578,135 +439,31 @@ Rs ${available}
 
 }
 
+});
 
-box.innerHTML=`
-
-${image}
-
-<div class="taskName">
-
-Task ${Number(task.order || "")}:
-${escapeHtml(task.name || "Task")}
-
-</div>
-
-<div class="info">
-
-💰 Task Price:
-<b>Rs ${price}</b>
-
-</div>
-
-<div class="info">
-
-💎 Commission:
-<b>Rs ${taskCommission}</b>
-
-</div>
-
-${requirement}
-
-<button
-class="completeBtn"
-id="complete-${id}"
-${required>0 ? "disabled":""}>
-
-${required>0 ?
-"Insufficient Amount":
-"Complete Task"}
-
-</button>
-
-`;
-
-
-tasksList.appendChild(box);
-
-
-const button=
-document.getElementById(
-"complete-"+id
-);
-
-
-if(required===0){
-
-button.onclick=async()=>{
-
-await completeTask(
-id,
-task,
-price,
-taskCommission,
-button
-);
-
-};
-
-}
-
-}
 
 
 /* =========================
-COMPLETE TASK
+LOAD ALL
 ========================= */
 
-async function completeTask(
-taskId,
-task,
-price,
-taskCommission,
-button
-){
 
-button.disabled=true;
-
-button.innerText=
-"Processing...";
+async function loadAll(){
 
 
-try{
-
-
-/*
-Check duplicate
-*/
-
-const duplicateQuery=
-query(
-collection(db,"orders"),
-where("uid","==",currentUser.uid),
-where("taskId","==",taskId)
+const userRef =
+doc(
+db,
+"users",
+currentUser.uid
 );
 
-const duplicateSnap=
-await getDocs(duplicateQuery);
 
-if(!duplicateSnap.empty){
+const userSnap =
+await getDoc(
+userRef
+);
 
-button.innerText=
-"Completed ✅";
-
-button.className=
-"completedBtn";
-
-await loadAll();
-
-return;
-
-}
-
-
-/*
-Latest user balance
-*/
-
-const userRef=
-doc(db,"users",currentUser.uid);
-
-const userSnap=
-await getDoc(userRef);
 
 if(!userSnap.exists()){
 
@@ -716,26 +473,878 @@ throw new Error(
 
 }
 
-const user=
+
+const user =
 userSnap.data();
 
 
-let oldBalance=
-Number(user.balance || 0);
+const balance =
+Number(
+user.balance || 0
+);
 
-let oldCommission=
-Number(user.commission || 0);
+
+const commission =
+Number(
+user.commission || 0
+);
+
+
+balanceEl.innerText =
+"Rs " + balance;
+
+
+commissionEl.innerText =
+"Rs " + commission;
+
+
+
+/* =========================
+GET COMPLETED ORDERS
+========================= */
+
+
+const orderQuery =
+query(
+collection(
+db,
+"orders"
+),
+where(
+"uid",
+"==",
+currentUser.uid
+)
+);
+
+
+const orderSnap =
+await getDocs(
+orderQuery
+);
+
+
+const completedIds =
+new Set();
+
+
+orderSnap.forEach(
+(item)=>{
+
+
+const data =
+item.data();
+
+
+if(
+data.status ===
+"Completed"
+){
+
+completedIds.add(
+data.taskId
+);
+
+}
+
+});
+
+
+
+/* =========================
+GET TASKS
+========================= */
+
+
+const taskSnap =
+await getDocs(
+collection(
+db,
+"tasks"
+)
+);
+
+
+const tasks = [];
+
+
+taskSnap.forEach(
+(item)=>{
+
+tasks.push({
+
+id:item.id,
+
+data:item.data()
+
+});
+
+});
+
+
+tasks.sort(
+(a,b)=>
+Number(
+a.data.order || 0
+)
+-
+Number(
+b.data.order || 0
+)
+);
+
+
+
+/* =========================
+AVAILABLE TASKS
+========================= */
+
+
+tasksList.innerHTML = "";
+
+
+let availableCount = 0;
+
+
+tasks.forEach(
+(item)=>{
+
+
+if(
+completedIds.has(
+item.id
+)
+){
+
+return;
+
+}
+
+
+renderTask(
+item.id,
+item.data,
+balance,
+commission
+);
+
+
+availableCount++;
+
+});
+
+
+
+if(
+availableCount === 0
+){
+
+tasksList.innerHTML = `
+
+<div class="empty">
+
+🎉 All available tasks are completed.
+
+</div>
+
+`;
+
+}
+
+
+
+/* =========================
+COMPLETED TASKS
+========================= */
+
+
+completedList.innerHTML = "";
+
+
+let completedCount = 0;
+
+
+orderSnap.forEach(
+(item)=>{
+
+
+const order =
+item.data();
+
+
+if(
+order.status !==
+"Completed"
+){
+
+return;
+
+}
+
+
+completedCount++;
+
+
+const box =
+document.createElement(
+"div"
+);
+
+
+box.className =
+"task";
+
+
+box.innerHTML = `
+
+<div class="taskName">
+
+${escapeHtml(
+order.taskName ||
+"Task"
+)}
+
+</div>
+
+
+<div class="info">
+
+💰 Task Price:
+
+<b>
+Rs ${Number(
+order.price || 0
+)}
+</b>
+
+</div>
+
+
+<div class="info">
+
+💎 Commission:
+
+<b>
+Rs ${Number(
+order.commission || 0
+)}
+</b>
+
+</div>
+
+
+<div class="info">
+
+⭐ Rating:
+
+<b>
+${Number(
+order.rating || 5
+)}/5
+</b>
+
+</div>
+
+
+<div class="info">
+
+💬 Comment:
+
+<b>
+${escapeHtml(
+order.comment || ""
+)}
+</b>
+
+</div>
+
+
+<button
+class="completedBtn"
+disabled>
+
+Completed ⭐⭐⭐⭐⭐
+
+</button>
+
+`;
+
+
+completedList.appendChild(
+box
+);
+
+});
+
+
+
+if(
+completedCount === 0
+){
+
+completedList.innerHTML = `
+
+<div class="empty">
+
+No completed tasks yet.
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+/* =========================
+RENDER TASK
+========================= */
+
+
+function renderTask(
+id,
+task,
+balance,
+commission
+){
+
+
+const price =
+Number(
+task.price || 0
+);
+
+
+const taskCommission =
+Number(
+task.commission || 0
+);
+
 
 
 /*
-Total available
+IMPORTANT:
+
+Balance + Commission
+dono next task ke liye
+available hain.
 */
 
-const available=
-oldBalance+oldCommission;
+
+const available =
+balance + commission;
 
 
-if(available<price){
+const required =
+Math.max(
+0,
+price - available
+);
+
+
+
+const box =
+document.createElement(
+"div"
+);
+
+
+box.className =
+"task";
+
+
+
+/* IMAGE */
+
+
+let image = "";
+
+
+if(
+task.image
+){
+
+image = `
+
+<img
+class="taskImage"
+src="${escapeAttribute(
+task.image
+)}"
+alt="Task Image"
+onerror="this.style.display='none'"
+>
+
+`;
+
+}
+
+
+
+/* REQUIRED */
+
+
+let requirement = "";
+
+
+if(
+required > 0
+){
+
+requirement = `
+
+<div class="required">
+
+⚠️ Required Deposit:
+
+<b>
+Rs ${required}
+</b>
+
+<br>
+
+Available:
+
+<b>
+Rs ${available}
+</b>
+
+</div>
+
+`;
+
+}else{
+
+requirement = `
+
+<div class="ready">
+
+✅ Enough amount available.
+
+<br>
+
+Available:
+
+Rs ${available}
+
+</div>
+
+`;
+
+}
+
+
+
+/* TASK HTML */
+
+
+box.innerHTML = `
+
+${image}
+
+
+<div class="taskName">
+
+Task ${Number(
+task.order || ""
+)}:
+
+${escapeHtml(
+task.name || "Task"
+)}
+
+</div>
+
+
+<div class="info">
+
+💰 Task Price:
+
+<b>
+Rs ${price}
+</b>
+
+</div>
+
+
+<div class="info">
+
+💎 Commission:
+
+<b>
+Rs ${taskCommission}
+</b>
+
+</div>
+
+
+${requirement}
+
+
+<div class="rating">
+
+
+<div class="ratingTitle">
+
+⭐ Give 5 Star Rating
+
+</div>
+
+
+<div
+class="stars"
+id="stars-${id}">
+
+
+<span
+class="star"
+data-rating="1">
+
+★
+</span>
+
+
+<span
+class="star"
+data-rating="2">
+
+★
+</span>
+
+
+<span
+class="star"
+data-rating="3">
+
+★
+</span>
+
+
+<span
+class="star"
+data-rating="4">
+
+★
+</span>
+
+
+<span
+class="star"
+data-rating="5">
+
+★
+</span>
+
+
+</div>
+
+
+<textarea
+class="commentBox"
+id="comment-${id}"
+placeholder="Write your comment...">
+</textarea>
+
+
+</div>
+
+
+<button
+class="completeBtn"
+id="complete-${id}"
+${required > 0 ? "disabled" : ""}>
+
+${required > 0
+?
+"Insufficient Amount"
+:
+"Complete Task"
+}
+
+</button>
+
+`;
+
+
+tasksList.appendChild(
+box
+);
+
+
+
+/* =========================
+STAR SYSTEM
+========================= */
+
+
+let selectedRating = 0;
+
+
+const stars =
+box.querySelectorAll(
+".star"
+);
+
+
+stars.forEach(
+(star)=>{
+
+
+star.addEventListener(
+"click",
+()=>{
+
+
+selectedRating =
+Number(
+star.dataset.rating
+);
+
+
+stars.forEach(
+(s)=>{
+
+
+const rating =
+Number(
+s.dataset.rating
+);
+
+
+if(
+rating <=
+selectedRating
+){
+
+s.classList.add(
+"selected"
+);
+
+}else{
+
+s.classList.remove(
+"selected"
+);
+
+}
+
+});
+
+});
+
+});
+
+
+
+/* =========================
+COMPLETE BUTTON
+========================= */
+
+
+const button =
+document.getElementById(
+"complete-"+id
+);
+
+
+if(
+required === 0
+){
+
+
+button.onclick =
+async()=>{
+
+
+const comment =
+document.getElementById(
+"comment-"+id
+).value.trim();
+
+
+if(
+selectedRating !== 5
+){
+
+alert(
+"Please select 5 stars ⭐⭐⭐⭐⭐"
+);
+
+return;
+
+}
+
+
+if(
+!comment
+){
+
+alert(
+"Please write a comment."
+);
+
+return;
+
+}
+
+
+await completeTask(
+id,
+task,
+price,
+taskCommission,
+button,
+selectedRating,
+comment
+);
+
+};
+
+}
+
+}
+
+
+
+/* =========================
+COMPLETE TASK
+========================= */
+
+
+async function completeTask(
+taskId,
+task,
+price,
+taskCommission,
+button,
+rating,
+comment
+){
+
+
+button.disabled =
+true;
+
+
+button.innerText =
+"Processing...";
+
+
+try{
+
+
+/* =========================
+DUPLICATE CHECK
+========================= */
+
+
+const duplicateQuery =
+query(
+collection(
+db,
+"orders"
+),
+where(
+"uid",
+"==",
+currentUser.uid
+),
+where(
+"taskId",
+"==",
+taskId
+)
+);
+
+
+const duplicateSnap =
+await getDocs(
+duplicateQuery
+);
+
+
+if(
+!duplicateSnap.empty
+){
+
+button.innerText =
+"Completed ⭐⭐⭐⭐⭐";
+
+
+button.className =
+"completedBtn";
+
+
+await loadAll();
+
+return;
+
+}
+
+
+
+/* =========================
+LATEST USER DATA
+========================= */
+
+
+const userRef =
+doc(
+db,
+"users",
+currentUser.uid
+);
+
+
+const userSnap =
+await getDoc(
+userRef
+);
+
+
+if(
+!userSnap.exists()
+){
+
+throw new Error(
+"User account not found."
+);
+
+}
+
+
+const user =
+userSnap.data();
+
+
+let oldBalance =
+Number(
+user.balance || 0
+);
+
+
+let oldCommission =
+Number(
+user.commission || 0
+);
+
+
+
+/* =========================
+AVAILABLE
+========================= */
+
+
+const available =
+oldBalance +
+oldCommission;
+
+
+if(
+available < price
+){
 
 throw new Error(
 "Insufficient amount for this task."
@@ -744,109 +1353,130 @@ throw new Error(
 }
 
 
+
 /*
-================================
-IMPORTANT RULE
-================================
+=================================
+YOUR EXACT RULE
+=================================
 
-Task price is transferred
-into Commission.
-
-We first deduct task price
+Task Price first gets deducted
 from Balance.
 
 If Balance is not enough,
-remaining amount is deducted
-from Commission.
+remaining is deducted from
+Commission.
 
-Then the FULL task price is
-added to Commission again,
-along with the new commission.
+After that:
+
+Task Price + NEW Task Commission
+
+is added into Commission.
 
 Example:
 
-Balance 100
-Task 100
-Commission 20
+Balance = 100
+Commission = 0
+Task = 100
+New Commission = 20
 
-After task:
+After:
 
-Balance 0
-Commission 140
+Balance = 0
+Commission = 120
 
-Wait:
-If old Commission was 20,
-then task price 100 + old 20
-+ new commission 20
-= 140.
-
-For your example where old
-Commission is 0:
-
-Balance 0
-Commission 120.
-================================
+=================================
 */
 
 
-let remainingPrice=price;
+/* =========================
+DEDUCT TASK PRICE
+========================= */
 
 
-/*
-Take from Balance first
-*/
-
-const balanceUsed=
-Math.min(oldBalance,remainingPrice);
-
-oldBalance=
-oldBalance-balanceUsed;
-
-remainingPrice=
-remainingPrice-balanceUsed;
+let remaining =
+price;
 
 
-/*
-If needed, take remaining
-from Commission.
-*/
+if(
+oldBalance >=
+remaining
+){
 
-const commissionUsed=
-remainingPrice;
-
-oldCommission=
-oldCommission-commissionUsed;
+oldBalance =
+oldBalance -
+remaining;
 
 
-/*
-Now transfer the task price
-to Commission and add reward.
-*/
+remaining = 0;
 
-const newCommission=
-oldCommission+
-price+
+}else{
+
+
+remaining =
+remaining -
+oldBalance;
+
+
+oldBalance = 0;
+
+
+oldCommission =
+oldCommission -
+remaining;
+
+}
+
+
+
+/* =========================
+ADD TASK PRICE + COMMISSION
+========================= */
+
+
+const newCommission =
+oldCommission +
+price +
 taskCommission;
 
 
-/*
-Completed count
-*/
 
-const countQuery=
+/* =========================
+COMPLETED COUNT
+========================= */
+
+
+const countQuery =
 query(
-collection(db,"orders"),
-where("uid","==",currentUser.uid)
+collection(
+db,
+"orders"
+),
+where(
+"uid",
+"==",
+currentUser.uid
+)
 );
 
-const countSnap=
-await getDocs(countQuery);
 
-let completed=0;
+const countSnap =
+await getDocs(
+countQuery
+);
 
-countSnap.forEach(item=>{
 
-if(item.data().status==="Completed"){
+let completed =
+0;
+
+
+countSnap.forEach(
+(item)=>{
+
+
+if(
+item.data().status ===
+"Completed"
+){
 
 completed++;
 
@@ -855,9 +1485,11 @@ completed++;
 });
 
 
-/*
-Update User
-*/
+
+/* =========================
+UPDATE USER
+========================= */
+
 
 await updateDoc(
 userRef,
@@ -870,18 +1502,23 @@ commission:
 newCommission,
 
 completed:
-completed+1
+completed + 1
 
 }
 );
 
 
-/*
-Save Order
-*/
+
+/* =========================
+SAVE ORDER
+========================= */
+
 
 await addDoc(
-collection(db,"orders"),
+collection(
+db,
+"orders"
+),
 {
 
 uid:
@@ -891,13 +1528,20 @@ taskId:
 taskId,
 
 taskName:
-task.name || "Task",
+task.name ||
+"Task",
 
 price:
 price,
 
 commission:
 taskCommission,
+
+rating:
+rating,
+
+comment:
+comment,
 
 status:
 "Completed",
@@ -909,29 +1553,38 @@ serverTimestamp()
 );
 
 
-button.innerText=
-"Completed ✅";
 
-button.className=
+/* =========================
+SUCCESS
+========================= */
+
+
+button.innerText =
+"Completed ⭐⭐⭐⭐⭐";
+
+
+button.className =
 "completedBtn";
 
-
-/*
-Reload screen
-*/
 
 await loadAll();
 
 
+
 }catch(error){
 
-button.disabled=false;
 
-button.innerText=
+button.disabled =
+false;
+
+
+button.innerText =
 "Complete Task";
 
+
 alert(
-"Error: "+error.message
+"Firebase Error: " +
+error.message
 );
 
 }
@@ -939,35 +1592,76 @@ alert(
 }
 
 
+
 /* =========================
-ESCAPE
+ESCAPE HTML
 ========================= */
 
-function escapeHtml(value){
+
+function escapeHtml(
+value
+){
 
 return String(value)
 
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
-function escapeAttribute(value){
+function escapeAttribute(
+value
+){
 
 return String(value)
 
-.replace(/&/g,"&amp;")
-.replace(/"/g,"&quot;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;");
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+);
 
 }
 
 </script>
 
 </body>
+
 </html>
