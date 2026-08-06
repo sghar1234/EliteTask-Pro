@@ -89,8 +89,10 @@ color:#2563eb;
 margin-top:20px;
 }
 
-.menu a{
+.menu a,
+.logout-btn{
 display:block;
+width:100%;
 background:#2563eb;
 color:white;
 text-decoration:none;
@@ -98,6 +100,13 @@ padding:15px;
 border-radius:12px;
 margin-bottom:12px;
 text-align:center;
+font-size:16px;
+border:none;
+cursor:pointer;
+}
+
+.logout-btn{
+background:#dc2626;
 }
 
 .task{
@@ -305,6 +314,14 @@ Rs 0
 🎧 Customer Service
 </a>
 
+<button
+id="logoutBtn"
+class="logout-btn">
+
+🚪 Logout
+
+</button>
+
 </div>
 
 
@@ -348,7 +365,8 @@ from "./firebase.js";
 
 
 import {
-onAuthStateChanged
+onAuthStateChanged,
+signOut
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
@@ -405,7 +423,54 @@ document.getElementById(
 "taskList"
 );
 
+const logoutBtn =
+document.getElementById(
+"logoutBtn"
+);
 
+
+
+/* =========================
+LOGOUT
+========================= */
+
+logoutBtn.addEventListener(
+"click",
+async()=>{
+
+try{
+
+logoutBtn.disabled = true;
+
+logoutBtn.innerText =
+"Logging out...";
+
+await signOut(auth);
+
+window.location.href =
+"index.html";
+
+}catch(error){
+
+logoutBtn.disabled = false;
+
+logoutBtn.innerText =
+"🚪 Logout";
+
+alert(
+"Logout Error: " +
+error.message
+);
+
+}
+
+});
+
+
+
+/* =========================
+AUTH
+========================= */
 
 onAuthStateChanged(
 auth,
@@ -435,7 +500,9 @@ taskList.innerHTML = `
 <div class="error">
 
 Firebase Error:<br>
-${escapeHtml(error.message)}
+${escapeHtml(
+error.message
+)}
 
 </div>
 
@@ -495,7 +562,6 @@ data.commission || 0
 const totalAvailable =
 userBalance +
 userCommission;
-
 
 
 userName.innerText =
@@ -570,12 +636,6 @@ return;
 }
 
 
-
-/*
-Only show first 3 tasks
-on dashboard.
-*/
-
 const taskArray = [];
 
 
@@ -612,12 +672,6 @@ taskArray.slice(
 );
 
 
-
-/*
-Get current displayed
-wallet values.
-*/
-
 const balanceValue =
 Number(
 balance.innerText
@@ -635,7 +689,6 @@ commission.innerText
 const totalAvailable =
 balanceValue +
 commissionValue;
-
 
 
 previewTasks.forEach(
@@ -782,4 +835,3 @@ return String(text)
 </body>
 
 </html>
-```
