@@ -1,334 +1,705 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Profile - EliteTask Pro</title>
+<title>EliteTask Pro - Profile</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#f5f5f5;
-padding:15px;
+    background:#f4f7fb;
+    color:#172033;
+    padding-bottom:90px;
 }
 
-.header{
-background:#111827;
-color:white;
-padding:18px;
-border-radius:15px;
-font-size:21px;
-font-weight:bold;
+/* TOP BAR */
+
+.topbar{
+    height:70px;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 17px;
+    color:white;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
+
+.back-btn{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    text-decoration:none;
+    color:white;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.logo{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:17px;
+}
+
+.logo-text{
+    font-size:16px;
+    font-weight:bold;
+}
+
+/* MAIN */
+
+.container{
+    max-width:600px;
+    margin:auto;
+    padding:18px 15px;
+}
+
+/* PROFILE CARD */
 
 .profile-card{
-background:white;
-margin-top:15px;
-padding:22px;
-border-radius:15px;
-box-shadow:0 3px 10px #ddd;
-text-align:center;
+    background:linear-gradient(135deg,#081a3c,#1454a3);
+    border-radius:24px;
+    padding:25px 20px;
+    color:white;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(13,65,140,.25);
 }
 
 .avatar{
-width:75px;
-height:75px;
-margin:auto;
-border-radius:50%;
-background:#2563eb;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    font-size:35px;
+    border:4px solid rgba(255,255,255,.25);
 }
 
-.name{
-font-size:22px;
-font-weight:bold;
-margin-top:12px;
+.profile-card h2{
+    font-size:21px;
+    margin-bottom:6px;
 }
 
-.email{
-color:#666;
-margin-top:6px;
-font-size:14px;
+.profile-card p{
+    font-size:13px;
+    opacity:.75;
+}
+
+/* INFO */
+
+.info-title{
+    margin:22px 3px 12px;
+    font-size:17px;
 }
 
 .info-card{
-background:white;
-margin-top:15px;
-padding:18px;
-border-radius:15px;
-box-shadow:0 3px 10px #ddd;
+    background:white;
+    border-radius:19px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(20,40,80,.07);
 }
 
-.row{
-display:flex;
-justify-content:space-between;
-padding:13px 0;
-border-bottom:1px solid #eee;
+.info-row{
+    min-height:62px;
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #edf0f5;
 }
 
-.row:last-child{
-border-bottom:none;
+.info-row:last-child{
+    border-bottom:none;
 }
 
-.label{
-color:#666;
+.info-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.value{
-font-weight:bold;
-color:#111827;
+.info-icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:#eef5ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
 }
 
-.back{
-display:block;
-margin-top:20px;
-background:#2563eb;
-color:white;
-text-decoration:none;
-text-align:center;
-padding:14px;
-border-radius:12px;
+.info-label{
+    font-size:11px;
+    color:#8992a2;
+    margin-bottom:3px;
+}
+
+.info-value{
+    font-size:14px;
+    font-weight:bold;
+    max-width:240px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.status{
+    color:#16a05d;
+    font-size:12px;
+    font-weight:bold;
+}
+
+/* ACTION BUTTONS */
+
+.actions{
+    margin-top:18px;
+}
+
+.action-btn{
+    width:100%;
+    border:none;
+    background:white;
+    padding:16px;
+    border-radius:17px;
+    margin-bottom:11px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    box-shadow:0 5px 20px rgba(20,40,80,.07);
+    font-size:14px;
+    font-weight:bold;
+    color:#172033;
+    text-align:left;
+}
+
+.action-icon{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:#eef5ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
 }
 
 .logout{
-width:100%;
-margin-top:12px;
-padding:14px;
-border:none;
-border-radius:12px;
-background:#dc2626;
-color:white;
-font-size:16px;
+    color:#e23b3b;
+}
+
+.logout .action-icon{
+    background:#fff0f0;
+}
+
+/* BOTTOM BAR */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:73px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -5px 25px rgba(0,0,0,.10);
+    z-index:1000;
+    border-top:1px solid #edf0f5;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#8992a2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    width:25%;
+    font-size:10px;
+}
+
+.nav-item span{
+    font-size:21px;
+}
+
+.nav-item.active{
+    color:#1677e8;
+    font-weight:bold;
+}
+
+.nav-item.support{
+    color:#1478ed;
+}
+
+.nav-center{
+    width:55px;
+    height:55px;
+    margin-top:-25px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 20px rgba(20,120,237,.35);
+    border:5px solid #f4f7fb;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
 
-<div class="header">
-👤 My Profile
-</div>
+<!-- TOP BAR -->
 
+<div class="topbar">
 
-<div class="profile-card">
+    <a href="dashboard.html" class="back-btn">
+        ←
+    </a>
 
-<div class="avatar" id="avatar">
-U
-</div>
+    <div class="logo-area">
 
-<div class="name" id="name">
-Loading...
-</div>
+        <div class="logo">
+            ET
+        </div>
 
-<div class="email" id="email">
-Loading...
-</div>
+        <div class="logo-text">
+            EliteTask Pro
+        </div>
 
-</div>
-
-
-
-<div class="info-card">
-
-
-<div class="row">
-
-<span class="label">
-User ID
-</span>
-
-<span class="value" id="userId">
-Loading...
-</span>
+    </div>
 
 </div>
 
 
-<div class="row">
+<!-- MAIN -->
 
-<span class="label">
-Balance
-</span>
+<div class="container">
 
-<span class="value" id="balance">
-Rs 0
-</span>
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <h2 id="profileName">
+            User
+        </h2>
+
+        <p id="profileEmail">
+            Loading...
+        </p>
+
+    </div>
+
+
+    <!-- ACCOUNT INFO -->
+
+    <h3 class="info-title">
+        Account Information
+    </h3>
+
+
+    <div class="info-card">
+
+
+        <div class="info-row">
+
+            <div class="info-left">
+
+                <div class="info-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <div class="info-label">
+                        Full Name
+                    </div>
+
+                    <div class="info-value" id="name">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <div class="info-left">
+
+                <div class="info-icon">
+                    📧
+                </div>
+
+                <div>
+
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div class="info-value" id="email">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <div class="info-left">
+
+                <div class="info-icon">
+                    🆔
+                </div>
+
+                <div>
+
+                    <div class="info-label">
+                        User ID
+                    </div>
+
+                    <div class="info-value" id="userId">
+                        Loading...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <div class="info-left">
+
+                <div class="info-icon">
+                    🟢
+                </div>
+
+                <div>
+
+                    <div class="info-label">
+                        Account Status
+                    </div>
+
+                    <div class="status">
+                        Active
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+
+        <button
+            class="action-btn"
+            onclick="location.href='support.html'"
+        >
+
+            <div class="action-icon">
+                💬
+            </div>
+
+            Customer Service
+
+        </button>
+
+
+        <button
+            class="action-btn"
+            onclick="location.href='withdraw.html'"
+        >
+
+            <div class="action-icon">
+                💳
+            </div>
+
+            Withdraw
+
+        </button>
+
+
+        <button
+            class="action-btn logout"
+            id="logoutBtn"
+        >
+
+            <div class="action-icon">
+                🚪
+            </div>
+
+            Logout
+
+        </button>
+
+
+    </div>
+
 
 </div>
 
 
-<div class="row">
+<!-- BOTTOM BAR -->
 
-<span class="label">
-Commission
-</span>
+<div class="bottom-nav">
 
-<span class="value" id="commission">
-Rs 0
-</span>
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+
+        <span>⌂</span>
+
+        Home
+
+    </a>
+
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+
+        <span>▣</span>
+
+        Tasks
+
+    </a>
+
+
+    <a
+        href="support.html"
+        class="nav-item support"
+    >
+
+        <div class="nav-center">
+            💬
+        </div>
+
+        Support
+
+    </a>
+
+
+    <a
+        href="profile.html"
+        class="nav-item active"
+    >
+
+        <span>👤</span>
+
+        Profile
+
+    </a>
+
 
 </div>
 
 
-<div class="row">
-
-<span class="label">
-Completed Tasks
-</span>
-
-<span class="value" id="completed">
-0
-</span>
-
-</div>
-
-
-</div>
-
-
-
-<a href="dashboard.html" class="back">
-⬅ Back to Dashboard
-</a>
-
-
-<button id="logoutBtn" class="logout">
-Logout
-</button>
-
-
+<!-- FIREBASE -->
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
-
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-onAuthStateChanged,
-signOut
+    getAuth,
+    onAuthStateChanged,
+    signOut
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-doc,
-getDoc
+    getFirestore,
+    doc,
+    getDoc
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+/* FIREBASE CONFIG */
 
-onAuthStateChanged(auth, async(user)=>{
+const firebaseConfig = {
 
+    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-if(!user){
+    authDomain: "elitetask-pro.firebaseapp.com",
 
-window.location.href="index.html";
+    projectId: "elitetask-pro",
 
-return;
+    storageBucket: "elitetask-pro.firebasestorage.app",
 
-}
+    messagingSenderId: "504295275402",
 
+    appId: "1:504295275402:web:8c480445c5510fa645a673"
 
-const userRef =
-doc(db,"users",user.uid);
-
-
-const userSnap =
-await getDoc(userRef);
+};
 
 
-if(!userSnap.exists()){
+/* START */
 
-alert("User data not found");
+const app =
+    initializeApp(firebaseConfig);
 
-return;
+const auth =
+    getAuth(app);
 
-}
-
-
-const data =
-userSnap.data();
-
-
-const name =
-data.name || "User";
+const db =
+    getFirestore(app);
 
 
-document.getElementById("name")
-.innerText=name;
+/* USER */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if(!user){
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
 
 
-document.getElementById("email")
-.innerText=
-data.email || user.email || "";
+    document.getElementById("email").textContent =
+        user.email || "Not available";
+
+    document.getElementById("profileEmail").textContent =
+        user.email || "Not available";
+
+    document.getElementById("userId").textContent =
+        user.uid;
 
 
-document.getElementById("userId")
-.innerText=
-user.uid.substring(0,8);
+    try{
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                user.uid
+            );
+
+        const userSnap =
+            await getDoc(userRef);
 
 
-document.getElementById("balance")
-.innerText=
-"Rs " + Number(data.balance || 0);
+        if(userSnap.exists()){
+
+            const data =
+                userSnap.data();
+
+            const name =
+                data.name || "User";
 
 
-document.getElementById("commission")
-.innerText=
-"Rs " + Number(data.commission || 0);
+            document.getElementById("profileName")
+                .textContent = name;
 
+            document.getElementById("name")
+                .textContent = name;
 
-document.getElementById("completed")
-.innerText=
-Number(data.completed || 0);
+        }
 
+    }
+    catch(error){
 
-document.getElementById("avatar")
-.innerText=
-name.charAt(0).toUpperCase();
+        console.error(
+            "Profile error:",
+            error
+        );
 
+    }
 
 });
 
 
+/* LOGOUT */
 
-document.getElementById("logoutBtn")
-.addEventListener("click",async()=>{
+document
+.getElementById("logoutBtn")
+.addEventListener("click", async () => {
 
+    try{
 
-try{
+        await signOut(auth);
 
-await signOut(auth);
+        window.location.href =
+            "index.html";
 
-window.location.href="index.html";
+    }
+    catch(error){
 
-}catch(error){
+        alert(
+            "Logout failed. Please try again."
+        );
 
-alert(error.message);
+        console.error(error);
 
-}
+    }
 
 });
 
@@ -336,5 +707,4 @@ alert(error.message);
 
 
 </body>
-
 </html>
