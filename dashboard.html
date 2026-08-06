@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -21,7 +20,6 @@ font-family:Arial,sans-serif;
 body{
 background:#f5f5f5;
 padding:15px;
-color:#111827;
 }
 
 .topbar{
@@ -66,7 +64,6 @@ margin-top:10px;
 .user{
 margin-top:8px;
 color:#555;
-word-break:break-word;
 }
 
 .stats{
@@ -85,7 +82,7 @@ box-shadow:0 2px 8px #ddd;
 }
 
 .stat h3{
-font-size:20px;
+color:#2563eb;
 }
 
 .menu{
@@ -110,94 +107,80 @@ border-radius:12px;
 margin-top:15px;
 }
 
-.task-title{
-font-size:20px;
-font-weight:bold;
-}
-
-.task-progress{
-margin-top:7px;
-font-size:13px;
-color:#777;
-}
-
 .task-box{
 background:white;
 padding:15px;
 border-radius:12px;
-margin-top:12px;
-box-shadow:0 2px 6px #ddd;
-}
-
-.task-image{
-width:100%;
-max-height:200px;
-object-fit:cover;
-border-radius:10px;
-margin-bottom:12px;
-}
-
-.task-number{
-display:inline-block;
-background:#2563eb;
-color:white;
-padding:5px 10px;
-border-radius:15px;
-font-size:12px;
-font-weight:bold;
-margin-bottom:9px;
+margin-top:10px;
 }
 
 .task-box h3{
-font-size:19px;
 margin-bottom:8px;
+color:#2563eb;
 }
 
-.task-info{
-margin-top:7px;
+.task-box p{
+margin-top:6px;
+color:#555;
 font-size:14px;
 }
 
-.task-btn{
+.open-tasks{
+display:block;
 width:100%;
-padding:13px;
-margin-top:14px;
-background:#16a34a;
+padding:12px;
+margin-top:12px;
+background:#2563eb;
 color:white;
 border:none;
 border-radius:10px;
-font-size:15px;
-font-weight:bold;
-}
-
-.task-btn:disabled{
-opacity:.6;
-}
-
-.completed-box{
 text-align:center;
-padding:20px;
-color:#16a34a;
+text-decoration:none;
 font-weight:bold;
+}
+
+.required{
+margin-top:10px;
+padding:10px;
+border-radius:9px;
+background:#fff7ed;
+color:#c2410c;
+font-weight:bold;
+font-size:13px;
+}
+
+.ready{
+margin-top:10px;
+padding:10px;
+border-radius:9px;
+background:#dcfce7;
+color:#166534;
+font-weight:bold;
+font-size:13px;
 }
 
 .loading{
 text-align:center;
-padding:20px;
 color:#777;
+padding:15px;
 }
 
 .error{
-text-align:center;
-padding:20px;
-color:#dc2626;
+color:#b91c1c;
+background:#fee2e2;
+padding:12px;
+border-radius:10px;
+margin-top:10px;
+word-break:break-word;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="topbar">
 
@@ -214,6 +197,8 @@ Customer Service
 </a>
 
 </div>
+
+
 
 <div class="card">
 
@@ -235,11 +220,11 @@ id="userId">
 
 </div>
 
+
+
 <div class="card">
 
-<p>
-My Balance
-</p>
+<p>My Balance</p>
 
 <div
 class="balance"
@@ -251,6 +236,8 @@ Rs 0
 
 </div>
 
+
+
 <div class="stats">
 
 <div class="stat">
@@ -259,11 +246,10 @@ Rs 0
 0
 </h3>
 
-<p>
-Completed
-</p>
+<p>Completed</p>
 
 </div>
+
 
 <div class="stat">
 
@@ -271,42 +257,40 @@ Completed
 Rs 0
 </h3>
 
-<p>
-Commission
-</p>
+<p>Commission</p>
 
 </div>
+
 
 <div class="stat">
 
-<h3 id="pending">
-0
+<h3 id="available">
+Rs 0
 </h3>
 
-<p>
-Next Task
-</p>
+<p>Available for Tasks</p>
 
 </div>
+
 
 <div class="stat">
 
 <h3>
-User
+0
 </h3>
 
-<p>
-ID
-</p>
+<p>Pending</p>
 
 </div>
 
 </div>
+
+
 
 <div class="menu">
 
 <a href="orders.html">
-📦 Orders / History
+📦 Start / View Tasks
 </a>
 
 <a href="withdraw.html">
@@ -323,29 +307,35 @@ ID
 
 </div>
 
+
+
 <div class="task">
 
-<div class="task-title">
-📦 Today's Tasks
-</div>
+<h3>
+Today's Tasks
+</h3>
 
-<div
-class="task-progress"
-id="taskProgress">
-
-Loading progress...
-
-</div>
 
 <div id="taskList">
 
 <div class="loading">
-Loading Task...
+Loading Tasks...
 </div>
 
 </div>
 
+
+<a
+href="orders.html"
+class="open-tasks">
+
+🚀 Open Tasks
+
+</a>
+
 </div>
+
+
 
 <script type="module">
 
@@ -367,40 +357,55 @@ from
 import {
 doc,
 getDoc,
-updateDoc,
 collection,
-getDocs,
-addDoc,
-query,
-where,
-serverTimestamp
+getDocs
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 
-let currentUserId = "";
+const userName =
+document.getElementById(
+"userName"
+);
 
-let currentUserData = null;
+const userEmail =
+document.getElementById(
+"userEmail"
+);
 
+const userId =
+document.getElementById(
+"userId"
+);
 
+const balance =
+document.getElementById(
+"balance"
+);
+
+const commission =
+document.getElementById(
+"commission"
+);
+
+const completed =
+document.getElementById(
+"completed"
+);
+
+const available =
+document.getElementById(
+"available"
+);
 
 const taskList =
 document.getElementById(
 "taskList"
 );
 
-const taskProgress =
-document.getElementById(
-"taskProgress"
-);
 
-
-
-/* =========================
-   LOGIN CHECK
-========================= */
 
 onAuthStateChanged(
 auth,
@@ -417,33 +422,42 @@ return;
 }
 
 
-currentUserId =
-user.uid;
+try{
 
+await loadUser(user.uid);
 
-await loadUser();
+await loadTasks();
 
+}catch(error){
 
-await loadNextTask();
+taskList.innerHTML = `
+
+<div class="error">
+
+Firebase Error:<br>
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
 
 });
 
 
 
 /* =========================
-   LOAD USER
+LOAD USER
 ========================= */
 
-async function loadUser(){
-
-try{
-
+async function loadUser(uid){
 
 const userRef =
 doc(
 db,
 "users",
-currentUserId
+uid
 );
 
 
@@ -455,12 +469,9 @@ userRef
 
 if(!userSnap.exists()){
 
-document.getElementById(
-"userName"
-).innerText =
-"User";
-
-return;
+throw new Error(
+"User profile not found."
+);
 
 }
 
@@ -469,159 +480,68 @@ const data =
 userSnap.data();
 
 
-currentUserData =
-data;
-
-
-document.getElementById(
-"userName"
-).innerText =
-data.name ||
-"User";
-
-
-document.getElementById(
-"userEmail"
-).innerText =
-data.email ||
-auth.currentUser.email ||
-"";
-
-
-document.getElementById(
-"userId"
-).innerText =
-"ID: " +
-currentUserId.substring(
-0,
-8
-);
-
-
-document.getElementById(
-"balance"
-).innerText =
-"Rs " +
+const userBalance =
 Number(
 data.balance || 0
 );
 
 
-document.getElementById(
-"commission"
-).innerText =
-"Rs " +
+const userCommission =
 Number(
 data.commission || 0
 );
 
 
-const completed =
+const totalAvailable =
+userBalance +
+userCommission;
+
+
+
+userName.innerText =
+data.name || "User";
+
+
+userEmail.innerText =
+data.email || "";
+
+
+userId.innerText =
+"ID: " +
+uid.substring(0,8);
+
+
+balance.innerText =
+"Rs " +
+userBalance;
+
+
+commission.innerText =
+"Rs " +
+userCommission;
+
+
+completed.innerText =
 Number(
 data.completed || 0
 );
 
 
-document.getElementById(
-"completed"
-).innerText =
-completed;
-
-
-document.getElementById(
-"pending"
-).innerText =
-completed + 1;
-
-
-}
-catch(error){
-
-console.log(
-error
-);
-
-}
+available.innerText =
+"Rs " +
+totalAvailable;
 
 }
 
 
 
 /* =========================
-   LOAD NEXT TASK
+LOAD TASK PREVIEW
 ========================= */
 
-async function loadNextTask(){
+async function loadTasks(){
 
-taskList.innerHTML =
-'<div class="loading">Loading Task...</div>';
-
-
-try{
-
-
-/*
- * User ka completed count
- */
-
-const userRef =
-doc(
-db,
-"users",
-currentUserId
-);
-
-
-const userSnap =
-await getDoc(
-userRef
-);
-
-
-if(!userSnap.exists()){
-
-taskList.innerHTML =
-'<div class="error">User profile not found.</div>';
-
-return;
-
-}
-
-
-const user =
-userSnap.data();
-
-
-const completed =
-Number(
-user.completed || 0
-);
-
-
-/*
- * Next task number
- *
- * completed 0 = task 1
- * completed 1 = task 2
- * completed 9 = task 10
- * completed 10 = task 11
- */
-
-const nextTaskNumber =
-completed + 1;
-
-
-taskProgress.innerText =
-"Task " +
-nextTaskNumber +
-" of 20";
-
-
-/*
- * Get all published tasks
- */
-
-const snap =
+const tasks =
 await getDocs(
 collection(
 db,
@@ -630,13 +550,16 @@ db,
 );
 
 
-if(snap.empty){
+taskList.innerHTML = "";
+
+
+if(tasks.empty){
 
 taskList.innerHTML = `
 
-<div class="error">
+<div class="loading">
 
-No tasks have been published yet.
+No Task Available
 
 </div>
 
@@ -647,513 +570,216 @@ return;
 }
 
 
+
 /*
- * Find next task
- */
+Only show first 3 tasks
+on dashboard.
+*/
 
-let nextTask = null;
+const taskArray = [];
 
 
-snap.forEach(
+tasks.forEach(
 (item)=>{
 
-const data =
-item.data();
-
-
-const order =
-Number(
-data.order ||
-data.taskNumber ||
-data.number ||
-0
-);
-
-
-if(
-order === nextTaskNumber
-){
-
-nextTask = {
+taskArray.push({
 
 id:item.id,
 
-data:data
+data:item.data()
 
-};
-
-}
+});
 
 });
 
 
+taskArray.sort(
+(a,b)=>
+Number(
+a.data.order || 0
+)
+-
+Number(
+b.data.order || 0
+)
+);
+
+
+const previewTasks =
+taskArray.slice(
+0,
+3
+);
+
+
 
 /*
- * No more tasks
- */
+Get current displayed
+wallet values.
+*/
 
-if(!nextTask){
+const balanceValue =
+Number(
+balance.innerText
+.replace("Rs ","")
+);
 
-taskProgress.innerText =
-"Completed: " +
-completed;
+
+const commissionValue =
+Number(
+commission.innerText
+.replace("Rs ","")
+);
 
 
-taskList.innerHTML = `
+const totalAvailable =
+balanceValue +
+commissionValue;
 
-<div class="completed-box">
 
-🎉 All available tasks completed!
 
-<br><br>
-
-You have completed all
-published tasks.
-
-</div>
-
-`;
-
-return;
-
-}
+previewTasks.forEach(
+(item,index)=>{
 
 
 const task =
-nextTask.data;
+item.data;
 
 
-const image =
-task.image ||
-"";
-
-
-taskList.innerHTML = `
-
-<div class="task-box">
-
-
-${
-image
-?
-`
-
-<img
-src="${escapeHtml(image)}"
-class="task-image"
-onerror="this.style.display='none'"
->
-
-`
-:
-""
-}
-
-
-<div class="task-number">
-
-TASK ${nextTaskNumber}
-
-</div>
-
-
-<h3>
-
-${escapeHtml(
-task.name ||
-"Task"
-)}
-
-</h3>
-
-
-<div class="task-info">
-
-💰 Price:
-<b>
-Rs ${Number(
+const price =
+Number(
 task.price || 0
-)}
-</b>
-
-</div>
-
-
-<div class="task-info">
-
-💵 Commission:
-<b>
-Rs ${Number(
-task.commission || 0
-)}
-</b>
-
-</div>
-
-
-<div class="task-info">
-
-📝
-${escapeHtml(
-task.description ||
-"No description"
-)}
-
-</div>
-
-
-<button
-class="task-btn"
-id="completeBtn"
-onclick="completeTask(
-'${nextTask.id}',
-'${escapeHtml(task.name || "Task")}',
-${Number(task.price || 0)},
-${Number(task.commission || 0)},
-${nextTaskNumber}
-)">
-
-✅ Complete Task
-
-</button>
-
-</div>
-
-`;
-
-}
-catch(error){
-
-taskList.innerHTML = `
-
-<div class="error">
-
-Error loading task.
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-
-`;
-
-}
-
-}
-
-
-
-/* =========================
-   COMPLETE TASK
-========================= */
-
-window.completeTask =
-async function(
-taskId,
-taskName,
-price,
-commission,
-taskNumber
-){
-
-const button =
-document.getElementById(
-"completeBtn"
 );
 
 
-if(button){
-
-button.disabled = true;
-
-button.innerText =
-"Completing...";
-
-}
-
-
-try{
-
-
-/*
- * Get latest user data
- */
-
-const userRef =
-doc(
-db,
-"users",
-currentUserId
+const required =
+Math.max(
+0,
+price - totalAvailable
 );
 
 
-const userSnap =
-await getDoc(
-userRef
-);
-
-
-if(!userSnap.exists()){
-
-throw new Error(
-"User account not found."
-);
-
-}
-
-
-const user =
-userSnap.data();
-
-
-const oldCompleted =
-Number(
-user.completed || 0
-);
-
-
-const oldBalance =
-Number(
-user.balance || 0
-);
-
-
-const oldCommission =
-Number(
-user.commission || 0
-);
-
-
-/*
- * Important:
- *
- * User ko task sequence ke
- * bahar complete nahi karne dena.
- */
-
-const expectedTask =
-oldCompleted + 1;
-
-
-if(
-Number(taskNumber) !==
-expectedTask
-){
-
-throw new Error(
-"Please complete tasks in order."
-);
-
-}
-
-
-/*
- * Check whether this task
- * was already completed.
- */
-
-const orderQuery =
-query(
-
-collection(
-db,
-"orders"
-),
-
-where(
-"uid",
-"==",
-currentUserId
-),
-
-where(
-"taskId",
-"==",
-taskId
-)
-
-);
-
-
-const oldOrders =
-await getDocs(
-orderQuery
-);
-
-
-if(!oldOrders.empty){
-
-throw new Error(
-"This task has already been completed."
-);
-
-}
-
-
-/*
- * New values
- */
-
-const taskCommission =
-Number(
-commission || 0
-);
-
-
-const newBalance =
-oldBalance +
-taskCommission;
-
-
-const newCommission =
-oldCommission +
-taskCommission;
-
-
-const newCompleted =
-oldCompleted +
-1;
-
-
-/*
- * Update user
- */
-
-await updateDoc(
-
-userRef,
-
-{
-
-balance:
-newBalance,
-
-commission:
-newCommission,
-
-completed:
-newCompleted
-
-}
-
-);
-
-
-/*
- * Save order history
- */
-
-await addDoc(
-
-collection(
-db,
-"orders"
-),
-
-{
-
-uid:
-currentUserId,
-
-name:
-user.name || "",
-
-email:
-user.email ||
-auth.currentUser.email ||
-"",
-
-taskId:
-taskId,
-
-taskNumber:
-Number(taskNumber),
-
-taskName:
-taskName,
-
-price:
-Number(price || 0),
-
-commission:
-taskCommission,
-
-status:
-"Completed",
-
-createdAt:
-serverTimestamp()
-
-}
-
-);
-
-
-alert(
-"Task " +
-taskNumber +
-" completed successfully! ✅"
-);
-
-
-/*
- * Reload dashboard
- *
- * Ab next task show hoga.
- */
-
-await loadUser();
-
-await loadNextTask();
-
-
-}
-catch(error){
-
-alert(
-"Task Error: " +
-error.message
-);
-
-
-if(button){
-
-button.disabled = false;
-
-button.innerText =
-"✅ Complete Task";
-
-}
-
-}
-
-};
-
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(text){
-
-const div =
+const box =
 document.createElement(
 "div"
 );
 
-div.textContent =
-String(text || "");
 
-return div.innerHTML;
+box.className =
+"task-box";
+
+
+let requirement;
+
+
+if(required > 0){
+
+requirement = `
+
+<div class="required">
+
+⚠️ Additional Virtual Credits Required:
+Rs ${required}
+
+</div>
+
+`;
+
+}else{
+
+requirement = `
+
+<div class="ready">
+
+✅ Enough available credits
+
+</div>
+
+`;
+
+}
+
+
+box.innerHTML = `
+
+<h3>
+Task ${index + 1}:
+${escapeHtml(
+task.name || "Task"
+)}
+</h3>
+
+<p>
+💰 Task Amount:
+<b>Rs ${price}</b>
+</p>
+
+<p>
+💎 Task Commission:
+<b>Rs ${Number(
+task.commission || 0
+)}</b>
+</p>
+
+<p>
+📊 Available:
+<b>Rs ${totalAvailable}</b>
+</p>
+
+${requirement}
+
+`;
+
+
+taskList.appendChild(
+box
+);
+
+});
+
+}
+
+
+
+/* =========================
+ESCAPE TEXT
+========================= */
+
+function escapeHtml(text){
+
+return String(text)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 </script>
 
+
 </body>
 
 </html>
+```
