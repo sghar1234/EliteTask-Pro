@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Login</title>
+<title>EliteTask Pro - Sign Up</title>
 
 <style>
 
@@ -25,36 +25,34 @@ body{
     padding:20px;
 }
 
-.login-wrapper{
+.wrapper{
     width:100%;
     max-width:420px;
 }
 
-/* LOGO */
-
 .brand{
     text-align:center;
     color:white;
-    margin-bottom:25px;
+    margin-bottom:22px;
 }
 
 .logo{
-    width:72px;
-    height:72px;
+    width:68px;
+    height:68px;
     margin:auto;
-    border-radius:22px;
+    border-radius:21px;
     background:linear-gradient(135deg,#2d8cff,#55c8ff);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:28px;
+    font-size:27px;
     font-weight:bold;
     box-shadow:0 12px 30px rgba(0,0,0,.2);
 }
 
 .brand h1{
-    font-size:24px;
-    margin-top:13px;
+    font-size:23px;
+    margin-top:11px;
 }
 
 .brand p{
@@ -63,41 +61,47 @@ body{
     margin-top:5px;
 }
 
-/* LOGIN CARD */
-
-.login-card{
+.card{
     background:white;
     border-radius:26px;
-    padding:27px 22px;
+    padding:25px 22px;
     box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
-.login-card h2{
+.card h2{
     text-align:center;
-    font-size:21px;
     color:#172033;
+    font-size:21px;
 }
 
 .subtitle{
     text-align:center;
     color:#8992a2;
     font-size:12px;
-    margin-top:6px;
-    margin-bottom:23px;
+    margin:6px 0 21px;
 }
 
-/* INPUT */
+.error{
+    display:none;
+    background:#fff1f1;
+    color:#d83232;
+    padding:10px;
+    border-radius:10px;
+    font-size:11px;
+    text-align:center;
+    margin-bottom:13px;
+}
 
 label{
     display:block;
-    font-size:12px;
     color:#596579;
+    font-size:12px;
     margin-bottom:7px;
 }
 
 .input-box{
     position:relative;
-    margin-bottom:16px;
+    margin-bottom:15px;
 }
 
 .input-box span{
@@ -109,7 +113,7 @@ label{
 
 input{
     width:100%;
-    height:50px;
+    height:49px;
     border:1px solid #e0e6ef;
     border-radius:13px;
     padding:0 14px 0 42px;
@@ -123,11 +127,9 @@ input:focus{
     background:white;
 }
 
-/* LOGIN BUTTON */
-
-.login-btn{
+.signup-btn{
     width:100%;
-    height:51px;
+    height:50px;
     border:none;
     border-radius:14px;
     background:linear-gradient(135deg,#1478ed,#25a5ff);
@@ -135,38 +137,24 @@ input:focus{
     font-size:14px;
     font-weight:bold;
     box-shadow:0 8px 20px rgba(20,120,237,.25);
+    margin-top:4px;
 }
 
-.login-btn:disabled{
+.signup-btn:disabled{
     opacity:.6;
 }
 
-/* SIGNUP */
-
-.signup{
+.login{
     text-align:center;
-    margin-top:20px;
-    font-size:12px;
+    margin-top:19px;
     color:#8992a2;
+    font-size:12px;
 }
 
-.signup a{
+.login a{
     color:#1478ed;
     text-decoration:none;
     font-weight:bold;
-}
-
-/* ERROR */
-
-.error{
-    display:none;
-    background:#fff1f1;
-    color:#d83232;
-    border-radius:10px;
-    padding:10px;
-    margin-bottom:14px;
-    font-size:11px;
-    text-align:center;
 }
 
 </style>
@@ -175,11 +163,7 @@ input:focus{
 
 <body>
 
-
-<div class="login-wrapper">
-
-
-    <!-- BRAND -->
+<div class="wrapper">
 
     <div class="brand">
 
@@ -198,16 +182,14 @@ input:focus{
     </div>
 
 
-    <!-- LOGIN -->
-
-    <div class="login-card">
+    <div class="card">
 
         <h2>
-            Welcome Back
+            Create Account
         </h2>
 
         <div class="subtitle">
-            Login to continue to your account
+            Join EliteTask Pro and get started
         </div>
 
 
@@ -218,20 +200,34 @@ input:focus{
 
 
         <label>
+            Full Name
+        </label>
+
+        <div class="input-box">
+
+            <span>👤</span>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter your full name"
+            >
+
+        </div>
+
+
+        <label>
             Email Address
         </label>
 
         <div class="input-box">
 
-            <span>
-                📧
-            </span>
+            <span>📧</span>
 
             <input
                 type="email"
                 id="email"
                 placeholder="Enter your email"
-                autocomplete="email"
             >
 
         </div>
@@ -243,34 +239,48 @@ input:focus{
 
         <div class="input-box">
 
-            <span>
-                🔒
-            </span>
+            <span>🔒</span>
 
             <input
                 type="password"
                 id="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
+                placeholder="Create a password"
+            >
+
+        </div>
+
+
+        <label>
+            Confirm Password
+        </label>
+
+        <div class="input-box">
+
+            <span>🔐</span>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your password"
             >
 
         </div>
 
 
         <button
-            class="login-btn"
-            id="loginBtn"
+            class="signup-btn"
+            id="signupBtn"
         >
-            Login
+            Create Account
         </button>
 
 
-        <div class="signup">
+        <div class="login">
 
-            Don't have an account?
+            Already have an account?
 
-            <a href="signup.html">
-                Create Account
+            <a href="index.html">
+                Login
             </a>
 
         </div>
@@ -279,8 +289,6 @@ input:focus{
 
 </div>
 
-
-<!-- FIREBASE -->
 
 <script type="module">
 
@@ -291,9 +299,17 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getAuth,
-    signInWithEmailAndPassword
+    createUserWithEmailAndPassword
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -316,22 +332,27 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-
 const auth =
     getAuth(app);
 
+const db =
+    getFirestore(app);
+
+
+const nameInput =
+    document.getElementById("name");
 
 const emailInput =
     document.getElementById("email");
 
-
 const passwordInput =
     document.getElementById("password");
 
+const confirmInput =
+    document.getElementById("confirmPassword");
 
-const loginBtn =
-    document.getElementById("loginBtn");
-
+const signupBtn =
+    document.getElementById("signupBtn");
 
 const errorBox =
     document.getElementById("errorBox");
@@ -348,7 +369,7 @@ function showError(message){
 }
 
 
-loginBtn.addEventListener(
+signupBtn.addEventListener(
     "click",
     async () => {
 
@@ -356,12 +377,28 @@ loginBtn.addEventListener(
             "none";
 
 
+        const name =
+            nameInput.value.trim();
+
         const email =
             emailInput.value.trim();
 
-
         const password =
             passwordInput.value;
+
+        const confirmPassword =
+            confirmInput.value;
+
+
+        if(!name){
+
+            showError(
+                "Apna naam enter karo."
+            );
+
+            return;
+
+        }
 
 
         if(!email){
@@ -375,10 +412,10 @@ loginBtn.addEventListener(
         }
 
 
-        if(!password){
+        if(password.length < 6){
 
             showError(
-                "Password enter karo."
+                "Password kam az kam 6 characters ka ho."
             );
 
             return;
@@ -386,19 +423,71 @@ loginBtn.addEventListener(
         }
 
 
-        loginBtn.disabled =
+        if(password !== confirmPassword){
+
+            showError(
+                "Passwords match nahi kar rahe."
+            );
+
+            return;
+
+        }
+
+
+        signupBtn.disabled =
             true;
 
-        loginBtn.textContent =
-            "Logging in...";
+        signupBtn.textContent =
+            "Creating...";
 
 
         try{
 
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
+            const result =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                result.user;
+
+
+            await setDoc(
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                ),
+                {
+
+                    name:
+                        name,
+
+                    email:
+                        email,
+
+                    balance:
+                        0,
+
+                    commission:
+                        0,
+
+                    completed:
+                        0,
+
+                    pending:
+                        0,
+
+                    role:
+                        "user",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
             );
 
 
@@ -414,38 +503,38 @@ loginBtn.addEventListener(
 
             if(
                 error.code ===
-                "auth/invalid-credential"
+                "auth/email-already-in-use"
             ){
 
                 showError(
-                    "Email ya password ghalat hai."
+                    "Ye email pehle se registered hai."
                 );
 
             }
             else if(
                 error.code ===
-                "auth/user-not-found"
+                "auth/invalid-email"
             ){
 
                 showError(
-                    "Ye account mojood nahi."
+                    "Email address ghalat hai."
                 );
 
             }
             else if(
                 error.code ===
-                "auth/wrong-password"
+                "auth/weak-password"
             ){
 
                 showError(
-                    "Password ghalat hai."
+                    "Password zyada strong rakho."
                 );
 
             }
             else{
 
                 showError(
-                    "Login nahi ho saka. Dobara try karo."
+                    "Account create nahi ho saka. Dobara try karo."
                 );
 
             }
@@ -453,23 +542,23 @@ loginBtn.addEventListener(
         }
 
 
-        loginBtn.disabled =
+        signupBtn.disabled =
             false;
 
-        loginBtn.textContent =
-            "Login";
+        signupBtn.textContent =
+            "Create Account";
 
     }
 );
 
 
-passwordInput.addEventListener(
+confirmInput.addEventListener(
     "keydown",
     (event) => {
 
         if(event.key === "Enter"){
 
-            loginBtn.click();
+            signupBtn.click();
 
         }
 
