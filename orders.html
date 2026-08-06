@@ -63,6 +63,13 @@ border-radius:15px;
 box-shadow:0 3px 10px #ddd;
 }
 
+.section-title{
+font-size:19px;
+font-weight:bold;
+color:#111827;
+margin-bottom:12px;
+}
+
 .task{
 border-bottom:1px solid #eee;
 padding-bottom:18px;
@@ -75,6 +82,15 @@ margin-bottom:0;
 padding-bottom:0;
 }
 
+.task-image{
+width:100%;
+height:190px;
+object-fit:cover;
+border-radius:12px;
+margin-bottom:14px;
+display:block;
+}
+
 .task h3{
 color:#2563eb;
 margin-bottom:10px;
@@ -83,7 +99,7 @@ margin-bottom:10px;
 .info{
 margin-top:7px;
 color:#555;
-font-size:14px;
+font-size:15px;
 }
 
 .required{
@@ -116,17 +132,28 @@ font-weight:bold;
 margin-top:12px;
 }
 
+.completed-btn{
+width:100%;
+border:none;
+background:#16a34a;
+color:white;
+padding:13px;
+border-radius:10px;
+font-size:15px;
+font-weight:bold;
+margin-top:12px;
+}
+
 .complete:disabled{
 background:#9ca3af;
 }
 
-.status{
-margin-top:10px;
-padding:10px;
-border-radius:10px;
+.completed-box{
 background:#dcfce7;
 color:#166534;
-font-size:13px;
+padding:12px;
+border-radius:10px;
+margin-top:12px;
 font-weight:bold;
 }
 
@@ -165,7 +192,7 @@ border-radius:12px;
 
 
 <div class="header">
-📦 Available Tasks
+📦 My Tasks
 </div>
 
 
@@ -197,11 +224,35 @@ Rs 0
 
 
 
+<!-- AVAILABLE TASKS -->
+
 <div class="card">
+
+<div class="section-title">
+📦 Available Tasks
+</div>
 
 <div id="tasksList">
 
 Loading Tasks...
+
+</div>
+
+</div>
+
+
+
+<!-- COMPLETED TASKS -->
+
+<div class="card">
+
+<div class="section-title">
+✅ Completed Tasks
+</div>
+
+<div id="completedList">
+
+Loading Completed Tasks...
 
 </div>
 
@@ -235,7 +286,7 @@ from
 import {
 collection,
 query,
-orderBy,
+where,
 getDocs,
 doc,
 getDoc,
@@ -256,6 +307,9 @@ document.getElementById("commission");
 
 const tasksList =
 document.getElementById("tasksList");
+
+const completedList =
+document.getElementById("completedList");
 
 
 let currentUser = null;
@@ -291,6 +345,8 @@ await loadUser();
 
 await loadTasks();
 
+await loadCompleted();
+
 });
 
 
@@ -300,9 +356,6 @@ LOAD USER
 ========================= */
 
 async function loadUser(){
-
-try{
-
 
 const userRef =
 doc(
@@ -318,13 +371,9 @@ await getDoc(userRef);
 
 if(!snap.exists()){
 
-tasksList.innerHTML = `
-<div class="error">
-User profile not found.
-</div>
-`;
-
-return;
+throw new Error(
+"User profile not found."
+);
 
 }
 
@@ -334,33 +383,25 @@ snap.data();
 
 
 userBalance =
-Number(data.balance || 0);
+Number(
+data.balance || 0
+);
 
 
 userCommission =
-Number(data.commission || 0);
+Number(
+data.commission || 0
+);
 
 
 updateWallet();
-
-
-}catch(error){
-
-tasksList.innerHTML = `
-<div class="error">
-Firebase Error:
-${escapeHtml(error.message)}
-</div>
-`;
-
-}
 
 }
 
 
 
 /* =========================
-WALLET DISPLAY
+UPDATE WALLET
 ========================= */
 
 function updateWallet(){
@@ -368,7 +409,6 @@ function updateWallet(){
 balanceBox.innerText =
 "Rs " +
 userBalance;
-
 
 commissionBox.innerText =
 "Rs " +
@@ -379,39 +419,40 @@ userCommission;
 
 
 /* =========================
-LOAD TASKS
+LOAD AVAILABLE TASKS
 ========================= */
 
 async function loadTasks(){
 
-
 tasksList.innerHTML =
-`
-<div class="empty">
-Loading Tasks...
-</div>
-`;
+"Loading Tasks...";
 
 
 try{
 
 
-const snap =
+const snapshot =
 await getDocs(
-collection(db,"tasks")
+collection(
+db,
+"tasks"
+)
 );
 
 
 tasksList.innerHTML = "";
 
 
-if(snap.empty){
+if(snapshot.empty){
 
-tasksList.innerHTML =
-`
+tasksList.innerHTML = `
+
 <div class="empty">
+
 No tasks available.
+
 </div>
+
 `;
 
 return;
@@ -422,7 +463,7 @@ return;
 const tasks = [];
 
 
-snap.forEach(
+snapshot.forEach(
 (item)=>{
 
 tasks.push({
@@ -448,14 +489,77 @@ b.data.order || 0
 );
 
 
-/* FIRST 10 TASKS */
 
-const firstTen =
-tasks.slice(0,10);
+/*
+GET ALREADY COMPLETED TASK IDs
+*/
+
+const completedQuery =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
 
 
-firstTen.forEach(
+const completedSnapshot =
+await getDocs(
+completedQuery
+);
+
+
+const completedIds =
+new Set();
+
+
+completedSnapshot.forEach(
+(item)=>{
+
+const data =
+item.data();
+
+if(
+data.status === "Completed"
+){
+
+completedIds.add(
+data.taskId
+);
+
+}
+
+});
+
+
+
+tasks.forEach(
 (item,index)=>{
+
+
+/*
+Don't show completed tasks
+in available section.
+*/
+
+if(
+completedIds.has(
+item.id
+)
+){
+
+return;
+
+}
+
 
 renderTask(
 item.id,
@@ -466,20 +570,37 @@ index + 1
 });
 
 
+if(
+tasksList.innerHTML.trim() === ""
+){
+
+tasksList.innerHTML = `
+
+<div class="empty">
+
+🎉 All available tasks are completed.
+
+</div>
+
+`;
+
+}
+
+
 }catch(error){
 
-tasksList.innerHTML =
-`
+tasksList.innerHTML = `
+
 <div class="error">
 
-Firebase Error:
-<br><br>
+Firebase Error:<br><br>
 
 ${escapeHtml(
 error.message
 )}
 
 </div>
+
 `;
 
 }
@@ -500,7 +621,9 @@ number
 
 
 const price =
-Number(task.price || 0);
+Number(
+task.price || 0
+);
 
 
 const taskCommission =
@@ -509,14 +632,10 @@ task.commission || 0
 );
 
 
-/* BOTH WALLETS CAN BE USED */
-
 const available =
 userBalance +
 userCommission;
 
-
-/* REQUIRED VIRTUAL CREDITS */
 
 const required =
 Math.max(
@@ -535,6 +654,37 @@ taskDiv.className =
 "task";
 
 
+
+/*
+TASK IMAGE
+*/
+
+let imageHTML = "";
+
+
+if(task.image){
+
+imageHTML = `
+
+<img
+class="task-image"
+src="${escapeAttribute(
+task.image
+)}"
+alt="Task Image"
+onerror="this.style.display='none'"
+>
+
+`;
+
+}
+
+
+
+/*
+REQUIRED MESSAGE
+*/
+
 let requirementHTML = "";
 
 
@@ -544,7 +694,7 @@ requirementHTML = `
 
 <div class="required">
 
-⚠️ Required Additional Credits:
+⚠️ Additional Virtual Credits Required:
 Rs ${required}
 
 </div>
@@ -566,37 +716,30 @@ requirementHTML = `
 }
 
 
+
 taskDiv.innerHTML = `
 
+${imageHTML}
+
 <h3>
-Task ${number}: ${escapeHtml(
+Task ${number}:
+${escapeHtml(
 task.name || "Task"
 )}
 </h3>
 
 <p class="info">
-💰 Task Amount:
+
+💰 Task Price:
 <b>Rs ${price}</b>
+
 </p>
 
 <p class="info">
-💵 Task Commission:
+
+💎 Commission:
 <b>Rs ${taskCommission}</b>
-</p>
 
-<p class="info">
-💳 Balance Available:
-<b>Rs ${userBalance}</b>
-</p>
-
-<p class="info">
-💎 Commission Available:
-<b>Rs ${userCommission}</b>
-</p>
-
-<p class="info">
-📊 Total Available:
-<b>Rs ${available}</b>
 </p>
 
 ${requirementHTML}
@@ -615,16 +758,13 @@ ${required > 0
 
 </button>
 
-<div
-id="status-${taskId}">
-</div>
-
 `;
 
 
 tasksList.appendChild(
 taskDiv
 );
+
 
 
 const button =
@@ -675,16 +815,69 @@ return;
 button.disabled = true;
 
 button.innerText =
-"Completing...";
+"Checking...";
 
 
 try{
 
 
 /*
-AVAILABLE MONEY
+IMPORTANT:
+CHECK FIRST IF THIS TASK
+IS ALREADY COMPLETED.
+*/
 
-Balance + Commission
+const existingQuery =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+),
+
+where(
+"taskId",
+"==",
+taskId
+)
+
+);
+
+
+const existingSnapshot =
+await getDocs(
+existingQuery
+);
+
+
+if(
+!existingSnapshot.empty
+){
+
+button.innerText =
+"Completed ✅";
+
+button.className =
+"completed-btn";
+
+await loadTasks();
+
+await loadCompleted();
+
+return;
+
+}
+
+
+
+/*
+AVAILABLE CREDITS
 */
 
 const available =
@@ -696,33 +889,31 @@ if(
 available < price
 ){
 
-throw new Error(
-"Not enough available credits."
-);
+button.disabled = false;
+
+button.innerText =
+"Insufficient Credits";
+
+return;
 
 }
 
 
 /*
-FIRST USE BALANCE.
-
-IF BALANCE IS NOT ENOUGH,
-USE COMMISSION FOR THE REMAINING PART.
+USE BALANCE FIRST.
+THEN COMMISSION.
 */
 
 let remaining =
 price;
 
-
 let newBalance =
 userBalance;
-
 
 let newCommission =
 userCommission;
 
 
-/* USE BALANCE FIRST */
 
 if(
 newBalance >= remaining
@@ -745,7 +936,6 @@ newBalance = 0;
 }
 
 
-/* USE COMMISSION FOR REMAINING */
 
 if(
 remaining > 0
@@ -760,10 +950,12 @@ remaining = 0;
 }
 
 
-/*
-TASK AMOUNT + EARNED COMMISSION
-GO INTO COMMISSION WALLET.
 
+/*
+TASK PRICE + TASK COMMISSION
+GO INTO COMMISSION.
+
+THIS HAPPENS ONLY ONCE.
 */
 
 newCommission =
@@ -772,7 +964,10 @@ price +
 taskCommission;
 
 
-/* UPDATE USER */
+
+/*
+UPDATE USER
+*/
 
 const userRef =
 doc(
@@ -790,13 +985,19 @@ balance:
 newBalance,
 
 commission:
-newCommission
+newCommission,
+
+completed:
+(await getCompletedCount()) + 1
 
 }
 );
 
 
-/* SAVE ORDER */
+
+/*
+SAVE ORDER
+*/
 
 await addDoc(
 
@@ -833,7 +1034,10 @@ serverTimestamp()
 );
 
 
-/* UPDATE LOCAL VALUES */
+
+/*
+UPDATE LOCAL VALUES
+*/
 
 userBalance =
 newBalance;
@@ -845,44 +1049,30 @@ newCommission;
 updateWallet();
 
 
+
 button.innerText =
 "Completed ✅";
 
+button.className =
+"completed-btn";
 
-const status =
-document.getElementById(
-"status-" + taskId
-);
-
-
-status.className =
-"status";
-
-
-status.innerText =
-"Task completed successfully ✅";
 
 
 /*
-RELOAD TASKS SO REQUIRED AMOUNT
-UPDATES USING NEW WALLET VALUES.
+RELOAD BOTH SECTIONS
 */
 
-setTimeout(
-loadTasks,
-500
-);
+await loadTasks();
+
+await loadCompleted();
 
 
 }catch(error){
 
-
-button.disabled =
-false;
+button.disabled = false;
 
 button.innerText =
 "Complete Task";
-
 
 alert(
 "Task Error: " +
@@ -890,6 +1080,193 @@ error.message
 );
 
 }
+
+}
+
+
+
+/* =========================
+COMPLETED TASKS
+========================= */
+
+async function loadCompleted(){
+
+completedList.innerHTML =
+"Loading Completed Tasks...";
+
+
+try{
+
+
+const q =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+completedList.innerHTML = "";
+
+
+if(snapshot.empty){
+
+completedList.innerHTML = `
+
+<div class="empty">
+
+No completed tasks yet.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+
+snapshot.forEach(
+(item)=>{
+
+
+const order =
+item.data();
+
+
+const box =
+document.createElement(
+"div"
+);
+
+
+box.className =
+"task";
+
+
+box.innerHTML = `
+
+<h3>
+
+${escapeHtml(
+order.taskName || "Task"
+)}
+
+</h3>
+
+<p class="info">
+
+💰 Task Price:
+<b>Rs ${Number(
+order.price || 0
+)}</b>
+
+</p>
+
+<p class="info">
+
+💎 Commission:
+<b>Rs ${Number(
+order.commission || 0
+)}</b>
+
+</p>
+
+<div class="completed-box">
+
+✅ Task Completed
+
+</div>
+
+`;
+
+
+completedList.appendChild(
+box
+);
+
+});
+
+
+
+}catch(error){
+
+completedList.innerHTML = `
+
+<div class="error">
+
+Unable to load completed tasks.
+
+</div>
+
+`;
+
+}
+
+}
+
+
+
+/* =========================
+COUNT COMPLETED
+========================= */
+
+async function getCompletedCount(){
+
+const q =
+query(
+
+collection(
+db,
+"orders"
+),
+
+where(
+"uid",
+"==",
+currentUser.uid
+)
+
+);
+
+
+const snapshot =
+await getDocs(q);
+
+
+let count = 0;
+
+
+snapshot.forEach(
+(item)=>{
+
+if(
+item.data().status ===
+"Completed"
+){
+
+count++;
+
+}
+
+});
+
+
+return count;
 
 }
 
@@ -926,6 +1303,38 @@ return String(text)
 .replace(
 /'/g,
 "&#039;"
+);
+
+}
+
+
+
+/* =========================
+ESCAPE ATTRIBUTE
+========================= */
+
+function escapeAttribute(text){
+
+return String(text)
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
 );
 
 }
