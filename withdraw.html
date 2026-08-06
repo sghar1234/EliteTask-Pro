@@ -1,205 +1,282 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Withdraw - EliteTask Pro</title>
+<title>EliteTask Pro - Withdraw</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#f5f5f5;
-padding:15px;
-color:#111827;
+    background:#f4f7fb;
+    color:#172033;
+    padding-bottom:90px;
 }
 
-.header{
-background:#111827;
-color:white;
-padding:18px;
-border-radius:15px;
-font-size:20px;
-font-weight:bold;
+.topbar{
+    height:70px;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 17px;
+    color:white;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
-.card{
-background:white;
-margin-top:15px;
-padding:20px;
-border-radius:15px;
-box-shadow:0 3px 10px #ddd;
+.back-btn{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    text-decoration:none;
+    font-size:22px;
 }
 
-.balance{
-font-size:28px;
-font-weight:bold;
-color:#2563eb;
-margin-top:8px;
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:9px;
 }
 
-.progress{
-margin-top:12px;
-padding:13px;
-background:#eff6ff;
-border-radius:10px;
-color:#1d4ed8;
-font-size:14px;
-font-weight:bold;
+.logo{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
-.withdraw-lock{
-margin-top:12px;
-padding:13px;
-background:#fff7ed;
-border-radius:10px;
-color:#c2410c;
-font-size:14px;
-font-weight:bold;
+.logo-text{
+    font-size:16px;
+    font-weight:bold;
 }
 
-.withdraw-ready{
-margin-top:12px;
-padding:13px;
-background:#dcfce7;
-border-radius:10px;
-color:#15803d;
-font-size:14px;
-font-weight:bold;
+.container{
+    max-width:600px;
+    margin:auto;
+    padding:18px 15px;
 }
 
-input,
-select{
-width:100%;
-padding:13px;
-margin-top:12px;
-border-radius:10px;
-border:1px solid #ddd;
-font-size:15px;
+.page-title{
+    margin:5px 2px 18px;
 }
 
-button{
-width:100%;
-padding:14px;
-margin-top:15px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:12px;
-font-size:16px;
-font-weight:bold;
+.page-title h2{
+    font-size:22px;
 }
 
-button:disabled{
-opacity:.6;
+.page-title p{
+    color:#8992a2;
+    font-size:13px;
+    margin-top:5px;
 }
 
-.message{
-margin-top:12px;
-text-align:center;
-font-size:14px;
-font-weight:bold;
+/* BALANCE */
+
+.balance-card{
+    background:linear-gradient(135deg,#081a3c,#1454a3);
+    color:white;
+    border-radius:22px;
+    padding:22px;
+    box-shadow:0 10px 28px rgba(13,65,140,.22);
+    margin-bottom:16px;
 }
 
-.success{
-color:#16a34a;
+.balance-card span{
+    font-size:12px;
+    opacity:.7;
 }
 
-.error{
-color:#dc2626;
+.balance-card h2{
+    font-size:30px;
+    margin-top:7px;
 }
 
-.back{
-display:block;
-text-align:center;
-margin-top:20px;
-color:#2563eb;
-text-decoration:none;
+/* FORM */
+
+.form-card{
+    background:white;
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 5px 20px rgba(20,40,80,.07);
 }
 
-.note{
-margin-top:10px;
-color:#777;
-font-size:13px;
+.form-title{
+    font-size:16px;
+    margin-bottom:15px;
 }
+
+label{
+    display:block;
+    font-size:12px;
+    color:#737e8f;
+    margin-bottom:7px;
+}
+
+select,
+input{
+    width:100%;
+    height:48px;
+    border:1px solid #e1e6ee;
+    border-radius:12px;
+    padding:0 13px;
+    outline:none;
+    font-size:13px;
+    background:white;
+    margin-bottom:14px;
+}
+
+select:focus,
+input:focus{
+    border-color:#2588ed;
+}
+
+.withdraw-btn{
+    width:100%;
+    height:49px;
+    border:none;
+    border-radius:13px;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+/* HISTORY */
 
 .history-title{
-font-size:20px;
-font-weight:bold;
-margin-bottom:5px;
+    margin:22px 2px 12px;
+    font-size:17px;
 }
 
 .history-card{
-background:#f9fafb;
-border:1px solid #e5e7eb;
-padding:15px;
-margin-top:12px;
-border-radius:12px;
+    background:white;
+    border-radius:18px;
+    padding:15px;
+    box-shadow:0 5px 18px rgba(20,40,80,.06);
+    margin-bottom:10px;
 }
 
-.history-amount{
-font-size:20px;
-font-weight:bold;
-color:#111827;
+.history-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.history-row{
-display:flex;
-justify-content:space-between;
-gap:10px;
-margin-top:8px;
-font-size:14px;
+.method{
+    font-size:14px;
+    font-weight:bold;
 }
 
-.history-label{
-color:#777;
+.amount{
+    font-size:15px;
+    font-weight:bold;
+    color:#e58b00;
 }
 
-.history-value{
-font-weight:bold;
-text-align:right;
-word-break:break-word;
+.history-bottom{
+    margin-top:7px;
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    color:#8992a2;
 }
 
 .status{
-display:inline-block;
-margin-top:12px;
-padding:7px 12px;
-border-radius:20px;
-font-size:13px;
-font-weight:bold;
+    font-weight:bold;
 }
 
 .pending{
-background:#fef3c7;
-color:#b45309;
+    color:#e58b00;
 }
 
 .approved{
-background:#dcfce7;
-color:#15803d;
+    color:#16a05d;
 }
 
 .rejected{
-background:#fee2e2;
-color:#dc2626;
+    color:#e23b3b;
 }
 
-.history-empty,
-.history-loading{
-text-align:center;
-padding:20px;
-color:#777;
+.empty{
+    background:white;
+    border-radius:18px;
+    padding:28px;
+    text-align:center;
+    color:#8992a2;
+    font-size:13px;
+}
+
+/* BOTTOM */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:73px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    box-shadow:0 -5px 25px rgba(0,0,0,.10);
+    z-index:1000;
+    border-top:1px solid #edf0f5;
+}
+
+.nav-item{
+    text-decoration:none;
+    color:#8992a2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    width:25%;
+    font-size:10px;
+}
+
+.nav-item span{
+    font-size:21px;
+}
+
+.nav-item.active{
+    color:#1677e8;
+    font-weight:bold;
+}
+
+.nav-center{
+    width:55px;
+    height:55px;
+    margin-top:-25px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 20px rgba(20,120,237,.35);
+    border:5px solid #f4f7fb;
 }
 
 </style>
@@ -208,1204 +285,679 @@ color:#777;
 
 <body>
 
-<div class="header">
-💰 Withdraw
-</div>
 
-<div class="card">
+<!-- TOP BAR -->
 
-<p>Available Balance</p>
+<div class="topbar">
 
-<div
-class="balance"
-id="balance">
+    <a href="dashboard.html" class="back-btn">
+        ←
+    </a>
 
-Loading...
+    <div class="logo-area">
 
-</div>
+        <div class="logo">
+            ET
+        </div>
 
-<div
-class="progress"
-id="progressBox">
+        <div class="logo-text">
+            EliteTask Pro
+        </div>
 
-Loading task progress...
-
-</div>
-
-<div
-id="withdrawStatus">
+    </div>
 
 </div>
 
-<p class="note">
 
-Withdraw sirf har 10 completed tasks ke baad available hoga.
+<div class="container">
 
-</p>
 
-<select id="method">
+    <div class="page-title">
 
-<option value="">
-Select Payment Method
-</option>
+        <h2>
+            Withdraw
+        </h2>
 
-<option value="EasyPaisa">
-EasyPaisa
-</option>
+        <p>
+            Request your available earnings.
+        </p>
 
-<option value="JazzCash">
-JazzCash
-</option>
+    </div>
 
-<option value="Bank Account">
-Bank Account
-</option>
 
-</select>
+    <!-- BALANCE -->
 
-<input
-id="account"
-type="text"
-placeholder="Enter Account / Number"
+    <div class="balance-card">
 
->
+        <span>
+            Available Balance
+        </span>
 
-<input
-id="amount"
-type="number"
-placeholder="Enter Amount"
-min="1"
+        <h2 id="balance">
+            $0.00
+        </h2>
 
->
+    </div>
 
-<button
-id="withdrawBtn">
 
-Submit Withdraw Request
+    <!-- FORM -->
 
-</button>
+    <div class="form-card">
 
-<div
-id="message"
-class="message">
+        <div class="form-title">
+            Withdrawal Details
+        </div>
+
+
+        <label>
+            Payment Method
+        </label>
+
+        <select id="method">
+
+            <option value="">
+                Select payment method
+            </option>
+
+            <option value="EasyPaisa">
+                EasyPaisa
+            </option>
+
+            <option value="JazzCash">
+                JazzCash
+            </option>
+
+            <option value="Bank Account">
+                Bank Account
+            </option>
+
+            <option value="USDT">
+                USDT
+            </option>
+
+        </select>
+
+
+        <label>
+            Account / Wallet Number
+        </label>
+
+        <input
+            type="text"
+            id="account"
+            placeholder="Enter account or wallet number"
+        >
+
+
+        <label>
+            Withdrawal Amount
+        </label>
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Enter amount"
+            min="1"
+        >
+
+
+        <button
+            class="withdraw-btn"
+            id="withdrawBtn"
+        >
+            Submit Withdrawal
+        </button>
+
+    </div>
+
+
+    <!-- HISTORY -->
+
+    <h3 class="history-title">
+        Withdrawal History
+    </h3>
+
+
+    <div id="history">
+
+        <div class="empty">
+            Loading history...
+        </div>
+
+    </div>
+
 
 </div>
 
+
+<!-- BOTTOM -->
+
+<div class="bottom-nav">
+
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+        <span>⌂</span>
+        Home
+    </a>
+
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+        <span>▣</span>
+        Tasks
+    </a>
+
+
+    <a
+        href="support.html"
+        class="nav-item"
+    >
+
+        <div class="nav-center">
+            💬
+        </div>
+
+        Support
+
+    </a>
+
+
+    <a
+        href="withdraw.html"
+        class="nav-item active"
+    >
+        <span>💳</span>
+        Withdraw
+    </a>
+
+
 </div>
 
-<div class="card">
 
-<div class="history-title">
-📋 Withdraw History
-</div>
-
-<p class="note">
-Your previous withdrawal requests
-</p>
-
-<div id="historyList">
-
-<div class="history-loading">
-Loading History...
-</div>
-
-</div>
-
-</div>
-
-<a
-class="back"
-href="dashboard.html">
-
-⬅ Back to Dashboard
-
-</a>
+<!-- FIREBASE -->
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-onAuthStateChanged
+    getAuth,
+    onAuthStateChanged
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-doc,
-getDoc,
-collection,
-query,
-where,
-getDocs,
-runTransaction,
-serverTimestamp
+    getFirestore,
+    doc,
+    getDoc,
+    updateDoc,
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    getDocs,
+    serverTimestamp
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+    authDomain: "elitetask-pro.firebaseapp.com",
+
+    projectId: "elitetask-pro",
+
+    storageBucket: "elitetask-pro.firebasestorage.app",
+
+    messagingSenderId: "504295275402",
+
+    appId: "1:504295275402:web:8c480445c5510fa645a673"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
 
 
 let currentUser = null;
-
 let currentBalance = 0;
 
-let currentCompleted = 0;
 
-let currentMilestone = 0;
+/* LOGIN */
 
+onAuthStateChanged(auth, async (user) => {
 
-const balanceElement =
-document.getElementById("balance");
+    if(!user){
 
-const progressBox =
-document.getElementById("progressBox");
+        window.location.href =
+            "index.html";
 
-const withdrawStatus =
-document.getElementById("withdrawStatus");
+        return;
 
-const methodElement =
-document.getElementById("method");
+    }
 
-const accountElement =
-document.getElementById("account");
+    currentUser = user;
 
-const amountElement =
-document.getElementById("amount");
+    await loadBalance();
 
-const withdrawBtn =
-document.getElementById("withdrawBtn");
-
-const messageElement =
-document.getElementById("message");
-
-const historyList =
-document.getElementById("historyList");
-
-
-/* =========================
-   LOGIN
-========================= */
-
-onAuthStateChanged(
-auth,
-async(user)=>{
-
-if(!user){
-
-window.location.href =
-"index.html";
-
-return;
-
-}
-
-currentUser = user;
-
-await loadUser();
-
-await loadHistory();
-
-}
-);
-
-
-/* =========================
-   LOAD USER
-========================= */
-
-async function loadUser(){
-
-try{
-
-const userRef =
-doc(
-db,
-"users",
-currentUser.uid
-);
-
-const userSnap =
-await getDoc(userRef);
-
-if(!userSnap.exists()){
-
-balanceElement.innerText =
-"Rs 0";
-
-showMessage(
-"User profile not found.",
-"error"
-);
-
-return;
-
-}
-
-const data =
-userSnap.data();
-
-
-currentBalance =
-Number(
-data.balance || 0
-);
-
-
-currentCompleted =
-Number(
-data.completed || 0
-);
-
-
-/*
- * Withdraw milestones:
- *
- * 10
- * 20
- * 30
- * 40...
- */
-
-currentMilestone =
-Math.floor(
-currentCompleted / 10
-) * 10;
-
-
-balanceElement.innerText =
-"Rs " +
-currentBalance;
-
-
-updateWithdrawStatus();
-
-
-}
-catch(error){
-
-balanceElement.innerText =
-"Rs 0";
-
-showMessage(
-"Unable to load account.",
-"error"
-);
-
-}
-
-}
-
-
-/* =========================
-   WITHDRAW STATUS
-========================= */
-
-async function updateWithdrawStatus(){
-
-if(currentCompleted < 10){
-
-const remaining =
-10 - currentCompleted;
-
-
-progressBox.innerText =
-"📊 Completed: " +
-currentCompleted +
-"/10 tasks";
-
-
-withdrawStatus.innerHTML = `
-
-<div class="withdraw-lock">
-
-🔒 Withdraw Locked
-
-<br><br>
-
-Complete ${remaining} more task(s) to unlock your first withdrawal.
-
-</div>
-
-`;
-
-withdrawBtn.disabled = true;
-
-return;
-
-}
-
-
-/*
- * Current milestone
- */
-
-const milestone =
-currentMilestone;
-
-
-/*
- * Check whether this milestone
- * already has pending/approved withdrawal.
- */
-
-try{
-
-const q =
-query(
-
-collection(
-db,
-"withdraws"
-),
-
-where(
-"uid",
-"==",
-currentUser.uid
-),
-
-where(
-"milestone",
-"==",
-milestone
-)
-
-);
-
-
-const snapshot =
-await getDocs(q);
-
-
-let alreadyUsed = false;
-
-
-snapshot.forEach(
-(item)=>{
-
-const data =
-item.data();
-
-
-const status =
-String(
-data.status || ""
-).toLowerCase();
-
-
-/*
- * Rejected withdrawal does not
- * permanently block the milestone.
- */
-
-if(
-status === "pending" ||
-status === "approved"
-){
-
-alreadyUsed = true;
-
-}
+    await loadHistory();
 
 });
 
 
-progressBox.innerText =
-"📊 Completed: " +
-currentCompleted +
-" tasks";
+/* LOAD BALANCE */
 
+async function loadBalance(){
 
-if(alreadyUsed){
+    try{
 
-withdrawStatus.innerHTML = `
+        const ref =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
 
-<div class="withdraw-lock">
+        const snap =
+            await getDoc(ref);
 
-🔒 ${milestone} Tasks Withdrawal Already Used
+        if(snap.exists()){
 
-<br><br>
+            const data =
+                snap.data();
 
-Complete next 10 tasks to unlock another withdrawal.
+            currentBalance =
+                Number(
+                    data.balance || 0
+                );
 
-</div>
+            document
+                .getElementById("balance")
+                .textContent =
+                "$" +
+                currentBalance.toFixed(2);
 
-`;
+        }
 
-withdrawBtn.disabled = true;
+    }
+    catch(error){
 
-}
-else{
+        console.error(error);
 
-withdrawStatus.innerHTML = `
-
-<div class="withdraw-ready">
-
-✅ Withdraw Unlocked
-
-<br><br>
-
-You completed ${milestone} tasks.
-
-You can submit your withdrawal now.
-
-</div>
-
-`;
-
-withdrawBtn.disabled = false;
-
-}
-
-}
-catch(error){
-
-withdrawStatus.innerHTML = `
-
-<div class="withdraw-lock">
-
-Unable to check withdrawal status.
-
-</div>
-
-`;
-
-withdrawBtn.disabled = true;
-
-}
+    }
 
 }
 
 
-/* =========================
-   SUBMIT WITHDRAW
-========================= */
+/* SUBMIT WITHDRAW */
 
-withdrawBtn.addEventListener(
-"click",
-submitWithdraw
-);
+document
+.getElementById("withdrawBtn")
+.addEventListener("click", async () => {
 
 
-async function submitWithdraw(){
+    const method =
+        document
+        .getElementById("method")
+        .value;
 
-messageElement.innerText = "";
 
-messageElement.className =
-"message";
+    const account =
+        document
+        .getElementById("account")
+        .value
+        .trim();
 
 
-/*
- * Double-check task milestone
- */
+    const amount =
+        Number(
+            document
+            .getElementById("amount")
+            .value
+        );
 
-if(
-currentCompleted < 10 ||
-currentCompleted % 10 !== 0
-){
 
-showMessage(
-"Withdraw sirf 10, 20, 30... completed tasks par available hai.",
-"error"
-);
+    if(!method){
 
-return;
+        alert(
+            "Payment method select karo."
+        );
 
-}
+        return;
 
+    }
 
-const method =
-methodElement.value;
 
+    if(!account){
 
-const account =
-accountElement.value.trim();
+        alert(
+            "Account number enter karo."
+        );
 
+        return;
 
-const amount =
-Number(
-amountElement.value
-);
+    }
 
 
-if(!method){
+    if(!amount || amount <= 0){
 
-showMessage(
-"Please select a payment method.",
-"error"
-);
+        alert(
+            "Valid amount enter karo."
+        );
 
-return;
+        return;
 
-}
+    }
 
 
-if(!account){
+    if(amount > currentBalance){
 
-showMessage(
-"Please enter your account number.",
-"error"
-);
+        alert(
+            "Available balance kam hai."
+        );
 
-return;
+        return;
 
-}
+    }
 
 
-if(
-!amount ||
-amount <= 0
-){
+    const btn =
+        document
+        .getElementById("withdrawBtn");
 
-showMessage(
-"Please enter a valid amount.",
-"error"
-);
 
-return;
+    btn.disabled = true;
 
-}
+    btn.textContent =
+        "Submitting...";
 
 
-if(
-amount > currentBalance
-){
+    try{
 
-showMessage(
-"Insufficient balance.",
-"error"
-);
 
-return;
+        /* WITHDRAW REQUEST */
 
-}
+        await addDoc(
+            collection(
+                db,
+                "withdraws"
+            ),
+            {
 
+                userId:
+                    currentUser.uid,
 
-withdrawBtn.disabled = true;
+                email:
+                    currentUser.email || "",
 
-withdrawBtn.innerText =
-"Submitting...";
+                method:
+                    method,
 
+                account:
+                    account,
 
-try{
+                amount:
+                    amount,
 
+                status:
+                    "pending",
 
-const userRef =
-doc(
-db,
-"users",
-currentUser.uid
-);
+                createdAt:
+                    serverTimestamp()
 
+            }
+        );
 
-const withdrawRef =
-doc(
-collection(
-db,
-"withdraws"
-)
-);
 
+        /* DEDUCT BALANCE */
 
-/*
- * Transaction
- */
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
 
-await runTransaction(
-db,
-async(transaction)=>{
 
+        const newBalance =
+            currentBalance - amount;
 
-const userSnap =
-await transaction.get(
-userRef
-);
 
+        await updateDoc(
+            userRef,
+            {
 
-if(
-!userSnap.exists()
-){
+                balance:
+                    newBalance
 
-throw new Error(
-"User profile not found."
-);
+            }
+        );
 
-}
 
+        currentBalance =
+            newBalance;
 
-const userData =
-userSnap.data();
 
+        document
+            .getElementById("balance")
+            .textContent =
+            "$" +
+            newBalance.toFixed(2);
 
-const balance =
-Number(
-userData.balance || 0
-);
 
+        document
+            .getElementById("method")
+            .value = "";
 
-const completed =
-Number(
-userData.completed || 0
-);
 
+        document
+            .getElementById("account")
+            .value = "";
 
-if(
-completed < 10 ||
-completed % 10 !== 0
-){
 
-throw new Error(
-"Withdraw is only available after every 10 completed tasks."
-);
+        document
+            .getElementById("amount")
+            .value = "";
 
-}
 
+        alert(
+            "Withdrawal request submit ho gayi."
+        );
 
-const milestone =
-Math.floor(
-completed / 10
-) * 10;
 
+        await loadHistory();
 
-/*
- * Check previous withdrawal
- */
+    }
+    catch(error){
 
-const existingQuery =
-query(
+        console.error(error);
 
-collection(
-db,
-"withdraws"
-),
+        alert(
+            "Withdrawal submit nahi ho saki."
+        );
 
-where(
-"uid",
-"==",
-currentUser.uid
-),
+    }
 
-where(
-"milestone",
-"==",
-milestone
-)
 
-);
+    btn.disabled = false;
 
-
-const existingSnapshot =
-await getDocs(
-existingQuery
-);
-
-
-let alreadyUsed = false;
-
-
-existingSnapshot.forEach(
-(item)=>{
-
-const oldData =
-item.data();
-
-
-const oldStatus =
-String(
-oldData.status || ""
-).toLowerCase();
-
-
-if(
-oldStatus === "pending" ||
-oldStatus === "approved"
-){
-
-alreadyUsed = true;
-
-}
+    btn.textContent =
+        "Submit Withdrawal";
 
 });
 
 
-if(alreadyUsed){
-
-throw new Error(
-"This 10-task withdrawal has already been used."
-);
-
-}
-
-
-if(
-amount > balance
-){
-
-throw new Error(
-"Insufficient balance."
-);
-
-}
-
-
-const newBalance =
-balance - amount;
-
-
-/*
- * Balance immediately deduct
- */
-
-transaction.update(
-
-userRef,
-
-{
-balance:newBalance
-}
-
-);
-
-
-/*
- * Create withdrawal
- */
-
-transaction.set(
-
-withdrawRef,
-
-{
-
-uid:
-currentUser.uid,
-
-name:
-userData.name || "",
-
-email:
-currentUser.email || "",
-
-method:
-method,
-
-account:
-account,
-
-amount:
-amount,
-
-milestone:
-milestone,
-
-status:
-"Pending",
-
-createdAt:
-serverTimestamp()
-
-}
-
-);
-
-}
-
-);
-
-
-/*
- * Update screen
- */
-
-currentBalance =
-currentBalance - amount;
-
-
-balanceElement.innerText =
-"Rs " +
-currentBalance;
-
-
-showMessage(
-"Withdraw request submitted successfully ✅",
-"success"
-);
-
-
-methodElement.value = "";
-
-accountElement.value = "";
-
-amountElement.value = "";
-
-
-/*
- * Lock this milestone
- */
-
-await updateWithdrawStatus();
-
-await loadHistory();
-
-}
-catch(error){
-
-showMessage(
-"Error: " +
-error.message,
-"error"
-);
-
-}
-
-
-withdrawBtn.disabled = false;
-
-withdrawBtn.innerText =
-"Submit Withdraw Request";
-
-
-/*
- * Re-check status
- */
-
-await updateWithdrawStatus();
-
-}
-
-
-/* =========================
-   LOAD HISTORY
-========================= */
+/* LOAD HISTORY */
 
 async function loadHistory(){
 
-historyList.innerHTML = `
+    const history =
+        document.getElementById(
+            "history"
+        );
 
-<div class="history-loading">
-Loading History...
-</div>
 
-`;
+    try{
 
+        const ref =
+            collection(
+                db,
+                "withdraws"
+            );
 
-try{
 
+        const q =
+            query(
+                ref,
+                where(
+                    "userId",
+                    "==",
+                    currentUser.uid
+                ),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+            );
 
-const q =
-query(
 
-collection(
-db,
-"withdraws"
-),
+        const snapshot =
+            await getDocs(q);
 
-where(
-"uid",
-"==",
-currentUser.uid
-)
 
-);
+        history.innerHTML = "";
 
 
-const snapshot =
-await getDocs(q);
+        if(snapshot.empty){
 
+            history.innerHTML = `
 
-historyList.innerHTML = "";
+                <div class="empty">
 
+                    No withdrawal history yet.
 
-if(snapshot.empty){
+                </div>
 
-historyList.innerHTML = `
+            `;
 
-<div class="history-empty">
+            return;
 
-No withdrawal history yet.
+        }
 
-</div>
 
-`;
+        snapshot.forEach((item) => {
 
-return;
+            const data =
+                item.data();
 
-}
 
+            const amount =
+                Number(
+                    data.amount || 0
+                );
 
-const withdrawals = [];
 
+            const status =
+                data.status ||
+                "pending";
 
-snapshot.forEach(
-(item)=>{
 
-withdrawals.push({
+            const date =
+                data.createdAt
+                ?.toDate
+                ? data.createdAt
+                    .toDate()
+                    .toLocaleString()
+                : "Just now";
 
-id:item.id,
 
-data:item.data()
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-});
 
-});
+            card.className =
+                "history-card";
 
 
-withdrawals.sort(
-(a,b)=>{
+            card.innerHTML = `
 
-const timeA =
-a.data.createdAt &&
-a.data.createdAt.toMillis
-?
-a.data.createdAt.toMillis()
-:
-0;
+                <div class="history-top">
 
+                    <div class="method">
+                        ${data.method || "Payment"}
+                    </div>
 
-const timeB =
-b.data.createdAt &&
-b.data.createdAt.toMillis
-?
-b.data.createdAt.toMillis()
-:
-0;
+                    <div class="amount">
+                        $${amount.toFixed(2)}
+                    </div>
 
+                </div>
 
-return timeB - timeA;
 
-}
+                <div class="history-bottom">
 
-);
+                    <span>
+                        ${date}
+                    </span>
 
+                    <span class="status ${status}">
+                        ${status.toUpperCase()}
+                    </span>
 
-withdrawals.forEach(
-(item)=>{
+                </div>
 
+            `;
 
-const data =
-item.data;
 
+            history.appendChild(card);
 
-const amount =
-Number(
-data.amount || 0
-);
+        });
 
+    }
+    catch(error){
 
-const method =
-data.method ||
-"Not provided";
+        console.error(
+            "History error:",
+            error
+        );
 
 
-const account =
-data.account ||
-"Not provided";
+        history.innerHTML = `
 
+            <div class="empty">
 
-const milestone =
-Number(
-data.milestone || 0
-);
+                Withdrawal history load nahi ho saki.
 
+            </div>
 
-const status =
-String(
-data.status ||
-"Pending"
-);
+        `;
 
-
-let statusClass =
-"pending";
-
-
-if(
-status.toLowerCase()
-===
-"approved"
-){
-
-statusClass =
-"approved";
-
-}
-
-
-if(
-status.toLowerCase()
-===
-"rejected"
-){
-
-statusClass =
-"rejected";
-
-}
-
-
-let dateText =
-"Date not available";
-
-
-if(
-data.createdAt &&
-data.createdAt.toDate
-){
-
-const date =
-data.createdAt.toDate();
-
-dateText =
-date.toLocaleString();
-
-}
-
-
-historyList.innerHTML += `
-
-<div class="history-card">
-
-<div class="history-amount">
-
-Rs ${amount}
-
-</div>
-
-
-<div class="history-row">
-
-<span class="history-label">
-Task Milestone
-</span>
-
-<span class="history-value">
-
-${milestone}
-Tasks
-
-</span>
-
-</div>
-
-
-<div class="history-row">
-
-<span class="history-label">
-Payment Method
-</span>
-
-<span class="history-value">
-
-${escapeHtml(method)}
-
-</span>
-
-</div>
-
-
-<div class="history-row">
-
-<span class="history-label">
-Account
-</span>
-
-<span class="history-value">
-
-${escapeHtml(account)}
-
-</span>
-
-</div>
-
-
-<div class="history-row">
-
-<span class="history-label">
-Date
-</span>
-
-<span class="history-value">
-
-${escapeHtml(dateText)}
-
-</span>
-
-</div>
-
-
-<div class="status ${statusClass}">
-
-${escapeHtml(status)}
-
-</div>
-
-
-</div>
-
-`;
-
-});
-
-
-}
-catch(error){
-
-historyList.innerHTML = `
-
-<div class="history-empty">
-
-Unable to load history.
-
-<br><br>
-
-${escapeHtml(error.message)}
-
-</div>
-
-`;
-
-}
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-function showMessage(
-text,
-type
-){
-
-messageElement.innerText =
-text;
-
-messageElement.className =
-"message " +
-type;
-
-}
-
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(text){
-
-const div =
-document.createElement("div");
-
-div.textContent =
-String(text || "");
-
-return div.innerHTML;
+    }
 
 }
 
 </script>
 
-</body>
 
+</body>
 </html>
