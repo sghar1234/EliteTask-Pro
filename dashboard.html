@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EliteTask Pro - Dashboard</title>
+
+<title>EliteTask Pro</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -16,22 +19,22 @@
 body{
     background:#f4f7fb;
     color:#172033;
-    padding-bottom:85px;
+    padding-bottom:90px;
 }
 
 /* TOP BAR */
+
 .topbar{
     height:70px;
-    background:linear-gradient(135deg,#07152f,#123b79);
+    background:linear-gradient(135deg,#07152f,#1454a3);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 18px;
+    padding:0 17px;
     color:white;
     box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
-/* PROFILE BUTTON */
 .profile-btn{
     width:43px;
     height:43px;
@@ -46,7 +49,6 @@ body{
     color:white;
 }
 
-/* LOGO */
 .logo-area{
     display:flex;
     align-items:center;
@@ -62,16 +64,16 @@ body{
     align-items:center;
     justify-content:center;
     font-weight:bold;
-    font-size:18px;
-    box-shadow:0 5px 15px rgba(55,160,255,.35);
+    font-size:17px;
 }
 
 .logo-text{
-    font-size:17px;
+    font-size:16px;
     font-weight:bold;
 }
 
 /* MAIN */
+
 .container{
     max-width:600px;
     margin:auto;
@@ -79,6 +81,7 @@ body{
 }
 
 /* WELCOME */
+
 .welcome{
     margin-bottom:18px;
 }
@@ -93,9 +96,10 @@ body{
     font-size:13px;
 }
 
-/* BALANCE CARD */
+/* BALANCE */
+
 .balance-card{
-    background:linear-gradient(135deg,#0a1d42,#1454a3);
+    background:linear-gradient(135deg,#081a3c,#1454a3);
     border-radius:22px;
     padding:23px;
     color:white;
@@ -107,12 +111,12 @@ body{
 .balance-card:after{
     content:"";
     position:absolute;
-    width:150px;
-    height:150px;
+    width:160px;
+    height:160px;
     border-radius:50%;
     background:rgba(255,255,255,.06);
-    right:-50px;
-    top:-50px;
+    right:-55px;
+    top:-55px;
 }
 
 .balance-title{
@@ -144,7 +148,8 @@ body{
     font-size:15px;
 }
 
-/* QUICK STATS */
+/* STATS */
+
 .stats{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -181,50 +186,54 @@ body{
     font-size:20px;
 }
 
-/* SECTION */
+/* TASKS */
+
 .section-title{
     margin:23px 2px 12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
 }
 
 .section-title h3{
     font-size:17px;
 }
 
-.section-title span{
-    font-size:12px;
-    color:#287de8;
-}
-
-/* TASK CARD */
 .task-card{
     background:white;
     border-radius:20px;
-    padding:17px;
+    padding:15px;
     box-shadow:0 5px 20px rgba(20,40,80,.07);
     margin-bottom:12px;
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:10px;
 }
 
 .task-info{
     display:flex;
     align-items:center;
     gap:12px;
+    min-width:0;
 }
 
-.task-icon{
-    width:48px;
-    height:48px;
+.task-image{
+    width:52px;
+    height:52px;
+    border-radius:15px;
+    object-fit:cover;
+    background:#eaf2ff;
+    flex-shrink:0;
+}
+
+.task-placeholder{
+    width:52px;
+    height:52px;
     border-radius:15px;
     background:linear-gradient(135deg,#e8f2ff,#d8eaff);
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:22px;
+    flex-shrink:0;
 }
 
 .task-info h4{
@@ -245,9 +254,27 @@ body{
     border-radius:11px;
     font-size:12px;
     font-weight:bold;
+    flex-shrink:0;
 }
 
-/* BOTTOM NAV */
+.no-task{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    color:#8992a2;
+    font-size:13px;
+}
+
+.loading{
+    text-align:center;
+    padding:20px;
+    color:#7d8796;
+    font-size:13px;
+}
+
+/* BOTTOM BAR */
+
 .bottom-nav{
     position:fixed;
     bottom:0;
@@ -298,77 +325,111 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:25px;
+    font-size:24px;
     box-shadow:0 8px 20px rgba(20,120,237,.35);
     border:5px solid #f4f7fb;
 }
 
-/* RESPONSIVE */
 @media(max-width:380px){
+
     .balance{
         font-size:28px;
     }
 
     .logo-text{
-        font-size:15px;
+        font-size:14px;
     }
 
     .container{
         padding:15px 12px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
+
 <!-- TOP BAR -->
+
 <div class="topbar">
 
-    <!-- PROFILE LEFT -->
     <a href="profile.html" class="profile-btn">
         👤
     </a>
 
-    <!-- LOGO RIGHT -->
     <div class="logo-area">
-        <div class="logo">ET</div>
-        <div class="logo-text">EliteTask Pro</div>
+
+        <div class="logo">
+            ET
+        </div>
+
+        <div class="logo-text">
+            EliteTask Pro
+        </div>
+
     </div>
 
 </div>
 
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
+
 <div class="container">
 
+
     <div class="welcome">
-        <h2>Welcome Back 👋</h2>
-        <p>Manage your tasks and earnings from here.</p>
+
+        <h2>
+            Welcome, <span id="userName">User</span> 👋
+        </h2>
+
+        <p>
+            Manage your tasks and earnings from here.
+        </p>
+
     </div>
 
 
-    <!-- BALANCE -->
+    <!-- BALANCE CARD -->
+
     <div class="balance-card">
 
         <div class="balance-title">
             Available Balance
         </div>
 
-        <div class="balance">
+        <div class="balance" id="balance">
             $0.00
         </div>
 
         <div class="balance-bottom">
 
             <div class="balance-item">
-                <span>Commission</span>
-                <strong>$0.00</strong>
+
+                <span>
+                    Commission
+                </span>
+
+                <strong id="commission">
+                    $0.00
+                </strong>
+
             </div>
 
             <div class="balance-item">
-                <span>Pending</span>
-                <strong>$0.00</strong>
+
+                <span>
+                    Pending
+                </span>
+
+                <strong id="pending">
+                    $0.00
+                </strong>
+
             </div>
 
         </div>
@@ -377,6 +438,7 @@ body{
 
 
     <!-- STATS -->
+
     <div class="stats">
 
         <div class="stat-card">
@@ -385,8 +447,13 @@ body{
                 📦
             </div>
 
-            <p>Completed Tasks</p>
-            <h3>0</h3>
+            <p>
+                Completed Tasks
+            </p>
+
+            <h3 id="completedTasks">
+                0
+            </h3>
 
         </div>
 
@@ -397,8 +464,13 @@ body{
                 💰
             </div>
 
-            <p>Today's Commission</p>
-            <h3>$0.00</h3>
+            <p>
+                Today's Commission
+            </p>
+
+            <h3 id="todayCommission">
+                $0.00
+            </h3>
 
         </div>
 
@@ -409,8 +481,13 @@ body{
                 📋
             </div>
 
-            <p>Total Tasks</p>
-            <h3>0</h3>
+            <p>
+                Total Tasks
+            </p>
+
+            <h3 id="totalTasks">
+                0
+            </h3>
 
         </div>
 
@@ -421,99 +498,520 @@ body{
                 ⭐
             </div>
 
-            <p>Task Level</p>
-            <h3>1</h3>
+            <p>
+                Task Level
+            </p>
+
+            <h3>
+                1
+            </h3>
 
         </div>
 
     </div>
 
 
-    <!-- TASK SECTION -->
+    <!-- AVAILABLE TASKS -->
+
     <div class="section-title">
-        <h3>Available Tasks</h3>
-        <span>View All</span>
+
+        <h3>
+            Available Tasks
+        </h3>
+
     </div>
 
 
-    <div class="task-card">
+    <div id="taskList">
 
-        <div class="task-info">
-
-            <div class="task-icon">
-                🛍️
-            </div>
-
-            <div>
-                <h4>Product Order Task</h4>
-                <p>Complete task & earn commission</p>
-            </div>
-
+        <div class="loading">
+            Loading tasks...
         </div>
 
-        <button class="task-btn"
-        onclick="location.href='orders.html'">
-            Start
-        </button>
-
     </div>
 
-
-    <div class="task-card">
-
-        <div class="task-info">
-
-            <div class="task-icon">
-                💎
-            </div>
-
-            <div>
-                <h4>Premium Task</h4>
-                <p>Higher commission available</p>
-            </div>
-
-        </div>
-
-        <button class="task-btn"
-        onclick="location.href='orders.html'">
-            Start
-        </button>
-
-    </div>
 
 </div>
 
 
-<!-- BOTTOM TASK BAR -->
+<!-- BOTTOM NAVIGATION -->
+
 <div class="bottom-nav">
 
-    <!-- HOME -->
-    <a href="dashboard.html" class="nav-item active">
-        <span>⌂</span>
+
+    <a
+        href="dashboard.html"
+        class="nav-item active"
+    >
+
+        <span>
+            ⌂
+        </span>
+
         Home
+
     </a>
 
-    <!-- TASKS -->
-    <a href="orders.html" class="nav-item">
-        <span>▣</span>
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+
+        <span>
+            ▣
+        </span>
+
         Tasks
+
     </a>
 
-    <!-- CUSTOMER SERVICE -->
-    <a href="support.html" class="nav-item support">
+
+    <a
+        href="support.html"
+        class="nav-item support"
+    >
+
         <div class="nav-center">
             💬
         </div>
+
         Support
+
     </a>
 
-    <!-- WITHDRAW -->
-    <a href="withdraw.html" class="nav-item">
-        <span>💳</span>
+
+    <a
+        href="withdraw.html"
+        class="nav-item"
+    >
+
+        <span>
+            💳
+        </span>
+
         Withdraw
+
     </a>
+
 
 </div>
+
+
+<!-- FIREBASE SCRIPT -->
+
+<script type="module">
+
+
+/* FIREBASE APP */
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+
+/* AUTH */
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+/* FIRESTORE */
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    collection,
+    getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/* YOUR FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+    authDomain: "elitetask-pro.firebaseapp.com",
+
+    projectId: "elitetask-pro",
+
+    storageBucket: "elitetask-pro.firebasestorage.app",
+
+    messagingSenderId: "504295275402",
+
+    appId: "1:504295275402:web:8c480445c5510fa645a673"
+
+};
+
+
+/* START FIREBASE */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* CHECK USER LOGIN */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if(!user){
+
+            window.location.href =
+                "index.html";
+
+            return;
+
+        }
+
+
+        await loadUser(user.uid);
+
+        await loadTasks();
+
+    }
+);
+
+
+/* LOAD USER */
+
+async function loadUser(uid){
+
+    try{
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                uid
+            );
+
+
+        const userSnap =
+            await getDoc(userRef);
+
+
+        if(!userSnap.exists()){
+
+            console.log(
+                "User data not found"
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            userSnap.data();
+
+
+        /* NAME */
+
+        document
+            .getElementById("userName")
+            .textContent =
+            data.name || "User";
+
+
+        /* BALANCE */
+
+        const balance =
+            Number(
+                data.balance || 0
+            );
+
+
+        document
+            .getElementById("balance")
+            .textContent =
+            "$" + balance.toFixed(2);
+
+
+        /* COMMISSION */
+
+        const commission =
+            Number(
+                data.commission || 0
+            );
+
+
+        document
+            .getElementById("commission")
+            .textContent =
+            "$" + commission.toFixed(2);
+
+
+        /* PENDING */
+
+        const pending =
+            Number(
+                data.pending || 0
+            );
+
+
+        document
+            .getElementById("pending")
+            .textContent =
+            "$" + pending.toFixed(2);
+
+
+        /* COMPLETED */
+
+        const completed =
+            Number(
+                data.completedTasks || 0
+            );
+
+
+        document
+            .getElementById("completedTasks")
+            .textContent =
+            completed;
+
+
+        /* TODAY COMMISSION */
+
+        const todayCommission =
+            Number(
+                data.todayCommission || 0
+            );
+
+
+        document
+            .getElementById("todayCommission")
+            .textContent =
+            "$" + todayCommission.toFixed(2);
+
+    }
+
+    catch(error){
+
+        console.error(
+            "User error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* LOAD TASKS */
+
+async function loadTasks(){
+
+    const taskList =
+        document.getElementById(
+            "taskList"
+        );
+
+
+    try{
+
+        const tasksRef =
+            collection(
+                db,
+                "tasks"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                tasksRef
+            );
+
+
+        document
+            .getElementById("totalTasks")
+            .textContent =
+            snapshot.size;
+
+
+        taskList.innerHTML = "";
+
+
+        if(snapshot.empty){
+
+            taskList.innerHTML = `
+
+                <div class="no-task">
+
+                    No tasks available
+                    right now.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        snapshot.forEach(
+            (docSnap) => {
+
+                const task =
+                    docSnap.data();
+
+
+                const taskId =
+                    docSnap.id;
+
+
+                const name =
+                    task.name ||
+                    "Product Task";
+
+
+                const price =
+                    Number(
+                        task.price || 0
+                    );
+
+
+                const image =
+                    task.image ||
+                    "";
+
+
+                let imageHTML;
+
+
+                if(image){
+
+                    imageHTML = `
+
+                        <img
+                            src="${image}"
+                            class="task-image"
+                            alt="Task"
+                        >
+
+                    `;
+
+                }
+
+                else{
+
+                    imageHTML = `
+
+                        <div
+                            class="task-placeholder"
+                        >
+                            🛍️
+                        </div>
+
+                    `;
+
+                }
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "task-card";
+
+
+                card.innerHTML = `
+
+                    <div class="task-info">
+
+                        ${imageHTML}
+
+                        <div>
+
+                            <h4>
+                                ${name}
+                            </h4>
+
+                            <p>
+                                Task Amount:
+                                $${price.toFixed(2)}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="task-btn"
+                    >
+                        Start
+                    </button>
+
+                `;
+
+
+                card
+                    .querySelector(
+                        ".task-btn"
+                    )
+                    .addEventListener(
+                        "click",
+                        function(){
+
+                            window.location.href =
+                                "orders.html?task=" +
+                                taskId;
+
+                        }
+                    );
+
+
+                taskList.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Task error:",
+            error
+        );
+
+
+        taskList.innerHTML = `
+
+            <div class="no-task">
+
+                Unable to load tasks.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+</script>
+
 
 </body>
 </html>
