@@ -312,6 +312,25 @@ font-weight:bold;
 margin-top:15px;
 }
 
+.image-preview{
+margin-top:10px;
+}
+
+.image-preview img{
+width:100%;
+max-height:200px;
+object-fit:cover;
+border-radius:10px;
+display:block;
+}
+
+.image-success{
+color:#16a34a;
+font-size:13px;
+margin-top:6px;
+font-weight:bold;
+}
+
 </style>
 
 </head>
@@ -442,10 +461,34 @@ type="number"
 placeholder="Commission">
 
 
+<label style="
+display:block;
+margin-top:10px;
+font-weight:bold;
+">
+
+Task Image
+
+</label>
+
+
 <input
-id="taskImage"
-type="text"
-placeholder="Image URL (optional)">
+id="taskImageFile"
+type="file"
+accept="image/*"
+style="
+width:100%;
+padding:12px;
+margin-top:8px;
+border:1px solid #ddd;
+border-radius:10px;
+">
+
+
+<div
+id="imagePreview"
+class="image-preview">
+</div>
 
 
 <textarea
@@ -465,7 +508,11 @@ class="primary">
 
 <div
 id="taskMessage"
-style="margin-top:10px;text-align:center;">
+style="
+margin-top:10px;
+text-align:center;
+">
+
 </div>
 
 </div>
@@ -590,6 +637,11 @@ const ADMIN_UID =
 let adminReady = false;
 
 
+/* IMAGE DATA */
+
+let taskImageData = "";
+
+
 
 /* ELEMENTS */
 
@@ -617,6 +669,147 @@ const supportList =
 document.getElementById(
 "supportList"
 );
+
+const taskImageFile =
+document.getElementById(
+"taskImageFile"
+);
+
+const imagePreview =
+document.getElementById(
+"imagePreview"
+);
+
+
+
+/* =========================
+IMAGE SELECT
+========================= */
+
+taskImageFile.addEventListener(
+"change",
+function(){
+
+const file =
+this.files[0];
+
+if(!file){
+
+taskImageData = "";
+
+imagePreview.innerHTML = "";
+
+return;
+
+}
+
+
+if(
+!file.type.startsWith("image/")
+){
+
+alert(
+"Please select an image."
+);
+
+this.value = "";
+
+return;
+
+}
+
+
+const reader =
+new FileReader();
+
+
+reader.onload =
+function(e){
+
+const img =
+new Image();
+
+
+img.onload =
+function(){
+
+const canvas =
+document.createElement(
+"canvas"
+);
+
+
+const maxWidth =
+700;
+
+
+const scale =
+Math.min(
+1,
+maxWidth / img.width
+);
+
+
+canvas.width =
+Math.round(
+img.width * scale
+);
+
+
+canvas.height =
+Math.round(
+img.height * scale
+);
+
+
+const ctx =
+canvas.getContext(
+"2d"
+);
+
+
+ctx.drawImage(
+img,
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+
+taskImageData =
+canvas.toDataURL(
+"image/jpeg",
+0.70
+);
+
+
+imagePreview.innerHTML = `
+
+<img
+src="${taskImageData}"
+>
+
+<div class="image-success">
+
+✅ Image ready
+
+</div>
+
+`;
+
+};
+
+
+img.src =
+e.target.result;
+
+};
+
+
+reader.readAsDataURL(file);
+
+});
 
 
 
@@ -674,8 +867,6 @@ style="margin-top:0;color:#16a34a;">
 </div>
 `;
 
-
-/* LOAD FIRST TAB */
 
 loadUsers();
 
@@ -1262,12 +1453,6 @@ document.getElementById(
 );
 
 
-const image =
-document.getElementById(
-"taskImage"
-).value.trim();
-
-
 const description =
 document.getElementById(
 "taskDescription"
@@ -1280,6 +1465,7 @@ document.getElementById(
 );
 
 
+
 if(
 !order ||
 !name
@@ -1288,9 +1474,29 @@ if(
 msg.innerText =
 "Task number and name required.";
 
+msg.style.color =
+"#dc2626";
+
 return;
 
 }
+
+
+
+/* IMAGE REQUIRED */
+
+if(!taskImageData){
+
+msg.innerText =
+"Please select a task image.";
+
+msg.style.color =
+"#dc2626";
+
+return;
+
+}
+
 
 
 try{
@@ -1308,7 +1514,7 @@ order,
 name,
 price,
 commission,
-image,
+image:taskImageData,
 description,
 createdAt:
 serverTimestamp()
@@ -1324,29 +1530,44 @@ msg.style.color =
 "#16a34a";
 
 
+
+/* CLEAR FORM */
+
+
 document.getElementById(
 "taskOrder"
 ).value = "";
+
 
 document.getElementById(
 "taskName"
 ).value = "";
 
+
 document.getElementById(
 "taskPrice"
 ).value = "";
+
 
 document.getElementById(
 "taskCommission"
 ).value = "";
 
+
 document.getElementById(
-"taskImage"
+"taskImageFile"
 ).value = "";
+
 
 document.getElementById(
 "taskDescription"
 ).value = "";
+
+
+taskImageData = "";
+
+
+imagePreview.innerHTML = "";
 
 
 loadTasks();
@@ -1463,7 +1684,8 @@ t.image
 ?
 `<img
 class="task-image"
-src="${escapeHtml(t.image)}">`
+src="${escapeHtml(t.image)}"
+onerror="this.style.display='none'">`
 :
 ""
 }
@@ -2077,71 +2299,4 @@ document
 )
 .addEventListener(
 "click",
-async()=>{
-
-
-try{
-
-
-await signOut(auth);
-
-
-window.location.href =
-"admin-login.html";
-
-
-}catch(error){
-
-alert(
-error.message
-);
-
-}
-
-});
-
-
-
-/* =========================
-ESCAPE
-========================= */
-
-
-function escapeHtml(text){
-
-return String(text)
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-</script>
-
-
-</body>
-
-</html>
-```
+async()
