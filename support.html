@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EliteTask Pro - Customer Service</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -19,10 +17,8 @@
 body{
     background:#f4f7fb;
     color:#172033;
-    padding-bottom:85px;
+    padding-bottom:90px;
 }
-
-/* TOP BAR */
 
 .topbar{
     height:70px;
@@ -71,15 +67,11 @@ body{
     font-weight:bold;
 }
 
-/* MAIN */
-
 .container{
     max-width:600px;
     margin:auto;
     padding:18px 15px;
 }
-
-/* HEADER */
 
 .service-header{
     text-align:center;
@@ -111,14 +103,11 @@ body{
     font-size:13px;
 }
 
-/* SUPPORT CARD */
-
 .support-card{
     background:white;
     border-radius:20px;
     padding:18px;
     box-shadow:0 5px 20px rgba(20,40,80,.07);
-    margin-bottom:15px;
 }
 
 .support-card h3{
@@ -126,53 +115,62 @@ body{
     margin-bottom:7px;
 }
 
-.support-card p{
+.support-card > p{
     font-size:12px;
     color:#8992a2;
     line-height:1.5;
 }
 
-/* CHAT */
-
 .chat-box{
     background:#f8faff;
     border-radius:17px;
     padding:15px;
-    min-height:160px;
-    max-height:320px;
+    height:360px;
     overflow-y:auto;
-    margin-bottom:12px;
+    margin:15px 0 12px;
+    border:1px solid #edf1f6;
 }
 
 .message{
     max-width:82%;
     padding:11px 13px;
     border-radius:14px;
-    margin-bottom:9px;
+    margin-bottom:10px;
     font-size:12px;
-    line-height:1.4;
+    line-height:1.45;
+    word-wrap:break-word;
 }
 
 .admin-message{
     background:white;
     color:#4b5565;
+    border:1px solid #e9edf3;
     border-bottom-left-radius:4px;
+    margin-right:auto;
 }
 
 .user-message{
-    background:#1478ed;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
     color:white;
     margin-left:auto;
     border-bottom-right-radius:4px;
 }
 
-.time{
+.message-time{
     font-size:9px;
     opacity:.55;
-    margin-top:4px;
+    margin-top:5px;
 }
 
-/* INPUT */
+.empty-chat{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#8992a2;
+    font-size:12px;
+}
 
 .message-area{
     display:flex;
@@ -181,6 +179,7 @@ body{
 
 .message-input{
     flex:1;
+    min-width:0;
     border:1px solid #e2e7ef;
     border-radius:13px;
     padding:13px;
@@ -189,16 +188,28 @@ body{
     background:#fff;
 }
 
+.message-input:focus{
+    border-color:#2d8cff;
+}
+
 .send-btn{
-    width:50px;
+    width:52px;
+    height:48px;
     border:none;
     border-radius:13px;
     background:linear-gradient(135deg,#1478ed,#25a5ff);
     color:white;
     font-size:20px;
+    cursor:pointer;
 }
 
-/* QUICK HELP */
+.send-btn:active{
+    transform:scale(.96);
+}
+
+.send-btn:disabled{
+    opacity:.6;
+}
 
 .quick-title{
     margin:20px 2px 12px;
@@ -219,6 +230,11 @@ body{
     box-shadow:0 5px 18px rgba(20,40,80,.06);
     text-align:center;
     color:#172033;
+    cursor:pointer;
+}
+
+.quick-btn:active{
+    transform:scale(.98);
 }
 
 .quick-btn div{
@@ -229,8 +245,6 @@ body{
 .quick-btn span{
     font-size:11px;
 }
-
-/* BOTTOM BAR */
 
 .bottom-nav{
     position:fixed;
@@ -282,15 +296,10 @@ body{
     box-shadow:0 8px 20px rgba(20,120,237,.35);
     border:5px solid #f4f7fb;
 }
-
 </style>
-
 </head>
 
 <body>
-
-
-<!-- TOP BAR -->
 
 <div class="topbar">
 
@@ -312,11 +321,7 @@ body{
 
 </div>
 
-
 <div class="container">
-
-
-    <!-- HEADER -->
 
     <div class="service-header">
 
@@ -334,9 +339,6 @@ body{
 
     </div>
 
-
-    <!-- CHAT -->
-
     <div class="support-card">
 
         <h3>
@@ -344,25 +346,19 @@ body{
         </h3>
 
         <p>
-            Send us your message and our support team will respond.
+            Send us a message and our support team will respond.
         </p>
 
-        <br>
+        <div
+            class="chat-box"
+            id="chatBox"
+        >
 
-        <div class="chat-box" id="chatBox">
-
-            <div class="message admin-message">
-
-                Hello! Welcome to EliteTask Pro Support. How can we help you?
-
-                <div class="time">
-                    Support
-                </div>
-
+            <div class="empty-chat">
+                Loading conversation...
             </div>
 
         </div>
-
 
         <div class="message-area">
 
@@ -371,11 +367,13 @@ body{
                 id="messageInput"
                 class="message-input"
                 placeholder="Type your message..."
+                autocomplete="off"
             >
 
             <button
                 class="send-btn"
                 id="sendBtn"
+                type="button"
             >
                 ➤
             </button>
@@ -384,105 +382,61 @@ body{
 
     </div>
 
-
-    <!-- QUICK HELP -->
-
     <h3 class="quick-title">
         Quick Help
     </h3>
 
-
     <div class="quick-grid">
-
 
         <button
             class="quick-btn"
             onclick="sendQuick('I need help with my tasks.')"
         >
-
             <div>📦</div>
-
-            <span>
-                Task Help
-            </span>
-
+            <span>Task Help</span>
         </button>
-
 
         <button
             class="quick-btn"
             onclick="sendQuick('I need help with withdrawal.')"
         >
-
             <div>💳</div>
-
-            <span>
-                Withdrawal
-            </span>
-
+            <span>Withdrawal</span>
         </button>
-
 
         <button
             class="quick-btn"
             onclick="sendQuick('I have a problem with my account.')"
         >
-
             <div>👤</div>
-
-            <span>
-                Account
-            </span>
-
+            <span>Account</span>
         </button>
-
 
         <button
             class="quick-btn"
             onclick="sendQuick('I need help with my balance.')"
         >
-
             <div>💰</div>
-
-            <span>
-                Balance
-            </span>
-
+            <span>Balance</span>
         </button>
-
 
     </div>
 
 </div>
 
-
-<!-- BOTTOM BAR -->
-
 <div class="bottom-nav">
 
-
-    <a
-        href="dashboard.html"
-        class="nav-item"
-    >
+    <a href="dashboard.html" class="nav-item">
         <span>⌂</span>
         Home
     </a>
 
-
-    <a
-        href="orders.html"
-        class="nav-item"
-    >
+    <a href="orders.html" class="nav-item">
         <span>▣</span>
         Tasks
     </a>
 
-
-    <a
-        href="support.html"
-        class="nav-item active"
-    >
+    <a href="support.html" class="nav-item active">
 
         <div class="nav-center">
             💬
@@ -492,20 +446,12 @@ body{
 
     </a>
 
-
-    <a
-        href="profile.html"
-        class="nav-item"
-    >
+    <a href="profile.html" class="nav-item">
         <span>👤</span>
         Profile
     </a>
 
-
 </div>
-
-
-<!-- FIREBASE -->
 
 <script type="module">
 
@@ -526,6 +472,7 @@ import {
     addDoc,
     serverTimestamp,
     query,
+    where,
     orderBy,
     onSnapshot
 }
@@ -560,34 +507,45 @@ const db =
 
 
 let currentUser = null;
+let unsubscribeMessages = null;
 
 
-/* LOGIN CHECK */
+/* LOGIN */
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(
+    auth,
+    (user) => {
 
-    if(!user){
+        if(!user){
 
-        window.location.href =
-            "index.html";
+            window.location.href =
+                "index.html";
 
-        return;
+            return;
+
+        }
+
+        currentUser = user;
+
+        loadMessages(user.uid);
 
     }
-
-    currentUser = user;
-
-    loadMessages(user.uid);
-
-});
+);
 
 
-/* LOAD MESSAGES */
+/* LOAD ONLY CURRENT USER CHAT */
 
 function loadMessages(uid){
 
     const chatBox =
         document.getElementById("chatBox");
+
+
+    if(unsubscribeMessages){
+
+        unsubscribeMessages();
+
+    }
 
 
     const messagesRef =
@@ -600,49 +558,143 @@ function loadMessages(uid){
     const q =
         query(
             messagesRef,
-            orderBy("createdAt","asc")
+            where(
+                "userId",
+                "==",
+                uid
+            ),
+            orderBy(
+                "createdAt",
+                "asc"
+            )
         );
 
 
-    onSnapshot(q, (snapshot) => {
+    unsubscribeMessages =
+        onSnapshot(
+            q,
+            (snapshot) => {
 
-        chatBox.innerHTML = "";
-
-
-        snapshot.forEach((item) => {
-
-            const data =
-                item.data();
+                chatBox.innerHTML = "";
 
 
-            if(data.userId !== uid){
-                return;
+                if(snapshot.empty){
+
+                    chatBox.innerHTML = `
+
+                        <div class="empty-chat">
+
+                            💬<br><br>
+
+                            No messages yet.<br>
+                            Send a message to customer support.
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                snapshot.forEach(
+                    (messageDoc) => {
+
+                        const data =
+                            messageDoc.data();
+
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        if(
+                            data.sender ===
+                            "admin"
+                        ){
+
+                            div.className =
+                                "message admin-message";
+
+                        }
+                        else{
+
+                            div.className =
+                                "message user-message";
+
+                        }
+
+
+                        const text =
+                            document.createElement(
+                                "div"
+                            );
+
+                        text.textContent =
+                            data.message || "";
+
+
+                        div.appendChild(text);
+
+
+                        if(
+                            data.createdAt
+                        ){
+
+                            const time =
+                                document.createElement(
+                                    "div"
+                                );
+
+                            time.className =
+                                "message-time";
+
+                            time.textContent =
+                                formatTime(
+                                    data.createdAt
+                                );
+
+                            div.appendChild(time);
+
+                        }
+
+
+                        chatBox.appendChild(div);
+
+                    }
+                );
+
+
+                chatBox.scrollTop =
+                    chatBox.scrollHeight;
+
+            },
+
+            (error) => {
+
+                console.error(
+                    "Chat listener error:",
+                    error
+                );
+
+
+                chatBox.innerHTML = `
+
+                    <div class="empty-chat">
+
+                        Unable to load chat.<br><br>
+
+                        Please try again.
+
+                    </div>
+
+                `;
+
             }
-
-
-            const div =
-                document.createElement("div");
-
-
-            div.className =
-                data.sender === "admin"
-                ? "message admin-message"
-                : "message user-message";
-
-
-            div.textContent =
-                data.message;
-
-
-            chatBox.appendChild(div);
-
-        });
-
-
-        chatBox.scrollTop =
-            chatBox.scrollHeight;
-
-    });
+        );
 
 }
 
@@ -656,19 +708,35 @@ async function sendMessage(){
             "messageInput"
         );
 
+    const sendBtn =
+        document.getElementById(
+            "sendBtn"
+        );
+
 
     const message =
         input.value.trim();
 
 
     if(!message){
+
         return;
+
     }
 
 
     if(!currentUser){
+
+        alert(
+            "Please login first."
+        );
+
         return;
+
     }
+
+
+    sendBtn.disabled = true;
 
 
     try{
@@ -701,15 +769,26 @@ async function sendMessage(){
 
         input.value = "";
 
-    }
 
+    }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Send message error:",
+            error
+        );
+
 
         alert(
             "Message send nahi ho saka."
         );
+
+    }
+    finally{
+
+        sendBtn.disabled = false;
+
+        input.focus();
 
     }
 
@@ -719,45 +798,80 @@ async function sendMessage(){
 /* SEND BUTTON */
 
 document
-.getElementById("sendBtn")
-.addEventListener(
-    "click",
-    sendMessage
-);
+    .getElementById("sendBtn")
+    .addEventListener(
+        "click",
+        sendMessage
+    );
 
 
-/* ENTER BUTTON */
+/* ENTER */
 
 document
-.getElementById("messageInput")
-.addEventListener(
-    "keydown",
-    (event) => {
+    .getElementById("messageInput")
+    .addEventListener(
+        "keydown",
+        (event) => {
 
-        if(event.key === "Enter"){
+            if(
+                event.key ===
+                "Enter"
+            ){
 
-            sendMessage();
+                event.preventDefault();
+
+                sendMessage();
+
+            }
 
         }
+    );
+
+
+/* QUICK HELP */
+
+window.sendQuick =
+    function(message){
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .value =
+            message;
+
+        sendMessage();
+
+    };
+
+
+/* TIME */
+
+function formatTime(timestamp){
+
+    try{
+
+        const date =
+            timestamp.toDate();
+
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
 
     }
-);
+    catch(error){
 
+        return "";
 
-/* QUICK MESSAGE */
+    }
 
-window.sendQuick = function(message){
-
-    document
-        .getElementById("messageInput")
-        .value = message;
-
-    sendMessage();
-
-};
+}
 
 </script>
-
 
 </body>
 </html>
