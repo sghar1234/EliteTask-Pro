@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>EliteTask Pro</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -17,30 +14,28 @@
 }
 
 body{
-    background:#f4f7fb;
+    background:#f5f8fa;
     color:#172033;
-    padding-bottom:90px;
+    padding-bottom:95px;
 }
-
-/* TOP BAR */
 
 .topbar{
     height:70px;
-    background:linear-gradient(135deg,#07152f,#1454a3);
+    background:linear-gradient(135deg,#063b46,#078b91);
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 17px;
     color:white;
-    box-shadow:0 4px 18px rgba(0,0,0,.15);
+    box-shadow:0 4px 18px rgba(0,0,0,.12);
 }
 
 .profile-btn{
     width:43px;
     height:43px;
     border-radius:50%;
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.35);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -59,12 +54,13 @@ body{
     width:38px;
     height:38px;
     border-radius:12px;
-    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    background:linear-gradient(135deg,#39d6d0,#8cf5e7);
+    color:#07535a;
     display:flex;
     align-items:center;
     justify-content:center;
     font-weight:bold;
-    font-size:17px;
+    font-size:16px;
 }
 
 .logo-text{
@@ -72,80 +68,113 @@ body{
     font-weight:bold;
 }
 
-/* MAIN */
-
 .container{
     max-width:600px;
     margin:auto;
-    padding:18px 15px;
+    padding:17px 15px;
 }
 
-/* WELCOME */
-
 .welcome{
-    margin-bottom:18px;
+    margin-bottom:15px;
 }
 
 .welcome h2{
-    font-size:22px;
+    font-size:21px;
     margin-bottom:5px;
 }
 
 .welcome p{
-    color:#7b8494;
+    color:#7d8995;
     font-size:13px;
 }
 
 /* BALANCE */
 
 .balance-card{
-    background:linear-gradient(135deg,#081a3c,#1454a3);
-    border-radius:22px;
+    background:linear-gradient(135deg,#07545d,#09a3a0);
+    border-radius:24px;
     padding:23px;
     color:white;
-    box-shadow:0 12px 30px rgba(13,65,140,.25);
+    box-shadow:0 13px 30px rgba(5,130,132,.23);
     position:relative;
     overflow:hidden;
+}
+
+.balance-card:before{
+    content:"";
+    position:absolute;
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
+    right:-65px;
+    top:-80px;
 }
 
 .balance-card:after{
     content:"";
     position:absolute;
-    width:160px;
-    height:160px;
+    width:100px;
+    height:100px;
     border-radius:50%;
-    background:rgba(255,255,255,.06);
-    right:-55px;
-    top:-55px;
+    background:rgba(255,255,255,.05);
+    left:-45px;
+    bottom:-60px;
 }
 
 .balance-title{
     font-size:13px;
-    opacity:.75;
+    opacity:.8;
+    position:relative;
+    z-index:2;
 }
 
 .balance{
     font-size:32px;
     font-weight:bold;
-    margin:8px 0 15px;
+    margin:8px 0 17px;
+    position:relative;
+    z-index:2;
 }
 
 .balance-bottom{
     display:flex;
     justify-content:space-between;
-    border-top:1px solid rgba(255,255,255,.15);
+    border-top:1px solid rgba(255,255,255,.18);
     padding-top:14px;
+    position:relative;
+    z-index:2;
 }
 
 .balance-item span{
     display:block;
     font-size:11px;
-    opacity:.65;
+    opacity:.7;
     margin-bottom:4px;
 }
 
 .balance-item strong{
     font-size:15px;
+}
+
+/* GRAB BUTTON */
+
+.grab-btn{
+    width:100%;
+    margin-top:14px;
+    border:0;
+    border-radius:17px;
+    padding:15px;
+    background:linear-gradient(135deg,#07535d,#08aaa5);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 8px 20px rgba(5,130,132,.20);
+    cursor:pointer;
+}
+
+.grab-btn:active{
+    transform:scale(.98);
 }
 
 /* STATS */
@@ -160,15 +189,16 @@ body{
 .stat-card{
     background:white;
     border-radius:18px;
-    padding:17px;
-    box-shadow:0 5px 20px rgba(20,40,80,.07);
+    padding:16px;
+    box-shadow:0 5px 20px rgba(20,40,80,.06);
+    border:1px solid #eef2f4;
 }
 
 .stat-icon{
     width:38px;
     height:38px;
     border-radius:12px;
-    background:#eef5ff;
+    background:#eafafa;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -178,7 +208,7 @@ body{
 
 .stat-card p{
     font-size:12px;
-    color:#8791a1;
+    color:#87919d;
 }
 
 .stat-card h3{
@@ -186,15 +216,65 @@ body{
     font-size:20px;
 }
 
-/* TASKS */
+/* PROMO */
+
+.promo{
+    margin-top:17px;
+    background:linear-gradient(135deg,#083e4a,#0a8d92);
+    border-radius:20px;
+    padding:19px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 8px 22px rgba(0,90,100,.15);
+}
+
+.promo h3{
+    font-size:17px;
+    margin-bottom:7px;
+}
+
+.promo p{
+    font-size:12px;
+    opacity:.82;
+    line-height:1.5;
+    max-width:75%;
+}
+
+.promo-badge{
+    position:absolute;
+    right:17px;
+    top:20px;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+/* SECTIONS */
 
 .section-title{
     margin:23px 2px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
 .section-title h3{
     font-size:17px;
 }
+
+.section-title span{
+    font-size:11px;
+    color:#078d91;
+    font-weight:bold;
+}
+
+/* TASKS */
 
 .task-card{
     background:white;
@@ -206,6 +286,7 @@ body{
     align-items:center;
     justify-content:space-between;
     gap:10px;
+    border:1px solid #edf1f3;
 }
 
 .task-info{
@@ -216,19 +297,19 @@ body{
 }
 
 .task-image{
-    width:52px;
-    height:52px;
+    width:54px;
+    height:54px;
     border-radius:15px;
     object-fit:cover;
-    background:#eaf2ff;
+    background:#eafafa;
     flex-shrink:0;
 }
 
 .task-placeholder{
-    width:52px;
-    height:52px;
+    width:54px;
+    height:54px;
     border-radius:15px;
-    background:linear-gradient(135deg,#e8f2ff,#d8eaff);
+    background:linear-gradient(135deg,#e8fbfa,#d9f5f3);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -248,13 +329,14 @@ body{
 
 .task-btn{
     border:none;
-    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    background:linear-gradient(135deg,#078d91,#0bb9b0);
     color:white;
     padding:10px 14px;
     border-radius:11px;
     font-size:12px;
     font-weight:bold;
     flex-shrink:0;
+    cursor:pointer;
 }
 
 .no-task{
@@ -273,7 +355,45 @@ body{
     font-size:13px;
 }
 
-/* BOTTOM BAR */
+/* PARTNERS */
+
+.partners-box{
+    background:white;
+    border-radius:20px;
+    padding:17px;
+    box-shadow:0 5px 20px rgba(20,40,80,.06);
+    border:1px solid #edf1f3;
+}
+
+.partners-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.partner{
+    height:65px;
+    border-radius:15px;
+    background:#f6f9fa;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:4px;
+    border:1px solid #edf1f2;
+}
+
+.partner-icon{
+    font-size:21px;
+}
+
+.partner-name{
+    font-size:9px;
+    font-weight:bold;
+    color:#6f7b84;
+}
+
+/* BOTTOM */
 
 .bottom-nav{
     position:fixed;
@@ -307,12 +427,12 @@ body{
 }
 
 .nav-item.active{
-    color:#1677e8;
+    color:#078d91;
     font-weight:bold;
 }
 
 .nav-item.support{
-    color:#1478ed;
+    color:#078d91;
 }
 
 .nav-center{
@@ -320,18 +440,147 @@ body{
     height:55px;
     margin-top:-25px;
     border-radius:50%;
-    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    background:linear-gradient(135deg,#078d91,#20c7c0);
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:24px;
-    box-shadow:0 8px 20px rgba(20,120,237,.35);
-    border:5px solid #f4f7fb;
+    box-shadow:0 8px 20px rgba(7,141,145,.35);
+    border:5px solid #f5f8fa;
+}
+
+/* ORDER POPUP */
+
+.popup-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(5,25,35,.58);
+    backdrop-filter:blur(5px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:3000;
+}
+
+.popup-overlay.show{
+    display:flex;
+}
+
+.order-popup{
+    width:100%;
+    max-width:600px;
+    background:white;
+    border-radius:27px 27px 0 0;
+    padding:22px 18px 28px;
+    animation:popupUp .25s ease;
+}
+
+@keyframes popupUp{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.popup-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+
+.popup-head h3{
+    font-size:18px;
+}
+
+.close-popup{
+    width:34px;
+    height:34px;
+    border:0;
+    border-radius:50%;
+    background:#f0f3f4;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.popup-product{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:#f6f9fa;
+    padding:13px;
+    border-radius:17px;
+    margin-bottom:15px;
+}
+
+.popup-product img{
+    width:65px;
+    height:65px;
+    border-radius:14px;
+    object-fit:cover;
+}
+
+.popup-placeholder{
+    width:65px;
+    height:65px;
+    border-radius:14px;
+    background:#e5f7f6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+}
+
+.popup-product h4{
+    font-size:15px;
+    margin-bottom:5px;
+}
+
+.popup-product p{
+    font-size:11px;
+    color:#89939a;
+}
+
+.popup-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.detail-box{
+    background:#f7f9fa;
+    padding:13px;
+    border-radius:15px;
+}
+
+.detail-box span{
+    display:block;
+    color:#89939a;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.detail-box strong{
+    font-size:16px;
+}
+
+.popup-start{
+    width:100%;
+    border:0;
+    border-radius:15px;
+    padding:15px;
+    background:linear-gradient(135deg,#078d91,#0bb9b0);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 @media(max-width:380px){
-
     .balance{
         font-size:28px;
     }
@@ -344,58 +593,40 @@ body{
         padding:15px 12px;
     }
 
+    .partners-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
 }
-
 </style>
-
 </head>
 
 <body>
 
-
 <!-- TOP BAR -->
-
 <div class="topbar">
 
-    <a href="profile.html" class="profile-btn">
-        👤
-    </a>
+    <a href="profile.html" class="profile-btn">👤</a>
 
     <div class="logo-area">
-
-        <div class="logo">
-            ET
-        </div>
-
-        <div class="logo-text">
-            EliteTask Pro
-        </div>
-
+        <div class="logo">ET</div>
+        <div class="logo-text">EliteTask Pro</div>
     </div>
 
 </div>
 
-
-<!-- MAIN -->
-
 <div class="container">
 
-
+    <!-- WELCOME -->
     <div class="welcome">
-
         <h2>
             Welcome, <span id="userName">User</span> 👋
         </h2>
-
         <p>
             Manage your tasks and earnings from here.
         </p>
-
     </div>
 
-
-    <!-- BALANCE CARD -->
-
+    <!-- BALANCE -->
     <div class="balance-card">
 
         <div class="balance-title">
@@ -409,118 +640,70 @@ body{
         <div class="balance-bottom">
 
             <div class="balance-item">
-
-                <span>
-                    Commission
-                </span>
-
-                <strong id="commission">
-                    $0.00
-                </strong>
-
+                <span>Commission</span>
+                <strong id="commission">$0.00</strong>
             </div>
 
             <div class="balance-item">
-
-                <span>
-                    Pending
-                </span>
-
-                <strong id="pending">
-                    $0.00
-                </strong>
-
+                <span>Pending</span>
+                <strong id="pending">$0.00</strong>
             </div>
 
         </div>
 
     </div>
 
+    <!-- GRAB ORDERS -->
+    <button class="grab-btn" onclick="scrollToTasks()">
+        🛍️ Start Grabbing Orders
+    </button>
 
     <!-- STATS -->
-
     <div class="stats">
 
         <div class="stat-card">
-
-            <div class="stat-icon">
-                📦
-            </div>
-
-            <p>
-                Completed Tasks
-            </p>
-
-            <h3 id="completedTasks">
-                0
-            </h3>
-
+            <div class="stat-icon">📦</div>
+            <p>Completed Tasks</p>
+            <h3 id="completedTasks">0</h3>
         </div>
 
-
         <div class="stat-card">
-
-            <div class="stat-icon">
-                💰
-            </div>
-
-            <p>
-                Today's Commission
-            </p>
-
-            <h3 id="todayCommission">
-                $0.00
-            </h3>
-
+            <div class="stat-icon">💰</div>
+            <p>Today's Commission</p>
+            <h3 id="todayCommission">$0.00</h3>
         </div>
 
-
         <div class="stat-card">
-
-            <div class="stat-icon">
-                📋
-            </div>
-
-            <p>
-                Total Tasks
-            </p>
-
-            <h3 id="totalTasks">
-                0
-            </h3>
-
+            <div class="stat-icon">📋</div>
+            <p>Total Tasks</p>
+            <h3 id="totalTasks">0</h3>
         </div>
 
-
         <div class="stat-card">
-
-            <div class="stat-icon">
-                ⭐
-            </div>
-
-            <p>
-                Task Level
-            </p>
-
-            <h3>
-                1
-            </h3>
-
+            <div class="stat-icon">⭐</div>
+            <p>Task Level</p>
+            <h3>1</h3>
         </div>
 
     </div>
 
+    <!-- PROMO -->
+    <div class="promo">
+        <h3>Earn More With Every Order</h3>
+        <p>
+            Complete available orders and grow your commission with EliteTask Pro.
+        </p>
+
+        <div class="promo-badge">
+            💎
+        </div>
+    </div>
 
     <!-- AVAILABLE TASKS -->
-
-    <div class="section-title">
-
-        <h3>
-            Available Tasks
-        </h3>
-
+    <div class="section-title" id="tasksSection">
+        <h3>Available Tasks</h3>
+        <span>VIEW ALL</span>
     </div>
-
 
     <div id="taskList">
 
@@ -530,97 +713,133 @@ body{
 
     </div>
 
+    <!-- PARTNERS -->
+    <div class="section-title">
+        <h3>Our Partners</h3>
+        <span>TRUSTED</span>
+    </div>
 
-</div>
+    <div class="partners-box">
 
+        <div class="partners-grid">
 
-<!-- BOTTOM NAVIGATION -->
+            <div class="partner">
+                <div class="partner-icon">🛒</div>
+                <div class="partner-name">SHOP</div>
+            </div>
 
-<div class="bottom-nav">
+            <div class="partner">
+                <div class="partner-icon">📦</div>
+                <div class="partner-name">MARKET</div>
+            </div>
 
+            <div class="partner">
+                <div class="partner-icon">🚚</div>
+                <div class="partner-name">EXPRESS</div>
+            </div>
 
-    <a
-        href="dashboard.html"
-        class="nav-item active"
-    >
+            <div class="partner">
+                <div class="partner-icon">💳</div>
+                <div class="partner-name">PAY</div>
+            </div>
 
-        <span>
-            ⌂
-        </span>
-
-        Home
-
-    </a>
-
-
-    <a
-        href="orders.html"
-        class="nav-item"
-    >
-
-        <span>
-            ▣
-        </span>
-
-        Tasks
-
-    </a>
-
-
-    <a
-        href="support.html"
-        class="nav-item support"
-    >
-
-        <div class="nav-center">
-            💬
         </div>
 
-        Support
-
-    </a>
-
-
-    <a
-        href="withdraw.html"
-        class="nav-item"
-    >
-
-        <span>
-            💳
-        </span>
-
-        Withdraw
-
-    </a>
-
+    </div>
 
 </div>
 
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
 
-<!-- FIREBASE SCRIPT -->
+    <a href="dashboard.html" class="nav-item active">
+        <span>⌂</span>
+        Home
+    </a>
+
+    <a href="orders.html" class="nav-item">
+        <span>▣</span>
+        Tasks
+    </a>
+
+    <a href="support.html" class="nav-item support">
+        <div class="nav-center">💬</div>
+        Support
+    </a>
+
+    <a href="withdraw.html" class="nav-item">
+        <span>💳</span>
+        Withdraw
+    </a>
+
+</div>
+
+<!-- ORDER POPUP -->
+<div class="popup-overlay" id="orderPopup">
+
+    <div class="order-popup">
+
+        <div class="popup-head">
+            <h3>Order Details</h3>
+
+            <button
+                class="close-popup"
+                onclick="closeOrderPopup()"
+            >
+                ×
+            </button>
+        </div>
+
+        <div class="popup-product">
+
+            <div id="popupImageArea">
+                <div class="popup-placeholder">🛍️</div>
+            </div>
+
+            <div>
+                <h4 id="popupName">Product Task</h4>
+                <p>Ready to start this order</p>
+            </div>
+
+        </div>
+
+        <div class="popup-details">
+
+            <div class="detail-box">
+                <span>Total Order</span>
+                <strong id="popupPrice">$0.00</strong>
+            </div>
+
+            <div class="detail-box">
+                <span>Commission</span>
+                <strong id="popupCommission">$0.00</strong>
+            </div>
+
+        </div>
+
+        <button
+            class="popup-start"
+            id="popupStartBtn"
+        >
+            Start Order
+        </button>
+
+    </div>
+
+</div>
 
 <script type="module">
-
-
-/* FIREBASE APP */
 
 import {
     initializeApp
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
-/* AUTH */
-
 import {
     getAuth,
     onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-/* FIRESTORE */
 
 import {
     getFirestore,
@@ -631,8 +850,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-/* YOUR FIREBASE CONFIG */
 
 const firebaseConfig = {
 
@@ -651,8 +868,6 @@ const firebaseConfig = {
 };
 
 
-/* START FIREBASE */
-
 const app =
     initializeApp(firebaseConfig);
 
@@ -662,8 +877,6 @@ const auth =
 const db =
     getFirestore(app);
 
-
-/* CHECK USER LOGIN */
 
 onAuthStateChanged(
     auth,
@@ -678,7 +891,6 @@ onAuthStateChanged(
 
         }
 
-
         await loadUser(user.uid);
 
         await loadTasks();
@@ -686,8 +898,6 @@ onAuthStateChanged(
     }
 );
 
-
-/* LOAD USER */
 
 async function loadUser(uid){
 
@@ -700,10 +910,8 @@ async function loadUser(uid){
                 uid
             );
 
-
         const userSnap =
             await getDoc(userRef);
-
 
         if(!userSnap.exists()){
 
@@ -715,12 +923,9 @@ async function loadUser(uid){
 
         }
 
-
         const data =
             userSnap.data();
 
-
-        /* NAME */
 
         document
             .getElementById("userName")
@@ -728,13 +933,10 @@ async function loadUser(uid){
             data.name || "User";
 
 
-        /* BALANCE */
-
         const balance =
             Number(
                 data.balance || 0
             );
-
 
         document
             .getElementById("balance")
@@ -742,13 +944,10 @@ async function loadUser(uid){
             "$" + balance.toFixed(2);
 
 
-        /* COMMISSION */
-
         const commission =
             Number(
                 data.commission || 0
             );
-
 
         document
             .getElementById("commission")
@@ -756,13 +955,10 @@ async function loadUser(uid){
             "$" + commission.toFixed(2);
 
 
-        /* PENDING */
-
         const pending =
             Number(
                 data.pending || 0
             );
-
 
         document
             .getElementById("pending")
@@ -770,13 +966,10 @@ async function loadUser(uid){
             "$" + pending.toFixed(2);
 
 
-        /* COMPLETED */
-
         const completed =
             Number(
                 data.completedTasks || 0
             );
-
 
         document
             .getElementById("completedTasks")
@@ -784,13 +977,10 @@ async function loadUser(uid){
             completed;
 
 
-        /* TODAY COMMISSION */
-
         const todayCommission =
             Number(
                 data.todayCommission || 0
             );
-
 
         document
             .getElementById("todayCommission")
@@ -811,15 +1001,12 @@ async function loadUser(uid){
 }
 
 
-/* LOAD TASKS */
-
 async function loadTasks(){
 
     const taskList =
         document.getElementById(
             "taskList"
         );
-
 
     try{
 
@@ -828,7 +1015,6 @@ async function loadTasks(){
                 db,
                 "tasks"
             );
-
 
         const snapshot =
             await getDocs(
@@ -869,25 +1055,26 @@ async function loadTasks(){
                 const task =
                     docSnap.data();
 
-
                 const taskId =
                     docSnap.id;
-
 
                 const name =
                     task.name ||
                     "Product Task";
-
 
                 const price =
                     Number(
                         task.price || 0
                     );
 
-
                 const image =
                     task.image ||
                     "";
+
+                const taskCommission =
+                    Number(
+                        task.commission || 0
+                    );
 
 
                 let imageHTML;
@@ -953,7 +1140,6 @@ async function loadTasks(){
 
                     </div>
 
-
                     <button
                         class="task-btn"
                     >
@@ -971,9 +1157,13 @@ async function loadTasks(){
                         "click",
                         function(){
 
-                            window.location.href =
-                                "orders.html?task=" +
-                                taskId;
+                            openOrderPopup(
+                                taskId,
+                                name,
+                                price,
+                                taskCommission,
+                                image
+                            );
 
                         }
                     );
@@ -995,7 +1185,6 @@ async function loadTasks(){
             error
         );
 
-
         taskList.innerHTML = `
 
             <div class="no-task">
@@ -1010,8 +1199,141 @@ async function loadTasks(){
 
 }
 
-</script>
 
+/* ORDER POPUP */
+
+let selectedTaskId = "";
+
+
+function openOrderPopup(
+    taskId,
+    name,
+    price,
+    commission,
+    image
+){
+
+    selectedTaskId =
+        taskId;
+
+
+    document
+        .getElementById("popupName")
+        .textContent =
+        name;
+
+
+    document
+        .getElementById("popupPrice")
+        .textContent =
+        "$" + price.toFixed(2);
+
+
+    document
+        .getElementById("popupCommission")
+        .textContent =
+        "$" + commission.toFixed(2);
+
+
+    const imageArea =
+        document.getElementById(
+            "popupImageArea"
+        );
+
+
+    if(image){
+
+        imageArea.innerHTML = `
+
+            <img
+                src="${image}"
+                style="
+                    width:65px;
+                    height:65px;
+                    border-radius:14px;
+                    object-fit:cover;
+                "
+            >
+
+        `;
+
+    }
+
+    else{
+
+        imageArea.innerHTML = `
+
+            <div class="popup-placeholder">
+                🛍️
+            </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("orderPopup")
+        .classList
+        .add("show");
+
+
+    document
+        .getElementById("popupStartBtn")
+        .onclick =
+        function(){
+
+            window.location.href =
+                "orders.html?task=" +
+                selectedTaskId;
+
+        };
+
+}
+
+
+window.closeOrderPopup =
+function(){
+
+    document
+        .getElementById("orderPopup")
+        .classList
+        .remove("show");
+
+};
+
+
+document
+    .getElementById("orderPopup")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closeOrderPopup();
+
+            }
+
+        }
+    );
+
+
+window.scrollToTasks =
+function(){
+
+    document
+        .getElementById("tasksSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+};
+
+</script>
 
 </body>
 </html>
