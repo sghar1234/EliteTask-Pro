@@ -1,311 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Customer Service</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Customer Service - EliteTask Pro</title>
+
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-    background:#f4f7fb;
-    color:#172033;
-    padding-bottom:90px;
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf7,
+            #f7efd2,
+            #fffaf0
+        );
+
+    color: #222;
+
+    padding-bottom: 90px;
 }
 
-.topbar{
-    height:70px;
-    background:linear-gradient(135deg,#07152f,#1454a3);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 17px;
-    color:white;
-    box-shadow:0 4px 18px rgba(0,0,0,.15);
+
+/* =========================
+   TOP AREA
+========================= */
+
+.top-area {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    padding: 22px 20px 16px;
 }
 
-.back-btn{
-    width:43px;
-    height:43px;
-    border-radius:50%;
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    text-decoration:none;
-    font-size:22px;
+
+.back-btn {
+
+    position: absolute;
+
+    left: 18px;
+    top: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    background: #ffffff;
+
+    border: 1px solid
+        rgba(212,175,55,.30);
+
+    border-radius: 13px;
+
+    color: #9a7410;
+
+    font-size: 25px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(120,90,20,.10);
 }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:9px;
+
+.logo-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
 }
 
-.logo{
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#2d8cff,#55c8ff);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
+
+.logo {
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f5df8b
+        );
+
+    color: white;
+
+    font-weight: 800;
+
+    font-size: 17px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(180,140,30,.20);
 }
 
-.logo-text{
-    font-size:16px;
-    font-weight:bold;
+
+.logo-text {
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    color: #7a5a0a;
+
 }
 
-.container{
-    max-width:600px;
-    margin:auto;
-    padding:18px 15px;
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    margin: auto;
+
+    padding: 10px 16px 30px;
 }
 
-.service-header{
-    text-align:center;
-    margin:10px 0 20px;
+
+/* =========================
+   SERVICE HEADER
+========================= */
+
+.service-header {
+
+    text-align: center;
+
+    padding: 18px 10px 20px;
 }
 
-.service-icon{
-    width:72px;
-    height:72px;
-    margin:auto;
-    border-radius:22px;
-    background:linear-gradient(135deg,#1478ed,#36b4ff);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    box-shadow:0 10px 25px rgba(20,120,237,.25);
+
+.service-icon {
+
+    width: 68px;
+    height: 68px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #f3d875
+        );
+
+    font-size: 31px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(180,140,30,.20);
 }
 
-.service-header h2{
-    margin-top:13px;
-    font-size:22px;
+
+.service-header h2 {
+
+    margin-top: 14px;
+
+    font-size: 23px;
+
+    color: #5f4707;
 }
 
-.service-header p{
-    margin-top:6px;
-    color:#8490a0;
-    font-size:13px;
+
+.service-header p {
+
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: #777;
 }
 
-.support-card{
-    background:white;
-    border-radius:20px;
-    padding:18px;
-    box-shadow:0 5px 20px rgba(20,40,80,.07);
+
+/* =========================
+   SUPPORT CARD
+========================= */
+
+.support-card {
+
+    background:
+        rgba(255,255,255,.94);
+
+    border-radius: 22px;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        rgba(212,175,55,.28);
+
+    box-shadow:
+        0 10px 35px
+        rgba(120,90,20,.12);
 }
 
-.support-card h3{
-    font-size:16px;
-    margin-bottom:7px;
+
+.support-card h3 {
+
+    font-size: 18px;
+
+    color: #5e4606;
 }
 
-.support-card > p{
-    font-size:12px;
-    color:#8992a2;
-    line-height:1.5;
+
+.support-card > p {
+
+    margin-top: 5px;
+
+    margin-bottom: 15px;
+
+    color: #777;
+
+    font-size: 13px;
+
 }
 
-.chat-box{
-    background:#f8faff;
-    border-radius:17px;
-    padding:15px;
-    height:360px;
-    overflow-y:auto;
-    margin:15px 0 12px;
-    border:1px solid #edf1f6;
+
+/* =========================
+   CHAT BOX
+========================= */
+
+.chat-box {
+
+    height: 330px;
+
+    overflow-y: auto;
+
+    padding: 12px;
+
+    border-radius: 16px;
+
+    background:
+        #faf8f0;
+
+    border:
+        1px solid
+        rgba(212,175,55,.18);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
 }
 
-.message{
-    max-width:82%;
-    padding:11px 13px;
-    border-radius:14px;
-    margin-bottom:10px;
-    font-size:12px;
-    line-height:1.45;
-    word-wrap:break-word;
+
+.empty-chat {
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    color: #999;
+
+    font-size: 13px;
+
+    padding: 20px;
 }
 
-.admin-message{
-    background:white;
-    color:#4b5565;
-    border:1px solid #e9edf3;
-    border-bottom-left-radius:4px;
-    margin-right:auto;
+
+/* =========================
+   MESSAGES
+========================= */
+
+.chat-message {
+
+    max-width: 82%;
+
+    padding: 10px 13px;
+
+    border-radius: 15px;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    word-break: break-word;
 }
 
-.user-message{
-    background:linear-gradient(135deg,#1478ed,#25a5ff);
-    color:white;
-    margin-left:auto;
-    border-bottom-right-radius:4px;
+
+.user-message {
+
+    align-self: flex-end;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #e7ca63
+        );
+
+    color: white;
+
+    border-bottom-right-radius: 4px;
 }
 
-.message-time{
-    font-size:9px;
-    opacity:.55;
-    margin-top:5px;
+
+.admin-message {
+
+    align-self: flex-start;
+
+    background: white;
+
+    color: #333;
+
+    border:
+        1px solid
+        rgba(212,175,55,.22);
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,.05);
+
+    border-bottom-left-radius: 4px;
 }
 
-.empty-chat{
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#8992a2;
-    font-size:12px;
+
+.message-label {
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    margin-bottom: 3px;
+
+    opacity: .75;
 }
 
-.message-area{
-    display:flex;
-    gap:8px;
+
+.message-text {
+
+    white-space: pre-wrap;
 }
 
-.message-input{
-    flex:1;
-    min-width:0;
-    border:1px solid #e2e7ef;
-    border-radius:13px;
-    padding:13px;
-    outline:none;
-    font-size:13px;
-    background:#fff;
+
+/* =========================
+   MESSAGE AREA
+========================= */
+
+.message-area {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 12px;
 }
 
-.message-input:focus{
-    border-color:#2d8cff;
+
+.message-input {
+
+    flex: 1;
+
+    height: 46px;
+
+    border-radius: 14px;
+
+    border:
+        1px solid
+        #ddd;
+
+    outline: none;
+
+    padding:
+        0 14px;
+
+    font-size: 14px;
+
+    background: white;
 }
 
-.send-btn{
-    width:52px;
-    height:48px;
-    border:none;
-    border-radius:13px;
-    background:linear-gradient(135deg,#1478ed,#25a5ff);
-    color:white;
-    font-size:20px;
-    cursor:pointer;
+
+.message-input:focus {
+
+    border-color:
+        #d4af37;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,.10);
 }
 
-.send-btn:active{
-    transform:scale(.96);
+
+.send-btn {
+
+    width: 48px;
+    height: 46px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c9a227,
+            #e4c75e
+        );
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 15px
+        rgba(180,140,30,.18);
 }
 
-.send-btn:disabled{
-    opacity:.6;
+
+.send-btn:disabled {
+
+    opacity: .55;
+
+    cursor: not-allowed;
 }
 
-.quick-title{
-    margin:20px 2px 12px;
-    font-size:17px;
+
+/* =========================
+   QUICK HELP
+========================= */
+
+.quick-title {
+
+    margin:
+        25px 4px 12px;
+
+    font-size: 18px;
+
+    color: #5e4606;
 }
 
-.quick-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:11px;
+
+.quick-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
 }
 
-.quick-btn{
-    border:none;
-    background:white;
-    border-radius:17px;
-    padding:17px 10px;
-    box-shadow:0 5px 18px rgba(20,40,80,.06);
-    text-align:center;
-    color:#172033;
-    cursor:pointer;
+
+.quick-btn {
+
+    border: none;
+
+    background: white;
+
+    border:
+        1px solid
+        rgba(212,175,55,.25);
+
+    border-radius: 17px;
+
+    padding: 15px 10px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 20px
+        rgba(120,90,20,.08);
+
+    color: #5e4606;
+
+    transition:
+        transform .15s ease;
 }
 
-.quick-btn:active{
-    transform:scale(.98);
+
+.quick-btn:active {
+
+    transform:
+        scale(.97);
 }
 
-.quick-btn div{
-    font-size:23px;
-    margin-bottom:7px;
+
+.quick-btn div {
+
+    font-size: 24px;
+
+    margin-bottom: 5px;
 }
 
-.quick-btn span{
-    font-size:11px;
+
+.quick-btn span {
+
+    font-size: 13px;
+
+    font-weight: 600;
 }
 
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:73px;
-    background:white;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:0 -5px 25px rgba(0,0,0,.10);
-    z-index:1000;
-    border-top:1px solid #edf0f5;
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-around;
+
+    background:
+        rgba(255,255,255,.97);
+
+    border-top:
+        1px solid
+        rgba(212,175,55,.25);
+
+    box-shadow:
+        0 -5px 20px
+        rgba(80,60,20,.08);
+
+    z-index: 100;
 }
 
-.nav-item{
-    text-decoration:none;
-    color:#8992a2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    width:25%;
-    font-size:10px;
+
+.nav-item {
+
+    text-decoration: none;
+
+    color: #888;
+
+    font-size: 11px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    width: 25%;
+
+    height: 100%;
 }
 
-.nav-item span{
-    font-size:21px;
+
+.nav-item span {
+
+    font-size: 21px;
 }
 
-.nav-item.active{
-    color:#1677e8;
-    font-weight:bold;
+
+.nav-item.active {
+
+    color: #b38a13;
+
+    font-weight: 700;
 }
 
-.nav-center{
-    width:55px;
-    height:55px;
-    margin-top:-25px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#1478ed,#36b4ff);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    box-shadow:0 8px 20px rgba(20,120,237,.35);
-    border:5px solid #f4f7fb;
+
+.nav-center {
+
+    width: 42px;
+    height: 42px;
+
+    margin-top: -19px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37,
+            #efd477
+        );
+
+    color: white;
+
+    font-size: 20px;
+
+    border: 4px solid #fff;
+
+    box-shadow:
+        0 5px 16px
+        rgba(180,140,30,.22);
 }
+
+
+@media (max-width: 380px) {
+
+    .chat-box {
+        height: 290px;
+    }
+
+    .service-header h2 {
+        font-size: 21px;
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="topbar">
 
-    <a href="dashboard.html" class="back-btn">
+<!-- =========================
+     TOP
+========================= -->
+
+<div class="top-area">
+
+    <a
+        href="dashboard.html"
+        class="back-btn"
+    >
         ←
     </a>
+
 
     <div class="logo-area">
 
@@ -321,122 +710,205 @@ body{
 
 </div>
 
+
+
 <div class="container">
 
-    <div class="service-header">
 
-        <div class="service-icon">
-            💬
-        </div>
+<!-- =========================
+     SERVICE HEADER
+========================= -->
 
-        <h2>
-            Customer Service
-        </h2>
+<div class="service-header">
 
-        <p>
-            How can we help you today?
-        </p>
-
+    <div class="service-icon">
+        💬
     </div>
 
-    <div class="support-card">
+    <h2>
+        Customer Service
+    </h2>
 
-        <h3>
-            Live Support
-        </h3>
+    <p>
+        How can we help you today?
+    </p>
 
-        <p>
-            Send us a message and our support team will respond.
-        </p>
+</div>
 
-        <div
-            class="chat-box"
-            id="chatBox"
-        >
 
-            <div class="empty-chat">
-                Loading conversation...
-            </div>
 
-        </div>
+<!-- =========================
+     SUPPORT CARD
+========================= -->
 
-        <div class="message-area">
+<div class="support-card">
 
-            <input
-                type="text"
-                id="messageInput"
-                class="message-input"
-                placeholder="Type your message..."
-                autocomplete="off"
-            >
-
-            <button
-                class="send-btn"
-                id="sendBtn"
-                type="button"
-            >
-                ➤
-            </button>
-
-        </div>
-
-    </div>
-
-    <h3 class="quick-title">
-        Quick Help
+    <h3>
+        Live Support
     </h3>
 
-    <div class="quick-grid">
+    <p>
+        Send us a message and our support team will respond.
+    </p>
+
+
+    <div
+        class="chat-box"
+        id="chatBox"
+    >
+
+        <div class="empty-chat">
+            Loading conversation...
+        </div>
+
+    </div>
+
+
+    <div class="message-area">
+
+        <input
+            type="text"
+            id="messageInput"
+            class="message-input"
+            placeholder="Type your message..."
+            autocomplete="off"
+        >
+
 
         <button
-            class="quick-btn"
-            onclick="sendQuick('I need help with my tasks.')"
+            class="send-btn"
+            id="sendBtn"
+            type="button"
         >
-            <div>📦</div>
-            <span>Task Help</span>
-        </button>
-
-        <button
-            class="quick-btn"
-            onclick="sendQuick('I need help with withdrawal.')"
-        >
-            <div>💳</div>
-            <span>Withdrawal</span>
-        </button>
-
-        <button
-            class="quick-btn"
-            onclick="sendQuick('I have a problem with my account.')"
-        >
-            <div>👤</div>
-            <span>Account</span>
-        </button>
-
-        <button
-            class="quick-btn"
-            onclick="sendQuick('I need help with my balance.')"
-        >
-            <div>💰</div>
-            <span>Balance</span>
+            ➤
         </button>
 
     </div>
 
 </div>
 
+
+
+<!-- =========================
+     QUICK HELP
+========================= -->
+
+<h3 class="quick-title">
+    Quick Help
+</h3>
+
+
+<div class="quick-grid">
+
+
+    <button
+        class="quick-btn"
+        onclick="sendQuick('I need help with my tasks.')"
+    >
+
+        <div>
+            📦
+        </div>
+
+        <span>
+            Task Help
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-btn"
+        onclick="sendQuick('I need help with withdrawal.')"
+    >
+
+        <div>
+            💳
+        </div>
+
+        <span>
+            Withdrawal
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-btn"
+        onclick="sendQuick('I have a problem with my account.')"
+    >
+
+        <div>
+            👤
+        </div>
+
+        <span>
+            Account
+        </span>
+
+    </button>
+
+
+    <button
+        class="quick-btn"
+        onclick="sendQuick('I need help with my balance.')"
+    >
+
+        <div>
+            💰
+        </div>
+
+        <span>
+            Balance
+        </span>
+
+    </button>
+
+</div>
+
+</div>
+
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
+
 <div class="bottom-nav">
 
-    <a href="dashboard.html" class="nav-item">
-        <span>⌂</span>
+
+    <a
+        href="dashboard.html"
+        class="nav-item"
+    >
+
+        <span>
+            ⌂
+        </span>
+
         Home
+
     </a>
 
-    <a href="orders.html" class="nav-item">
-        <span>▣</span>
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+
+        <span>
+            ▣
+        </span>
+
         Tasks
+
     </a>
 
-    <a href="support.html" class="nav-item active">
+
+    <a
+        href="support.html"
+        class="nav-item active"
+    >
 
         <div class="nav-center">
             💬
@@ -446,86 +918,153 @@ body{
 
     </a>
 
-    <a href="profile.html" class="nav-item">
-        <span>👤</span>
+
+    <a
+        href="profile.html"
+        class="nav-item"
+    >
+
+        <span>
+            👤
+        </span>
+
         Profile
+
     </a>
 
 </div>
+
+
+
+<!-- =========================
+     FIREBASE SUPPORT
+========================= -->
 
 <script type="module">
 
 import {
     initializeApp
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
     getFirestore,
     collection,
     addDoc,
-    serverTimestamp,
     query,
     where,
-    orderBy,
-    onSnapshot
+    onSnapshot,
+    serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    apiKey:
+        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-    authDomain: "elitetask-pro.firebaseapp.com",
+    authDomain:
+        "elitetask-pro.firebaseapp.com",
 
-    projectId: "elitetask-pro",
+    projectId:
+        "elitetask-pro",
 
-    storageBucket: "elitetask-pro.firebasestorage.app",
+    storageBucket:
+        "elitetask-pro.firebasestorage.app",
 
-    messagingSenderId: "504295275402",
+    messagingSenderId:
+        "504295275402",
 
-    appId: "1:504295275402:web:8c480445c5510fa645a673"
+    appId:
+        "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
 
+
+/* =========================
+   INITIALIZE
+========================= */
+
 const app =
     initializeApp(firebaseConfig);
 
+
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
 
 
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const chatBox =
+    document.getElementById("chatBox");
+
+
+const messageInput =
+    document.getElementById("messageInput");
+
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+
 let currentUser = null;
-let unsubscribeMessages = null;
 
 
-/* LOGIN */
+
+/* =========================
+   AUTH CHECK
+========================= */
 
 onAuthStateChanged(
     auth,
     (user) => {
 
-        if(!user){
+        if (!user) {
 
-            window.location.href =
-                "index.html";
+            currentUser = null;
+
+            chatBox.innerHTML = `
+                <div class="empty-chat">
+                    Please login to use Customer Service.
+                </div>
+            `;
+
+            messageInput.disabled = true;
+
+            sendBtn.disabled = true;
 
             return;
-
         }
 
+
         currentUser = user;
+
+        messageInput.disabled = false;
+
+        sendBtn.disabled = false;
+
 
         loadMessages(user.uid);
 
@@ -533,20 +1072,12 @@ onAuthStateChanged(
 );
 
 
-/* LOAD ONLY CURRENT USER CHAT */
 
-function loadMessages(uid){
+/* =========================
+   LOAD CHAT
+========================= */
 
-    const chatBox =
-        document.getElementById("chatBox");
-
-
-    if(unsubscribeMessages){
-
-        unsubscribeMessages();
-
-    }
-
+function loadMessages(uid) {
 
     const messagesRef =
         collection(
@@ -562,216 +1093,235 @@ function loadMessages(uid){
                 "userId",
                 "==",
                 uid
-            ),
-            orderBy(
-                "createdAt",
-                "asc"
             )
         );
 
 
-    unsubscribeMessages =
-        onSnapshot(
-            q,
-            (snapshot) => {
+    onSnapshot(
+        q,
+        (snapshot) => {
 
-                chatBox.innerHTML = "";
-
-
-                if(snapshot.empty){
-
-                    chatBox.innerHTML = `
-
-                        <div class="empty-chat">
-
-                            💬<br><br>
-
-                            No messages yet.<br>
-                            Send a message to customer support.
-
-                        </div>
-
-                    `;
-
-                    return;
-
-                }
-
-
-                snapshot.forEach(
-                    (messageDoc) => {
-
-                        const data =
-                            messageDoc.data();
-
-
-                        const div =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        if(
-                            data.sender ===
-                            "admin"
-                        ){
-
-                            div.className =
-                                "message admin-message";
-
-                        }
-                        else{
-
-                            div.className =
-                                "message user-message";
-
-                        }
-
-
-                        const text =
-                            document.createElement(
-                                "div"
-                            );
-
-                        text.textContent =
-                            data.message || "";
-
-
-                        div.appendChild(text);
-
-
-                        if(
-                            data.createdAt
-                        ){
-
-                            const time =
-                                document.createElement(
-                                    "div"
-                                );
-
-                            time.className =
-                                "message-time";
-
-                            time.textContent =
-                                formatTime(
-                                    data.createdAt
-                                );
-
-                            div.appendChild(time);
-
-                        }
-
-
-                        chatBox.appendChild(div);
-
-                    }
-                );
-
-
-                chatBox.scrollTop =
-                    chatBox.scrollHeight;
-
-            },
-
-            (error) => {
-
-                console.error(
-                    "Chat listener error:",
-                    error
-                );
-
+            if (snapshot.empty) {
 
                 chatBox.innerHTML = `
-
                     <div class="empty-chat">
-
-                        Unable to load chat.<br><br>
-
-                        Please try again.
-
+                        No messages yet.<br>
+                        Send us a message and our support team will respond.
                     </div>
-
                 `;
 
+                return;
             }
-        );
+
+
+            const messages = [];
+
+
+            snapshot.forEach(
+                (doc) => {
+
+                    messages.push({
+
+                        id: doc.id,
+
+                        ...doc.data()
+
+                    });
+
+                }
+            );
+
+
+            messages.sort(
+                (a, b) => {
+
+                    const timeA =
+                        a.createdAt &&
+                        typeof a.createdAt.toMillis === "function"
+                            ? a.createdAt.toMillis()
+                            : 0;
+
+
+                    const timeB =
+                        b.createdAt &&
+                        typeof b.createdAt.toMillis === "function"
+                            ? b.createdAt.toMillis()
+                            : 0;
+
+
+                    return timeA - timeB;
+
+                }
+            );
+
+
+            chatBox.innerHTML = "";
+
+
+            messages.forEach(
+                (msg) => {
+
+                    const message =
+                        document.createElement("div");
+
+
+                    const sender =
+                        String(
+                            msg.sender ||
+                            msg.from ||
+                            "user"
+                        ).toLowerCase();
+
+
+                    if (
+                        sender === "admin" ||
+                        sender === "support"
+                    ) {
+
+                        message.className =
+                            "chat-message admin-message";
+
+
+                        message.innerHTML = `
+                            <div class="message-label">
+                                Customer Support
+                            </div>
+
+                            <div class="message-text"></div>
+                        `;
+
+                    } else {
+
+                        message.className =
+                            "chat-message user-message";
+
+
+                        message.innerHTML = `
+                            <div class="message-label">
+                                You
+                            </div>
+
+                            <div class="message-text"></div>
+                        `;
+
+                    }
+
+
+                    const text =
+                        message.querySelector(
+                            ".message-text"
+                        );
+
+
+                    text.textContent =
+                        msg.message ||
+                        msg.text ||
+                        "";
+
+
+                    chatBox.appendChild(
+                        message
+                    );
+
+                }
+            );
+
+
+            chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+        },
+
+
+        (error) => {
+
+            console.error(
+                "Support chat error:",
+                error
+            );
+
+
+            chatBox.innerHTML = `
+                <div class="empty-chat">
+                    Unable to load conversation.
+                </div>
+            `;
+
+        }
+    );
 
 }
 
 
-/* SEND MESSAGE */
 
-async function sendMessage(){
+/* =========================
+   SEND MESSAGE
+========================= */
 
-    const input =
-        document.getElementById(
-            "messageInput"
-        );
+async function sendMessage(text) {
 
-    const sendBtn =
-        document.getElementById(
-            "sendBtn"
-        );
-
-
-    const message =
-        input.value.trim();
-
-
-    if(!message){
-
-        return;
-
-    }
-
-
-    if(!currentUser){
+    if (!currentUser) {
 
         alert(
             "Please login first."
         );
 
         return;
+    }
 
+
+    text =
+        String(text || "").trim();
+
+
+    if (!text) {
+        return;
     }
 
 
     sendBtn.disabled = true;
 
+    messageInput.disabled = true;
 
-    try{
+
+    try {
 
         await addDoc(
+
             collection(
                 db,
                 "supportMessages"
             ),
+
             {
 
                 userId:
                     currentUser.uid,
 
-                email:
+                userEmail:
                     currentUser.email || "",
 
                 message:
-                    message,
+                    text,
 
                 sender:
                     "user",
+
+                status:
+                    "new",
 
                 createdAt:
                     serverTimestamp()
 
             }
+
         );
 
 
-        input.value = "";
+        messageInput.value = "";
 
 
-    }
-    catch(error){
+    } catch (error) {
 
         console.error(
             "Send message error:",
@@ -780,98 +1330,78 @@ async function sendMessage(){
 
 
         alert(
-            "Message send nahi ho saka."
+            "Message could not be sent. Please try again."
         );
 
     }
-    finally{
 
-        sendBtn.disabled = false;
 
-        input.focus();
+    sendBtn.disabled = false;
 
-    }
+    messageInput.disabled = false;
+
+    messageInput.focus();
 
 }
 
 
-/* SEND BUTTON */
 
-document
-    .getElementById("sendBtn")
-    .addEventListener(
-        "click",
-        sendMessage
-    );
+/* =========================
+   SEND BUTTON
+========================= */
+
+sendBtn.addEventListener(
+    "click",
+    () => {
+
+        sendMessage(
+            messageInput.value
+        );
+
+    }
+);
 
 
-/* ENTER */
 
-document
-    .getElementById("messageInput")
-    .addEventListener(
-        "keydown",
-        (event) => {
+/* =========================
+   ENTER KEY
+========================= */
 
-            if(
-                event.key ===
-                "Enter"
-            ){
+messageInput.addEventListener(
+    "keydown",
+    (event) => {
 
-                event.preventDefault();
+        if (
+            event.key === "Enter"
+        ) {
 
-                sendMessage();
+            event.preventDefault();
 
-            }
+            sendMessage(
+                messageInput.value
+            );
 
         }
-    );
+
+    }
+);
 
 
-/* QUICK HELP */
+
+/* =========================
+   QUICK HELP
+========================= */
 
 window.sendQuick =
-    function(message){
+    function(text) {
 
-        document
-            .getElementById(
-                "messageInput"
-            )
-            .value =
-            message;
-
-        sendMessage();
+        sendMessage(text);
 
     };
 
 
-/* TIME */
-
-function formatTime(timestamp){
-
-    try{
-
-        const date =
-            timestamp.toDate();
-
-        return date.toLocaleTimeString(
-            [],
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-    }
-    catch(error){
-
-        return "";
-
-    }
-
-}
-
 </script>
 
 </body>
+
 </html>
