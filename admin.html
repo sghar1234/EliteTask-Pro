@@ -1,321 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EliteTask Pro Admin</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f3f4f6;
-padding:15px;
-color:#111827;
+    background:#f3f4f6;
+    padding:15px;
+    color:#111827;
 }
 
 .header{
-background:#111827;
-color:white;
-padding:20px;
-border-radius:16px;
-font-size:22px;
-font-weight:bold;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    color:white;
+    padding:20px;
+    border-radius:18px;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
 
 .sub{
-font-size:13px;
-font-weight:normal;
-opacity:.7;
-margin-top:5px;
+    font-size:13px;
+    font-weight:normal;
+    opacity:.7;
+    margin-top:5px;
 }
 
 .tabs{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-top:15px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:15px;
 }
 
 .tab{
-background:white;
-border:none;
-padding:14px 8px;
-border-radius:12px;
-font-size:14px;
-font-weight:bold;
-box-shadow:0 2px 8px #ddd;
-color:#374151;
+    background:white;
+    border:none;
+    padding:14px 8px;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 2px 8px #ddd;
+    color:#374151;
 }
 
 .tab.active{
-background:#2563eb;
-color:white;
+    background:#2563eb;
+    color:white;
 }
 
 .section{
-display:none;
-margin-top:15px;
+    display:none;
+    margin-top:15px;
 }
 
 .section.active{
-display:block;
+    display:block;
 }
 
 .card{
-background:white;
-padding:18px;
-border-radius:15px;
-margin-top:12px;
-box-shadow:0 3px 10px #ddd;
+    background:white;
+    padding:18px;
+    border-radius:15px;
+    margin-top:12px;
+    box-shadow:0 3px 10px #ddd;
 }
 
 .card h3{
-color:#2563eb;
-margin-bottom:10px;
+    color:#2563eb;
+    margin-bottom:10px;
 }
 
 input,
 textarea{
-width:100%;
-padding:13px;
-margin-top:8px;
-border:1px solid #ddd;
-border-radius:10px;
-font-size:15px;
-outline:none;
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
 }
 
 textarea{
-height:90px;
-resize:none;
+    height:90px;
+    resize:none;
 }
 
 button{
-border:none;
-cursor:pointer;
+    border:none;
+    cursor:pointer;
 }
 
 .primary{
-width:100%;
-background:#2563eb;
-color:white;
-padding:14px;
-border-radius:11px;
-font-size:15px;
-font-weight:bold;
-margin-top:12px;
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:14px;
+    border-radius:11px;
+    font-size:15px;
+    font-weight:bold;
+    margin-top:12px;
 }
 
 .loading{
-background:white;
-padding:20px;
-border-radius:12px;
-text-align:center;
-color:#6b7280;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    color:#6b7280;
 }
 
 .empty{
-background:white;
-padding:20px;
-border-radius:12px;
-text-align:center;
-color:#6b7280;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    color:#6b7280;
 }
 
 .error{
-background:#fee2e2;
-color:#b91c1c;
-padding:15px;
-border-radius:12px;
-margin-top:12px;
-word-break:break-word;
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:15px;
+    border-radius:12px;
+    margin-top:12px;
+    word-break:break-word;
 }
 
 .info{
-margin-top:8px;
-color:#4b5563;
-font-size:14px;
+    margin-top:8px;
+    color:#4b5563;
+    font-size:14px;
 }
 
 .email{
-color:#6b7280;
-font-size:13px;
-margin-top:5px;
-word-break:break-word;
+    color:#6b7280;
+    font-size:13px;
+    margin-top:5px;
+    word-break:break-word;
 }
 
 .actions{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:12px;
 }
 
 .edit{
-background:#f59e0b;
-color:white;
-padding:12px;
-border-radius:9px;
-font-weight:bold;
+    background:#f59e0b;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    font-weight:bold;
 }
 
 .delete{
-background:#dc2626;
-color:white;
-padding:12px;
-border-radius:9px;
-font-weight:bold;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    font-weight:bold;
 }
 
 .chat{
-display:block;
-background:#16a34a;
-color:white;
-padding:13px;
-border-radius:10px;
-text-align:center;
-text-decoration:none;
-font-weight:bold;
-margin-top:10px;
+    display:block;
+    background:#16a34a;
+    color:white;
+    padding:13px;
+    border-radius:10px;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:10px;
 }
 
 .editBox{
-display:none;
-margin-top:12px;
-padding:12px;
-background:#f9fafb;
-border-radius:10px;
+    display:none;
+    margin-top:12px;
+    padding:12px;
+    background:#f9fafb;
+    border-radius:10px;
 }
 
 .editBox label{
-display:block;
-margin-top:8px;
-font-size:13px;
-font-weight:bold;
+    display:block;
+    margin-top:8px;
+    font-size:13px;
+    font-weight:bold;
 }
 
 .save{
-width:100%;
-background:#16a34a;
-color:white;
-padding:12px;
-border-radius:9px;
-margin-top:10px;
-font-weight:bold;
+    width:100%;
+    background:#16a34a;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    margin-top:10px;
+    font-weight:bold;
 }
 
 .task-image{
-width:100%;
-max-height:200px;
-object-fit:cover;
-border-radius:10px;
-margin-bottom:12px;
+    width:100%;
+    max-height:200px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:12px;
 }
 
 .task-number{
-font-size:12px;
-color:#6b7280;
-font-weight:bold;
+    font-size:12px;
+    color:#6b7280;
+    font-weight:bold;
 }
 
 .task-name{
-font-size:18px;
-font-weight:bold;
-margin-top:5px;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:5px;
 }
 
 .task-delete{
-width:100%;
-background:#dc2626;
-color:white;
-padding:12px;
-border-radius:9px;
-margin-top:12px;
-font-weight:bold;
+    width:100%;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    margin-top:12px;
+    font-weight:bold;
 }
 
 .status{
-display:inline-block;
-padding:6px 10px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
-margin-top:10px;
-background:#fef3c7;
-color:#92400e;
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:10px;
+    background:#fef3c7;
+    color:#92400e;
 }
 
 .approve{
-width:100%;
-background:#16a34a;
-color:white;
-padding:12px;
-border-radius:9px;
-margin-top:10px;
-font-weight:bold;
+    width:100%;
+    background:#16a34a;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    margin-top:10px;
+    font-weight:bold;
 }
 
 .reject{
-width:100%;
-background:#dc2626;
-color:white;
-padding:12px;
-border-radius:9px;
-margin-top:8px;
-font-weight:bold;
+    width:100%;
+    background:#dc2626;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+
+/* SUPPORT USER LIST */
+
+.support-user-card{
+    background:white;
+    padding:16px;
+    border-radius:15px;
+    margin-top:10px;
+    box-shadow:0 3px 10px #ddd;
+    cursor:pointer;
+}
+
+.support-user-card:active{
+    transform:scale(.99);
+}
+
+.support-user-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.support-avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.support-user-name{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.support-user-email{
+    color:#6b7280;
+    font-size:12px;
+    margin-top:4px;
+    word-break:break-word;
+}
+
+.support-last{
+    color:#6b7280;
+    font-size:12px;
+    margin-top:10px;
+    line-height:1.4;
+}
+
+.unread{
+    background:#dc2626;
+    color:white;
+    min-width:22px;
+    height:22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
+}
+
+
+/* ADMIN CHAT */
+
+.admin-chat{
+    display:none;
+    background:white;
+    border-radius:17px;
+    margin-top:12px;
+    overflow:hidden;
+    box-shadow:0 3px 12px #ddd;
+}
+
+.admin-chat.show{
+    display:block;
+}
+
+.chat-header{
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    color:white;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.chat-back{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    color:white;
+    font-size:20px;
+}
+
+.chat-title{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.chat-email{
+    font-size:11px;
+    opacity:.7;
+    margin-top:3px;
+}
+
+.chat-messages{
+    height:390px;
+    overflow-y:auto;
+    padding:15px;
+    background:#f6f8fb;
+}
+
+.chat-bubble{
+    max-width:82%;
+    padding:11px 13px;
+    border-radius:15px;
+    margin-bottom:10px;
+    font-size:13px;
+    line-height:1.45;
+    word-break:break-word;
+}
+
+.chat-bubble.user{
+    background:white;
+    color:#374151;
+    border-bottom-left-radius:4px;
+    margin-right:auto;
+    box-shadow:0 2px 6px rgba(0,0,0,.05);
+}
+
+.chat-bubble.admin{
+    background:#2563eb;
+    color:white;
+    border-bottom-right-radius:4px;
+    margin-left:auto;
+}
+
+.chat-time{
+    font-size:9px;
+    opacity:.55;
+    margin-top:5px;
+}
+
+.admin-chat-input{
+    display:flex;
+    gap:8px;
+    padding:12px;
+    background:white;
+    border-top:1px solid #eee;
+}
+
+.admin-chat-input input{
+    margin:0;
+    flex:1;
+}
+
+.admin-send{
+    width:52px;
+    border-radius:11px;
+    background:#2563eb;
+    color:white;
+    font-size:20px;
 }
 
 .support-message{
-background:white;
-padding:16px;
-border-radius:12px;
-margin-top:10px;
-box-shadow:0 2px 7px #ddd;
+    background:white;
+    padding:16px;
+    border-radius:12px;
+    margin-top:10px;
+    box-shadow:0 2px 7px #ddd;
 }
 
 .support-user{
-font-weight:bold;
-color:#2563eb;
+    font-weight:bold;
+    color:#2563eb;
 }
 
 .support-email{
-font-size:12px;
-color:#6b7280;
-margin-top:4px;
+    font-size:12px;
+    color:#6b7280;
+    margin-top:4px;
 }
 
 .support-text{
-margin-top:10px;
-line-height:1.5;
+    margin-top:10px;
+    line-height:1.5;
 }
 
 .logout{
-width:100%;
-background:#111827;
-color:white;
-padding:14px;
-border-radius:11px;
-font-size:15px;
-font-weight:bold;
-margin-top:15px;
+    width:100%;
+    background:#111827;
+    color:white;
+    padding:14px;
+    border-radius:11px;
+    font-size:15px;
+    font-weight:bold;
+    margin-top:15px;
+    margin-bottom:20px;
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -331,66 +501,39 @@ Admin Control Panel
 </div>
 
 
-
-<div id="authStatus"
-class="loading">
-
+<div id="authStatus" class="loading">
 Checking Admin Login...
-
 </div>
-
 
 
 <div class="tabs">
 
-<button
-id="usersTab"
-class="tab active"
+<button id="usersTab" class="tab active"
 onclick="showSection('users')">
-
 👥 Users
-
 </button>
 
-
-<button
-id="tasksTab"
-class="tab"
+<button id="tasksTab" class="tab"
 onclick="showSection('tasks')">
-
 📦 Tasks
-
 </button>
 
-
-<button
-id="withdrawTab"
-class="tab"
+<button id="withdrawTab" class="tab"
 onclick="showSection('withdraw')">
-
 💰 Withdraw
-
 </button>
 
-
-<button
-id="supportTab"
-class="tab"
+<button id="supportTab" class="tab"
 onclick="showSection('support')">
-
 🎧 Support
-
 </button>
 
 </div>
 
 
-
 <!-- USERS -->
 
-<div
-id="usersSection"
-class="section active">
+<div id="usersSection" class="section active">
 
 <div id="usersList">
 
@@ -403,73 +546,46 @@ Loading Users...
 </div>
 
 
-
 <!-- TASKS -->
 
-<div
-id="tasksSection"
-class="section">
-
+<div id="tasksSection" class="section">
 
 <div class="card">
 
-<h3>
-➕ Add New Task
-</h3>
+<h3>➕ Add New Task</h3>
 
-
-<input
-id="taskOrder"
+<input id="taskOrder"
 type="number"
 placeholder="Task Number">
 
-
-<input
-id="taskName"
+<input id="taskName"
 type="text"
 placeholder="Task Name">
 
-
-<input
-id="taskPrice"
+<input id="taskPrice"
 type="number"
 placeholder="Task Price">
 
-
-<input
-id="taskCommission"
+<input id="taskCommission"
 type="number"
 placeholder="Commission">
 
-
-<input
-id="taskImage"
+<input id="taskImage"
 type="text"
 placeholder="Image URL (optional)">
 
+<textarea id="taskDescription"
+placeholder="Task Description"></textarea>
 
-<textarea
-id="taskDescription"
-placeholder="Task Description">
-</textarea>
-
-
-<button
-id="addTaskBtn"
-class="primary">
-
+<button id="addTaskBtn" class="primary">
 ➕ Add Task
-
 </button>
 
-
-<div
-id="taskMessage"
+<div id="taskMessage"
 style="margin-top:10px;text-align:center;">
 </div>
 
 </div>
-
 
 
 <div id="tasksList">
@@ -480,17 +596,12 @@ Loading Tasks...
 
 </div>
 
-
 </div>
-
 
 
 <!-- WITHDRAW -->
 
-<div
-id="withdrawSection"
-class="section">
-
+<div id="withdrawSection" class="section">
 
 <div id="withdrawList">
 
@@ -500,85 +611,112 @@ Loading Withdraw Requests...
 
 </div>
 
-
 </div>
-
 
 
 <!-- SUPPORT -->
 
-<div
-id="supportSection"
-class="section">
+<div id="supportSection" class="section">
 
-
-<div class="card">
-
-<h3>
-🎧 Customer Support
-</h3>
-
-<p class="info">
-Users ke support messages yahan show honge.
-</p>
-
-</div>
-
-
-<div id="supportList">
+<div id="supportUsersList">
 
 <div class="loading">
-Loading Support...
+Loading Support Users...
 </div>
 
 </div>
 
 
-</div>
+<div id="adminChat" class="admin-chat">
 
+<div class="chat-header">
 
-
-<button
-id="logoutBtn"
-class="logout">
-
-🚪 Logout Admin
-
+<button class="chat-back"
+id="chatBack">
+←
 </button>
 
+<div>
+
+<div id="chatUserName" class="chat-title">
+User
+</div>
+
+<div id="chatUserEmail" class="chat-email">
+</div>
+
+</div>
+
+</div>
+
+
+<div id="chatMessages"
+class="chat-messages">
+
+<div class="loading">
+Loading messages...
+</div>
+
+</div>
+
+
+<div class="admin-chat-input">
+
+<input
+id="adminMessageInput"
+type="text"
+placeholder="Type your reply...">
+
+<button
+id="adminSendBtn"
+class="admin-send">
+➤
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button id="logoutBtn" class="logout">
+🚪 Logout Admin
+</button>
 
 
 <script type="module">
 
-
 import {
-auth,
-db
+    auth,
+    db
 }
 from "./firebase.js";
 
 
 import {
-onAuthStateChanged,
-signOut
+    onAuthStateChanged,
+    signOut
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
-collection,
-getDocs,
-getDoc,
-doc,
-addDoc,
-updateDoc,
-deleteDoc,
-serverTimestamp
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    serverTimestamp,
+    onSnapshot,
+    query,
+    where
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
 
 
 /* ADMIN UID */
@@ -589,1558 +727,648 @@ const ADMIN_UID =
 
 let adminReady = false;
 
+let selectedSupportUser = null;
+
+let supportUnsubscribe = null;
 
 
 /* ELEMENTS */
 
 const authStatus =
-document.getElementById(
-"authStatus"
-);
+document.getElementById("authStatus");
 
 const usersList =
-document.getElementById(
-"usersList"
-);
+document.getElementById("usersList");
 
 const tasksList =
-document.getElementById(
-"tasksList"
-);
+document.getElementById("tasksList");
 
 const withdrawList =
-document.getElementById(
-"withdrawList"
-);
+document.getElementById("withdrawList");
 
-const supportList =
-document.getElementById(
-"supportList"
-);
+const supportUsersList =
+document.getElementById("supportUsersList");
 
+const adminChat =
+document.getElementById("adminChat");
+
+const chatMessages =
+document.getElementById("chatMessages");
 
 
 /* =========================
 AUTH
 ========================= */
 
-
 onAuthStateChanged(
 auth,
 async(user)=>{
 
+    if(!user){
 
-if(!user){
+        authStatus.innerHTML = `
+        <div class="error">
+        Admin login not found.
+        <br><br>
+        <a href="admin-login.html">
+        Go to Admin Login
+        </a>
+        </div>
+        `;
 
-authStatus.innerHTML = `
-<div class="error">
-Admin login not found.
-<br><br>
-<a href="admin-login.html">
-Go to Admin Login
-</a>
-</div>
-`;
-
-return;
-
-}
+        return;
+    }
 
 
-if(
-user.uid !== ADMIN_UID
-){
+    if(user.uid !== ADMIN_UID){
 
-authStatus.innerHTML = `
-<div class="error">
-Access Denied.
-<br><br>
-This account is not the Admin account.
-</div>
-`;
+        authStatus.innerHTML = `
+        <div class="error">
+        Access Denied.
+        <br><br>
+        This account is not the Admin account.
+        </div>
+        `;
 
-return;
-
-}
+        return;
+    }
 
 
-adminReady = true;
+    adminReady = true;
 
 
-authStatus.innerHTML = `
-<div class="card"
-style="margin-top:0;color:#16a34a;">
-✅ Admin Logged In
-</div>
-`;
+    authStatus.innerHTML = `
+    <div class="card"
+    style="margin-top:0;color:#16a34a;">
+    ✅ Admin Logged In
+    </div>
+    `;
 
 
-/* LOAD FIRST TAB */
-
-loadUsers();
+    loadUsers();
 
 });
-
 
 
 /* =========================
 SECTION SWITCH
 ========================= */
 
-
 window.showSection =
 async function(section){
 
-
-if(!adminReady){
-
-return;
-
-}
+    if(!adminReady){
+        return;
+    }
 
 
-document
-.querySelectorAll(".section")
-.forEach(
-el =>
-el.classList.remove(
-"active"
-)
-);
+    document
+    .querySelectorAll(".section")
+    .forEach(el =>
+        el.classList.remove("active")
+    );
 
 
-document
-.querySelectorAll(".tab")
-.forEach(
-el =>
-el.classList.remove(
-"active"
-)
-);
+    document
+    .querySelectorAll(".tab")
+    .forEach(el =>
+        el.classList.remove("active")
+    );
 
 
-if(
-section === "users"
-){
+    if(section === "users"){
 
-document
-.getElementById(
-"usersSection"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("usersSection")
+        .classList.add("active");
 
-document
-.getElementById(
-"usersTab"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("usersTab")
+        .classList.add("active");
 
-loadUsers();
+        loadUsers();
 
-}
+    }
 
 
-if(
-section === "tasks"
-){
+    if(section === "tasks"){
 
-document
-.getElementById(
-"tasksSection"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("tasksSection")
+        .classList.add("active");
 
-document
-.getElementById(
-"tasksTab"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("tasksTab")
+        .classList.add("active");
 
-loadTasks();
+        loadTasks();
 
-}
+    }
 
 
-if(
-section === "withdraw"
-){
+    if(section === "withdraw"){
 
-document
-.getElementById(
-"withdrawSection"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("withdrawSection")
+        .classList.add("active");
 
-document
-.getElementById(
-"withdrawTab"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("withdrawTab")
+        .classList.add("active");
 
-loadWithdraws();
+        loadWithdraws();
 
-}
+    }
 
 
-if(
-section === "support"
-){
+    if(section === "support"){
 
-document
-.getElementById(
-"supportSection"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("supportSection")
+        .classList.add("active");
 
-document
-.getElementById(
-"supportTab"
-)
-.classList.add(
-"active"
-);
+        document
+        .getElementById("supportTab")
+        .classList.add("active");
 
-loadSupport();
+        loadSupportUsers();
 
-}
+    }
 
 };
-
 
 
 /* =========================
 USERS
 ========================= */
 
-
 async function loadUsers(){
 
-
-usersList.innerHTML =
-`
-<div class="loading">
-Loading Users...
-</div>
-`;
+    usersList.innerHTML = `
+    <div class="loading">
+    Loading Users...
+    </div>
+    `;
 
 
-try{
+    try{
+
+        const snap =
+        await getDocs(
+            collection(db,"users")
+        );
 
 
-const snap =
-await getDocs(
-collection(
-db,
-"users"
-)
-);
+        usersList.innerHTML = "";
 
 
-usersList.innerHTML = "";
+        if(snap.empty){
+
+            usersList.innerHTML = `
+            <div class="empty">
+            No users found.
+            </div>
+            `;
+
+            return;
+        }
 
 
-if(
-snap.empty
-){
+        snap.forEach((item)=>{
 
-usersList.innerHTML =
-`
-<div class="empty">
-No users found.
-</div>
-`;
+            const u = item.data();
 
-return;
+            const id = item.id;
+
+            const name =
+            u.name || "User";
+
+            const email =
+            u.email || "No email";
+
+            const balance =
+            Number(u.balance || 0);
+
+            const commission =
+            Number(u.commission || 0);
+
+            const completed =
+            Number(u.completed || 0);
+
+
+            const card =
+            document.createElement("div");
+
+            card.className = "card";
+
+
+            card.innerHTML = `
+
+            <h3>
+            👤 ${escapeHtml(name)}
+            </h3>
+
+            <div class="email">
+            ${escapeHtml(email)}
+            </div>
+
+            <div class="info">
+            💰 Balance:
+            <b>Rs ${balance}</b>
+            </div>
+
+            <div class="info">
+            💵 Commission:
+            <b>Rs ${commission}</b>
+            </div>
+
+            <div class="info">
+            ✅ Completed:
+            <b>${completed}</b>
+            </div>
+
+            <div class="actions">
+
+            <button
+            class="edit"
+            onclick="editUser('${id}')">
+            ✏️ Edit
+            </button>
+
+            <button
+            class="delete"
+            onclick="deleteUser('${id}')">
+            🗑️ Delete
+            </button>
+
+            </div>
+
+
+            <div
+            id="editBox-${id}"
+            class="editBox">
+
+            <label>Balance</label>
+
+            <input
+            id="balance-${id}"
+            type="number"
+            value="${balance}">
+
+
+            <label>Commission</label>
+
+            <input
+            id="commission-${id}"
+            type="number"
+            value="${commission}">
+
+
+            <label>Completed</label>
+
+            <input
+            id="completed-${id}"
+            type="number"
+            value="${completed}">
+
+
+            <button
+            class="save"
+            onclick="saveUser('${id}')">
+
+            💾 Save Changes
+
+            </button>
+
+            </div>
+
+
+            <button
+            class="chat"
+            onclick="openSupportChat(
+            '${escapeAttr(id)}',
+            '${escapeAttr(name)}',
+            '${escapeAttr(email)}'
+            )">
+
+            💬 Chat with User
+
+            </button>
+
+            `;
+
+
+            usersList.appendChild(card);
+
+        });
+
+
+    }catch(error){
+
+        usersList.innerHTML = `
+        <div class="error">
+
+        <strong>Firebase Error</strong>
+
+        <br><br>
+
+        ${escapeHtml(error.message)}
+
+        <br><br>
+
+        Code:
+        ${escapeHtml(error.code || "")}
+
+        </div>
+        `;
+
+    }
 
 }
-
-
-snap.forEach(
-(item)=>{
-
-
-const u =
-item.data();
-
-
-const id =
-item.id;
-
-
-const name =
-u.name || "User";
-
-
-const email =
-u.email || "No email";
-
-
-const balance =
-Number(
-u.balance || 0
-);
-
-
-const commission =
-Number(
-u.commission || 0
-);
-
-
-const completed =
-Number(
-u.completed || 0
-);
-
-
-const card =
-document.createElement(
-"div"
-);
-
-
-card.className =
-"card";
-
-
-card.innerHTML = `
-
-<h3>
-👤 ${escapeHtml(name)}
-</h3>
-
-<div class="email">
-${escapeHtml(email)}
-</div>
-
-<div class="info">
-💰 Balance:
-<b>Rs ${balance}</b>
-</div>
-
-<div class="info">
-💵 Commission:
-<b>Rs ${commission}</b>
-</div>
-
-<div class="info">
-✅ Completed:
-<b>${completed}</b>
-</div>
-
-<div class="actions">
-
-<button
-class="edit"
-onclick="editUser('${id}')">
-
-✏️ Edit
-
-</button>
-
-<button
-class="delete"
-onclick="deleteUser('${id}')">
-
-🗑️ Delete
-
-</button>
-
-</div>
-
-
-<div
-id="editBox-${id}"
-class="editBox">
-
-<label>
-Balance
-</label>
-
-<input
-id="balance-${id}"
-type="number"
-value="${balance}">
-
-
-<label>
-Commission
-</label>
-
-<input
-id="commission-${id}"
-type="number"
-value="${commission}">
-
-
-<label>
-Completed
-</label>
-
-<input
-id="completed-${id}"
-type="number"
-value="${completed}">
-
-
-<button
-class="save"
-onclick="saveUser('${id}')">
-
-💾 Save Changes
-
-</button>
-
-</div>
-
-
-<a
-class="chat"
-href="admin-chat.html?uid=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}">
-
-💬 Chat with User
-
-</a>
-
-`;
-
-
-usersList.appendChild(
-card
-);
-
-});
-
-
-
-}catch(error){
-
-
-usersList.innerHTML =
-`
-<div class="error">
-
-<strong>
-Firebase Error
-</strong>
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-<br><br>
-
-Code:
-${escapeHtml(
-error.code || ""
-)}
-
-</div>
-`;
-
-}
-
-}
-
 
 
 /* EDIT USER */
 
-
 window.editUser =
 function(id){
 
-const box =
-document.getElementById(
-"editBox-" + id
-);
+    const box =
+    document.getElementById(
+        "editBox-" + id
+    );
 
 
-if(
-box.style.display ===
-"block"
-){
+    if(box.style.display === "block"){
 
-box.style.display =
-"none";
+        box.style.display = "none";
 
-}else{
+    }else{
 
-box.style.display =
-"block";
+        box.style.display = "block";
 
-}
+    }
 
 };
-
 
 
 /* SAVE USER */
 
-
 window.saveUser =
 async function(id){
 
-try{
+    try{
+
+        const balance =
+        Number(
+            document.getElementById(
+                "balance-" + id
+            ).value
+        );
 
 
-const balance =
-Number(
-document.getElementById(
-"balance-" + id
-).value
-);
+        const commission =
+        Number(
+            document.getElementById(
+                "commission-" + id
+            ).value
+        );
 
 
-const commission =
-Number(
-document.getElementById(
-"commission-" + id
-).value
-);
+        const completed =
+        Number(
+            document.getElementById(
+                "completed-" + id
+            ).value
+        );
 
 
-const completed =
-Number(
-document.getElementById(
-"completed-" + id
-).value
-);
+        await updateDoc(
+
+            doc(db,"users",id),
+
+            {
+                balance,
+                commission,
+                completed
+            }
+
+        );
 
 
-await updateDoc(
-
-doc(
-db,
-"users",
-id
-),
-
-{
-balance,
-commission,
-completed
-}
-
-);
+        alert(
+            "User updated successfully ✅"
+        );
 
 
-alert(
-"User updated successfully ✅"
-);
+        loadUsers();
 
 
-loadUsers();
+    }catch(error){
 
+        alert(
+            "Update Error: " +
+            error.message
+        );
 
-}catch(error){
-
-alert(
-"Update Error: " +
-error.message
-);
-
-}
+    }
 
 };
-
 
 
 /* DELETE USER */
 
-
 window.deleteUser =
 async function(id){
 
-
-if(
-!confirm(
-"Delete this user?"
-)
-){
-
-return;
-
-}
+    if(!confirm(
+        "Delete this user?"
+    )){
+        return;
+    }
 
 
-try{
+    try{
+
+        await deleteDoc(
+            doc(db,"users",id)
+        );
 
 
-await deleteDoc(
-doc(
-db,
-"users",
-id
-)
-);
+        alert(
+            "User deleted successfully."
+        );
 
 
-alert(
-"User deleted successfully."
-);
+        loadUsers();
 
 
-loadUsers();
+    }catch(error){
 
+        alert(
+            "Delete Error: " +
+            error.message
+        );
 
-}catch(error){
-
-alert(
-"Delete Error: " +
-error.message
-);
-
-}
+    }
 
 };
-
 
 
 /* =========================
 TASKS
 ========================= */
 
-
 document
-.getElementById(
-"addTaskBtn"
-)
+.getElementById("addTaskBtn")
 .addEventListener(
-"click",
-addTask
+    "click",
+    addTask
 );
-
 
 
 async function addTask(){
 
-
-const order =
-Number(
-document.getElementById(
-"taskOrder"
-).value
-);
-
-
-const name =
-document.getElementById(
-"taskName"
-).value.trim();
+    const order =
+    Number(
+        document.getElementById(
+            "taskOrder"
+        ).value
+    );
 
 
-const price =
-Number(
-document.getElementById(
-"taskPrice"
-).value
-);
+    const name =
+    document.getElementById(
+        "taskName"
+    ).value.trim();
 
 
-const commission =
-Number(
-document.getElementById(
-"taskCommission"
-).value
-);
+    const price =
+    Number(
+        document.getElementById(
+            "taskPrice"
+        ).value
+    );
 
 
-const image =
-document.getElementById(
-"taskImage"
-).value.trim();
+    const commission =
+    Number(
+        document.getElementById(
+            "taskCommission"
+        ).value
+    );
 
 
-const description =
-document.getElementById(
-"taskDescription"
-).value.trim();
+    const image =
+    document.getElementById(
+        "taskImage"
+    ).value.trim();
 
 
-const msg =
-document.getElementById(
-"taskMessage"
-);
+    const description =
+    document.getElementById(
+        "taskDescription"
+    ).value.trim();
 
 
-if(
-!order ||
-!name
-){
-
-msg.innerText =
-"Task number and name required.";
-
-return;
-
-}
+    const msg =
+    document.getElementById(
+        "taskMessage"
+    );
 
 
-try{
+    if(!order || !name){
+
+        msg.innerText =
+        "Task number and name required.";
+
+        return;
+
+    }
 
 
-await addDoc(
+    try{
 
-collection(
-db,
-"tasks"
-),
+        await addDoc(
 
-{
-order,
-name,
-price,
-commission,
-image,
-description,
-createdAt:
-serverTimestamp()
-}
+            collection(db,"tasks"),
 
-);
+            {
+                order,
+                name,
+                price,
+                commission,
+                image,
+                description,
+                createdAt:
+                serverTimestamp()
+            }
 
-
-msg.innerText =
-"Task added successfully ✅";
-
-msg.style.color =
-"#16a34a";
+        );
 
 
-document.getElementById(
-"taskOrder"
-).value = "";
+        msg.innerText =
+        "Task added successfully ✅";
 
-document.getElementById(
-"taskName"
-).value = "";
-
-document.getElementById(
-"taskPrice"
-).value = "";
-
-document.getElementById(
-"taskCommission"
-).value = "";
-
-document.getElementById(
-"taskImage"
-).value = "";
-
-document.getElementById(
-"taskDescription"
-).value = "";
+        msg.style.color =
+        "#16a34a";
 
 
-loadTasks();
+        document.getElementById(
+            "taskOrder"
+        ).value = "";
+
+        document.getElementById(
+            "taskName"
+        ).value = "";
+
+        document.getElementById(
+            "taskPrice"
+        ).value = "";
+
+        document.getElementById(
+            "taskCommission"
+        ).value = "";
+
+        document.getElementById(
+            "taskImage"
+        ).value = "";
+
+        document.getElementById(
+            "taskDescription"
+        ).value = "";
 
 
-}catch(error){
+        loadTasks();
 
-msg.innerText =
-"Error: " +
-error.message;
 
-msg.style.color =
-"#dc2626";
+    }catch(error){
+
+        msg.innerText =
+        "Error: " +
+        error.message;
+
+        msg.style.color =
+        "#dc2626";
+
+    }
 
 }
-
-}
-
 
 
 /* LOAD TASKS */
 
-
 async function loadTasks(){
 
-
-tasksList.innerHTML =
-`
-<div class="loading">
-Loading Tasks...
-</div>
-`;
-
-
-try{
-
-
-const snap =
-await getDocs(
-collection(
-db,
-"tasks"
-)
-);
-
-
-tasksList.innerHTML = "";
-
-
-if(
-snap.empty
-){
-
-tasksList.innerHTML =
-`
-<div class="empty">
-No tasks found.
-</div>
-`;
-
-return;
-
-}
-
-
-const tasks = [];
-
-
-snap.forEach(
-(item)=>{
-
-tasks.push({
-id:item.id,
-data:item.data()
-});
-
-});
-
-
-tasks.sort(
-(a,b)=>
-Number(
-a.data.order || 0
-)
--
-Number(
-b.data.order || 0
-)
-);
-
-
-tasks.forEach(
-(item)=>{
-
-
-const t =
-item.data;
-
-
-const card =
-document.createElement(
-"div"
-);
-
-
-card.className =
-"card";
-
-
-card.innerHTML = `
-
-${
-t.image
-?
-`<img
-class="task-image"
-src="${escapeHtml(t.image)}">`
-:
-""
-}
-
-<div class="task-number">
-TASK ${Number(t.order || 0)}
-</div>
-
-<div class="task-name">
-${escapeHtml(
-t.name || "Task"
-)}
-</div>
-
-<div class="info">
-💰 Price:
-<b>Rs ${Number(t.price || 0)}</b>
-</div>
-
-<div class="info">
-💵 Commission:
-<b>Rs ${Number(t.commission || 0)}</b>
-</div>
-
-<div class="info">
-📝 ${escapeHtml(
-t.description || ""
-)}
-</div>
-
-<button
-class="task-delete"
-onclick="deleteTask('${item.id}')">
-
-🗑️ Delete Task
-
-</button>
-
-`;
-
-
-tasksList.appendChild(
-card
-);
-
-});
-
-
-}catch(error){
-
-tasksList.innerHTML =
-`
-<div class="error">
-
-<strong>
-Task Error
-</strong>
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-`;
-
-}
-
-}
-
-
-
-/* DELETE TASK */
-
-
-window.deleteTask =
-async function(id){
-
-
-if(
-!confirm(
-"Delete this task?"
-)
-){
-
-return;
-
-}
-
-
-try{
-
-
-await deleteDoc(
-doc(
-db,
-"tasks",
-id
-)
-);
-
-
-alert(
-"Task deleted successfully."
-);
-
-
-loadTasks();
-
-
-}catch(error){
-
-alert(
-"Delete Error: " +
-error.message
-);
-
-}
-
-};
-
-
-
-/* =========================
-WITHDRAWS
-========================= */
-
-
-async function loadWithdraws(){
-
-
-withdrawList.innerHTML =
-`
-<div class="loading">
-Loading Withdraw Requests...
-</div>
-`;
-
-
-try{
-
-
-const snap =
-await getDocs(
-collection(
-db,
-"withdraws"
-)
-);
-
-
-withdrawList.innerHTML = "";
-
-
-if(
-snap.empty
-){
-
-withdrawList.innerHTML =
-`
-<div class="empty">
-No Withdraw Requests.
-</div>
-`;
-
-return;
-
-}
-
-
-snap.forEach(
-(item)=>{
-
-
-const w =
-item.data();
-
-
-const amount =
-Number(
-w.amount || 0
-);
-
-
-const name =
-w.name || "User";
-
-
-const email =
-w.email || "";
-
-
-const method =
-w.method || "";
-
-
-const account =
-w.account ||
-w.accountNumber ||
-w.number ||
-"";
-
-
-const uid =
-w.userId ||
-w.uid ||
-"";
-
-
-const status =
-String(
-w.status ||
-"pending"
-).toLowerCase();
-
-
-const card =
-document.createElement(
-"div"
-);
-
-
-card.className =
-"card";
-
-
-card.innerHTML = `
-
-<h3>
-💰 Rs ${amount}
-</h3>
-
-<div class="info">
-👤 ${escapeHtml(name)}
-</div>
-
-<div class="email">
-${escapeHtml(email)}
-</div>
-
-<div class="info">
-💳 Method:
-${escapeHtml(method)}
-</div>
-
-<div class="info">
-📱 Account:
-${escapeHtml(account)}
-</div>
-
-<div class="status">
-${escapeHtml(status)}
-</div>
-
-`;
-
-
-if(
-status ===
-"pending"
-){
-
-
-const approve =
-document.createElement(
-"button"
-);
-
-
-approve.className =
-"approve";
-
-
-approve.innerText =
-"✅ Approve";
-
-
-approve.onclick =
-async()=>{
-
-await updateDoc(
-
-doc(
-db,
-"withdraws",
-item.id
-),
-
-{
-status:
-"approved"
-}
-
-);
-
-alert(
-"Withdrawal approved."
-);
-
-loadWithdraws();
-
-};
-
-
-card.appendChild(
-approve
-);
-
-
-const reject =
-document.createElement(
-"button"
-);
-
-
-reject.className =
-"reject";
-
-
-reject.innerText =
-"❌ Reject";
-
-
-reject.onclick =
-async()=>{
-
-await rejectWithdraw(
-item.id,
-uid,
-amount
-);
-
-};
-
-
-card.appendChild(
-reject
-);
-
-}
-
-
-withdrawList.appendChild(
-card
-);
-
-});
-
-
-}catch(error){
-
-withdrawList.innerHTML =
-`
-<div class="error">
-
-<strong>
-Withdraw Error
-</strong>
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-`;
-
-}
-
-}
-
-
-
-/* REJECT WITHDRAW */
-
-
-async function rejectWithdraw(
-withdrawId,
-uid,
-amount
-){
-
-
-if(
-!confirm(
-"Reject this withdrawal?"
-)
-){
-
-return;
-
-}
-
-
-try{
-
-
-if(uid){
-
-const userRef =
-doc(
-db,
-"users",
-uid
-);
-
-
-const userSnap =
-await getDoc(
-userRef
-);
-
-
-if(
-userSnap.exists()
-){
-
-const user =
-userSnap.data();
-
-
-const oldBalance =
-Number(
-user.balance || 0
-);
-
-
-await updateDoc(
-userRef,
-{
-balance:
-oldBalance +
-Number(amount || 0)
-}
-);
-
-}
-
-}
-
-
-await updateDoc(
-
-doc(
-db,
-"withdraws",
-withdrawId
-),
-
-{
-status:
-"rejected"
-}
-
-);
-
-
-alert(
-"Withdrawal rejected."
-);
-
-
-loadWithdraws();
-
-
-}catch(error){
-
-alert(
-"Reject Error: " +
-error.message
-);
-
-}
-
-}
-
-
-
-/* =========================
-SUPPORT
-========================= */
-
-
-async function loadSupport(){
-
-
-supportList.innerHTML =
-`
-<div class="loading">
-Loading Support...
-</div>
-`;
-
-
-try{
-
-
-const snap =
-await getDocs(
-collection(
-db,
-"supportMessages"
-)
-);
-
-
-supportList.innerHTML = "";
-
-
-if(
-snap.empty
-){
-
-supportList.innerHTML =
-`
-<div class="empty">
-No support messages found.
-</div>
-`;
-
-return;
-
-}
-
-
-snap.forEach(
-(item)=>{
-
-
-const m =
-item.data();
-
-
-const card =
-document.createElement(
-"div"
-);
-
-
-card.className =
-"support-message";
-
-
-card.innerHTML = `
-
-<div class="support-user">
-👤 ${escapeHtml(
-m.name || "User"
-)}
-</div>
-
-<div class="support-email">
-${escapeHtml(
-m.email || ""
-)}
-</div>
-
-<div class="support-text">
-${escapeHtml(
-m.message ||
-m.text ||
-"No message"
-)}
-</div>
-
-`;
-
-
-supportList.appendChild(
-card
-);
-
-});
-
-
-}catch(error){
-
-supportList.innerHTML =
-`
-<div class="error">
-
-<strong>
-Support Error
-</strong>
-
-<br><br>
-
-${escapeHtml(
-error.message
-)}
-
-</div>
-`;
-
-}
-
-}
-
-
-
-/* =========================
-LOGOUT
-========================= */
-
-
-document
-.getElementById(
-"logoutBtn"
-)
-.addEventListener(
-"click",
-async()=>{
-
-
-try{
-
-
-await signOut(auth);
-
-
-window.location.href =
-"admin-login.html";
-
-
-}catch(error){
-
-alert(
-error.message
-);
-
-}
-
-});
-
-
-
-/* =========================
-ESCAPE
-========================= */
-
-
-function escapeHtml(text){
-
-return String(text)
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-</script>
-
-
-</body>
-
-</html>
+    tasksList.innerHTML = `
+    <div class="loading">
+    Loading Tasks...
+    </div>
+    `;
+
+
+    try{
+
+        const snap =
+        await getDocs(
+            collection(db,"tasks")
+        )
