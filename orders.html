@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Order</title>
+<title>EliteTask Pro - My Order</title>
 
 <style>
 
@@ -19,7 +19,7 @@
 body{
     background:#f5f8fa;
     color:#172033;
-    padding-bottom:90px;
+    padding-bottom:100px;
 }
 
 /* TOP BAR */
@@ -56,15 +56,16 @@ body{
 }
 
 .logo{
-    width:38px;
-    height:38px;
-    border-radius:12px;
+    width:42px;
+    height:42px;
+    border-radius:13px;
     background:linear-gradient(135deg,#39d6d0,#8cf5e7);
     color:#07535a;
     display:flex;
     align-items:center;
     justify-content:center;
     font-weight:bold;
+    font-size:17px;
 }
 
 .logo-text{
@@ -77,77 +78,78 @@ body{
 .container{
     max-width:600px;
     margin:auto;
-    padding:18px 15px;
+    padding:22px 15px;
 }
 
 .page-title{
-    margin:5px 2px 15px;
+    margin:0 2px 18px;
 }
 
-.page-title h2{
-    font-size:22px;
+.page-title h1{
+    font-size:30px;
+    margin-bottom:5px;
 }
 
 .page-title p{
     color:#8992a2;
-    font-size:13px;
-    margin-top:5px;
+    font-size:14px;
 }
 
 /* BALANCE */
 
-.balance-mini{
+.balance-card{
     background:linear-gradient(135deg,#07545d,#09a3a0);
     color:white;
-    border-radius:21px;
-    padding:18px;
-    margin-bottom:18px;
-    box-shadow:0 10px 25px rgba(5,130,132,.20);
+    border-radius:25px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 12px 30px rgba(5,130,132,.22);
 }
 
-.balance-mini span{
-    font-size:11px;
-    opacity:.75;
+.balance-card span{
+    font-size:13px;
+    opacity:.78;
 }
 
-.balance-mini strong{
+.balance-card strong{
     display:block;
-    font-size:27px;
-    margin-top:6px;
+    font-size:36px;
+    margin-top:7px;
 }
 
-/* ORDER CARD */
+/* CURRENT ORDER */
 
 .order-card{
     background:white;
-    border-radius:27px;
-    padding:18px;
-    box-shadow:0 12px 35px rgba(20,40,80,.12);
-    border:1px solid #e9eff1;
-    overflow:hidden;
+    border-radius:28px;
+    padding:20px;
+    box-shadow:0 8px 28px rgba(20,40,80,.08);
+    border:1px solid #edf1f3;
 }
 
 .order-label{
     display:inline-block;
-    background:#e5f8f7;
+    background:#e4f8f7;
     color:#078d91;
-    padding:7px 12px;
+    padding:10px 16px;
     border-radius:20px;
-    font-size:11px;
+    font-size:13px;
     font-weight:bold;
-    margin-bottom:14px;
+    margin-bottom:20px;
 }
+
+/* IMAGE */
 
 .product-image-box{
     width:100%;
-    height:310px;
-    background:#f5f7f8;
-    border-radius:22px;
-    overflow:hidden;
+    height:330px;
+    border-radius:25px;
+    background:#f3f6f7;
     display:flex;
     align-items:center;
     justify-content:center;
-    margin-bottom:17px;
+    overflow:hidden;
+    margin-bottom:22px;
 }
 
 .product-image-box img{
@@ -156,21 +158,22 @@ body{
     object-fit:contain;
 }
 
-.product-placeholder{
-    font-size:70px;
+.image-placeholder{
+    font-size:80px;
 }
 
-.product-name{
-    font-size:19px;
+/* ORDER INFO */
+
+.order-name{
+    font-size:27px;
     font-weight:bold;
-    line-height:1.4;
-    margin-bottom:6px;
+    margin-bottom:8px;
 }
 
-.product-sub{
+.order-description{
     color:#89939a;
-    font-size:12px;
-    margin-bottom:18px;
+    font-size:14px;
+    margin-bottom:20px;
 }
 
 /* DETAILS */
@@ -178,38 +181,60 @@ body{
 .details{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:11px;
-    margin-bottom:17px;
+    gap:12px;
+    margin-bottom:18px;
 }
 
 .detail-box{
     background:#f7f9fa;
-    border-radius:17px;
-    padding:15px;
+    border-radius:18px;
+    padding:17px;
 }
 
 .detail-box span{
     display:block;
     color:#89939a;
-    font-size:10px;
+    font-size:11px;
     margin-bottom:7px;
 }
 
 .detail-box strong{
-    font-size:19px;
+    font-size:20px;
 }
 
 .detail-box.commission strong{
     color:#16a05d;
 }
 
-/* COMPLETE */
+/* REQUIRED */
+
+.required-box{
+    background:#fff6e5;
+    border:1px solid #ffe1a6;
+    border-radius:17px;
+    padding:15px;
+    margin-bottom:17px;
+}
+
+.required-box span{
+    display:block;
+    color:#9b7634;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.required-box strong{
+    color:#c47b00;
+    font-size:20px;
+}
+
+/* COMPLETE BUTTON */
 
 .complete-btn{
     width:100%;
-    border:none;
+    border:0;
     border-radius:17px;
-    padding:16px;
+    padding:17px;
     background:linear-gradient(135deg,#078d91,#0bb9b0);
     color:white;
     font-size:15px;
@@ -223,38 +248,74 @@ body{
 }
 
 .complete-btn:disabled{
-    opacity:.6;
+    background:#b7c1c4;
+    box-shadow:none;
     cursor:not-allowed;
 }
 
-/* STATUS */
+/* MESSAGE */
 
-.status{
+.message{
     text-align:center;
-    padding:35px 20px;
     background:white;
-    border-radius:24px;
+    border-radius:25px;
+    padding:40px 22px;
     box-shadow:0 8px 25px rgba(20,40,80,.07);
 }
 
-.status-icon{
-    font-size:50px;
-    margin-bottom:13px;
+.message-icon{
+    font-size:55px;
+    margin-bottom:15px;
 }
 
-.status h3{
-    font-size:19px;
-    margin-bottom:7px;
+.message h3{
+    font-size:21px;
+    margin-bottom:8px;
 }
 
-.status p{
+.message p{
     color:#8992a2;
     font-size:13px;
     line-height:1.6;
 }
 
-.hidden{
-    display:none!important;
+/* SUCCESS */
+
+.success-box{
+    display:none;
+    text-align:center;
+    background:white;
+    border-radius:25px;
+    padding:40px 22px;
+    box-shadow:0 8px 25px rgba(20,40,80,.07);
+}
+
+.success-box.show{
+    display:block;
+}
+
+.success-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    background:#e4f8ee;
+    color:#16a05d;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    margin:0 auto 18px;
+}
+
+.success-box h3{
+    font-size:23px;
+    margin-bottom:8px;
+}
+
+.success-box p{
+    color:#8992a2;
+    font-size:13px;
+    line-height:1.6;
 }
 
 /* LOADING */
@@ -263,96 +324,16 @@ body{
     text-align:center;
     padding:50px 20px;
     color:#8992a2;
-    font-size:14px;
 }
 
-/* SUCCESS POPUP */
-
-.success-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(4,28,34,.60);
-    backdrop-filter:blur(5px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:5000;
-}
-
-.success-overlay.show{
-    display:flex;
-}
-
-.success-box{
-    width:100%;
-    max-width:390px;
-    background:white;
-    border-radius:28px;
-    padding:30px 22px;
-    text-align:center;
-    animation:successIn .25s ease;
-}
-
-@keyframes successIn{
-    from{
-        transform:scale(.85);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
-
-.success-icon{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background:#e7faf1;
-    color:#16a05d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:38px;
-    margin:0 auto 15px;
-}
-
-.success-box h3{
-    font-size:21px;
-    margin-bottom:8px;
-}
-
-.success-box p{
-    color:#8992a2;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.success-commission{
-    margin:17px 0;
-    padding:14px;
-    border-radius:16px;
-    background:#f5faf7;
-    color:#16a05d;
-    font-size:18px;
-    font-weight:bold;
-}
-
-.next-text{
-    color:#078d91;
-    font-size:12px;
-    font-weight:bold;
-}
-
-/* BOTTOM */
+/* BOTTOM NAV */
 
 .bottom-nav{
     position:fixed;
     bottom:0;
     left:0;
     right:0;
-    height:73px;
+    height:78px;
     background:white;
     display:flex;
     justify-content:space-around;
@@ -375,7 +356,7 @@ body{
 }
 
 .nav-item span{
-    font-size:21px;
+    font-size:22px;
 }
 
 .nav-item.active{
@@ -401,15 +382,15 @@ body{
 @media(max-width:380px){
 
     .container{
-        padding:15px 12px;
+        padding:18px 12px;
     }
 
     .product-image-box{
-        height:270px;
+        height:290px;
     }
 
-    .logo-text{
-        font-size:14px;
+    .order-name{
+        font-size:24px;
     }
 
 }
@@ -445,11 +426,13 @@ body{
 
 <div class="container">
 
+    <!-- TITLE -->
+
     <div class="page-title">
 
-        <h2>
+        <h1>
             My Order
-        </h2>
+        </h1>
 
         <p>
             Complete your order and earn commission.
@@ -460,7 +443,7 @@ body{
 
     <!-- BALANCE -->
 
-    <div class="balance-mini">
+    <div class="balance-card">
 
         <span>
             Available Balance
@@ -476,46 +459,72 @@ body{
     <!-- LOADING -->
 
     <div id="loadingBox" class="loading">
-        Loading your order...
+
+        Loading current order...
+
     </div>
 
 
-    <!-- ORDER -->
+    <!-- CURRENT ORDER -->
 
-    <div id="orderCard" class="order-card hidden">
+    <div
+        id="orderCard"
+        class="order-card"
+        style="display:none;"
+    >
 
         <div class="order-label">
             CURRENT ORDER
         </div>
 
 
-        <div class="product-image-box" id="productImage">
+        <!-- IMAGE -->
 
-            <div class="product-placeholder">
+        <div class="product-image-box">
+
+            <img
+                id="productImage"
+                src=""
+                alt="Product"
+                style="display:none;"
+            >
+
+            <div
+                id="imagePlaceholder"
+                class="image-placeholder"
+            >
                 🛍️
             </div>
 
         </div>
 
 
-        <div class="product-name" id="productName">
+        <!-- NAME -->
+
+        <div
+            id="orderName"
+            class="order-name"
+        >
             Product Task
         </div>
 
-        <div class="product-sub">
+
+        <div class="order-description">
             Please complete this order to continue.
         </div>
 
+
+        <!-- DETAILS -->
 
         <div class="details">
 
             <div class="detail-box">
 
                 <span>
-                    Total Order
+                    ORDER AMOUNT
                 </span>
 
-                <strong id="productPrice">
+                <strong id="orderPrice">
                     $0.00
                 </strong>
 
@@ -525,10 +534,10 @@ body{
             <div class="detail-box commission">
 
                 <span>
-                    Commission
+                    COMMISSION
                 </span>
 
-                <strong id="productCommission">
+                <strong id="orderCommission">
                     +$0.00
                 </strong>
 
@@ -537,21 +546,42 @@ body{
         </div>
 
 
+        <!-- REQUIRED -->
+
+        <div class="required-box">
+
+            <span>
+                REQUIRED AMOUNT
+            </span>
+
+            <strong id="requiredAmount">
+                $0.00
+            </strong>
+
+        </div>
+
+
+        <!-- COMPLETE -->
+
         <button
-            class="complete-btn"
             id="completeBtn"
+            class="complete-btn"
         >
-            COMPLETE ORDER
+            Complete Order
         </button>
 
     </div>
 
 
-    <!-- EMPTY -->
+    <!-- NO MORE ORDERS -->
 
-    <div id="emptyBox" class="status hidden">
+    <div
+        id="noOrder"
+        class="message"
+        style="display:none;"
+    >
 
-        <div class="status-icon">
+        <div class="message-icon">
             🎉
         </div>
 
@@ -561,46 +591,31 @@ body{
 
         <p>
             You have completed all available orders.
-            <br>
             New orders will appear here when available.
         </p>
 
     </div>
 
-</div>
 
+    <!-- SUCCESS -->
 
-<!-- SUCCESS -->
-
-<div
-    class="success-overlay"
-    id="successOverlay"
->
-
-    <div class="success-box">
+    <div
+        id="successBox"
+        class="success-box"
+    >
 
         <div class="success-icon">
             ✓
         </div>
 
         <h3>
-            Order Completed
+            Order Completed!
         </h3>
 
         <p>
             Your order has been completed successfully.
+            Loading your next order...
         </p>
-
-        <div
-            class="success-commission"
-            id="successCommission"
-        >
-            +$0.00
-        </div>
-
-        <div class="next-text">
-            Loading next order...
-        </div>
 
     </div>
 
@@ -673,13 +688,14 @@ import {
     getFirestore,
     doc,
     getDoc,
+    updateDoc,
     collection,
-    getDocs,
-    runTransaction,
-    arrayUnion
+    getDocs
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -713,12 +729,11 @@ const db =
 let currentUser = null;
 
 
-/* ALL TASKS */
+/* TASK DATA */
 
-let allTasks = [];
+let tasks = [];
 
-
-/* CURRENT TASK */
+let currentTaskIndex = 0;
 
 let currentTask = null;
 
@@ -738,150 +753,17 @@ onAuthStateChanged(
 
         }
 
-
         currentUser = user;
 
-
-        await loadUser();
-
-        await loadTasks();
+        await loadUserAndOrder();
 
     }
 );
 
 
-/* LOAD USER */
+/* LOAD USER + ORDER */
 
-async function loadUser(){
-
-    try{
-
-        const ref =
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            );
-
-
-        const snap =
-            await getDoc(ref);
-
-
-        if(!snap.exists()){
-            return;
-        }
-
-
-        const data =
-            snap.data();
-
-
-        const balance =
-            Number(
-                data.balance || 0
-            );
-
-
-        document
-            .getElementById("balance")
-            .textContent =
-            "$" + balance.toFixed(2);
-
-    }
-
-    catch(error){
-
-        console.error(
-            "User error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* LOAD TASKS */
-
-async function loadTasks(){
-
-    try{
-
-        const taskRef =
-            collection(
-                db,
-                "tasks"
-            );
-
-
-        const snapshot =
-            await getDocs(taskRef);
-
-
-        allTasks = [];
-
-
-        snapshot.forEach(
-            (taskDoc) => {
-
-                const data =
-                    taskDoc.data();
-
-
-                allTasks.push({
-
-                    id:taskDoc.id,
-
-                    name:
-                        data.name ||
-                        "Product Task",
-
-                    price:
-                        Number(
-                            data.price || 0
-                        ),
-
-                    commission:
-                        Number(
-                            data.commission || 0
-                        ),
-
-                    image:
-                        data.image ||
-                        ""
-
-                });
-
-            }
-        );
-
-
-        await showNextOrder();
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Tasks error:",
-            error
-        );
-
-
-        document
-            .getElementById("loadingBox")
-            .textContent =
-            "Unable to load order.";
-
-    }
-
-}
-
-
-/* SHOW NEXT ORDER */
-
-async function showNextOrder(){
+async function loadUserAndOrder(){
 
     try{
 
@@ -897,148 +779,325 @@ async function showNextOrder(){
             await getDoc(userRef);
 
 
-        let completedIds = [];
+        if(!userSnap.exists()){
 
-
-        if(userSnap.exists()){
-
-            const data =
-                userSnap.data();
-
-
-            completedIds =
-                Array.isArray(
-                    data.completedTaskIds
-                )
-                ? data.completedTaskIds
-                : [];
-
-        }
-
-
-        /* FIND FIRST UNCOMPLETED TASK */
-
-        currentTask =
-            allTasks.find(
-                task =>
-                    !completedIds.includes(
-                        task.id
-                    )
-            );
-
-
-        document
-            .getElementById("loadingBox")
-            .classList
-            .add("hidden");
-
-
-        if(!currentTask){
-
-            document
-                .getElementById("orderCard")
-                .classList
-                .add("hidden");
-
-
-            document
-                .getElementById("emptyBox")
-                .classList
-                .remove("hidden");
-
+            showNoOrder();
 
             return;
 
         }
 
 
-        showOrder(currentTask);
+        const userData =
+            userSnap.data();
+
+
+        /* BALANCE */
+
+        const balance =
+            Number(
+                userData.balance || 0
+            );
+
+
+        document
+            .getElementById("balance")
+            .textContent =
+            "$" + balance.toFixed(2);
+
+
+        /* CURRENT TASK INDEX */
+
+        currentTaskIndex =
+            Number(
+                userData.currentTaskIndex || 0
+            );
+
+
+        await loadTasks(
+            balance
+        );
 
     }
 
     catch(error){
 
         console.error(
-            "Next order error:",
+            "User/order error:",
             error
         );
+
+        document
+            .getElementById("loadingBox")
+            .textContent =
+            "Unable to load order.";
 
     }
 
 }
 
 
-/* SHOW ORDER */
+/* LOAD TASKS */
 
-function showOrder(task){
+async function loadTasks(balance){
+
+    try{
+
+        const taskRef =
+            collection(
+                db,
+                "tasks"
+            );
+
+
+        const snapshot =
+            await getDocs(
+                taskRef
+            );
+
+
+        tasks = [];
+
+
+        snapshot.forEach(
+            taskDoc => {
+
+                const data =
+                    taskDoc.data();
+
+
+                tasks.push({
+
+                    id:taskDoc.id,
+
+                    ...data
+
+                });
+
+            }
+        );
+
+
+        /* SORT BY ORDER */
+
+        tasks.sort(
+            (a,b) => {
+
+                const aOrder =
+                    Number(
+                        a.order ??
+                        a.taskNumber ??
+                        999999
+                    );
+
+                const bOrder =
+                    Number(
+                        b.order ??
+                        b.taskNumber ??
+                        999999
+                    );
+
+
+                return aOrder - bOrder;
+
+            }
+        );
+
+
+        /* NO TASKS */
+
+        if(
+            tasks.length === 0 ||
+            currentTaskIndex >= tasks.length
+        ){
+
+            showNoOrder();
+
+            return;
+
+        }
+
+
+        /* ONE CURRENT TASK ONLY */
+
+        currentTask =
+            tasks[currentTaskIndex];
+
+
+        showCurrentOrder(
+            currentTask,
+            balance
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Tasks error:",
+            error
+        );
+
+        document
+            .getElementById("loadingBox")
+            .textContent =
+            "Unable to load current order.";
+
+    }
+
+}
+
+
+/* SHOW CURRENT ORDER */
+
+function showCurrentOrder(
+    task,
+    balance
+){
 
     document
-        .getElementById("emptyBox")
-        .classList
-        .add("hidden");
+        .getElementById("loadingBox")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("noOrder")
+        .style.display =
+        "none";
 
 
     document
         .getElementById("orderCard")
-        .classList
-        .remove("hidden");
+        .style.display =
+        "block";
+
+
+    const name =
+        task.name ||
+        "Product Task";
+
+
+    const price =
+        Number(
+            task.price || 0
+        );
+
+
+    const commission =
+        Number(
+            task.commission || 0
+        );
+
+
+    const image =
+        task.image ||
+        "";
 
 
     document
-        .getElementById("productName")
+        .getElementById("orderName")
         .textContent =
-        task.name;
+        name;
 
 
     document
-        .getElementById("productPrice")
+        .getElementById("orderPrice")
         .textContent =
-        "$" +
-        task.price.toFixed(2);
+        "$" + price.toFixed(2);
 
 
     document
-        .getElementById("productCommission")
+        .getElementById("orderCommission")
         .textContent =
-        "+$" +
-        task.commission.toFixed(2);
+        "+$" + commission.toFixed(2);
 
 
-    const imageBox =
+    /* REQUIRED */
+
+    const required =
+        Math.max(
+            price - balance,
+            0
+        );
+
+
+    document
+        .getElementById("requiredAmount")
+        .textContent =
+        "$" + required.toFixed(2);
+
+
+    /* IMAGE */
+
+    const imageElement =
         document.getElementById(
             "productImage"
         );
 
 
-    if(task.image){
+    const placeholder =
+        document.getElementById(
+            "imagePlaceholder"
+        );
 
-        imageBox.innerHTML = `
 
-            <img
-                src="${task.image}"
-                alt="Product"
-            >
+    if(image){
 
-        `;
+        imageElement.src =
+            image;
+
+        imageElement.style.display =
+            "block";
+
+        placeholder.style.display =
+            "none";
 
     }
 
     else{
 
-        imageBox.innerHTML = `
+        imageElement.style.display =
+            "none";
 
-            <div class="product-placeholder">
-                🛍️
-            </div>
+        placeholder.style.display =
+            "flex";
 
-        `;
+    }
+
+
+    /* BUTTON */
+
+    const completeBtn =
+        document.getElementById(
+            "completeBtn"
+        );
+
+
+    if(balance >= price){
+
+        completeBtn.disabled =
+            false;
+
+        completeBtn.textContent =
+            "Complete Order";
+
+    }
+
+    else{
+
+        completeBtn.disabled =
+            false;
+
+        completeBtn.textContent =
+            "Complete Order";
 
     }
 
 }
 
 
-/* COMPLETE */
+/* COMPLETE ORDER */
 
 document
     .getElementById("completeBtn")
@@ -1050,8 +1109,10 @@ document
 
 async function completeCurrentOrder(){
 
-    if(!currentTask){
+    if(!currentUser || !currentTask){
+
         return;
+
     }
 
 
@@ -1061,10 +1122,11 @@ async function completeCurrentOrder(){
         );
 
 
-    button.disabled = true;
+    button.disabled =
+        true;
 
     button.textContent =
-        "COMPLETING...";
+        "Completing...";
 
 
     try{
@@ -1077,259 +1139,155 @@ async function completeCurrentOrder(){
             );
 
 
-        await runTransaction(
-            db,
-            async (transaction) => {
-
-                const userSnap =
-                    await transaction.get(
-                        userRef
-                    );
+        const userSnap =
+            await getDoc(
+                userRef
+            );
 
 
-                if(!userSnap.exists()){
+        if(!userSnap.exists()){
 
-                    throw new Error(
-                        "User profile not found."
-                    );
+            throw new Error(
+                "User not found"
+            );
 
-                }
-
-
-                const data =
-                    userSnap.data();
+        }
 
 
-                const balance =
-                    Number(
-                        data.balance || 0
-                    );
+        const userData =
+            userSnap.data();
 
 
-                const commissionBalance =
-                    Number(
-                        data.commission || 0
-                    );
+        const balance =
+            Number(
+                userData.balance || 0
+            );
 
 
-                /*
-                 * Available funds:
-                 * Balance + Commission
-                 */
-
-                const available =
-                    balance +
-                    commissionBalance;
+        const oldCommission =
+            Number(
+                userData.commission || 0
+            );
 
 
-                const taskAmount =
-                    Number(
-                        currentTask.price || 0
-                    );
+        const price =
+            Number(
+                currentTask.price || 0
+            );
 
 
-                /*
-                 * Prevent completion
-                 * when funds are not enough.
-                 */
-
-                if(
-                    available <
-                    taskAmount
-                ){
-
-                    throw new Error(
-                        "INSUFFICIENT_BALANCE"
-                    );
-
-                }
+        const earnedCommission =
+            Number(
+                currentTask.commission || 0
+            );
 
 
-                /*
-                 * First use Balance.
-                 * Remaining amount uses Commission.
-                 */
+        /* CHECK BALANCE */
 
-                let remaining =
-                    taskAmount;
+        if(balance < price){
 
-
-                let newBalance =
-                    balance;
+            const required =
+                price - balance;
 
 
-                let newCommissionBalance =
-                    commissionBalance;
+            alert(
+                "Insufficient balance.\n\nRequired: $" +
+                required.toFixed(2)
+            );
 
 
-                if(newBalance >= remaining){
+            button.disabled =
+                false;
 
-                    newBalance =
-                        newBalance -
-                        remaining;
+            button.textContent =
+                "Complete Order";
 
-                    remaining = 0;
+            return;
 
-                }
-
-                else{
-
-                    remaining =
-                        remaining -
-                        newBalance;
-
-                    newBalance = 0;
+        }
 
 
-                    newCommissionBalance =
-                        newCommissionBalance -
-                        remaining;
+        /* NEW BALANCE */
 
-                    remaining = 0;
-
-                }
+        const newBalance =
+            balance - price;
 
 
-                /*
-                 * Earned commission is added
-                 * to Commission box.
-                 */
+        /* TASK AMOUNT + COMMISSION */
 
-                const earnedCommission =
-                    Number(
-                        currentTask.commission || 0
-                    );
+        const newCommission =
+            oldCommission +
+            price +
+            earnedCommission;
 
 
-                newCommissionBalance =
-                    newCommissionBalance +
-                    earnedCommission;
+        /* COMPLETED COUNT */
+
+        const completed =
+            Number(
+                userData.completedTasks || 0
+            );
 
 
-                const oldCompleted =
-                    Array.isArray(
-                        data.completedTaskIds
-                    )
-                    ? data.completedTaskIds
-                    : [];
+        const newCompleted =
+            completed + 1;
 
 
-                const newCompleted =
-                    oldCompleted.includes(
-                        currentTask.id
-                    )
-                    ? oldCompleted
-                    : [
-                        ...oldCompleted,
-                        currentTask.id
-                    ];
+        /* NEXT TASK */
+
+        const nextIndex =
+            currentTaskIndex + 1;
 
 
-                const oldCompletedCount =
-                    Number(
-                        data.completedTasks || 0
-                    );
+        await updateDoc(
+            userRef,
+            {
 
+                balance:
+                    newBalance,
 
-                const oldToday =
-                    Number(
-                        data.todayCommission || 0
-                    );
+                commission:
+                    newCommission,
 
+                completedTasks:
+                    newCompleted,
 
-                transaction.update(
-                    userRef,
-                    {
-
-                        balance:
-                            newBalance,
-
-                        commission:
-                            newCommissionBalance,
-
-                        completedTasks:
-                            oldCompletedCount + 1,
-
-                        todayCommission:
-                            oldToday +
-                            earnedCommission,
-
-                        completedTaskIds:
-                            newCompleted
-
-                    }
-                );
+                currentTaskIndex:
+                    nextIndex
 
             }
         );
 
 
-        /*
-         * Show success.
-         */
+        /* SUCCESS */
 
         document
             .getElementById(
-                "successCommission"
+                "orderCard"
             )
-            .textContent =
-            "+$" +
-            Number(
-                currentTask.commission || 0
-            ).toFixed(2);
+            .style.display =
+            "none";
 
 
         document
             .getElementById(
-                "successOverlay"
+                "successBox"
             )
             .classList
             .add("show");
 
 
         /*
-         * Refresh balance.
-         */
-
-        await loadUser();
-
-
-        /*
-         * Remove current order from screen.
-         */
-
-        document
-            .getElementById(
-                "orderCard"
-            )
-            .classList
-            .add("hidden");
-
-
-        /*
-         * After short delay,
-         * automatically show next order.
-         */
+         NEXT ORDER AFTER 1.2 SEC
+        */
 
         setTimeout(
-            async () => {
+            () => {
 
-                document
-                    .getElementById(
-                        "successOverlay"
-                    )
-                    .classList
-                    .remove("show");
-
-
-                currentTask = null;
-
-
-                await showNextOrder();
-
+                window.location.reload();
 
             },
-            1300
+            1200
         );
 
     }
@@ -1342,32 +1300,42 @@ async function completeCurrentOrder(){
         );
 
 
-        if(
-            error.message ===
-            "INSUFFICIENT_BALANCE"
-        ){
-
-            alert(
-                "Insufficient balance for this order."
-            );
-
-        }
-
-        else{
-
-            alert(
-                "Order complete nahi ho saka. Please try again."
-            );
-
-        }
+        alert(
+            "Order complete nahi ho saka."
+        );
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
-            "COMPLETE ORDER";
+            "Complete Order";
 
     }
+
+}
+
+
+/* NO ORDER */
+
+function showNoOrder(){
+
+    document
+        .getElementById("loadingBox")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("orderCard")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("noOrder")
+        .style.display =
+        "block";
 
 }
 
