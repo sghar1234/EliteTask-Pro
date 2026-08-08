@@ -1,1350 +1,720 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>EliteTask Pro Admin</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#fffdf5,#f5e8b8,#fffaf0);
-color:#222;
-min-height:100vh;
-}
-
-.header{
-background:#fff;
-padding:14px 16px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 3px 15px #0001;
-position:sticky;
-top:0;
-z-index:10;
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:bold;
-color:#80620c;
-}
-
-.logo{
-width:42px;
-height:42px;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#b99320,#efd56d);
-color:white;
-font-weight:900;
-}
-
-.logout{
-border:0;
-background:#222;
-color:white;
-padding:9px 13px;
-border-radius:9px;
+    font-family:Arial,sans-serif;
+    background:#f7edbd;
+    color:#3d2d00;
+    padding:15px;
 }
 
 .container{
-max-width:1100px;
-margin:auto;
-padding:18px 14px 50px;
+    max-width:700px;
+    margin:auto;
 }
 
-h1{
-color:#69500a;
-margin-bottom:5px;
+.header{
+    background:linear-gradient(135deg,#8c6500,#d8b33d,#9c7100);
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.subtitle{
-color:#888;
-font-size:13px;
-margin-bottom:18px;
+.header h2{
+    font-size:20px;
 }
 
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-margin-bottom:18px;
-}
-
-.stat{
-background:#fff;
-border-radius:16px;
-padding:16px;
-box-shadow:0 5px 20px #0000000d;
-border:1px solid #e7d48e;
-}
-
-.stat small{color:#888}
-.stat strong{
-display:block;
-font-size:24px;
-margin-top:6px;
-color:#765b08;
-}
-
-.tabs{
-display:flex;
-gap:7px;
-overflow-x:auto;
-margin-bottom:15px;
-}
-
-.tab{
-border:1px solid #ddc777;
-background:white;
-color:#72580a;
-padding:10px 14px;
-border-radius:10px;
-font-weight:bold;
-white-space:nowrap;
-}
-
-.tab.active{
-background:linear-gradient(135deg,#bd971e,#e5c75d);
-color:white;
-}
-
-.panel{
-display:none;
-background:#fff;
-border-radius:18px;
-padding:15px;
-box-shadow:0 6px 25px #0000000d;
-}
-
-.panel.active{display:block}
-
-.panel-head{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:14px;
-}
-
-.panel-head h2{
-color:#69500a;
-font-size:19px;
-}
-
-.refresh{
-border:1px solid #d9c16c;
-background:#fff;
-padding:8px 12px;
-border-radius:9px;
-color:#72580a;
+.logout{
+    background:white;
+    color:#8b6500;
+    border:0;
+    padding:9px 13px;
+    border-radius:9px;
+    font-weight:bold;
 }
 
 .card{
-border:1px solid #eadba7;
-border-radius:14px;
-padding:13px;
-margin-bottom:10px;
-background:#fffdf7;
+    background:white;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 5px 18px rgba(0,0,0,.1);
 }
 
 .card h3{
-font-size:15px;
-color:#604a08;
-}
-
-.small{
-font-size:12px;
-color:#777;
-margin-top:4px;
-}
-
-.row{
-display:flex;
-justify-content:space-between;
-gap:10px;
-align-items:center;
-}
-
-.actions{
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-margin-top:11px;
-}
-
-.btn{
-border:0;
-padding:8px 11px;
-border-radius:8px;
-font-size:12px;
-font-weight:bold;
-}
-
-.gold{background:#fff0b8;color:#725500}
-.green{background:#e1f5e5;color:#167329}
-.red{background:#ffe2e2;color:#a00000}
-.dark{background:#222;color:white}
-
-.form{
-background:#faf6e8;
-border-radius:14px;
-padding:14px;
-margin-bottom:15px;
-}
-
-.form h3{
-color:#69500a;
-margin-bottom:10px;
+    margin-bottom:15px;
+    color:#715200;
 }
 
 .input{
-width:100%;
-height:43px;
-border:1px solid #ddd;
-border-radius:9px;
-padding:0 11px;
-margin-bottom:9px;
-outline:none;
+    width:100%;
+    padding:13px;
+    border:1px solid #dbc879;
+    border-radius:10px;
+    margin-bottom:11px;
+    outline:none;
 }
 
-.primary{
-width:100%;
-border:0;
-padding:11px;
-border-radius:10px;
-background:linear-gradient(135deg,#bd971e,#e5c75d);
-color:white;
-font-weight:bold;
+.input:focus{
+    border-color:#b78a00;
 }
 
-.support{
-display:grid;
-grid-template-columns:280px 1fr;
-gap:12px;
+.preview{
+    width:100%;
+    max-height:230px;
+    object-fit:cover;
+    border-radius:14px;
+    margin-bottom:12px;
+    display:none;
 }
 
-.chat-list{
-border:1px solid #eadba7;
-border-radius:12px;
-padding:7px;
-max-height:500px;
-overflow:auto;
+.save-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:11px;
+    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
+    color:white;
+    font-weight:bold;
+    font-size:15px;
 }
 
-.chat-user{
-width:100%;
-border:0;
-background:white;
-padding:11px;
-text-align:left;
-border-radius:9px;
-margin-bottom:5px;
+.task{
+    border:1px solid #ead99a;
+    border-radius:15px;
+    overflow:hidden;
+    margin-top:12px;
 }
 
-.chat-user.active{
-background:#fff0b8;
+.task img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    display:block;
 }
 
-.chat-user strong{
-display:block;
-color:#654d08;
+.task-info{
+    padding:14px;
 }
 
-.chat-user small{
-color:#888;
-font-size:11px;
+.task-info h4{
+    color:#624700;
+    margin-bottom:6px;
 }
 
-.chat{
-border:1px solid #eadba7;
-border-radius:12px;
-overflow:hidden;
+.task-info p{
+    margin-top:4px;
+    color:#777;
+    font-size:13px;
 }
 
-.chat-title{
-padding:12px;
-background:#faf6e8;
-font-weight:bold;
-color:#654d08;
+.reply-row{
+    display:flex;
+    gap:8px;
 }
 
-.messages{
-height:380px;
-overflow:auto;
-padding:12px;
-background:#fffdf7;
+.reply-row input{
+    flex:1;
+    padding:12px;
+    border:1px solid #dbc879;
+    border-radius:10px;
 }
 
-.msg{
-max-width:78%;
-padding:9px 11px;
-border-radius:12px;
-margin-bottom:8px;
-font-size:13px;
-white-space:pre-wrap;
-word-break:break-word;
+.reply-btn{
+    border:0;
+    border-radius:10px;
+    padding:0 16px;
+    background:#b48600;
+    color:white;
 }
 
-.msg.user{
-background:white;
-border:1px solid #e5d9a9;
+#status{
+    margin-top:10px;
+    font-size:13px;
+    color:#777;
 }
 
-.msg.admin{
-margin-left:auto;
-background:#c5a12c;
-color:white;
-}
-
-.reply{
-display:flex;
-gap:6px;
-padding:8px;
-border-top:1px solid #eadba7;
-}
-
-.reply input{
-flex:1;
-height:42px;
-border:1px solid #ddd;
-border-radius:9px;
-padding:0 10px;
-}
-
-.reply button{
-width:50px;
-border:0;
-border-radius:9px;
-background:#c5a12c;
-color:white;
-}
-
-.empty{
-text-align:center;
-padding:30px;
-color:#999;
-font-size:13px;
-}
-
-.error{
-padding:12px;
-background:#ffe8e8;
-color:#a00000;
-border-radius:10px;
-margin-bottom:12px;
-font-size:13px;
-}
-
-@media(max-width:750px){
-.stats{grid-template-columns:repeat(2,1fr)}
-.support{grid-template-columns:1fr}
-.chat-list{max-height:180px}
-}
-
-@media(max-width:450px){
-.container{padding:14px 9px}
-.stat{padding:12px}
-.stat strong{font-size:20px}
-}
 </style>
+
 </head>
+
 
 <body>
 
-<header class="header">
-<div class="brand">
-<div class="logo">ET</div>
-<span>EliteTask Pro Admin</span>
-</div>
 
-<button id="logout" class="logout">Logout</button>
-</header>
+<div class="container">
 
-<main class="container">
 
-<h1>Admin Dashboard</h1>
-<p class="subtitle">Manage your EliteTask Pro website</p>
+<div class="header">
 
-<div id="error"></div>
+<h2>EliteTask Pro Admin</h2>
 
-<div class="stats">
-<div class="stat">
-<small>Users</small>
-<strong id="usersCount">0</strong>
-</div>
-
-<div class="stat">
-<small>Tasks</small>
-<strong id="tasksCount">0</strong>
-</div>
-
-<div class="stat">
-<small>Pending Withdraw</small>
-<strong id="withdrawCount">0</strong>
-</div>
-
-<div class="stat">
-<small>Support Messages</small>
-<strong id="supportCount">0</strong>
-</div>
-</div>
-
-<div class="tabs">
-
-<button class="tab active" data-panel="users">
-Users
-</button>
-
-<button class="tab" data-panel="tasks">
-Tasks
-</button>
-
-<button class="tab" data-panel="withdraws">
-Withdrawals
-</button>
-
-<button class="tab" data-panel="support">
-Customer Support
+<button
+    class="logout"
+    id="logoutBtn"
+>
+Logout
 </button>
 
 </div>
 
 
-<!-- USERS -->
+<div class="card">
 
-<section id="users" class="panel active">
+<h3>Add New Task</h3>
 
-<div class="panel-head">
-<h2>Users</h2>
-<button class="refresh" id="refreshUsers">Refresh</button>
-</div>
-
-<div id="usersList">
-<div class="empty">Loading users...</div>
-</div>
-
-</section>
-
-
-<!-- TASKS -->
-
-<section id="tasks" class="panel">
-
-<div class="panel-head">
-<h2>Tasks</h2>
-<button class="refresh" id="refreshTasks">Refresh</button>
-</div>
-
-<div class="form">
-
-<h3>Add Task</h3>
 
 <input
-id="taskName"
-class="input"
-placeholder="Task name"
+    id="taskName"
+    class="input"
+    placeholder="Task name"
 >
+
 
 <input
-id="taskPrice"
-class="input"
-type="number"
-placeholder="Task price"
+    id="taskPrice"
+    class="input"
+    type="number"
+    placeholder="Task price"
 >
+
 
 <input
-id="taskCommission"
-class="input"
-type="number"
-placeholder="Commission"
+    id="taskCommission"
+    class="input"
+    type="number"
+    placeholder="Commission"
 >
+
 
 <input
-id="taskImage"
-class="input"
-placeholder="Image URL"
+    id="taskImage"
+    class="input"
+    type="file"
+    accept="image/*"
 >
 
-<button id="addTask" class="primary">
-Add Task
+
+<img
+    id="imagePreview"
+    class="preview"
+    alt="Selected image"
+>
+
+
+<button
+    id="saveTask"
+    class="save-btn"
+    type="button"
+>
+Save Task
 </button>
 
+
+<div id="status"></div>
+
 </div>
 
-<div id="tasksList">
-<div class="empty">Loading tasks...</div>
+
+<div class="card">
+
+<h3>Tasks</h3>
+
+<div id="taskList">
+Loading tasks...
 </div>
 
-</section>
-
-
-<!-- WITHDRAW -->
-
-<section id="withdraws" class="panel">
-
-<div class="panel-head">
-<h2>Withdraw Requests</h2>
-<button class="refresh" id="refreshWithdraws">
-Refresh
-</button>
 </div>
 
-<div id="withdrawList">
-<div class="empty">Loading withdrawals...</div>
-</div>
 
-</section>
+<div class="card">
+
+<h3>Customer Service</h3>
 
 
-<!-- SUPPORT -->
-
-<section id="support" class="panel">
-
-<div class="panel-head">
-<h2>Customer Support</h2>
-<button class="refresh" id="refreshSupport">
-Refresh
-</button>
-</div>
-
-<div class="support">
-
-<div class="chat-list" id="chatUsers">
-<div class="empty">Loading conversations...</div>
-</div>
-
-<div class="chat">
-
-<div class="chat-title" id="chatTitle">
-Select customer
-</div>
-
-<div class="messages" id="messages">
-<div class="empty">
-Select a customer to view messages.
-</div>
-</div>
-
-<div class="reply">
+<div class="reply-row">
 
 <input
-id="replyInput"
-placeholder="Type reply..."
-autocomplete="off"
+    id="replyInput"
+    placeholder="Type reply..."
+    autocomplete="off"
 >
 
-<button id="replyBtn">
-➤
+
+<button
+    id="replyBtn"
+    class="reply-btn"
+    type="button"
+>
+Send
 </button>
 
 </div>
 
 </div>
 
+
 </div>
-
-</section>
-
-</main>
 
 
 <script type="module">
 
+
 import {
-initializeApp
+    initializeApp
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
-import {
-getAuth,
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-getDocs,
-getDoc,
-doc,
-addDoc,
-updateDoc,
-deleteDoc,
-serverTimestamp
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-const firebaseConfig={
-apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-authDomain:"elitetask-pro.firebaseapp.com",
-projectId:"elitetask-pro",
-storageBucket:"elitetask-pro.firebasestorage.app",
-messagingSenderId:"504295275402",
-appId:"1:504295275402:web:cf744a5d4e82c72145a673"
-};
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-
-let selectedUser=null;
-let supportData=[];
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
 
-function esc(v){
-return String(v??"")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-}
+const firebaseConfig = {
 
+    apiKey:
+        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-/* AUTH */
+    authDomain:
+        "elitetask-pro.firebaseapp.com",
 
-onAuthStateChanged(auth,async user=>{
+    projectId:
+        "elitetask-pro",
 
-if(!user){
-showError("Admin login required.");
-return;
-}
+    storageBucket:
+        "elitetask-pro.firebasestorage.app",
 
-try{
+    messagingSenderId:
+        "504295275402",
 
-const ref=doc(db,"users",user.uid);
-const snap=await getDoc(ref);
-
-if(!snap.exists()){
-showError("Admin user document not found.");
-return;
-}
-
-const data=snap.data();
-
-if(data.role!=="admin"){
-showError("This account is not an admin account.");
-return;
-}
-
-loadUsers();
-loadTasks();
-loadWithdraws();
-loadSupport();
-
-}
-catch(e){
-showError(e.message);
-}
-
-});
-
-
-function showError(text){
-document.getElementById("error").innerHTML=
-`<div class="error">${esc(text)}</div>`;
-}
-
-
-/* TABS */
-
-document.querySelectorAll(".tab").forEach(btn=>{
-
-btn.onclick=()=>{
-
-document.querySelectorAll(".tab")
-.forEach(x=>x.classList.remove("active"));
-
-document.querySelectorAll(".panel")
-.forEach(x=>x.classList.remove("active"));
-
-btn.classList.add("active");
-
-document.getElementById(
-btn.dataset.panel
-).classList.add("active");
+    appId:
+        "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
-});
+
+const app =
+    initializeApp(firebaseConfig);
 
 
-/* USERS */
+const auth =
+    getAuth(app);
 
-async function loadUsers(){
 
-const list=document.getElementById("usersList");
+const db =
+    getFirestore(app);
 
-list.innerHTML=
-'<div class="empty">Loading users...</div>';
 
-try{
+const storage =
+    getStorage(app);
 
-const snap=await getDocs(
-collection(db,"users")
+
+const imageInput =
+    document.getElementById("taskImage");
+
+
+const preview =
+    document.getElementById("imagePreview");
+
+
+const status =
+    document.getElementById("status");
+
+
+imageInput.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            imageInput.files[0];
+
+        if(!file){
+
+            preview.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+    }
 );
 
-document.getElementById("usersCount")
-.textContent=snap.size;
 
-if(snap.empty){
-list.innerHTML=
-'<div class="empty">No users found.</div>';
-return;
-}
+document
+.getElementById("saveTask")
+.addEventListener(
+    "click",
+    async () => {
 
-list.innerHTML="";
+        try{
 
-snap.forEach(item=>{
-
-const d=item.data();
-
-const card=document.createElement("div");
-card.className="card";
-
-card.innerHTML=`
-
-<div class="row">
-
-<div>
-<h3>${esc(d.name||"User")}</h3>
-
-<div class="small">
-${esc(d.email||"")}
-</div>
-
-<div class="small">
-UID: ${esc(item.id)}
-</div>
-</div>
-
-<strong>
-Balance:
-${Number(d.balance||0).toFixed(2)}
-</strong>
-
-</div>
-
-<div class="actions">
-
-<button
-class="btn gold"
-data-edit="${item.id}">
-Edit Balance
-</button>
-
-<button
-class="btn red"
-data-del="${item.id}">
-Delete
-</button>
-
-</div>
-`;
-
-list.appendChild(card);
-
-});
+            const name =
+                document
+                .getElementById("taskName")
+                .value
+                .trim();
 
 
-list.querySelectorAll("[data-edit]")
-.forEach(btn=>{
+            const price =
+                Number(
+                    document
+                    .getElementById("taskPrice")
+                    .value
+                );
 
-btn.onclick=async()=>{
 
-const value=prompt("Enter new balance:");
+            const commission =
+                Number(
+                    document
+                    .getElementById("taskCommission")
+                    .value
+                );
 
-if(value===null)return;
 
-const amount=Number(value);
+            const file =
+                imageInput.files[0];
 
-if(!Number.isFinite(amount)){
-alert("Invalid amount.");
-return;
-}
 
-await updateDoc(
-doc(db,"users",btn.dataset.edit),
-{balance:amount}
+            if(!name){
+
+                alert("Enter task name.");
+
+                return;
+
+            }
+
+
+            if(!price){
+
+                alert("Enter task price.");
+
+                return;
+
+            }
+
+
+            if(!commission){
+
+                alert("Enter commission.");
+
+                return;
+
+            }
+
+
+            if(!file){
+
+                alert(
+                    "Please select an image from Gallery."
+                );
+
+                return;
+
+            }
+
+
+            status.textContent =
+                "Uploading image...";
+
+
+            const safeName =
+                file.name
+                .replace(
+                    /[^a-zA-Z0-9.-]/g,
+                    "_"
+                );
+
+
+            const imageRef =
+                ref(
+                    storage,
+                    "tasks/" +
+                    Date.now() +
+                    "_" +
+                    safeName
+                );
+
+
+            await uploadBytes(
+                imageRef,
+                file
+            );
+
+
+            const imageURL =
+                await getDownloadURL(
+                    imageRef
+                );
+
+
+            status.textContent =
+                "Saving task...";
+
+
+            await addDoc(
+                collection(db,"tasks"),
+                {
+
+                    name:name,
+
+                    price:price,
+
+                    commission:commission,
+
+                    image:imageURL,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            status.textContent =
+                "Task saved successfully.";
+
+
+            document
+            .getElementById("taskName")
+            .value = "";
+
+
+            document
+            .getElementById("taskPrice")
+            .value = "";
+
+
+            document
+            .getElementById("taskCommission")
+            .value = "";
+
+
+            imageInput.value = "";
+
+
+            preview.src = "";
+
+            preview.style.display =
+                "none";
+
+
+            loadTasks();
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            status.textContent =
+                error.message;
+
+            alert(
+                "Error: " +
+                error.message
+            );
+
+        }
+
+    }
 );
 
-loadUsers();
-
-};
-
-});
-
-
-list.querySelectorAll("[data-del]")
-.forEach(btn=>{
-
-btn.onclick=async()=>{
-
-if(!confirm("Delete this user record?"))
-return;
-
-await deleteDoc(
-doc(db,"users",btn.dataset.del)
-);
-
-loadUsers();
-
-};
-
-});
-
-}
-catch(e){
-
-list.innerHTML=
-`<div class="error">${esc(e.message)}</div>`;
-
-}
-
-}
-
-
-/* TASKS */
 
 async function loadTasks(){
 
-const list=document.getElementById("tasksList");
+    const list =
+        document.getElementById(
+            "taskList"
+        );
 
-list.innerHTML=
-'<div class="empty">Loading tasks...</div>';
 
-try{
+    list.innerHTML =
+        "Loading tasks...";
 
-const snap=await getDocs(
-collection(db,"tasks")
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                collection(db,"tasks")
+            );
+
+
+        if(snapshot.empty){
+
+            list.innerHTML =
+                "No tasks found.";
+
+            return;
+
+        }
+
+
+        list.innerHTML = "";
+
+
+        snapshot.forEach(
+            (taskDoc) => {
+
+                const task =
+                    taskDoc.data();
+
+
+                const image =
+                    task.image ||
+                    task.imageUrl ||
+                    task.imageURL ||
+                    "";
+
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "task";
+
+
+                div.innerHTML = `
+
+                    ${
+                        image
+                        ?
+                        `
+                        <img
+                            src="${image}"
+                            alt="${task.name || "Task"}"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+                    <div class="task-info">
+
+                        <h4>
+                            ${task.name || "Task"}
+                        </h4>
+
+                        <p>
+                            Price:
+                            ${task.price || 0}
+                        </p>
+
+                        <p>
+                            Commission:
+                            ${task.commission || 0}
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        list.innerHTML =
+            "Unable to load tasks.";
+
+    }
+
+}
+
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    async () => {
+
+        await signOut(auth);
+
+        location.href =
+            "index.html";
+
+    }
 );
 
-document.getElementById("tasksCount")
-.textContent=snap.size;
 
-if(snap.empty){
-list.innerHTML=
-'<div class="empty">No tasks found.</div>';
-return;
-}
+onAuthStateChanged(
+    auth,
+    (user) => {
 
-list.innerHTML="";
+        if(!user){
 
-snap.forEach(item=>{
+            location.href =
+                "index.html";
 
-const d=item.data();
+            return;
 
-const card=document.createElement("div");
-card.className="card";
-
-card.innerHTML=`
-
-<div class="row">
-
-<div>
-<h3>${esc(d.name||d.title||"Task")}</h3>
-
-<div class="small">
-Commission:
-${Number(d.commission||0)}
-</div>
-
-</div>
-
-<strong>
-${Number(d.price||0)}
-</strong>
-
-</div>
-
-<div class="actions">
-
-<button
-class="btn red"
-data-task="${item.id}">
-Delete
-</button>
-
-</div>
-`;
-
-list.appendChild(card);
-
-});
+        }
 
 
-list.querySelectorAll("[data-task]")
-.forEach(btn=>{
+        loadTasks();
 
-btn.onclick=async()=>{
-
-if(!confirm("Delete this task?"))
-return;
-
-await deleteDoc(
-doc(db,"tasks",btn.dataset.task)
+    }
 );
-
-loadTasks();
-
-};
-
-});
-
-}
-catch(e){
-
-list.innerHTML=
-`<div class="error">${esc(e.message)}</div>`;
-
-}
-
-}
-
-
-/* ADD TASK */
-
-document.getElementById("addTask")
-.onclick=async()=>{
-
-const name=
-document.getElementById("taskName")
-.value.trim();
-
-const price=
-Number(document.getElementById("taskPrice").value);
-
-const commission=
-Number(document.getElementById("taskCommission").value)||0;
-
-const image=
-document.getElementById("taskImage")
-.value.trim();
-
-if(!name||!Number.isFinite(price)){
-alert("Enter task name and price.");
-return;
-}
-
-try{
-
-await addDoc(
-collection(db,"tasks"),
-{
-name,
-price,
-commission,
-image,
-createdAt:serverTimestamp()
-}
-);
-
-document.getElementById("taskName").value="";
-document.getElementById("taskPrice").value="";
-document.getElementById("taskCommission").value="";
-document.getElementById("taskImage").value="";
-
-loadTasks();
-
-}
-catch(e){
-alert(e.message);
-}
-
-};
-
-
-/* WITHDRAW */
-
-async function loadWithdraws(){
-
-const list=document.getElementById("withdrawList");
-
-list.innerHTML=
-'<div class="empty">Loading withdrawals...</div>';
-
-try{
-
-const snap=await getDocs(
-collection(db,"withdraws")
-);
-
-let pending=0;
-
-snap.forEach(x=>{
-if(String(x.data().status||"pending").toLowerCase()==="pending")
-pending++;
-});
-
-document.getElementById("withdrawCount")
-.textContent=pending;
-
-if(snap.empty){
-list.innerHTML=
-'<div class="empty">No withdrawal requests.</div>';
-return;
-}
-
-list.innerHTML="";
-
-snap.forEach(item=>{
-
-const d=item.data();
-
-const status=String(d.status||"pending");
-
-const card=document.createElement("div");
-card.className="card";
-
-card.innerHTML=`
-
-<div class="row">
-
-<div>
-
-<h3>Withdrawal Request</h3>
-
-<div class="small">
-User: ${esc(d.userId||"")}
-</div>
-
-<div class="small">
-Method:
-${esc(d.method||d.paymentMethod||"")}
-</div>
-
-<div class="small">
-Account:
-${esc(d.account||d.accountNumber||d.number||"")}
-</div>
-
-</div>
-
-<strong>
-${Number(d.amount||0).toFixed(2)}
-</strong>
-
-</div>
-
-<div class="small">
-Status: ${esc(status)}
-</div>
-
-${
-status.toLowerCase()==="pending"
-?`
-<div class="actions">
-
-<button
-class="btn green"
-data-approve="${item.id}">
-Approve
-</button>
-
-<button
-class="btn red"
-data-reject="${item.id}">
-Reject
-</button>
-
-</div>
-`
-:""
-}
-
-`;
-
-list.appendChild(card);
-
-});
-
-
-list.querySelectorAll("[data-approve]")
-.forEach(btn=>{
-btn.onclick=()=>setWithdraw(btn.dataset.approve,"approved");
-});
-
-list.querySelectorAll("[data-reject]")
-.forEach(btn=>{
-btn.onclick=()=>setWithdraw(btn.dataset.reject,"rejected");
-});
-
-}
-catch(e){
-
-list.innerHTML=
-`<div class="error">${esc(e.message)}</div>`;
-
-}
-
-}
-
-
-async function setWithdraw(id,status){
-
-if(!confirm("Set withdrawal to "+status+"?"))
-return;
-
-try{
-
-await updateDoc(
-doc(db,"withdraws",id),
-{
-status,
-updatedAt:serverTimestamp()
-}
-);
-
-loadWithdraws();
-
-}
-catch(e){
-alert(e.message);
-}
-
-}
-
-
-/* SUPPORT */
-
-async function loadSupport(){
-
-const list=document.getElementById("chatUsers");
-
-list.innerHTML=
-'<div class="empty">Loading conversations...</div>';
-
-try{
-
-const snap=await getDocs(
-collection(db,"supportMessages")
-);
-
-supportData=[];
-
-const users=new Map();
-
-snap.forEach(item=>{
-
-const d=item.data();
-
-supportData.push({
-id:item.id,
-...d
-});
-
-if(!d.userId)return;
-
-if(!users.has(d.userId)){
-
-users.set(d.userId,{
-email:d.userEmail||d.email||"",
-last:d.message||d.text||""
-});
-
-}else{
-
-users.get(d.userId).last=
-d.message||d.text||
-users.get(d.userId).last;
-
-}
-
-});
-
-
-document.getElementById("supportCount")
-.textContent=supportData.length;
-
-if(users.size===0){
-
-list.innerHTML=
-'<div class="empty">No conversations.</div>';
-
-return;
-}
-
-list.innerHTML="";
-
-users.forEach((u,uid)=>{
-
-const b=document.createElement("button");
-
-b.className="chat-user";
-
-b.innerHTML=`
-<strong>${esc(u.email||uid)}</strong>
-<small>${esc(u.last)}</small>
-`;
-
-b.onclick=()=>{
-
-selectedUser=uid;
-
-document.querySelectorAll(".chat-user")
-.forEach(x=>x.classList.remove("active"));
-
-b.classList.add("active");
-
-document.getElementById("chatTitle")
-.textContent=u.email||uid;
-
-renderChat();
-
-};
-
-list.appendChild(b);
-
-});
-
-}
-catch(e){
-
-list.innerHTML=
-`<div class="error">${esc(e.message)}</div>`;
-
-}
-
-}
-
-
-function renderChat(){
-
-const box=document.getElementById("messages");
-
-if(!selectedUser){
-
-box.innerHTML=
-'<div class="empty">Select customer.</div>';
-
-return;
-}
-
-const messages=supportData
-.filter(x=>x.userId===selectedUser);
-
-if(messages.length===0){
-
-box.innerHTML=
-'<div class="empty">No messages.</div>';
-
-return;
-}
-
-box.innerHTML="";
-
-messages.forEach(m=>{
-
-const sender=
-String(m.sender||m.from||"user")
-.toLowerCase();
-
-const div=document.createElement("div");
-
-div.className=
-"msg "+
-(
-sender==="admin"||sender==="support"
-?"admin"
-:"user"
-);
-
-div.textContent=m.message||m.text||"";
-
-box.appendChild(div);
-
-});
-
-box.scrollTop=box.scrollHeight;
-
-}
-
-
-/* REPLY */
-
-async function sendReply(){
-
-if(!selectedUser){
-alert("Select a customer first.");
-return;
-}
-
-const input=
-document.getElementById("replyInput");
-
-const text=input.value.trim();
-
-if(!text)return;
-
-try{
-
-await addDoc(
-collection(db,"supportMessages"),
-{
-userId:selectedUser,
-message:text,
-sender:"admin",
-status:"replied",
-createdAt:serverTimestamp()
-}
-);
-
-input.value="";
-
-await loadSupport();
-
-renderChat();
-
-}
-catch(e){
-alert(e.message);
-}
-
-}
-
-document.getElementById("replyBtn")
-.onclick=sendReply;
-
-document.getElementById("replyInput")
-.addEventListener("keydown",e=>{
-if(e.key==="Enter"){
-e.preventDefault();
-sendReply();
-}
-});
-
-
-/* REFRESH */
-
-document.getElementById("refreshUsers")
-.onclick=loadUsers;
-
-document.getElementById("refreshTasks")
-.onclick=loadTasks;
-
-document.getElementById("refreshWithdraws")
-.onclick=loadWithdraws;
-
-document.getElementById("refreshSupport")
-.onclick=loadSupport;
-
-
-/* LOGOUT */
-
-document.getElementById("logout")
-.onclick=async()=>{
-await signOut(auth);
-location.reload();
-};
 
 </script>
 
+
 </body>
+
 </html>
