@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>EliteTask Pro - Admin Chat</title>
 
+
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -20,6 +26,9 @@ body{
     padding-bottom:20px;
 }
 
+
+/* HEADER */
+
 .header{
     height:72px;
     background:linear-gradient(135deg,#07152f,#1454a3);
@@ -28,6 +37,7 @@ body{
     align-items:center;
     padding:0 15px;
     gap:12px;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
 }
 
 .back{
@@ -38,6 +48,11 @@ body{
     background:rgba(255,255,255,.12);
     color:white;
     font-size:22px;
+    cursor:pointer;
+}
+
+.header-info{
+    flex:1;
 }
 
 .header-title{
@@ -48,8 +63,11 @@ body{
 .header-user{
     font-size:12px;
     opacity:.75;
-    margin-top:3px;
+    margin-top:4px;
 }
+
+
+/* MAIN */
 
 .container{
     max-width:650px;
@@ -59,15 +77,28 @@ body{
 
 .chat-card{
     background:white;
-    border-radius:20px;
+    border-radius:21px;
     padding:15px;
     box-shadow:0 5px 20px rgba(20,40,80,.08);
 }
 
+
+/* STATUS */
+
+.status{
+    text-align:center;
+    font-size:11px;
+    color:#8994a6;
+    margin-bottom:10px;
+}
+
+
+/* CHAT */
+
 .chat-box{
     height:500px;
     background:#f7f9fc;
-    border-radius:16px;
+    border-radius:17px;
     padding:15px;
     overflow-y:auto;
 }
@@ -75,9 +106,9 @@ body{
 .message{
     max-width:82%;
     padding:11px 13px;
-    border-radius:14px;
+    border-radius:15px;
     margin-bottom:10px;
-    font-size:14px;
+    font-size:13px;
     line-height:1.45;
     word-break:break-word;
 }
@@ -85,12 +116,12 @@ body{
 .user-message{
     background:white;
     color:#263244;
-    border:1px solid #e6eaf0;
+    border:1px solid #e4e8ef;
     border-bottom-left-radius:4px;
 }
 
 .admin-message{
-    background:#1678ed;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
     color:white;
     margin-left:auto;
     border-bottom-right-radius:4px;
@@ -98,26 +129,36 @@ body{
 
 .time{
     font-size:9px;
-    opacity:.6;
+    opacity:.55;
     margin-top:5px;
 }
 
+
+/* EMPTY */
+
 .empty{
-    height:100%;
+    min-height:450px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
     color:#8994a6;
-    font-size:15px;
+    font-size:14px;
 }
+
+
+/* ERROR */
 
 .error{
     padding:20px;
-    color:#b91c1c;
     text-align:center;
-    line-height:1.5;
+    color:#b91c1c;
+    font-size:13px;
+    line-height:1.6;
 }
+
+
+/* INPUT */
 
 .message-area{
     display:flex;
@@ -128,78 +169,138 @@ body{
 .message-input{
     flex:1;
     border:1px solid #dce2ea;
-    border-radius:13px;
+    border-radius:14px;
     padding:13px;
     font-size:14px;
     outline:none;
+    background:white;
 }
 
 .message-input:focus{
-    border-color:#1678ed;
+    border-color:#1678e8;
 }
 
 .send-btn{
     width:55px;
     border:none;
-    border-radius:13px;
+    border-radius:14px;
     background:linear-gradient(135deg,#1478ed,#25a5ff);
     color:white;
     font-size:21px;
+    cursor:pointer;
 }
 
-.status{
-    text-align:center;
-    font-size:11px;
-    color:#8b95a5;
-    margin-bottom:10px;
+.send-btn:disabled{
+    opacity:.6;
 }
+
+
+/* USER INFO */
+
+.user-info{
+    margin-top:12px;
+    background:#f5f8fc;
+    border-radius:13px;
+    padding:12px;
+    font-size:11px;
+    color:#788496;
+}
+
+.user-info b{
+    color:#172033;
+}
+
+
+/* MOBILE */
+
+@media(max-width:380px){
+
+    .container{
+        padding:12px;
+    }
+
+    .chat-box{
+        height:450px;
+    }
+
+    .header-title{
+        font-size:16px;
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- HEADER -->
+
 <div class="header">
 
-    <button class="back" onclick="history.back()">←</button>
+    <button
+        class="back"
+        id="backBtn">
+        ←
+    </button>
 
-    <div>
+
+    <div class="header-info">
+
         <div class="header-title">
             💬 Customer Support
         </div>
 
-        <div class="header-user" id="userName">
+        <div
+            class="header-user"
+            id="userName">
             Loading user...
         </div>
+
     </div>
 
 </div>
 
 
+<!-- MAIN -->
+
 <div class="container">
 
     <div class="chat-card">
 
-        <div class="status" id="statusText">
-            Loading chat...
+
+        <div
+            class="status"
+            id="statusText">
+            Checking admin login...
         </div>
 
-        <div class="chat-box" id="chatBox">
+
+        <!-- CHAT -->
+
+        <div
+            class="chat-box"
+            id="chatBox">
 
             <div class="empty">
-                Loading messages...
+                Loading chat...
             </div>
 
         </div>
 
 
+        <!-- INPUT -->
+
         <div class="message-area">
 
             <input
+                type="text"
                 id="messageInput"
                 class="message-input"
-                type="text"
-                placeholder="Type your reply..."
-            >
+                placeholder="Type your reply...">
 
             <button
                 id="sendBtn"
@@ -209,57 +310,100 @@ body{
 
         </div>
 
+
+        <!-- USER INFO -->
+
+        <div class="user-info">
+
+            Chatting with:
+            <b id="userInfoName">
+                User
+            </b>
+
+            <br>
+
+            User ID:
+            <b id="userInfoId">
+                Loading...
+            </b>
+
+        </div>
+
+
     </div>
 
 </div>
 
 
+<!-- FIREBASE -->
+
 <script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
 
 import {
     auth,
     db
-} from "./firebase.js";
+}
+from "./firebase.js";
+
 
 import {
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
     collection,
     addDoc,
     query,
     where,
-    orderBy,
-    onSnapshot,
+    getDocs,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* ADMIN UID */
+
+/* =========================
+   ADMIN UID
+========================= */
+
 
 const ADMIN_UID =
 "BLmacTdfuBVlQ0eEJWsQidnexY02";
 
 
-/* GET USER ID FROM URL */
+
+/* =========================
+   URL USER
+========================= */
+
 
 const params =
 new URLSearchParams(
     window.location.search
 );
 
+
 const userId =
 params.get("uid");
 
+
 const userName =
-params.get("name") || "User";
+params.get("name") ||
+"User";
 
 
-document.getElementById(
-    "userName"
-).textContent =
-"Chat with: " + userName;
+
+/* =========================
+   ELEMENTS
+========================= */
 
 
 const chatBox =
@@ -267,15 +411,18 @@ document.getElementById(
     "chatBox"
 );
 
+
 const input =
 document.getElementById(
     "messageInput"
 );
 
+
 const sendBtn =
 document.getElementById(
     "sendBtn"
 );
+
 
 const statusText =
 document.getElementById(
@@ -283,14 +430,74 @@ document.getElementById(
 );
 
 
-let currentAdmin = null;
+const userNameBox =
+document.getElementById(
+    "userName"
+);
 
 
-/* AUTH */
+const userInfoName =
+document.getElementById(
+    "userInfoName"
+);
+
+
+const userInfoId =
+document.getElementById(
+    "userInfoId"
+);
+
+
+
+/* =========================
+   SHOW USER
+========================= */
+
+
+userNameBox.textContent =
+"Chat with: " + userName;
+
+
+userInfoName.textContent =
+userName;
+
+
+userInfoId.textContent =
+userId || "Missing";
+
+
+
+/* =========================
+   BACK
+========================= */
+
+
+document
+.getElementById("backBtn")
+.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+        "admin.html";
+
+    }
+);
+
+
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+
+let adminUser = null;
+
 
 onAuthStateChanged(
     auth,
-    (user) => {
+    async (user) => {
+
 
         if(!user){
 
@@ -300,228 +507,378 @@ onAuthStateChanged(
             chatBox.innerHTML = `
                 <div class="error">
                     Admin login not found.
+                    <br><br>
+                    Please login as Admin.
                 </div>
             `;
 
             return;
+
         }
 
 
-        if(user.uid !== ADMIN_UID){
+        if(
+            user.uid !==
+            ADMIN_UID
+        ){
 
             statusText.textContent =
             "Access denied.";
 
             chatBox.innerHTML = `
                 <div class="error">
+                    Access Denied.
+                    <br><br>
                     This account is not the Admin account.
                 </div>
             `;
 
             return;
+
         }
 
 
-        currentAdmin = user;
+        adminUser = user;
 
 
         if(!userId){
 
             statusText.textContent =
-            "No user selected.";
+            "User not selected.";
 
             chatBox.innerHTML = `
                 <div class="error">
                     User ID is missing.
+                    <br><br>
+                    Please open Chat with User
+                    from the Admin Users section.
                 </div>
             `;
 
             return;
+
         }
 
 
-        loadChat();
+        statusText.textContent =
+        "Loading messages...";
+
+
+        await loadChat();
 
     }
 );
 
 
-/* LOAD CHAT */
 
-function loadChat(){
-
-    statusText.textContent =
-    "Loading chat...";
+/* =========================
+   LOAD CHAT
+========================= */
 
 
-    const messagesRef =
-    collection(
-        db,
-        "supportMessages"
-    );
+async function loadChat(){
+
+    try{
 
 
-    const q =
-    query(
-        messagesRef,
-        where(
-            "userId",
-            "==",
-            userId
-        ),
-        orderBy(
-            "createdAt",
-            "asc"
-        )
-    );
+        const messagesRef =
+        collection(
+            db,
+            "supportMessages"
+        );
 
 
-    onSnapshot(
-        q,
-        (snapshot) => {
-
-            chatBox.innerHTML = "";
-
-
-            if(snapshot.empty){
-
-                chatBox.innerHTML = `
-                    <div class="empty">
-                        No messages yet.
-                    </div>
-                `;
-
-                statusText.textContent =
-                "No messages";
-
-                return;
-            }
+        /*
+         IMPORTANT:
+         Only where() is used.
+         No orderBy().
+         Therefore Firebase index
+         is NOT required.
+        */
 
 
-            snapshot.forEach(
-                (item) => {
-
-                    const data =
-                    item.data();
-
-
-                    const div =
-                    document.createElement(
-                        "div"
-                    );
+        const q =
+        query(
+            messagesRef,
+            where(
+                "userId",
+                "==",
+                userId
+            )
+        );
 
 
-                    if(
-                        data.sender === "admin"
-                    ){
-
-                        div.className =
-                        "message admin-message";
-
-                    }else{
-
-                        div.className =
-                        "message user-message";
-
-                    }
+        const snapshot =
+        await getDocs(q);
 
 
-                    const text =
-                    document.createElement(
-                        "div"
-                    );
-
-                    text.textContent =
-                    data.message || "";
+        chatBox.innerHTML = "";
 
 
-                    const time =
-                    document.createElement(
-                        "div"
-                    );
-
-                    time.className =
-                    "time";
-
-
-                    if(
-                        data.createdAt &&
-                        data.createdAt.toDate
-                    ){
-
-                        time.textContent =
-                        data.createdAt
-                        .toDate()
-                        .toLocaleString();
-
-                    }else{
-
-                        time.textContent =
-                        "";
-
-                    }
-
-
-                    div.appendChild(text);
-                    div.appendChild(time);
-
-                    chatBox.appendChild(div);
-
-                }
-            );
-
-
-            chatBox.scrollTop =
-            chatBox.scrollHeight;
-
-
-            statusText.textContent =
-            "Live Support";
-
-        },
-
-        (error) => {
-
-            console.error(
-                "CHAT ERROR:",
-                error
-            );
-
+        if(
+            snapshot.empty
+        ){
 
             chatBox.innerHTML = `
-                <div class="error">
-                    <b>Unable to load chat.</b>
+                <div class="empty">
+                    💬
                     <br><br>
-                    ${escapeHtml(
-                        error.message
-                    )}
+                    No messages yet.
+                    <br><br>
+                    Send a message to the user.
                 </div>
             `;
 
             statusText.textContent =
-            "Chat loading error";
+            "No messages";
+
+            return;
 
         }
+
+
+        const messages = [];
+
+
+        snapshot.forEach(
+            (item) => {
+
+                const data =
+                item.data();
+
+
+                messages.push({
+                    id:item.id,
+                    ...data
+                });
+
+            }
+        );
+
+
+        /* SORT LOCALLY */
+
+
+        messages.sort(
+            (a,b) => {
+
+                let timeA = 0;
+                let timeB = 0;
+
+
+                if(
+                    a.createdAt &&
+                    typeof a.createdAt.toMillis ===
+                    "function"
+                ){
+
+                    timeA =
+                    a.createdAt.toMillis();
+
+                }
+
+
+                if(
+                    b.createdAt &&
+                    typeof b.createdAt.toMillis ===
+                    "function"
+                ){
+
+                    timeB =
+                    b.createdAt.toMillis();
+
+                }
+
+
+                return timeA - timeB;
+
+            }
+        );
+
+
+        messages.forEach(
+            (data) => {
+
+                addMessageToScreen(
+                    data
+                );
+
+            }
+        );
+
+
+        chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+
+        statusText.textContent =
+        "Live Support";
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "CHAT ERROR:",
+            error
+        );
+
+
+        chatBox.innerHTML = `
+            <div class="error">
+
+                <b>
+                    Unable to load chat
+                </b>
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message
+                )}
+
+                <br><br>
+
+                <b>
+                    ${escapeHtml(
+                        error.code ||
+                        ""
+                    )}
+                </b>
+
+            </div>
+        `;
+
+
+        statusText.textContent =
+        "Chat loading error";
+
+    }
+
+}
+
+
+
+/* =========================
+   ADD MESSAGE TO SCREEN
+========================= */
+
+
+function addMessageToScreen(
+    data
+){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+
+    if(
+        data.sender ===
+        "admin"
+    ){
+
+        div.className =
+        "message admin-message";
+
+    }
+    else{
+
+        div.className =
+        "message user-message";
+
+    }
+
+
+    const text =
+    document.createElement(
+        "div"
+    );
+
+
+    text.textContent =
+    data.message ||
+    data.text ||
+    "";
+
+
+    const time =
+    document.createElement(
+        "div"
+    );
+
+
+    time.className =
+    "time";
+
+
+    if(
+        data.createdAt &&
+        typeof data.createdAt.toDate ===
+        "function"
+    ){
+
+        time.textContent =
+        data.createdAt
+        .toDate()
+        .toLocaleString();
+
+    }
+    else{
+
+        time.textContent =
+        "Just now";
+
+    }
+
+
+    div.appendChild(
+        text
+    );
+
+
+    div.appendChild(
+        time
+    );
+
+
+    chatBox.appendChild(
+        div
     );
 
 }
 
 
-/* SEND ADMIN MESSAGE */
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
 
 async function sendMessage(){
+
 
     const message =
     input.value.trim();
 
 
     if(!message){
+
         return;
+
     }
 
 
-    if(!currentAdmin){
+    if(!adminUser){
+
+        alert(
+            "Admin login required."
+        );
+
         return;
+
     }
 
 
@@ -532,12 +889,19 @@ async function sendMessage(){
         );
 
         return;
+
     }
 
 
     try{
 
-        sendBtn.disabled = true;
+
+        sendBtn.disabled =
+        true;
+
+
+        statusText.textContent =
+        "Sending...";
 
 
         await addDoc(
@@ -552,6 +916,9 @@ async function sendMessage(){
 
                 email:
                 "",
+
+                name:
+                userName,
 
                 message:
                 message,
@@ -569,24 +936,52 @@ async function sendMessage(){
         input.value = "";
 
 
-    }catch(error){
+        statusText.textContent =
+        "Message sent ✓";
 
-        console.error(error);
+
+        /*
+         Reload chat so the new
+         message appears immediately.
+        */
+
+
+        await loadChat();
+
+
+    }
+    catch(error){
+
+
+        console.error(
+            "SEND ERROR:",
+            error
+        );
+
 
         alert(
-            "Message send nahi ho saka:\n" +
+            "Message send nahi ho saka:\n\n" +
             error.message
         );
+
+
+        statusText.textContent =
+        "Send error";
 
     }
 
 
-    sendBtn.disabled = false;
+    sendBtn.disabled =
+    false;
 
 }
 
 
-/* SEND BUTTON */
+
+/* =========================
+   SEND BUTTON
+========================= */
+
 
 sendBtn.addEventListener(
     "click",
@@ -594,15 +989,22 @@ sendBtn.addEventListener(
 );
 
 
-/* ENTER */
+
+/* =========================
+   ENTER KEY
+========================= */
+
 
 input.addEventListener(
     "keydown",
     (event) => {
 
         if(
-            event.key === "Enter"
+            event.key ===
+            "Enter"
         ){
+
+            event.preventDefault();
 
             sendMessage();
 
@@ -612,7 +1014,11 @@ input.addEventListener(
 );
 
 
-/* ESCAPE */
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
 
 function escapeHtml(text){
 
@@ -645,7 +1051,9 @@ function escapeHtml(text){
 
 }
 
+
 </script>
 
 </body>
+
 </html>
