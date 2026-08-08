@@ -1,597 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Support Admin - EliteTask Pro</title>
+<title>EliteTask Pro - Admin Chat</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f5f5f5;
-padding:15px;
+    background:#f3f6fa;
+    color:#172033;
+    padding-bottom:20px;
 }
 
 .header{
-background:#111827;
-color:white;
-padding:18px;
-border-radius:15px;
-font-size:21px;
-font-weight:bold;
-}
-
-.card{
-background:white;
-margin-top:15px;
-padding:18px;
-border-radius:15px;
-box-shadow:0 3px 10px #ddd;
-}
-
-.user{
-padding:15px;
-background:#f3f4f6;
-border-radius:12px;
-margin-top:10px;
-cursor:pointer;
-}
-
-.user strong{
-display:block;
-color:#111827;
-}
-
-.user small{
-color:#666;
-}
-
-.chat-title{
-font-size:18px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.chat-box{
-height:350px;
-overflow-y:auto;
-background:#f3f4f6;
-padding:12px;
-border-radius:12px;
-}
-
-.message{
-max-width:80%;
-padding:10px 12px;
-margin-bottom:10px;
-border-radius:12px;
-word-break:break-word;
-}
-
-.user-message{
-background:#2563eb;
-color:white;
-margin-right:auto;
-}
-
-.admin-message{
-background:white;
-color:#111827;
-border:1px solid #ddd;
-margin-left:auto;
-}
-
-.sender{
-font-size:11px;
-font-weight:bold;
-margin-bottom:5px;
-}
-
-.chat-input{
-display:flex;
-gap:8px;
-margin-top:12px;
-}
-
-.chat-input input{
-flex:1;
-padding:13px;
-border:1px solid #ddd;
-border-radius:10px;
-outline:none;
-}
-
-.chat-input button{
-width:80px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
+    height:72px;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    color:white;
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+    gap:12px;
 }
 
 .back{
-display:block;
-margin-top:20px;
-background:#111827;
-color:white;
-text-decoration:none;
-text-align:center;
-padding:14px;
-border-radius:12px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.12);
+    color:white;
+    font-size:22px;
 }
 
-.hidden{
-display:none;
+.header-title{
+    font-size:18px;
+    font-weight:bold;
 }
 
+.header-user{
+    font-size:12px;
+    opacity:.75;
+    margin-top:3px;
+}
+
+.container{
+    max-width:650px;
+    margin:auto;
+    padding:15px;
+}
+
+.chat-card{
+    background:white;
+    border-radius:20px;
+    padding:15px;
+    box-shadow:0 5px 20px rgba(20,40,80,.08);
+}
+
+.chat-box{
+    height:500px;
+    background:#f7f9fc;
+    border-radius:16px;
+    padding:15px;
+    overflow-y:auto;
+}
+
+.message{
+    max-width:82%;
+    padding:11px 13px;
+    border-radius:14px;
+    margin-bottom:10px;
+    font-size:14px;
+    line-height:1.45;
+    word-break:break-word;
+}
+
+.user-message{
+    background:white;
+    color:#263244;
+    border:1px solid #e6eaf0;
+    border-bottom-left-radius:4px;
+}
+
+.admin-message{
+    background:#1678ed;
+    color:white;
+    margin-left:auto;
+    border-bottom-right-radius:4px;
+}
+
+.time{
+    font-size:9px;
+    opacity:.6;
+    margin-top:5px;
+}
+
+.empty{
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#8994a6;
+    font-size:15px;
+}
+
+.error{
+    padding:20px;
+    color:#b91c1c;
+    text-align:center;
+    line-height:1.5;
+}
+
+.message-area{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.message-input{
+    flex:1;
+    border:1px solid #dce2ea;
+    border-radius:13px;
+    padding:13px;
+    font-size:14px;
+    outline:none;
+}
+
+.message-input:focus{
+    border-color:#1678ed;
+}
+
+.send-btn{
+    width:55px;
+    border:none;
+    border-radius:13px;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    color:white;
+    font-size:21px;
+}
+
+.status{
+    text-align:center;
+    font-size:11px;
+    color:#8b95a5;
+    margin-bottom:10px;
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="header">
-🎧 Support Admin
-</div>
 
+    <button class="back" onclick="history.back()">←</button>
 
-<div class="card">
+    <div>
+        <div class="header-title">
+            💬 Customer Support
+        </div>
 
-<h3>
-Users / Conversations
-</h3>
-
-<div id="usersList">
-Loading...
-</div>
-
-</div>
-
-
-
-<div id="chatCard" class="card hidden">
-
-<div class="chat-title" id="chatTitle">
-Live Chat
-</div>
-
-
-<div id="chatBox" class="chat-box">
-</div>
-
-
-<div class="chat-input">
-
-<input
-id="messageInput"
-type="text"
-placeholder="Write reply..."
-maxlength="500"
->
-
-<button id="sendBtn">
-Send
-</button>
-
-</div>
+        <div class="header-user" id="userName">
+            Loading user...
+        </div>
+    </div>
 
 </div>
 
 
+<div class="container">
 
-<a href="admin.html" class="back">
-⬅ Back to Admin
-</a>
+    <div class="chat-card">
 
+        <div class="status" id="statusText">
+            Loading chat...
+        </div>
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="empty">
+                Loading messages...
+            </div>
+
+        </div>
+
+
+        <div class="message-area">
+
+            <input
+                id="messageInput"
+                class="message-input"
+                type="text"
+                placeholder="Type your reply..."
+            >
+
+            <button
+                id="sendBtn"
+                class="send-btn">
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <script type="module">
 
-import { auth, db } from "./firebase.js";
-
+import {
+    auth,
+    db
+} from "./firebase.js";
 
 import {
-onAuthStateChanged
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-collection,
-query,
-where,
-onSnapshot,
-addDoc,
-serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+    collection,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
+/* ADMIN UID */
 
-const usersList =
-document.getElementById("usersList");
+const ADMIN_UID =
+"BLmacTdfuBVlQ0eEJWsQidnexY02";
 
-const chatCard =
-document.getElementById("chatCard");
 
-const chatTitle =
-document.getElementById("chatTitle");
+/* GET USER ID FROM URL */
+
+const params =
+new URLSearchParams(
+    window.location.search
+);
+
+const userId =
+params.get("uid");
+
+const userName =
+params.get("name") || "User";
+
+
+document.getElementById(
+    "userName"
+).textContent =
+"Chat with: " + userName;
+
 
 const chatBox =
-document.getElementById("chatBox");
+document.getElementById(
+    "chatBox"
+);
 
-const messageInput =
-document.getElementById("messageInput");
+const input =
+document.getElementById(
+    "messageInput"
+);
 
 const sendBtn =
-document.getElementById("sendBtn");
+document.getElementById(
+    "sendBtn"
+);
 
-
-let selectedUid = "";
-
-let selectedName = "";
-
-
-
-onAuthStateChanged(auth,(user)=>{
-
-if(!user){
-
-window.location.href="admin-login.html";
-
-return;
-
-}
-
-loadUsers();
-
-});
-
-
-
-function loadUsers(){
-
-const q =
-query(
-collection(db,"supportMessages")
+const statusText =
+document.getElementById(
+    "statusText"
 );
 
 
-onSnapshot(q,(snapshot)=>{
-
-const users = {};
+let currentAdmin = null;
 
 
-snapshot.forEach((item)=>{
+/* AUTH */
 
-const data =
-item.data();
+onAuthStateChanged(
+    auth,
+    (user) => {
 
-if(data.uid){
+        if(!user){
 
-users[data.uid] = {
+            statusText.textContent =
+            "Admin login required.";
 
-uid:data.uid,
+            chatBox.innerHTML = `
+                <div class="error">
+                    Admin login not found.
+                </div>
+            `;
 
-name:data.name || "User",
-
-email:data.email || ""
-
-};
-
-}
-
-});
-
-
-usersList.innerHTML="";
+            return;
+        }
 
 
-const userArray =
-Object.values(users);
+        if(user.uid !== ADMIN_UID){
+
+            statusText.textContent =
+            "Access denied.";
+
+            chatBox.innerHTML = `
+                <div class="error">
+                    This account is not the Admin account.
+                </div>
+            `;
+
+            return;
+        }
 
 
-if(userArray.length === 0){
-
-usersList.innerHTML =
-"<p style='color:#777;margin-top:10px;'>No conversations yet.</p>";
-
-return;
-
-}
+        currentAdmin = user;
 
 
-userArray.forEach((user)=>{
+        if(!userId){
 
-const div =
-document.createElement("div");
+            statusText.textContent =
+            "No user selected.";
 
-div.className="user";
+            chatBox.innerHTML = `
+                <div class="error">
+                    User ID is missing.
+                </div>
+            `;
 
-
-div.innerHTML=`
-
-<strong>
-${escapeHtml(user.name)}
-</strong>
-
-<small>
-${escapeHtml(user.email)}
-</small>
-
-`;
+            return;
+        }
 
 
-div.addEventListener(
-"click",
-()=>openChat(
-user.uid,
-user.name
-)
+        loadChat();
+
+    }
 );
 
 
-usersList.appendChild(div);
+/* LOAD CHAT */
 
-});
+function loadChat(){
 
-});
+    statusText.textContent =
+    "Loading chat...";
+
+
+    const messagesRef =
+    collection(
+        db,
+        "supportMessages"
+    );
+
+
+    const q =
+    query(
+        messagesRef,
+        where(
+            "userId",
+            "==",
+            userId
+        ),
+        orderBy(
+            "createdAt",
+            "asc"
+        )
+    );
+
+
+    onSnapshot(
+        q,
+        (snapshot) => {
+
+            chatBox.innerHTML = "";
+
+
+            if(snapshot.empty){
+
+                chatBox.innerHTML = `
+                    <div class="empty">
+                        No messages yet.
+                    </div>
+                `;
+
+                statusText.textContent =
+                "No messages";
+
+                return;
+            }
+
+
+            snapshot.forEach(
+                (item) => {
+
+                    const data =
+                    item.data();
+
+
+                    const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                    if(
+                        data.sender === "admin"
+                    ){
+
+                        div.className =
+                        "message admin-message";
+
+                    }else{
+
+                        div.className =
+                        "message user-message";
+
+                    }
+
+
+                    const text =
+                    document.createElement(
+                        "div"
+                    );
+
+                    text.textContent =
+                    data.message || "";
+
+
+                    const time =
+                    document.createElement(
+                        "div"
+                    );
+
+                    time.className =
+                    "time";
+
+
+                    if(
+                        data.createdAt &&
+                        data.createdAt.toDate
+                    ){
+
+                        time.textContent =
+                        data.createdAt
+                        .toDate()
+                        .toLocaleString();
+
+                    }else{
+
+                        time.textContent =
+                        "";
+
+                    }
+
+
+                    div.appendChild(text);
+                    div.appendChild(time);
+
+                    chatBox.appendChild(div);
+
+                }
+            );
+
+
+            chatBox.scrollTop =
+            chatBox.scrollHeight;
+
+
+            statusText.textContent =
+            "Live Support";
+
+        },
+
+        (error) => {
+
+            console.error(
+                "CHAT ERROR:",
+                error
+            );
+
+
+            chatBox.innerHTML = `
+                <div class="error">
+                    <b>Unable to load chat.</b>
+                    <br><br>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </div>
+            `;
+
+            statusText.textContent =
+            "Chat loading error";
+
+        }
+    );
 
 }
 
 
+/* SEND ADMIN MESSAGE */
 
-function openChat(uid,name){
+async function sendMessage(){
 
-selectedUid=uid;
-
-selectedName=name;
-
-chatCard.classList.remove("hidden");
-
-chatTitle.innerText =
-"💬 Chat with " + name;
-
-loadMessages(uid);
-
-}
+    const message =
+    input.value.trim();
 
 
-
-function loadMessages(uid){
-
-const q =
-query(
-
-collection(db,"supportMessages"),
-
-where("uid","==",uid)
-
-);
+    if(!message){
+        return;
+    }
 
 
-onSnapshot(q,(snapshot)=>{
-
-chatBox.innerHTML="";
-
-
-const messages=[];
+    if(!currentAdmin){
+        return;
+    }
 
 
-snapshot.forEach((item)=>{
+    if(!userId){
 
-messages.push({
+        alert(
+            "User ID missing."
+        );
 
-id:item.id,
-
-data:item.data()
-
-});
-
-});
+        return;
+    }
 
 
-messages.sort((a,b)=>{
+    try{
 
-const aTime =
-a.data.createdAt?.seconds || 0;
-
-const bTime =
-b.data.createdAt?.seconds || 0;
-
-return aTime-bTime;
-
-});
+        sendBtn.disabled = true;
 
 
-if(messages.length===0){
+        await addDoc(
+            collection(
+                db,
+                "supportMessages"
+            ),
+            {
 
-chatBox.innerHTML =
-"<p style='text-align:center;color:#777;'>No messages.</p>";
+                userId:
+                userId,
 
-return;
+                email:
+                "",
 
-}
+                message:
+                message,
+
+                sender:
+                "admin",
+
+                createdAt:
+                serverTimestamp()
+
+            }
+        );
 
 
-messages.forEach((item)=>{
-
-const data =
-item.data;
-
-const div =
-document.createElement("div");
+        input.value = "";
 
 
-div.classList.add("message");
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Message send nahi ho saka:\n" +
+            error.message
+        );
+
+    }
 
 
-if(data.sender==="admin"){
-
-div.classList.add(
-"admin-message"
-);
-
-div.innerHTML=`
-
-<div class="sender">
-You / Admin
-</div>
-
-${escapeHtml(data.message)}
-
-`;
-
-}else{
-
-div.classList.add(
-"user-message"
-);
-
-div.innerHTML=`
-
-<div class="sender">
-${escapeHtml(data.name || "User")}
-</div>
-
-${escapeHtml(data.message)}
-
-`;
+    sendBtn.disabled = false;
 
 }
 
 
-chatBox.appendChild(div);
-
-});
-
-
-chatBox.scrollTop =
-chatBox.scrollHeight;
-
-});
-
-}
-
-
+/* SEND BUTTON */
 
 sendBtn.addEventListener(
-"click",
-sendReply
+    "click",
+    sendMessage
 );
 
 
+/* ENTER */
 
-messageInput.addEventListener(
-"keydown",
-(event)=>{
+input.addEventListener(
+    "keydown",
+    (event) => {
 
-if(event.key==="Enter"){
+        if(
+            event.key === "Enter"
+        ){
 
-sendReply();
+            sendMessage();
 
-}
+        }
 
-});
-
-
-
-async function sendReply(){
-
-const text =
-messageInput.value.trim();
-
-
-if(!text){
-
-return;
-
-}
-
-
-if(!selectedUid){
-
-alert("Select a conversation first.");
-
-return;
-
-}
-
-
-sendBtn.disabled=true;
-
-
-try{
-
-await addDoc(
-
-collection(db,"supportMessages"),
-
-{
-
-uid:selectedUid,
-
-name:selectedName,
-
-message:text,
-
-sender:"admin",
-
-createdAt:serverTimestamp()
-
-}
-
+    }
 );
 
 
-messageInput.value="";
-
-
-}catch(error){
-
-alert(
-"Reply failed: " +
-error.message
-);
-
-}
-
-
-sendBtn.disabled=false;
-
-}
-
-
+/* ESCAPE */
 
 function escapeHtml(text){
 
-const div =
-document.createElement("div");
+    return String(text)
 
-div.textContent =
-text || "";
+    .replace(
+        /&/g,
+        "&amp;"
+    )
 
-return div.innerHTML;
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
 </script>
 
-
 </body>
-
 </html>
