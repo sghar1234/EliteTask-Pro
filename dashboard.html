@@ -157,7 +157,7 @@ body{
     font-size:15px;
 }
 
-/* GRAB BUTTON */
+/* GRAB ORDERS */
 
 .grab-btn{
     width:100%;
@@ -171,6 +171,7 @@ body{
     font-weight:bold;
     box-shadow:0 8px 20px rgba(5,130,132,.20);
     cursor:pointer;
+    display:block;
 }
 
 .grab-btn:active{
@@ -255,7 +256,7 @@ body{
     font-size:24px;
 }
 
-/* SECTIONS */
+/* SECTION */
 
 .section-title{
     margin:23px 2px 12px;
@@ -393,7 +394,7 @@ body{
     color:#6f7b84;
 }
 
-/* BOTTOM */
+/* BOTTOM NAV */
 
 .bottom-nav{
     position:fixed;
@@ -450,137 +451,8 @@ body{
     border:5px solid #f5f8fa;
 }
 
-/* ORDER POPUP */
-
-.popup-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(5,25,35,.58);
-    backdrop-filter:blur(5px);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    z-index:3000;
-}
-
-.popup-overlay.show{
-    display:flex;
-}
-
-.order-popup{
-    width:100%;
-    max-width:600px;
-    background:white;
-    border-radius:27px 27px 0 0;
-    padding:22px 18px 28px;
-    animation:popupUp .25s ease;
-}
-
-@keyframes popupUp{
-    from{
-        transform:translateY(100%);
-    }
-    to{
-        transform:translateY(0);
-    }
-}
-
-.popup-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:16px;
-}
-
-.popup-head h3{
-    font-size:18px;
-}
-
-.close-popup{
-    width:34px;
-    height:34px;
-    border:0;
-    border-radius:50%;
-    background:#f0f3f4;
-    font-size:18px;
-    cursor:pointer;
-}
-
-.popup-product{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    background:#f6f9fa;
-    padding:13px;
-    border-radius:17px;
-    margin-bottom:15px;
-}
-
-.popup-product img{
-    width:65px;
-    height:65px;
-    border-radius:14px;
-    object-fit:cover;
-}
-
-.popup-placeholder{
-    width:65px;
-    height:65px;
-    border-radius:14px;
-    background:#e5f7f6;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:27px;
-}
-
-.popup-product h4{
-    font-size:15px;
-    margin-bottom:5px;
-}
-
-.popup-product p{
-    font-size:11px;
-    color:#89939a;
-}
-
-.popup-details{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:16px;
-}
-
-.detail-box{
-    background:#f7f9fa;
-    padding:13px;
-    border-radius:15px;
-}
-
-.detail-box span{
-    display:block;
-    color:#89939a;
-    font-size:10px;
-    margin-bottom:5px;
-}
-
-.detail-box strong{
-    font-size:16px;
-}
-
-.popup-start{
-    width:100%;
-    border:0;
-    border-radius:15px;
-    padding:15px;
-    background:linear-gradient(135deg,#078d91,#0bb9b0);
-    color:white;
-    font-size:14px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
 @media(max-width:380px){
+
     .balance{
         font-size:28px;
     }
@@ -592,10 +464,6 @@ body{
     .container{
         padding:15px 12px;
     }
-
-    .partners-grid{
-        grid-template-columns:repeat(4,1fr);
-    }
 }
 </style>
 </head>
@@ -603,30 +471,49 @@ body{
 <body>
 
 <!-- TOP BAR -->
+
 <div class="topbar">
 
-    <a href="profile.html" class="profile-btn">👤</a>
+    <a href="profile.html" class="profile-btn">
+        👤
+    </a>
 
     <div class="logo-area">
-        <div class="logo">ET</div>
-        <div class="logo-text">EliteTask Pro</div>
+
+        <div class="logo">
+            ET
+        </div>
+
+        <div class="logo-text">
+            EliteTask Pro
+        </div>
+
     </div>
 
 </div>
 
+
+<!-- MAIN -->
+
 <div class="container">
 
     <!-- WELCOME -->
+
     <div class="welcome">
+
         <h2>
             Welcome, <span id="userName">User</span> 👋
         </h2>
+
         <p>
             Manage your tasks and earnings from here.
         </p>
+
     </div>
 
+
     <!-- BALANCE -->
+
     <div class="balance-card">
 
         <div class="balance-title">
@@ -640,56 +527,127 @@ body{
         <div class="balance-bottom">
 
             <div class="balance-item">
-                <span>Commission</span>
-                <strong id="commission">$0.00</strong>
+
+                <span>
+                    Commission
+                </span>
+
+                <strong id="commission">
+                    $0.00
+                </strong>
+
             </div>
 
             <div class="balance-item">
-                <span>Pending</span>
-                <strong id="pending">$0.00</strong>
+
+                <span>
+                    Pending
+                </span>
+
+                <strong id="pending">
+                    $0.00
+                </strong>
+
             </div>
 
         </div>
 
     </div>
 
-    <!-- GRAB ORDERS -->
-    <button class="grab-btn" onclick="scrollToTasks()">
+
+    <!-- START GRABBING ORDERS -->
+
+    <button
+        type="button"
+        class="grab-btn"
+        id="grabOrdersBtn"
+    >
         🛍️ Start Grabbing Orders
     </button>
 
+
     <!-- STATS -->
+
     <div class="stats">
 
         <div class="stat-card">
-            <div class="stat-icon">📦</div>
-            <p>Completed Tasks</p>
-            <h3 id="completedTasks">0</h3>
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <p>
+                Completed Tasks
+            </p>
+
+            <h3 id="completedTasks">
+                0
+            </h3>
+
         </div>
 
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <p>Today's Commission</p>
-            <h3 id="todayCommission">$0.00</h3>
-        </div>
 
         <div class="stat-card">
-            <div class="stat-icon">📋</div>
-            <p>Total Tasks</p>
-            <h3 id="totalTasks">0</h3>
+
+            <div class="stat-icon">
+                💰
+            </div>
+
+            <p>
+                Today's Commission
+            </p>
+
+            <h3 id="todayCommission">
+                $0.00
+            </h3>
+
         </div>
 
+
         <div class="stat-card">
-            <div class="stat-icon">⭐</div>
-            <p>Task Level</p>
-            <h3>1</h3>
+
+            <div class="stat-icon">
+                📋
+            </div>
+
+            <p>
+                Total Tasks
+            </p>
+
+            <h3 id="totalTasks">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⭐
+            </div>
+
+            <p>
+                Task Level
+            </p>
+
+            <h3>
+                1
+            </h3>
+
         </div>
 
     </div>
 
+
     <!-- PROMO -->
+
     <div class="promo">
-        <h3>Earn More With Every Order</h3>
+
+        <h3>
+            Earn More With Every Order
+        </h3>
+
         <p>
             Complete available orders and grow your commission with EliteTask Pro.
         </p>
@@ -697,13 +655,27 @@ body{
         <div class="promo-badge">
             💎
         </div>
+
     </div>
 
-    <!-- AVAILABLE TASKS -->
-    <div class="section-title" id="tasksSection">
-        <h3>Available Tasks</h3>
-        <span>VIEW ALL</span>
+
+    <!-- TASKS -->
+
+    <div
+        class="section-title"
+        id="tasksSection"
+    >
+
+        <h3>
+            Available Tasks
+        </h3>
+
+        <span>
+            VIEW ALL
+        </span>
+
     </div>
+
 
     <div id="taskList">
 
@@ -713,34 +685,75 @@ body{
 
     </div>
 
+
     <!-- PARTNERS -->
+
     <div class="section-title">
-        <h3>Our Partners</h3>
-        <span>TRUSTED</span>
+
+        <h3>
+            Our Partners
+        </h3>
+
+        <span>
+            TRUSTED
+        </span>
+
     </div>
+
 
     <div class="partners-box">
 
         <div class="partners-grid">
 
             <div class="partner">
-                <div class="partner-icon">🛒</div>
-                <div class="partner-name">SHOP</div>
+
+                <div class="partner-icon">
+                    🛒
+                </div>
+
+                <div class="partner-name">
+                    SHOP
+                </div>
+
             </div>
 
-            <div class="partner">
-                <div class="partner-icon">📦</div>
-                <div class="partner-name">MARKET</div>
-            </div>
 
             <div class="partner">
-                <div class="partner-icon">🚚</div>
-                <div class="partner-name">EXPRESS</div>
+
+                <div class="partner-icon">
+                    📦
+                </div>
+
+                <div class="partner-name">
+                    MARKET
+                </div>
+
             </div>
 
+
             <div class="partner">
-                <div class="partner-icon">💳</div>
-                <div class="partner-name">PAY</div>
+
+                <div class="partner-icon">
+                    🚚
+                </div>
+
+                <div class="partner-name">
+                    EXPRESS
+                </div>
+
+            </div>
+
+
+            <div class="partner">
+
+                <div class="partner-icon">
+                    💳
+                </div>
+
+                <div class="partner-name">
+                    PAY
+                </div>
+
             </div>
 
         </div>
@@ -748,85 +761,71 @@ body{
     </div>
 
 </div>
+
 
 <!-- BOTTOM NAVIGATION -->
+
 <div class="bottom-nav">
 
-    <a href="dashboard.html" class="nav-item active">
-        <span>⌂</span>
+    <a
+        href="dashboard.html"
+        class="nav-item active"
+    >
+
+        <span>
+            ⌂
+        </span>
+
         Home
+
     </a>
 
-    <a href="orders.html" class="nav-item">
-        <span>▣</span>
+
+    <a
+        href="orders.html"
+        class="nav-item"
+    >
+
+        <span>
+            ▣
+        </span>
+
         Tasks
+
     </a>
 
-    <a href="support.html" class="nav-item support">
-        <div class="nav-center">💬</div>
+
+    <a
+        href="support.html"
+        class="nav-item support"
+    >
+
+        <div class="nav-center">
+            💬
+        </div>
+
         Support
+
     </a>
 
-    <a href="withdraw.html" class="nav-item">
-        <span>💳</span>
+
+    <a
+        href="withdraw.html"
+        class="nav-item"
+    >
+
+        <span>
+            💳
+        </span>
+
         Withdraw
+
     </a>
 
 </div>
 
-<!-- ORDER POPUP -->
-<div class="popup-overlay" id="orderPopup">
 
-    <div class="order-popup">
-
-        <div class="popup-head">
-            <h3>Order Details</h3>
-
-            <button
-                class="close-popup"
-                onclick="closeOrderPopup()"
-            >
-                ×
-            </button>
-        </div>
-
-        <div class="popup-product">
-
-            <div id="popupImageArea">
-                <div class="popup-placeholder">🛍️</div>
-            </div>
-
-            <div>
-                <h4 id="popupName">Product Task</h4>
-                <p>Ready to start this order</p>
-            </div>
-
-        </div>
-
-        <div class="popup-details">
-
-            <div class="detail-box">
-                <span>Total Order</span>
-                <strong id="popupPrice">$0.00</strong>
-            </div>
-
-            <div class="detail-box">
-                <span>Commission</span>
-                <strong id="popupCommission">$0.00</strong>
-            </div>
-
-        </div>
-
-        <button
-            class="popup-start"
-            id="popupStartBtn"
-        >
-            Start Order
-        </button>
-
-    </div>
-
-</div>
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -835,11 +834,13 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -871,12 +872,16 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
+
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
 
+
+/* LOGIN */
 
 onAuthStateChanged(
     auth,
@@ -899,6 +904,8 @@ onAuthStateChanged(
 );
 
 
+/* USER DATA */
+
 async function loadUser(uid){
 
     try{
@@ -910,8 +917,10 @@ async function loadUser(uid){
                 uid
             );
 
+
         const userSnap =
             await getDoc(userRef);
+
 
         if(!userSnap.exists()){
 
@@ -922,6 +931,7 @@ async function loadUser(uid){
             return;
 
         }
+
 
         const data =
             userSnap.data();
@@ -938,6 +948,7 @@ async function loadUser(uid){
                 data.balance || 0
             );
 
+
         document
             .getElementById("balance")
             .textContent =
@@ -948,6 +959,7 @@ async function loadUser(uid){
             Number(
                 data.commission || 0
             );
+
 
         document
             .getElementById("commission")
@@ -960,6 +972,7 @@ async function loadUser(uid){
                 data.pending || 0
             );
 
+
         document
             .getElementById("pending")
             .textContent =
@@ -971,6 +984,7 @@ async function loadUser(uid){
                 data.completedTasks || 0
             );
 
+
         document
             .getElementById("completedTasks")
             .textContent =
@@ -981,6 +995,7 @@ async function loadUser(uid){
             Number(
                 data.todayCommission || 0
             );
+
 
         document
             .getElementById("todayCommission")
@@ -1001,12 +1016,15 @@ async function loadUser(uid){
 }
 
 
+/* TASKS */
+
 async function loadTasks(){
 
     const taskList =
         document.getElementById(
             "taskList"
         );
+
 
     try{
 
@@ -1015,6 +1033,7 @@ async function loadTasks(){
                 db,
                 "tasks"
             );
+
 
         const snapshot =
             await getDocs(
@@ -1055,26 +1074,25 @@ async function loadTasks(){
                 const task =
                     docSnap.data();
 
+
                 const taskId =
                     docSnap.id;
+
 
                 const name =
                     task.name ||
                     "Product Task";
+
 
                 const price =
                     Number(
                         task.price || 0
                     );
 
+
                 const image =
                     task.image ||
                     "";
-
-                const taskCommission =
-                    Number(
-                        task.commission || 0
-                    );
 
 
                 let imageHTML;
@@ -1140,7 +1158,9 @@ async function loadTasks(){
 
                     </div>
 
+
                     <button
+                        type="button"
                         class="task-btn"
                     >
                         Start
@@ -1150,20 +1170,14 @@ async function loadTasks(){
 
 
                 card
-                    .querySelector(
-                        ".task-btn"
-                    )
+                    .querySelector(".task-btn")
                     .addEventListener(
                         "click",
                         function(){
 
-                            openOrderPopup(
-                                taskId,
-                                name,
-                                price,
-                                taskCommission,
-                                image
-                            );
+                            window.location.href =
+                                "orders.html?task=" +
+                                encodeURIComponent(taskId);
 
                         }
                     );
@@ -1185,6 +1199,7 @@ async function loadTasks(){
             error
         );
 
+
         taskList.innerHTML = `
 
             <div class="no-task">
@@ -1200,138 +1215,19 @@ async function loadTasks(){
 }
 
 
-/* ORDER POPUP */
+/* START GRABBING ORDERS */
 
-let selectedTaskId = "";
-
-
-function openOrderPopup(
-    taskId,
-    name,
-    price,
-    commission,
-    image
-){
-
-    selectedTaskId =
-        taskId;
-
-
-    document
-        .getElementById("popupName")
-        .textContent =
-        name;
-
-
-    document
-        .getElementById("popupPrice")
-        .textContent =
-        "$" + price.toFixed(2);
-
-
-    document
-        .getElementById("popupCommission")
-        .textContent =
-        "$" + commission.toFixed(2);
-
-
-    const imageArea =
-        document.getElementById(
-            "popupImageArea"
-        );
-
-
-    if(image){
-
-        imageArea.innerHTML = `
-
-            <img
-                src="${image}"
-                style="
-                    width:65px;
-                    height:65px;
-                    border-radius:14px;
-                    object-fit:cover;
-                "
-            >
-
-        `;
-
-    }
-
-    else{
-
-        imageArea.innerHTML = `
-
-            <div class="popup-placeholder">
-                🛍️
-            </div>
-
-        `;
-
-    }
-
-
-    document
-        .getElementById("orderPopup")
-        .classList
-        .add("show");
-
-
-    document
-        .getElementById("popupStartBtn")
-        .onclick =
+document
+    .getElementById("grabOrdersBtn")
+    .addEventListener(
+        "click",
         function(){
 
             window.location.href =
-                "orders.html?task=" +
-                selectedTaskId;
-
-        };
-
-}
-
-
-window.closeOrderPopup =
-function(){
-
-    document
-        .getElementById("orderPopup")
-        .classList
-        .remove("show");
-
-};
-
-
-document
-    .getElementById("orderPopup")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(
-                event.target ===
-                this
-            ){
-
-                closeOrderPopup();
-
-            }
+                "orders.html";
 
         }
     );
-
-
-window.scrollToTasks =
-function(){
-
-    document
-        .getElementById("tasksSection")
-        .scrollIntoView({
-            behavior:"smooth"
-        });
-
-};
 
 </script>
 
