@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>EliteTask Pro - Add Task</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    background:#f7edbd;
+    color:#3d2d00;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+}
+
+.card{
+    background:#fff;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
+
+h2{
+    margin-top:0;
+    text-align:center;
+    color:#8b6500;
+}
+
+.input{
+    width:100%;
+    padding:13px;
+    margin-bottom:12px;
+    border:1px solid #d9c477;
+    border-radius:10px;
+    font-size:15px;
+}
+
+.image-box{
+    margin-bottom:15px;
+}
+
+.preview{
+    width:100%;
+    max-height:230px;
+    object-fit:cover;
+    border-radius:14px;
+    display:none;
+    margin-top:10px;
+}
+
+.save-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:11px;
+    background:linear-gradient(
+        135deg,
+        #8e6500,
+        #e0bd4d,
+        #8e6500
+    );
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.save-btn:disabled{
+    opacity:.6;
+}
+
+.status{
+    text-align:center;
+    margin-top:14px;
+    font-size:14px;
+}
+
+.back{
+    display:block;
+    margin-top:15px;
+    text-align:center;
+    color:#8b6500;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<div class="card">
+
+<h2>EliteTask Pro</h2>
+
+<h3>Add New Task</h3>
+
+
+<input
+    id="taskName"
+    class="input"
+    type="text"
+    placeholder="Task name"
+>
+
+
+<input
+    id="taskPrice"
+    class="input"
+    type="number"
+    placeholder="Task price"
+>
+
+
+<input
+    id="taskCommission"
+    class="input"
+    type="number"
+    placeholder="Commission"
+>
+
+
+<div class="image-box">
+
+<label>
+    Select Task Image
+</label>
+
+<input
+    id="taskImage"
+    class="input"
+    type="file"
+    accept="image/*"
+>
+
+<img
+    id="imagePreview"
+    class="preview"
+    alt="Task image preview"
+>
+
+</div>
+
+
+<button
+    id="saveTask"
+    class="save-btn"
+    type="button"
+>
+Save Task
+</button>
+
+
+<div
+    id="status"
+    class="status"
+>
+</div>
+
+
+<a
+    href="admin.html"
+    class="back"
+>
+← Back to Admin Panel
+</a>
+
+</div>
+
+</div>
+
+
+<script type="module">
+
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    getDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+
+    authDomain:
+        "elitetask-pro.firebaseapp.com",
+
+    projectId:
+        "elitetask-pro",
+
+    storageBucket:
+        "elitetask-pro.firebasestorage.app",
+
+    messagingSenderId:
+        "504295275402",
+
+    appId:
+        "1:504295275402:web:cf744a5d4e82c72145a673"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+const imageInput =
+    document.getElementById("taskImage");
+
+
+const preview =
+    document.getElementById("imagePreview");
+
+
+const status =
+    document.getElementById("status");
+
+
+const saveButton =
+    document.getElementById("saveTask");
+
+
+let currentUser = null;
+
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if(!user){
+
+            status.textContent =
+                "Please login first.";
+
+            saveButton.disabled = true;
+
+            return;
+        }
+
+
+        currentUser = user;
+
+
+        try{
+
+            const userDoc =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(
+                !userDoc.exists() ||
+                userDoc.data().role !== "admin"
+            ){
+
+                status.textContent =
+                    "Admin access required.";
+
+                saveButton.disabled = true;
+
+                return;
+            }
+
+
+            status.textContent =
+                "Ready.";
+
+            saveButton.disabled = false;
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            status.textContent =
+                "Unable to verify admin account.";
+
+            saveButton.disabled = true;
+
+        }
+
+    }
+);
+
+
+imageInput.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            imageInput.files[0];
+
+
+        if(!file){
+
+            preview.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        if(
+            !file.type.startsWith("image/")
+        ){
+
+            alert(
+                "Please select an image."
+            );
+
+            imageInput.value = "";
+
+            return;
+
+        }
+
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+    }
+);
+
+
+function compressImage(file){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload = function(event){
+
+                const img =
+                    new Image();
+
+
+                img.onload = function(){
+
+                    const canvas =
+                        document.createElement(
+                            "canvas"
+                        );
+
+
+                    const maxSize = 350;
+
+
+                    let width =
+                        img.width;
+
+                    let height =
+                        img.height;
+
+
+                    if(width > height){
+
+                        if(width > maxSize){
+
+                            height =
+                                height *
+                                maxSize /
+                                width;
+
+                            width =
+                                maxSize;
+
+                        }
+
+                    }
+                    else{
+
+                        if(height > maxSize){
+
+                            width =
+                                width *
+                                maxSize /
+                                height;
+
+                            height =
+                                maxSize;
+
+                        }
+
+                    }
+
+
+                    canvas.width =
+                        Math.round(width);
+
+                    canvas.height =
+                        Math.round(height);
+
+
+                    const ctx =
+                        canvas.getContext(
+                            "2d"
+                        );
+
+
+                    ctx.drawImage(
+                        img,
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+
+
+                    const data =
+                        canvas.toDataURL(
+                            "image/jpeg",
+                            0.40
+                        );
+
+
+                    resolve(data);
+
+                };
+
+
+                img.onerror =
+                    () => reject(
+                        new Error(
+                            "Image could not be processed."
+                        )
+                    );
+
+
+                img.src =
+                    event.target.result;
+
+            };
+
+
+            reader.onerror =
+                () => reject(
+                    new Error(
+                        "Image could not be read."
+                    )
+                );
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+saveButton.addEventListener(
+    "click",
+    async () => {
+
+        try{
+
+            if(!currentUser){
+
+                alert(
+                    "Please login first."
+                );
+
+                return;
+
+            }
+
+
+            const taskName =
+                document
+                .getElementById("taskName")
+                .value
+                .trim();
+
+
+            const taskPrice =
+                Number(
+                    document
+                    .getElementById("taskPrice")
+                    .value
+                );
+
+
+            const taskCommission =
+                Number(
+                    document
+                    .getElementById(
+                        "taskCommission"
+                    )
+                    .value
+                );
+
+
+            const file =
+                imageInput.files[0];
+
+
+            if(!taskName){
+
+                alert(
+                    "Enter task name."
+                );
+
+                return;
+
+            }
+
+
+            if(!taskPrice){
+
+                alert(
+                    "Enter task price."
+                );
+
+                return;
+
+            }
+
+
+            if(!taskCommission){
+
+                alert(
+                    "Enter commission."
+                );
+
+                return;
+
+            }
+
+
+            if(!file){
+
+                alert(
+                    "Select image from Gallery."
+                );
+
+                return;
+
+            }
+
+
+            saveButton.disabled = true;
+
+            status.textContent =
+                "Compressing image...";
+
+
+            const imageData =
+                await compressImage(file);
+
+
+            status.textContent =
+                "Saving task...";
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "tasks"
+                ),
+                {
+
+                    name:
+                        taskName,
+
+                    price:
+                        taskPrice,
+
+                    commission:
+                        taskCommission,
+
+                    image:
+                        imageData,
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    createdBy:
+                        currentUser.uid
+
+                }
+            );
+
+
+            status.textContent =
+                "✅ Task saved successfully!";
+
+
+            document
+            .getElementById("taskName")
+            .value = "";
+
+
+            document
+            .getElementById("taskPrice")
+            .value = "";
+
+
+            document
+            .getElementById("taskCommission")
+            .value = "";
+
+
+            imageInput.value = "";
+
+
+            preview.src = "";
+
+            preview.style.display =
+                "none";
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            status.textContent =
+                "Error: " +
+                error.message;
+
+            alert(
+                "Task save failed:\n" +
+                error.message
+            );
+
+        }
+
+        finally{
+
+            saveButton.disabled =
+                false;
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
