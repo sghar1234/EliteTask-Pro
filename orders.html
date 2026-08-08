@@ -1,670 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EliteTask Pro - My Order</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>EliteTask Pro - Orders</title>
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    background:#f5f8fa;
-    color:#172033;
-    padding-bottom:100px;
+font-family:Arial,sans-serif;
+background:#f5f8fa;
+color:#172033;
+padding-bottom:90px
 }
-
-/* TOP BAR */
 
 .topbar{
-    height:70px;
-    background:linear-gradient(135deg,#063b46,#078d91);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 17px;
-    color:white;
-    box-shadow:0 4px 18px rgba(0,0,0,.13);
+height:65px;
+background:linear-gradient(135deg,#063b46,#078d91);
+display:flex;
+align-items:center;
+padding:0 15px;
+color:white
 }
 
-.back-btn{
-    width:43px;
-    height:43px;
-    border-radius:50%;
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.3);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    text-decoration:none;
-    font-size:22px;
-}
-
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:9px;
+.back{
+color:white;
+text-decoration:none;
+font-size:25px;
+margin-right:15px
 }
 
 .logo{
-    width:42px;
-    height:42px;
-    border-radius:13px;
-    background:linear-gradient(135deg,#39d6d0,#8cf5e7);
-    color:#07535a;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
-    font-size:17px;
+font-weight:bold;
+font-size:18px
 }
-
-.logo-text{
-    font-size:16px;
-    font-weight:bold;
-}
-
-/* MAIN */
 
 .container{
-    max-width:600px;
-    margin:auto;
-    padding:22px 15px;
+max-width:600px;
+margin:auto;
+padding:20px 15px
 }
 
-.page-title{
-    margin:0 2px 18px;
+h1{
+font-size:28px;
+margin-bottom:5px
 }
 
-.page-title h1{
-    font-size:30px;
-    margin-bottom:5px;
+.subtitle{
+color:#8992a2;
+font-size:13px;
+margin-bottom:18px
 }
 
-.page-title p{
-    color:#8992a2;
-    font-size:14px;
+.balance{
+background:linear-gradient(135deg,#07545d,#09a3a0);
+color:white;
+border-radius:20px;
+padding:20px;
+margin-bottom:18px
 }
 
-/* BALANCE */
-
-.balance-card{
-    background:linear-gradient(135deg,#07545d,#09a3a0);
-    color:white;
-    border-radius:25px;
-    padding:25px;
-    margin-bottom:20px;
-    box-shadow:0 12px 30px rgba(5,130,132,.22);
+.balance small{
+opacity:.8
 }
 
-.balance-card span{
-    font-size:13px;
-    opacity:.78;
+.balance strong{
+display:block;
+font-size:32px;
+margin-top:5px
 }
 
-.balance-card strong{
-    display:block;
-    font-size:36px;
-    margin-top:7px;
+.card{
+background:white;
+border-radius:22px;
+padding:16px;
+box-shadow:0 6px 20px rgba(0,0,0,.08)
 }
 
-/* CURRENT ORDER */
-
-.order-card{
-    background:white;
-    border-radius:28px;
-    padding:20px;
-    box-shadow:0 8px 28px rgba(20,40,80,.08);
-    border:1px solid #edf1f3;
+.task-image{
+width:100%;
+height:300px;
+object-fit:contain;
+background:#f3f6f7;
+border-radius:18px;
+margin-bottom:15px
 }
 
-.order-label{
-    display:inline-block;
-    background:#e4f8f7;
-    color:#078d91;
-    padding:10px 16px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:bold;
-    margin-bottom:20px;
+.task-name{
+font-size:24px;
+font-weight:bold;
+margin-bottom:12px
 }
-
-/* IMAGE */
-
-.product-image-box{
-    width:100%;
-    height:330px;
-    border-radius:25px;
-    background:#f3f6f7;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    margin-bottom:22px;
-}
-
-.product-image-box img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-
-.image-placeholder{
-    font-size:80px;
-}
-
-/* ORDER INFO */
-
-.order-name{
-    font-size:27px;
-    font-weight:bold;
-    margin-bottom:8px;
-}
-
-.order-description{
-    color:#89939a;
-    font-size:14px;
-    margin-bottom:20px;
-}
-
-/* DETAILS */
 
 .details{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:18px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px
 }
 
-.detail-box{
-    background:#f7f9fa;
-    border-radius:18px;
-    padding:17px;
+.box{
+background:#f7f9fa;
+padding:14px;
+border-radius:14px
 }
 
-.detail-box span{
-    display:block;
-    color:#89939a;
-    font-size:11px;
-    margin-bottom:7px;
+.box small{
+display:block;
+color:#8992a2;
+font-size:10px;
+margin-bottom:5px
 }
 
-.detail-box strong{
-    font-size:20px;
+.box strong{
+font-size:19px
 }
 
-.detail-box.commission strong{
-    color:#16a05d;
+.commission{
+color:#15965a
 }
 
-/* REQUIRED */
-
-.required-box{
-    background:#fff6e5;
-    border:1px solid #ffe1a6;
-    border-radius:17px;
-    padding:15px;
-    margin-bottom:17px;
+.required{
+margin-top:12px;
+padding:14px;
+background:#fff6e5;
+border:1px solid #ffe1a6;
+border-radius:14px
 }
 
-.required-box span{
-    display:block;
-    color:#9b7634;
-    font-size:11px;
-    margin-bottom:5px;
+.required small{
+display:block;
+color:#9b7634
 }
 
-.required-box strong{
-    color:#c47b00;
-    font-size:20px;
+.required strong{
+display:block;
+color:#c47b00;
+font-size:21px;
+margin-top:4px
 }
 
-/* COMPLETE BUTTON */
-
-.complete-btn{
-    width:100%;
-    border:0;
-    border-radius:17px;
-    padding:17px;
-    background:linear-gradient(135deg,#078d91,#0bb9b0);
-    color:white;
-    font-size:15px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 8px 20px rgba(7,141,145,.25);
+button{
+width:100%;
+border:0;
+border-radius:14px;
+padding:15px;
+margin-top:14px;
+background:linear-gradient(135deg,#078d91,#0bb9b0);
+color:white;
+font-weight:bold;
+font-size:15px
 }
 
-.complete-btn:active{
-    transform:scale(.98);
+button:disabled{
+background:#aaa
 }
-
-.complete-btn:disabled{
-    background:#b7c1c4;
-    box-shadow:none;
-    cursor:not-allowed;
-}
-
-/* MESSAGE */
 
 .message{
-    text-align:center;
-    background:white;
-    border-radius:25px;
-    padding:40px 22px;
-    box-shadow:0 8px 25px rgba(20,40,80,.07);
+text-align:center;
+background:white;
+padding:35px 20px;
+border-radius:20px;
+color:#777
 }
 
-.message-icon{
-    font-size:55px;
-    margin-bottom:15px;
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:70px;
+background:white;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -4px 15px rgba(0,0,0,.1)
 }
 
-.message h3{
-    font-size:21px;
-    margin-bottom:8px;
+.bottom a{
+text-decoration:none;
+color:#777;
+font-size:11px;
+text-align:center
 }
 
-.message p{
-    color:#8992a2;
-    font-size:13px;
-    line-height:1.6;
+.bottom span{
+display:block;
+font-size:20px;
+margin-bottom:3px
 }
 
-/* SUCCESS */
-
-.success-box{
-    display:none;
-    text-align:center;
-    background:white;
-    border-radius:25px;
-    padding:40px 22px;
-    box-shadow:0 8px 25px rgba(20,40,80,.07);
+.active{
+color:#078d91!important;
+font-weight:bold
 }
-
-.success-box.show{
-    display:block;
-}
-
-.success-icon{
-    width:75px;
-    height:75px;
-    border-radius:50%;
-    background:#e4f8ee;
-    color:#16a05d;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:40px;
-    margin:0 auto 18px;
-}
-
-.success-box h3{
-    font-size:23px;
-    margin-bottom:8px;
-}
-
-.success-box p{
-    color:#8992a2;
-    font-size:13px;
-    line-height:1.6;
-}
-
-/* LOADING */
-
-.loading{
-    text-align:center;
-    padding:50px 20px;
-    color:#8992a2;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:78px;
-    background:white;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    box-shadow:0 -5px 25px rgba(0,0,0,.10);
-    z-index:1000;
-    border-top:1px solid #edf0f5;
-}
-
-.nav-item{
-    text-decoration:none;
-    color:#8992a2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    width:25%;
-    font-size:10px;
-}
-
-.nav-item span{
-    font-size:22px;
-}
-
-.nav-item.active{
-    color:#078d91;
-    font-weight:bold;
-}
-
-.nav-center{
-    width:55px;
-    height:55px;
-    margin-top:-25px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#078d91,#20c7c0);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    box-shadow:0 8px 20px rgba(7,141,145,.35);
-    border:5px solid #f5f8fa;
-}
-
-@media(max-width:380px){
-
-    .container{
-        padding:18px 12px;
-    }
-
-    .product-image-box{
-        height:290px;
-    }
-
-    .order-name{
-        font-size:24px;
-    }
-
-}
-
 </style>
-
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-
 <div class="topbar">
 
-    <a href="dashboard.html" class="back-btn">
-        ←
-    </a>
+<a href="dashboard.html" class="back">
+←
+</a>
 
-    <div class="logo-area">
-
-        <div class="logo">
-            ET
-        </div>
-
-        <div class="logo-text">
-            EliteTask Pro
-        </div>
-
-    </div>
+<div class="logo">
+EliteTask Pro
+</div>
 
 </div>
 
 
 <div class="container">
 
-    <!-- TITLE -->
+<h1>My Order</h1>
 
-    <div class="page-title">
+<p class="subtitle">
+Complete your order and earn commission.
+</p>
 
-        <h1>
-            My Order
-        </h1>
 
-        <p>
-            Complete your order and earn commission.
-        </p>
+<div class="balance">
 
-    </div>
+<small>Available Balance</small>
 
-
-    <!-- BALANCE -->
-
-    <div class="balance-card">
-
-        <span>
-            Available Balance
-        </span>
-
-        <strong id="balance">
-            $0.00
-        </strong>
-
-    </div>
-
-
-    <!-- LOADING -->
-
-    <div id="loadingBox" class="loading">
-
-        Loading current order...
-
-    </div>
-
-
-    <!-- CURRENT ORDER -->
-
-    <div
-        id="orderCard"
-        class="order-card"
-        style="display:none;"
-    >
-
-        <div class="order-label">
-            CURRENT ORDER
-        </div>
-
-
-        <!-- IMAGE -->
-
-        <div class="product-image-box">
-
-            <img
-                id="productImage"
-                src=""
-                alt="Product"
-                style="display:none;"
-            >
-
-            <div
-                id="imagePlaceholder"
-                class="image-placeholder"
-            >
-                🛍️
-            </div>
-
-        </div>
-
-
-        <!-- NAME -->
-
-        <div
-            id="orderName"
-            class="order-name"
-        >
-            Product Task
-        </div>
-
-
-        <div class="order-description">
-            Please complete this order to continue.
-        </div>
-
-
-        <!-- DETAILS -->
-
-        <div class="details">
-
-            <div class="detail-box">
-
-                <span>
-                    ORDER AMOUNT
-                </span>
-
-                <strong id="orderPrice">
-                    $0.00
-                </strong>
-
-            </div>
-
-
-            <div class="detail-box commission">
-
-                <span>
-                    COMMISSION
-                </span>
-
-                <strong id="orderCommission">
-                    +$0.00
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- REQUIRED -->
-
-        <div class="required-box">
-
-            <span>
-                REQUIRED AMOUNT
-            </span>
-
-            <strong id="requiredAmount">
-                $0.00
-            </strong>
-
-        </div>
-
-
-        <!-- COMPLETE -->
-
-        <button
-            id="completeBtn"
-            class="complete-btn"
-        >
-            Complete Order
-        </button>
-
-    </div>
-
-
-    <!-- NO MORE ORDERS -->
-
-    <div
-        id="noOrder"
-        class="message"
-        style="display:none;"
-    >
-
-        <div class="message-icon">
-            🎉
-        </div>
-
-        <h3>
-            All Orders Completed
-        </h3>
-
-        <p>
-            You have completed all available orders.
-            New orders will appear here when available.
-        </p>
-
-    </div>
-
-
-    <!-- SUCCESS -->
-
-    <div
-        id="successBox"
-        class="success-box"
-    >
-
-        <div class="success-icon">
-            ✓
-        </div>
-
-        <h3>
-            Order Completed!
-        </h3>
-
-        <p>
-            Your order has been completed successfully.
-            Loading your next order...
-        </p>
-
-    </div>
+<strong id="balance">
+$0.00
+</strong>
 
 </div>
 
 
-<!-- BOTTOM NAV -->
-
-<div class="bottom-nav">
-
-    <a
-        href="dashboard.html"
-        class="nav-item"
-    >
-        <span>⌂</span>
-        Home
-    </a>
+<div id="loading" class="message">
+Loading current order...
+</div>
 
 
-    <a
-        href="orders.html"
-        class="nav-item active"
-    >
-        <span>▣</span>
-        Orders
-    </a>
+<div id="taskBox" class="card" style="display:none">
+
+<img
+id="taskImage"
+class="task-image"
+alt="Task"
+>
+
+<div
+id="taskName"
+class="task-name"
+>
+Task
+</div>
 
 
-    <a
-        href="support.html"
-        class="nav-item"
-    >
+<div class="details">
 
-        <div class="nav-center">
-            💬
-        </div>
+<div class="box">
 
-        Support
+<small>ORDER AMOUNT</small>
 
-    </a>
+<strong id="taskPrice">
+$0.00
+</strong>
+
+</div>
 
 
-    <a
-        href="profile.html"
-        class="nav-item"
-    >
-        <span>👤</span>
-        Profile
-    </a>
+<div class="box commission">
+
+<small>COMMISSION</small>
+
+<strong id="taskCommission">
++$0.00
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="required">
+
+<small>
+REQUIRED DEPOSIT
+</small>
+
+<strong id="required">
+$0.00
+</strong>
+
+</div>
+
+
+<button id="completeBtn">
+Complete Order
+</button>
+
+</div>
+
+
+<div
+id="noTask"
+class="message"
+style="display:none"
+>
+
+<div style="font-size:45px">
+🎉
+</div>
+
+<h3 style="margin:10px 0">
+All Tasks Completed
+</h3>
+
+<p>
+No more tasks are available.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="bottom">
+
+<a href="dashboard.html">
+<span>⌂</span>
+Home
+</a>
+
+<a href="orders.html" class="active">
+<span>▣</span>
+Orders
+</a>
+
+<a href="support.html">
+<span>💬</span>
+Support
+</a>
+
+<a href="profile.html">
+<span>👤</span>
+Profile
+</a>
 
 </div>
 
@@ -672,670 +350,454 @@ body{
 <script type="module">
 
 import {
-    initializeApp
+initializeApp
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 
 import {
-    getAuth,
-    onAuthStateChanged
+getAuth,
+onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
-    getFirestore,
-    doc,
-    getDoc,
-    updateDoc,
-    collection,
-    getDocs
+getFirestore,
+doc,
+getDoc,
+updateDoc,
+collection,
+getDocs
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* FIREBASE */
+const firebaseConfig={
 
-const firebaseConfig = {
+apiKey:
+"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+authDomain:
+"elitetask-pro.firebaseapp.com",
 
-    authDomain: "elitetask-pro.firebaseapp.com",
+projectId:
+"elitetask-pro",
 
-    projectId: "elitetask-pro",
+storageBucket:
+"elitetask-pro.firebasestorage.app",
 
-    storageBucket: "elitetask-pro.firebasestorage.app",
+messagingSenderId:
+"504295275402",
 
-    messagingSenderId: "504295275402",
-
-    appId: "1:504295275402:web:8c480445c5510fa645a673"
+appId:
+"1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
 
-const app =
-    initializeApp(firebaseConfig);
+const app=
+initializeApp(firebaseConfig);
 
-const auth =
-    getAuth(app);
+const auth=
+getAuth(app);
 
-const db =
-    getFirestore(app);
-
-
-/* CURRENT USER */
-
-let currentUser = null;
+const db=
+getFirestore(app);
 
 
-/* TASK DATA */
+let userId=null;
 
-let tasks = [];
+let currentTask=null;
 
-let currentTaskIndex = 0;
+let taskIndex=0;
 
-let currentTask = null;
-
-
-/* LOGIN */
 
 onAuthStateChanged(
-    auth,
-    async (user) => {
+auth,
+async user=>{
 
-        if(!user){
+if(!user){
 
-            window.location.href =
-                "index.html";
+location.href="index.html";
 
-            return;
+return;
 
-        }
+}
 
-        currentUser = user;
+userId=user.uid;
 
-        await loadUserAndOrder();
+loadOrder();
 
-    }
+});
+
+
+async function loadOrder(){
+
+try{
+
+const userSnap=
+await getDoc(
+doc(db,"users",userId)
+);
+
+if(!userSnap.exists()){
+
+showNoTask();
+
+return;
+
+}
+
+
+const user=
+userSnap.data();
+
+
+const balance=
+Number(user.balance||0);
+
+const commission=
+Number(user.commission||0);
+
+
+document
+.getElementById("balance")
+.textContent=
+"$"+balance.toFixed(2);
+
+
+taskIndex=
+Number(
+user.currentTaskIndex||0
 );
 
 
-/* LOAD USER + ORDER */
+const snap=
+await getDocs(
+collection(db,"tasks")
+);
 
-async function loadUserAndOrder(){
 
-    try{
+const tasks=[];
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            );
 
+snap.forEach(d=>{
 
-        const userSnap =
-            await getDoc(userRef);
+tasks.push({
+id:d.id,
+...d.data()
+});
 
+});
 
-        if(!userSnap.exists()){
 
-            showNoOrder();
+tasks.sort(
+(a,b)=>
+Number(a.order||0)-
+Number(b.order||0)
+);
 
-            return;
 
-        }
-
-
-        const userData =
-            userSnap.data();
-
-
-        /* BALANCE */
-
-        const balance =
-            Number(
-                userData.balance || 0
-            );
-
-
-        document
-            .getElementById("balance")
-            .textContent =
-            "$" + balance.toFixed(2);
-
-
-        /* CURRENT TASK INDEX */
-
-        currentTaskIndex =
-            Number(
-                userData.currentTaskIndex || 0
-            );
-
-
-        await loadTasks(
-            balance
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "User/order error:",
-            error
-        );
-
-        document
-            .getElementById("loadingBox")
-            .textContent =
-            "Unable to load order.";
-
-    }
-
-}
-
-
-/* LOAD TASKS */
-
-async function loadTasks(balance){
-
-    try{
-
-        const taskRef =
-            collection(
-                db,
-                "tasks"
-            );
-
-
-        const snapshot =
-            await getDocs(
-                taskRef
-            );
-
-
-        tasks = [];
-
-
-        snapshot.forEach(
-            taskDoc => {
-
-                const data =
-                    taskDoc.data();
-
-
-                tasks.push({
-
-                    id:taskDoc.id,
-
-                    ...data
-
-                });
-
-            }
-        );
-
-
-        /* SORT BY ORDER */
-
-        tasks.sort(
-            (a,b) => {
-
-                const aOrder =
-                    Number(
-                        a.order ??
-                        a.taskNumber ??
-                        999999
-                    );
-
-                const bOrder =
-                    Number(
-                        b.order ??
-                        b.taskNumber ??
-                        999999
-                    );
-
-
-                return aOrder - bOrder;
-
-            }
-        );
-
-
-        /* NO TASKS */
-
-        if(
-            tasks.length === 0 ||
-            currentTaskIndex >= tasks.length
-        ){
-
-            showNoOrder();
-
-            return;
-
-        }
-
-
-        /* ONE CURRENT TASK ONLY */
-
-        currentTask =
-            tasks[currentTaskIndex];
-
-
-        showCurrentOrder(
-            currentTask,
-            balance
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Tasks error:",
-            error
-        );
-
-        document
-            .getElementById("loadingBox")
-            .textContent =
-            "Unable to load current order.";
-
-    }
-
-}
-
-
-/* SHOW CURRENT ORDER */
-
-function showCurrentOrder(
-    task,
-    balance
+if(
+tasks.length===0 ||
+taskIndex>=tasks.length
 ){
 
-    document
-        .getElementById("loadingBox")
-        .style.display =
-        "none";
+showNoTask();
 
-
-    document
-        .getElementById("noOrder")
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById("orderCard")
-        .style.display =
-        "block";
-
-
-    const name =
-        task.name ||
-        "Product Task";
-
-
-    const price =
-        Number(
-            task.price || 0
-        );
-
-
-    const commission =
-        Number(
-            task.commission || 0
-        );
-
-
-    const image =
-        task.image ||
-        "";
-
-
-    document
-        .getElementById("orderName")
-        .textContent =
-        name;
-
-
-    document
-        .getElementById("orderPrice")
-        .textContent =
-        "$" + price.toFixed(2);
-
-
-    document
-        .getElementById("orderCommission")
-        .textContent =
-        "+$" + commission.toFixed(2);
-
-
-    /* REQUIRED */
-
-    const required =
-        Math.max(
-            price - balance,
-            0
-        );
-
-
-    document
-        .getElementById("requiredAmount")
-        .textContent =
-        "$" + required.toFixed(2);
-
-
-    /* IMAGE */
-
-    const imageElement =
-        document.getElementById(
-            "productImage"
-        );
-
-
-    const placeholder =
-        document.getElementById(
-            "imagePlaceholder"
-        );
-
-
-    if(image){
-
-        imageElement.src =
-            image;
-
-        imageElement.style.display =
-            "block";
-
-        placeholder.style.display =
-            "none";
-
-    }
-
-    else{
-
-        imageElement.style.display =
-            "none";
-
-        placeholder.style.display =
-            "flex";
-
-    }
-
-
-    /* BUTTON */
-
-    const completeBtn =
-        document.getElementById(
-            "completeBtn"
-        );
-
-
-    if(balance >= price){
-
-        completeBtn.disabled =
-            false;
-
-        completeBtn.textContent =
-            "Complete Order";
-
-    }
-
-    else{
-
-        completeBtn.disabled =
-            false;
-
-        completeBtn.textContent =
-            "Complete Order";
-
-    }
+return;
 
 }
 
 
-/* COMPLETE ORDER */
+currentTask=
+tasks[taskIndex];
+
+
+const price=
+Number(
+currentTask.price||0
+);
+
+
+const earned=
+Number(
+currentTask.commission||0
+);
+
+
+/*
+BALANCE + COMMISSION
+DONO NEXT TASK KE LIYE USE HONGE
+*/
+
+const usable=
+balance+commission;
+
+
+const required=
+Math.max(
+price-usable,
+0
+);
+
 
 document
-    .getElementById("completeBtn")
-    .addEventListener(
-        "click",
-        completeCurrentOrder
-    );
+.getElementById("loading")
+.style.display="none";
 
 
-async function completeCurrentOrder(){
+document
+.getElementById("taskBox")
+.style.display="block";
 
-    if(!currentUser || !currentTask){
 
-        return;
+document
+.getElementById("taskName")
+.textContent=
+currentTask.name||"Task";
 
-    }
 
+document
+.getElementById("taskPrice")
+.textContent=
+"$"+price.toFixed(2);
 
-    const button =
-        document.getElementById(
-            "completeBtn"
-        );
 
+document
+.getElementById("taskCommission")
+.textContent=
+"+$"+earned.toFixed(2);
 
-    button.disabled =
-        true;
 
-    button.textContent =
-        "Completing...";
+document
+.getElementById("required")
+.textContent=
+"$"+required.toFixed(2);
 
 
-    try{
+const image=
+document.getElementById("taskImage");
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            );
 
+if(currentTask.image){
 
-        const userSnap =
-            await getDoc(
-                userRef
-            );
+image.src=
+currentTask.image;
 
+image.style.display="block";
 
-        if(!userSnap.exists()){
+}else{
 
-            throw new Error(
-                "User not found"
-            );
-
-        }
-
-
-        const userData =
-            userSnap.data();
-
-
-        const balance =
-            Number(
-                userData.balance || 0
-            );
-
-
-        const oldCommission =
-            Number(
-                userData.commission || 0
-            );
-
-
-        const price =
-            Number(
-                currentTask.price || 0
-            );
-
-
-        const earnedCommission =
-            Number(
-                currentTask.commission || 0
-            );
-
-
-        /* CHECK BALANCE */
-
-        if(balance < price){
-
-            const required =
-                price - balance;
-
-
-            alert(
-                "Insufficient balance.\n\nRequired: $" +
-                required.toFixed(2)
-            );
-
-
-            button.disabled =
-                false;
-
-            button.textContent =
-                "Complete Order";
-
-            return;
-
-        }
-
-
-        /* NEW BALANCE */
-
-        const newBalance =
-            balance - price;
-
-
-        /* TASK AMOUNT + COMMISSION */
-
-        const newCommission =
-            oldCommission +
-            price +
-            earnedCommission;
-
-
-        /* COMPLETED COUNT */
-
-        const completed =
-            Number(
-                userData.completedTasks || 0
-            );
-
-
-        const newCompleted =
-            completed + 1;
-
-
-        /* NEXT TASK */
-
-        const nextIndex =
-            currentTaskIndex + 1;
-
-
-        await updateDoc(
-            userRef,
-            {
-
-                balance:
-                    newBalance,
-
-                commission:
-                    newCommission,
-
-                completedTasks:
-                    newCompleted,
-
-                currentTaskIndex:
-                    nextIndex
-
-            }
-        );
-
-
-        /* SUCCESS */
-
-        document
-            .getElementById(
-                "orderCard"
-            )
-            .style.display =
-            "none";
-
-
-        document
-            .getElementById(
-                "successBox"
-            )
-            .classList
-            .add("show");
-
-
-        /*
-         NEXT ORDER AFTER 1.2 SEC
-        */
-
-        setTimeout(
-            () => {
-
-                window.location.reload();
-
-            },
-            1200
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            "Complete error:",
-            error
-        );
-
-
-        alert(
-            "Order complete nahi ho saka."
-        );
-
-
-        button.disabled =
-            false;
-
-        button.textContent =
-            "Complete Order";
-
-    }
+image.style.display="none";
 
 }
 
 
-/* NO ORDER */
+}catch(error){
 
-function showNoOrder(){
+console.log(error);
 
-    document
-        .getElementById("loadingBox")
-        .style.display =
-        "none";
+document
+.getElementById("loading")
+.textContent=
+"Unable to load order.";
 
+}
 
-    document
-        .getElementById("orderCard")
-        .style.display =
-        "none";
+}
 
 
-    document
-        .getElementById("noOrder")
-        .style.display =
-        "block";
+document
+.getElementById("completeBtn")
+.onclick=
+async()=>{
+
+if(!currentTask)
+return;
+
+
+const button=
+document.getElementById("completeBtn");
+
+button.disabled=true;
+
+button.textContent=
+"Completing...";
+
+
+try{
+
+const userRef=
+doc(db,"users",userId);
+
+
+const userSnap=
+await getDoc(userRef);
+
+
+const user=
+userSnap.data();
+
+
+let balance=
+Number(user.balance||0);
+
+let commission=
+Number(user.commission||0);
+
+
+const price=
+Number(
+currentTask.price||0
+);
+
+const earned=
+Number(
+currentTask.commission||0
+);
+
+
+const usable=
+balance+commission;
+
+
+const required=
+Math.max(
+price-usable,
+0
+);
+
+
+/*
+AGAR BALANCE + COMMISSION
+TASK KE LIYE KAFI NAHI
+*/
+
+if(required>0){
+
+alert(
+"Insufficient amount.\n\nRequired: $"+
+required.toFixed(2)
+);
+
+button.disabled=false;
+
+button.textContent=
+"Complete Order";
+
+return;
+
+}
+
+
+/*
+PEHLE BALANCE USE HOGA
+PHIR COMMISSION
+*/
+
+let newBalance=0;
+
+let newCommission=0;
+
+
+if(balance>=price){
+
+newBalance=
+balance-price;
+
+newCommission=
+commission;
+
+}else{
+
+const remaining=
+price-balance;
+
+newBalance=0;
+
+newCommission=
+commission-remaining;
+
+}
+
+
+/*
+EARNED COMMISSION
+COMMISSION BOX MEIN ADD
+*/
+
+newCommission+=
+price+earned;
+
+
+const completed=
+Number(
+user.completedTasks||0
+)+1;
+
+
+const nextIndex=
+taskIndex+1;
+
+
+await updateDoc(
+userRef,
+{
+
+balance:newBalance,
+
+commission:newCommission,
+
+completedTasks:completed,
+
+currentTaskIndex:nextIndex
+
+}
+);
+
+
+alert(
+"Order completed successfully!"
+);
+
+
+location.reload();
+
+
+}catch(error){
+
+console.log(error);
+
+alert(error.message);
+
+button.disabled=false;
+
+button.textContent=
+"Complete Order";
+
+}
+
+};
+
+
+function showNoTask(){
+
+document
+.getElementById("loading")
+.style.display="none";
+
+document
+.getElementById("taskBox")
+.style.display="none";
+
+document
+.getElementById("noTask")
+.style.display="block";
 
 }
 
