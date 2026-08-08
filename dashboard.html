@@ -4,22 +4,531 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>EliteTask Pro Dashboard</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    min-height:100vh;
+
+    padding-bottom:90px;
+
+    color:#3d2d00;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf3 0%,
+            #f5e7a7 25%,
+            #fff5c5 50%,
+            #e4c85f 75%,
+            #fff9dc 100%
+        );
+
+}
+
+
+/* PROFILE */
+
+.profile-btn{
+
+    position:absolute;
+
+    right:15px;
+
+    top:15px;
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    background:#ffffff;
+
+    color:#6d5200;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+}
+
+
+/* LOGO */
+
+.logo-area{
+
+    text-align:center;
+
+    padding:20px 15px 10px;
+
+}
+
+.logo{
+
+    width:48px;
+
+    height:48px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:#c79b20;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.logo-text{
+
+    margin-top:7px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    color:#725400;
+
+}
+
+
+/* WELCOME */
+
+.welcome{
+
+    margin:15px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:white;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+}
+
+.welcome h2{
+
+    font-size:20px;
+
+    color:#4d3a00;
+
+}
+
+.welcome h2 span{
+
+    color:#bd8e00;
+
+}
+
+.welcome p{
+
+    margin-top:7px;
+
+    font-size:13px;
+
+    color:#888;
+
+}
+
+
+/* BALANCE */
+
+.balance-card{
+
+    margin:15px;
+
+    padding:22px;
+
+    border-radius:20px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #795500,
+            #d0a62b,
+            #f1d66e,
+            #b27e00
+        );
+
+    color:white;
+
+    box-shadow:0 8px 22px rgba(90,60,0,.25);
+
+}
+
+.balance-title{
+
+    font-size:13px;
+
+    opacity:.9;
+
+}
+
+.balance{
+
+    margin-top:7px;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+}
+
+.balance-bottom{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+.balance-item{
+
+    padding:11px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.17);
+
+}
+
+.balance-item span{
+
+    display:block;
+
+    font-size:11px;
+
+    opacity:.9;
+
+}
+
+.balance-item strong{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:16px;
+
+}
+
+
+/* STATS */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin:15px;
+
+}
+
+.stat-card{
+
+    padding:16px;
+
+    border-radius:17px;
+
+    background:white;
+
+    border:1px solid #ead78c;
+
+    box-shadow:0 5px 17px rgba(0,0,0,.07);
+
+}
+
+.stat-icon{
+
+    font-size:22px;
+
+}
+
+.stat-card p{
+
+    margin-top:9px;
+
+    font-size:12px;
+
+    color:#777;
+
+}
+
+.stat-card h3{
+
+    margin-top:5px;
+
+    font-size:21px;
+
+    color:#745600;
+
+}
+
+
+/* CURRENT ORDER */
+
+.section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin:20px 15px 10px;
+
+}
+
+.section-title h3{
+
+    color:#4e3a00;
+
+}
+
+.section-title a{
+
+    padding:7px 10px;
+
+    border-radius:8px;
+
+    background:#c59a20;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+}
+
+#currentOrder{
+
+    margin:0 15px;
+
+}
+
+.loading{
+
+    padding:25px;
+
+    text-align:center;
+
+    border-radius:17px;
+
+    background:white;
+
+    color:#888;
+
+}
+
+
+/* GRAB ORDER */
+
+.grab-section{
+
+    margin:18px 15px;
+
+}
+
+.grab-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #a87900,
+            #e2bd45,
+            #a87900
+        );
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 18px rgba(100,70,0,.25);
+
+}
+
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+
+    position:fixed;
+
+    left:0;
+
+    right:0;
+
+    bottom:0;
+
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-around;
+
+    background:white;
+
+    border-top:1px solid #e3cf76;
+
+    box-shadow:0 -4px 18px rgba(0,0,0,.1);
+
+    z-index:100;
+
+}
+
+.nav-item{
+
+    position:relative;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:4px;
+
+    min-width:60px;
+
+    color:#777;
+
+    text-decoration:none;
+
+    font-size:11px;
+
+}
+
+.nav-item span{
+
+    font-size:20px;
+
+}
+
+.nav-item.active{
+
+    color:#a87900;
+
+    font-weight:bold;
+
+}
+
+.nav-center{
+
+    width:43px;
+
+    height:43px;
+
+    margin-top:-18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#d1a52c;
+
+    color:white;
+
+    border:4px solid white;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.18);
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+    .balance{
+
+        font-size:30px;
+
+    }
+
+    .stat-card{
+
+        padding:14px;
+
+    }
+
+}
+
+</style>
 
 </head>
+
 
 <body>
 
 
-<!-- TOP -->
-
 <a href="profile.html" class="profile-btn">
     👤
 </a>
+
 
 <div class="logo-area">
 
@@ -34,8 +543,6 @@
 </div>
 
 
-<!-- WELCOME -->
-
 <div class="welcome">
 
     <h2>
@@ -48,8 +555,6 @@
 
 </div>
 
-
-<!-- BALANCE -->
 
 <div class="balance-card">
 
@@ -75,7 +580,6 @@
 
         </div>
 
-
         <div class="balance-item">
 
             <span>
@@ -93,9 +597,8 @@
 </div>
 
 
-<!-- STATS -->
-
 <div class="stats">
+
 
     <div class="stat-card">
 
@@ -164,10 +667,9 @@
 
     </div>
 
+
 </div>
 
-
-<!-- CURRENT ORDER -->
 
 <div class="section-title">
 
@@ -191,8 +693,6 @@
 </div>
 
 
-<!-- GRAB ORDERS -->
-
 <div class="grab-section">
 
     <button
@@ -204,8 +704,6 @@
 
 </div>
 
-
-<!-- BOTTOM NAVIGATION -->
 
 <div class="bottom-nav">
 
@@ -267,11 +765,6 @@
 
 
 </div>
-
-
-<!-- EXISTING SCRIPT -->
-
-<script src="script.js"></script>
 
 
 </body>
