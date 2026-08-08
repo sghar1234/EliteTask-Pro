@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Tasks</title>
+<title>EliteTask Pro - Orders</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -17,22 +15,20 @@
 }
 
 body{
-    background:#f4f7fb;
+    background:#f5f8fa;
     color:#172033;
     padding-bottom:90px;
 }
 
-/* TOP */
-
 .topbar{
     height:70px;
-    background:linear-gradient(135deg,#07152f,#1454a3);
+    background:linear-gradient(135deg,#063b46,#078d91);
     display:flex;
     align-items:center;
     justify-content:space-between;
     padding:0 17px;
     color:white;
-    box-shadow:0 4px 18px rgba(0,0,0,.15);
+    box-shadow:0 4px 18px rgba(0,0,0,.13);
 }
 
 .back-btn{
@@ -59,7 +55,8 @@ body{
     width:38px;
     height:38px;
     border-radius:12px;
-    background:linear-gradient(135deg,#2d8cff,#55c8ff);
+    background:linear-gradient(135deg,#39d6d0,#8cf5e7);
+    color:#07535a;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -70,8 +67,6 @@ body{
     font-size:16px;
     font-weight:bold;
 }
-
-/* MAIN */
 
 .container{
     max-width:600px;
@@ -96,33 +91,51 @@ body{
 /* BALANCE */
 
 .balance-mini{
-    background:linear-gradient(135deg,#081a3c,#1454a3);
+    background:linear-gradient(135deg,#07545d,#09a3a0);
     color:white;
-    border-radius:20px;
-    padding:18px;
+    border-radius:21px;
+    padding:19px;
     margin-bottom:18px;
-    box-shadow:0 10px 25px rgba(13,65,140,.2);
+    box-shadow:0 10px 25px rgba(5,130,132,.2);
+    position:relative;
+    overflow:hidden;
+}
+
+.balance-mini:after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:rgba(255,255,255,.07);
+    right:-35px;
+    top:-55px;
 }
 
 .balance-mini span{
     font-size:11px;
-    opacity:.7;
+    opacity:.75;
+    position:relative;
+    z-index:2;
 }
 
 .balance-mini strong{
     display:block;
-    font-size:25px;
+    font-size:27px;
     margin-top:6px;
+    position:relative;
+    z-index:2;
 }
 
 /* TASK CARD */
 
 .task-card{
     background:white;
-    border-radius:20px;
+    border-radius:21px;
     padding:15px;
     margin-bottom:13px;
     box-shadow:0 5px 20px rgba(20,40,80,.07);
+    border:1px solid #edf1f3;
 }
 
 .task-top{
@@ -132,18 +145,19 @@ body{
 }
 
 .task-image{
-    width:65px;
-    height:65px;
-    border-radius:16px;
+    width:68px;
+    height:68px;
+    border-radius:17px;
     object-fit:cover;
-    background:#eaf2ff;
+    background:#eafafa;
+    flex-shrink:0;
 }
 
 .task-placeholder{
-    width:65px;
-    height:65px;
-    border-radius:16px;
-    background:linear-gradient(135deg,#e8f2ff,#d8eaff);
+    width:68px;
+    height:68px;
+    border-radius:17px;
+    background:linear-gradient(135deg,#e7faf9,#d8f3f1);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -163,7 +177,7 @@ body{
 }
 
 .task-price strong{
-    color:#1478ed;
+    color:#078d91;
 }
 
 .task-bottom{
@@ -189,12 +203,17 @@ body{
 
 .start-btn{
     border:none;
-    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    background:linear-gradient(135deg,#078d91,#0bb9b0);
     color:white;
     padding:11px 18px;
     border-radius:12px;
     font-weight:bold;
     font-size:12px;
+    cursor:pointer;
+}
+
+.start-btn:active{
+    transform:scale(.97);
 }
 
 .empty{
@@ -211,6 +230,145 @@ body{
     padding:30px;
     color:#8992a2;
     font-size:13px;
+}
+
+/* ORDER POPUP */
+
+.popup-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(4,28,34,.58);
+    backdrop-filter:blur(5px);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:3000;
+}
+
+.popup-overlay.show{
+    display:flex;
+}
+
+.order-popup{
+    width:100%;
+    max-width:600px;
+    background:white;
+    border-radius:27px 27px 0 0;
+    padding:22px 18px 29px;
+    animation:popupUp .25s ease;
+}
+
+@keyframes popupUp{
+    from{
+        transform:translateY(100%);
+    }
+    to{
+        transform:translateY(0);
+    }
+}
+
+.popup-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:17px;
+}
+
+.popup-head h3{
+    font-size:19px;
+}
+
+.close-popup{
+    width:35px;
+    height:35px;
+    border:0;
+    border-radius:50%;
+    background:#f0f3f4;
+    color:#56636a;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.popup-product{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:#f6f9fa;
+    padding:13px;
+    border-radius:18px;
+    margin-bottom:15px;
+}
+
+.popup-product img{
+    width:70px;
+    height:70px;
+    border-radius:15px;
+    object-fit:cover;
+}
+
+.popup-placeholder{
+    width:70px;
+    height:70px;
+    border-radius:15px;
+    background:#e5f7f6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+.popup-product h4{
+    font-size:15px;
+    margin-bottom:6px;
+}
+
+.popup-product p{
+    font-size:11px;
+    color:#89939a;
+}
+
+.popup-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.detail-box{
+    background:#f7f9fa;
+    padding:14px;
+    border-radius:16px;
+}
+
+.detail-box span{
+    display:block;
+    color:#89939a;
+    font-size:10px;
+    margin-bottom:6px;
+}
+
+.detail-box strong{
+    font-size:17px;
+}
+
+.detail-box.commission strong{
+    color:#16a05d;
+}
+
+.popup-start{
+    width:100%;
+    border:0;
+    border-radius:16px;
+    padding:15px;
+    background:linear-gradient(135deg,#078d91,#0bb9b0);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.popup-start:active{
+    transform:scale(.98);
 }
 
 /* BOTTOM */
@@ -247,7 +405,7 @@ body{
 }
 
 .nav-item.active{
-    color:#1677e8;
+    color:#078d91;
     font-weight:bold;
 }
 
@@ -256,22 +414,29 @@ body{
     height:55px;
     margin-top:-25px;
     border-radius:50%;
-    background:linear-gradient(135deg,#1478ed,#36b4ff);
+    background:linear-gradient(135deg,#078d91,#20c7c0);
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:24px;
-    box-shadow:0 8px 20px rgba(20,120,237,.35);
-    border:5px solid #f4f7fb;
+    box-shadow:0 8px 20px rgba(7,141,145,.35);
+    border:5px solid #f5f8fa;
 }
 
-</style>
+@media(max-width:380px){
+    .container{
+        padding:15px 12px;
+    }
 
+    .logo-text{
+        font-size:14px;
+    }
+}
+</style>
 </head>
 
 <body>
-
 
 <!-- TOP BAR -->
 
@@ -298,15 +463,14 @@ body{
 
 <div class="container">
 
-
     <div class="page-title">
 
         <h2>
-            Available Tasks
+            Available Orders
         </h2>
 
         <p>
-            Complete tasks and earn commission.
+            Select an order and earn your commission.
         </p>
 
     </div>
@@ -332,11 +496,100 @@ body{
     <div id="taskList">
 
         <div class="loading">
-            Loading tasks...
+            Loading orders...
         </div>
 
     </div>
 
+</div>
+
+
+<!-- ORDER POPUP -->
+
+<div
+    class="popup-overlay"
+    id="orderPopup"
+>
+
+    <div class="order-popup">
+
+        <div class="popup-head">
+
+            <h3>
+                Order Details
+            </h3>
+
+            <button
+                class="close-popup"
+                id="closePopup"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="popup-product">
+
+            <div id="popupImage">
+                <div class="popup-placeholder">
+                    🛍️
+                </div>
+            </div>
+
+            <div>
+
+                <h4 id="popupName">
+                    Product Task
+                </h4>
+
+                <p>
+                    Order is ready to start
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="popup-details">
+
+            <div class="detail-box">
+
+                <span>
+                    Total Order
+                </span>
+
+                <strong id="popupPrice">
+                    $0.00
+                </strong>
+
+            </div>
+
+
+            <div class="detail-box commission">
+
+                <span>
+                    Commission
+                </span>
+
+                <strong id="popupCommission">
+                    +$0.00
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="popup-start"
+            id="popupStart"
+        >
+            Start Order
+        </button>
+
+    </div>
 
 </div>
 
@@ -344,7 +597,6 @@ body{
 <!-- BOTTOM NAV -->
 
 <div class="bottom-nav">
-
 
     <a
         href="dashboard.html"
@@ -360,7 +612,7 @@ body{
         class="nav-item active"
     >
         <span>▣</span>
-        Tasks
+        Orders
     </a>
 
 
@@ -385,7 +637,6 @@ body{
         <span>👤</span>
         Profile
     </a>
-
 
 </div>
 
@@ -442,24 +693,32 @@ const db =
     getFirestore(app);
 
 
+/* SELECTED TASK */
+
+let selectedTaskId = "";
+
+
 /* LOGIN */
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if(!user){
+        if(!user){
 
-        window.location.href =
-            "index.html";
+            window.location.href =
+                "index.html";
 
-        return;
+            return;
+
+        }
+
+        await loadBalance(user.uid);
+
+        await loadTasks();
 
     }
-
-    await loadBalance(user.uid);
-
-    await loadTasks();
-
-});
+);
 
 
 /* BALANCE */
@@ -477,6 +736,7 @@ async function loadBalance(uid){
 
         const snap =
             await getDoc(ref);
+
 
         if(snap.exists()){
 
@@ -496,9 +756,13 @@ async function loadBalance(uid){
         }
 
     }
+
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Balance error:",
+            error
+        );
 
     }
 
@@ -514,6 +778,7 @@ async function loadTasks(){
             "taskList"
         );
 
+
     try{
 
         const ref =
@@ -525,6 +790,7 @@ async function loadTasks(){
         const snapshot =
             await getDocs(ref);
 
+
         list.innerHTML = "";
 
 
@@ -534,7 +800,10 @@ async function loadTasks(){
 
                 <div class="empty">
 
-                    📦<br><br>
+                    📦
+
+                    <br>
+                    <br>
 
                     No tasks available right now.
 
@@ -547,148 +816,174 @@ async function loadTasks(){
         }
 
 
-        snapshot.forEach((taskDoc) => {
+        snapshot.forEach(
+            (taskDoc) => {
 
-            const task =
-                taskDoc.data();
-
-            const taskId =
-                taskDoc.id;
-
-            const name =
-                task.name ||
-                "Product Task";
-
-            const price =
-                Number(
-                    task.price || 0
-                );
-
-            const commission =
-                Number(
-                    task.commission || 0
-                );
-
-            const image =
-                task.image || "";
+                const task =
+                    taskDoc.data();
 
 
-            let imageHTML = "";
+                const taskId =
+                    taskDoc.id;
 
 
-            if(image){
-
-                imageHTML = `
-
-                    <img
-                        src="${image}"
-                        class="task-image"
-                        alt="Task"
-                    >
-
-                `;
-
-            }
-            else{
-
-                imageHTML = `
-
-                    <div class="task-placeholder">
-                        🛍️
-                    </div>
-
-                `;
-
-            }
+                const name =
+                    task.name ||
+                    "Product Task";
 
 
-            const card =
-                document.createElement(
-                    "div"
-                );
-
-            card.className =
-                "task-card";
+                const price =
+                    Number(
+                        task.price || 0
+                    );
 
 
-            card.innerHTML = `
+                const commission =
+                    Number(
+                        task.commission || 0
+                    );
 
-                <div class="task-top">
 
-                    ${imageHTML}
+                const image =
+                    task.image ||
+                    "";
 
-                    <div>
 
-                        <div class="task-name">
-                            ${name}
+                let imageHTML;
+
+
+                if(image){
+
+                    imageHTML = `
+
+                        <img
+                            src="${image}"
+                            class="task-image"
+                            alt="Product"
+                        >
+
+                    `;
+
+                }
+
+                else{
+
+                    imageHTML = `
+
+                        <div
+                            class="task-placeholder"
+                        >
+                            🛍️
                         </div>
 
-                        <div class="task-price">
+                    `;
 
-                            Task Amount:
+                }
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "task-card";
+
+
+                card.innerHTML = `
+
+                    <div class="task-top">
+
+                        ${imageHTML}
+
+                        <div>
+
+                            <div class="task-name">
+                                ${name}
+                            </div>
+
+                            <div class="task-price">
+
+                                Total Order:
+
+                                <strong>
+                                    $${price.toFixed(2)}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="task-bottom">
+
+                        <div class="reward">
+
+                            Commission
+
                             <strong>
-                                $${price.toFixed(2)}
+                                +$${commission.toFixed(2)}
                             </strong>
 
                         </div>
 
-                    </div>
 
-                </div>
-
-
-                <div class="task-bottom">
-
-                    <div class="reward">
-
-                        Commission
-
-                        <strong>
-                            +$${commission.toFixed(2)}
-                        </strong>
+                        <button
+                            class="start-btn"
+                        >
+                            View Order
+                        </button>
 
                     </div>
 
-
-                    <button
-                        class="start-btn"
-                    >
-                        Start Task
-                    </button>
-
-                </div>
-
-            `;
+                `;
 
 
-            card
-                .querySelector(".start-btn")
-                .addEventListener(
-                    "click",
-                    () => {
+                card
+                    .querySelector(
+                        ".start-btn"
+                    )
+                    .addEventListener(
+                        "click",
+                        () => {
 
-                        window.location.href =
-                            "orders.html?task=" +
-                            taskId;
+                            openPopup(
+                                taskId,
+                                name,
+                                price,
+                                commission,
+                                image
+                            );
 
-                    }
+                        }
+                    );
+
+
+                list.appendChild(
+                    card
                 );
 
-
-            list.appendChild(card);
-
-        });
+            }
+        );
 
     }
+
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Task error:",
+            error
+        );
+
 
         list.innerHTML = `
 
             <div class="empty">
 
-                Tasks load nahi ho rahe.
+                Unable to load tasks.
 
             </div>
 
@@ -697,6 +992,137 @@ async function loadTasks(){
     }
 
 }
+
+
+/* OPEN POPUP */
+
+function openPopup(
+    taskId,
+    name,
+    price,
+    commission,
+    image
+){
+
+    selectedTaskId =
+        taskId;
+
+
+    document
+        .getElementById("popupName")
+        .textContent =
+        name;
+
+
+    document
+        .getElementById("popupPrice")
+        .textContent =
+        "$" + price.toFixed(2);
+
+
+    document
+        .getElementById("popupCommission")
+        .textContent =
+        "+$" + commission.toFixed(2);
+
+
+    const imageBox =
+        document.getElementById(
+            "popupImage"
+        );
+
+
+    if(image){
+
+        imageBox.innerHTML = `
+
+            <img
+                src="${image}"
+                alt="Product"
+            >
+
+        `;
+
+    }
+
+    else{
+
+        imageBox.innerHTML = `
+
+            <div class="popup-placeholder">
+                🛍️
+            </div>
+
+        `;
+
+    }
+
+
+    document
+        .getElementById("orderPopup")
+        .classList
+        .add("show");
+
+}
+
+
+/* CLOSE POPUP */
+
+function closePopup(){
+
+    document
+        .getElementById("orderPopup")
+        .classList
+        .remove("show");
+
+}
+
+
+document
+    .getElementById("closePopup")
+    .addEventListener(
+        "click",
+        closePopup
+    );
+
+
+document
+    .getElementById("orderPopup")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+
+                closePopup();
+
+            }
+
+        }
+    );
+
+
+/* START ORDER */
+
+document
+    .getElementById("popupStart")
+    .addEventListener(
+        "click",
+        function(){
+
+            if(!selectedTaskId){
+                return;
+            }
+
+            window.location.href =
+                "orders.html?task=" +
+                selectedTaskId;
+
+        }
+    );
 
 </script>
 
