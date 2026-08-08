@@ -1,236 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>EliteTask Pro Admin</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-    font-family:Arial,sans-serif;
-    background:#f7edbd;
-    color:#3d2d00;
-    padding:15px;
+font-family:Arial,sans-serif;
+background:#f7edbd;
+color:#3d2d00;
+padding:15px
 }
 
 .container{
-    max-width:700px;
-    margin:auto;
+max-width:700px;
+margin:auto
 }
 
 .header{
-    background:linear-gradient(135deg,#8c6500,#d8b33d,#9c7100);
-    color:white;
-    padding:18px;
-    border-radius:18px;
-    margin-bottom:18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.header h2{
-    font-size:20px;
+background:linear-gradient(135deg,#806000,#d9b43d,#967000);
+color:white;
+padding:18px;
+border-radius:18px;
+margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center
 }
 
 .logout{
-    background:white;
-    color:#8b6500;
-    border:0;
-    padding:9px 13px;
-    border-radius:9px;
-    font-weight:bold;
+background:white;
+color:#806000;
+border:0;
+padding:10px 14px;
+border-radius:9px;
+font-weight:bold
 }
 
+.tabs{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+margin-bottom:15px
+}
+
+.tab{
+padding:11px 4px;
+border:0;
+border-radius:9px;
+background:white;
+color:#725300;
+font-weight:bold;
+font-size:11px
+}
+
+.tab.active{
+background:#b48600;
+color:white
+}
+
+.panel{display:none}
+.panel.active{display:block}
+
 .card{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:18px;
-    box-shadow:0 5px 18px rgba(0,0,0,.1);
+background:white;
+border-radius:18px;
+padding:18px;
+margin-bottom:15px;
+box-shadow:0 5px 18px rgba(0,0,0,.1)
 }
 
 .card h3{
-    margin-bottom:15px;
-    color:#715200;
+color:#715200;
+margin-bottom:14px
 }
 
 .input{
-    width:100%;
-    padding:13px;
-    border:1px solid #dbc879;
-    border-radius:10px;
-    margin-bottom:11px;
-    outline:none;
-}
-
-.input:focus{
-    border-color:#b78a00;
+width:100%;
+padding:13px;
+border:1px solid #dbc879;
+border-radius:10px;
+margin-bottom:10px
 }
 
 .preview{
-    width:100%;
-    max-height:230px;
-    object-fit:cover;
-    border-radius:14px;
-    margin-bottom:12px;
-    display:none;
+width:100%;
+max-height:220px;
+object-fit:cover;
+border-radius:12px;
+display:none;
+margin-bottom:10px
 }
 
-.save-btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:11px;
-    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
-    color:white;
-    font-weight:bold;
-    font-size:15px;
+.main-btn{
+width:100%;
+padding:14px;
+border:0;
+border-radius:11px;
+background:#b48600;
+color:white;
+font-weight:bold
 }
 
-.task{
-    border:1px solid #ead99a;
-    border-radius:15px;
-    overflow:hidden;
-    margin-top:12px;
+.item{
+border:1px solid #ead99a;
+border-radius:14px;
+padding:13px;
+margin-top:10px
 }
 
-.task img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-    display:block;
+.item img{
+width:100%;
+height:170px;
+object-fit:cover;
+border-radius:10px
 }
 
-.task-info{
-    padding:14px;
+.item h4{
+margin:8px 0;
+color:#624700
 }
 
-.task-info h4{
-    color:#624700;
-    margin-bottom:6px;
+.item p{
+font-size:13px;
+color:#777;
+margin:4px 0
 }
 
-.task-info p{
-    margin-top:4px;
-    color:#777;
-    font-size:13px;
+.row{
+display:flex;
+gap:7px;
+margin-top:10px
 }
 
-.reply-row{
-    display:flex;
-    gap:8px;
+.small{
+flex:1;
+padding:10px;
+border:0;
+border-radius:8px;
+background:#b48600;
+color:white
 }
 
-.reply-row input{
-    flex:1;
-    padding:12px;
-    border:1px solid #dbc879;
-    border-radius:10px;
+.red{background:#b33b2e}
+.green{background:#218c55}
+
+.status{
+text-align:center;
+margin-top:10px;
+font-size:13px;
+color:#777
 }
 
-.reply-btn{
-    border:0;
-    border-radius:10px;
-    padding:0 16px;
-    background:#b48600;
-    color:white;
+.message{
+background:#faf7e8;
+padding:11px;
+border-radius:10px;
+margin-top:8px;
+font-size:13px
 }
-
-#status{
-    margin-top:10px;
-    font-size:13px;
-    color:#777;
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="container">
 
-
 <div class="header">
-
 <h2>EliteTask Pro Admin</h2>
+<button class="logout" id="logoutBtn">Logout</button>
+</div>
 
-<button
-    class="logout"
-    id="logoutBtn"
->
-Logout
+<div class="tabs">
+
+<button class="tab active" data-tab="tasks">
+Tasks
+</button>
+
+<button class="tab" data-tab="users">
+Users
+</button>
+
+<button class="tab" data-tab="withdraws">
+Withdraws
+</button>
+
+<button class="tab" data-tab="support">
+Support
 </button>
 
 </div>
 
 
+<!-- TASKS -->
+
+<div id="tasks" class="panel active">
+
 <div class="card">
 
 <h3>Add New Task</h3>
 
-
 <input
-    id="taskName"
-    class="input"
-    placeholder="Task name"
+id="taskName"
+class="input"
+placeholder="Task name"
 >
 
-
 <input
-    id="taskPrice"
-    class="input"
-    type="number"
-    placeholder="Task price"
+id="taskPrice"
+class="input"
+type="number"
+placeholder="Task price"
 >
 
-
 <input
-    id="taskCommission"
-    class="input"
-    type="number"
-    placeholder="Commission"
+id="taskCommission"
+class="input"
+type="number"
+placeholder="Commission"
 >
 
-
 <input
-    id="taskImage"
-    class="input"
-    type="file"
-    accept="image/*"
+id="taskImage"
+class="input"
+type="file"
+accept="image/*"
 >
-
 
 <img
-    id="imagePreview"
-    class="preview"
-    alt="Selected image"
+id="imagePreview"
+class="preview"
 >
 
-
 <button
-    id="saveTask"
-    class="save-btn"
-    type="button"
+id="saveTask"
+class="main-btn"
 >
 Save Task
 </button>
 
-
-<div id="status"></div>
+<div id="taskStatus" class="status">
+Ready
+</div>
 
 </div>
 
@@ -245,476 +259,829 @@ Loading tasks...
 
 </div>
 
+</div>
+
+
+<!-- USERS -->
+
+<div id="users" class="panel">
+
+<div class="card">
+
+<h3>Users</h3>
+
+<div id="userList">
+Loading users...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WITHDRAWS -->
+
+<div id="withdraws" class="panel">
+
+<div class="card">
+
+<h3>Withdraw Requests</h3>
+
+<div id="withdrawList">
+Loading withdrawals...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SUPPORT -->
+
+<div id="support" class="panel">
 
 <div class="card">
 
 <h3>Customer Service</h3>
 
-
-<div class="reply-row">
+<div id="supportList">
+Loading messages...
+</div>
 
 <input
-    id="replyInput"
-    placeholder="Type reply..."
-    autocomplete="off"
+id="replyInput"
+class="input"
+placeholder="Type reply..."
 >
-
 
 <button
-    id="replyBtn"
-    class="reply-btn"
-    type="button"
+id="replyBtn"
+class="main-btn"
 >
-Send
+Send Reply
 </button>
 
-</div>
+<div id="supportStatus" class="status"></div>
 
 </div>
 
+</div>
 
 </div>
 
 
 <script type="module">
 
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
-
-import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
+getAuth,
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+getFirestore,
+collection,
+addDoc,
+getDocs,
+updateDoc,
+deleteDoc,
+doc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-import {
-    getStorage,
-    ref,
-    uploadBytes,
-    getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+const firebaseConfig={
 
+apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-const firebaseConfig = {
+authDomain:"elitetask-pro.firebaseapp.com",
 
-    apiKey:
-        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+projectId:"elitetask-pro",
 
-    authDomain:
-        "elitetask-pro.firebaseapp.com",
+storageBucket:"elitetask-pro.firebasestorage.app",
 
-    projectId:
-        "elitetask-pro",
+messagingSenderId:"504295275402",
 
-    storageBucket:
-        "elitetask-pro.firebasestorage.app",
-
-    messagingSenderId:
-        "504295275402",
-
-    appId:
-        "1:504295275402:web:cf744a5d4e82c72145a673"
+appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
 
-const app =
-    initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+let selectedUserId=null;
 
 
-const auth =
-    getAuth(app);
+/* TABS */
 
+document.querySelectorAll(".tab").forEach(btn=>{
 
-const db =
-    getFirestore(app);
+btn.onclick=()=>{
 
+document.querySelectorAll(".tab")
+.forEach(x=>x.classList.remove("active"));
 
-const storage =
-    getStorage(app);
+document.querySelectorAll(".panel")
+.forEach(x=>x.classList.remove("active"));
 
-
-const imageInput =
-    document.getElementById("taskImage");
-
-
-const preview =
-    document.getElementById("imagePreview");
-
-
-const status =
-    document.getElementById("status");
-
-
-imageInput.addEventListener(
-    "change",
-    () => {
-
-        const file =
-            imageInput.files[0];
-
-        if(!file){
-
-            preview.style.display =
-                "none";
-
-            return;
-
-        }
-
-
-        preview.src =
-            URL.createObjectURL(file);
-
-        preview.style.display =
-            "block";
-
-    }
-);
-
+btn.classList.add("active");
 
 document
-.getElementById("saveTask")
-.addEventListener(
-    "click",
-    async () => {
+.getElementById(btn.dataset.tab)
+.classList.add("active");
 
-        try{
+if(btn.dataset.tab==="tasks") loadTasks();
 
-            const name =
-                document
-                .getElementById("taskName")
-                .value
-                .trim();
+if(btn.dataset.tab==="users") loadUsers();
 
+if(btn.dataset.tab==="withdraws") loadWithdraws();
 
-            const price =
-                Number(
-                    document
-                    .getElementById("taskPrice")
-                    .value
-                );
+if(btn.dataset.tab==="support") loadSupport();
 
+};
 
-            const commission =
-                Number(
-                    document
-                    .getElementById("taskCommission")
-                    .value
-                );
+});
 
 
-            const file =
-                imageInput.files[0];
+/* LOGIN */
 
+onAuthStateChanged(auth,user=>{
 
-            if(!name){
+if(!user){
 
-                alert("Enter task name.");
+location.href="index.html";
 
-                return;
+return;
 
-            }
+}
 
+loadTasks();
 
-            if(!price){
+});
 
-                alert("Enter task price.");
 
-                return;
+/* IMAGE PREVIEW */
 
-            }
+document
+.getElementById("taskImage")
+.addEventListener("change",function(){
 
+const file=this.files[0];
 
-            if(!commission){
+const img=
+document.getElementById("imagePreview");
 
-                alert("Enter commission.");
+if(!file){
 
-                return;
+img.style.display="none";
 
-            }
+return;
 
+}
 
-            if(!file){
+img.src=URL.createObjectURL(file);
 
-                alert(
-                    "Please select an image from Gallery."
-                );
+img.style.display="block";
 
-                return;
+});
 
-            }
 
+/* IMAGE TO BASE64 */
 
-            status.textContent =
-                "Uploading image...";
+function imageToBase64(file){
 
+return new Promise((resolve,reject)=>{
 
-            const safeName =
-                file.name
-                .replace(
-                    /[^a-zA-Z0-9.-]/g,
-                    "_"
-                );
+const reader=new FileReader();
 
+reader.onload=()=>{
+resolve(reader.result);
+};
 
-            const imageRef =
-                ref(
-                    storage,
-                    "tasks/" +
-                    Date.now() +
-                    "_" +
-                    safeName
-                );
+reader.onerror=reject;
 
+reader.readAsDataURL(file);
 
-            await uploadBytes(
-                imageRef,
-                file
-            );
-
-
-            const imageURL =
-                await getDownloadURL(
-                    imageRef
-                );
-
-
-            status.textContent =
-                "Saving task...";
-
-
-            await addDoc(
-                collection(db,"tasks"),
-                {
-
-                    name:name,
-
-                    price:price,
-
-                    commission:commission,
-
-                    image:imageURL,
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            status.textContent =
-                "Task saved successfully.";
-
-
-            document
-            .getElementById("taskName")
-            .value = "";
-
-
-            document
-            .getElementById("taskPrice")
-            .value = "";
-
-
-            document
-            .getElementById("taskCommission")
-            .value = "";
-
-
-            imageInput.value = "";
-
-
-            preview.src = "";
-
-            preview.style.display =
-                "none";
-
-
-            loadTasks();
-
-        }
-
-        catch(error){
-
-            console.error(error);
-
-            status.textContent =
-                error.message;
-
-            alert(
-                "Error: " +
-                error.message
-            );
-
-        }
-
-    }
-);
-
-
-async function loadTasks(){
-
-    const list =
-        document.getElementById(
-            "taskList"
-        );
-
-
-    list.innerHTML =
-        "Loading tasks...";
-
-
-    try{
-
-        const snapshot =
-            await getDocs(
-                collection(db,"tasks")
-            );
-
-
-        if(snapshot.empty){
-
-            list.innerHTML =
-                "No tasks found.";
-
-            return;
-
-        }
-
-
-        list.innerHTML = "";
-
-
-        snapshot.forEach(
-            (taskDoc) => {
-
-                const task =
-                    taskDoc.data();
-
-
-                const image =
-                    task.image ||
-                    task.imageUrl ||
-                    task.imageURL ||
-                    "";
-
-
-                const div =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                div.className =
-                    "task";
-
-
-                div.innerHTML = `
-
-                    ${
-                        image
-                        ?
-                        `
-                        <img
-                            src="${image}"
-                            alt="${task.name || "Task"}"
-                        >
-                        `
-                        :
-                        ""
-                    }
-
-                    <div class="task-info">
-
-                        <h4>
-                            ${task.name || "Task"}
-                        </h4>
-
-                        <p>
-                            Price:
-                            ${task.price || 0}
-                        </p>
-
-                        <p>
-                            Commission:
-                            ${task.commission || 0}
-                        </p>
-
-                    </div>
-
-                `;
-
-
-                list.appendChild(div);
-
-            }
-        );
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        list.innerHTML =
-            "Unable to load tasks.";
-
-    }
+});
 
 }
 
 
+/* SAVE TASK */
+
+document
+.getElementById("saveTask")
+.onclick=async()=>{
+
+try{
+
+const name=
+document.getElementById("taskName")
+.value.trim();
+
+const price=
+Number(
+document.getElementById("taskPrice").value
+);
+
+const commission=
+Number(
+document.getElementById("taskCommission").value
+);
+
+const file=
+document.getElementById("taskImage")
+.files[0];
+
+
+if(!name){
+
+alert("Task name enter karo");
+
+return;
+
+}
+
+if(!price){
+
+alert("Task price enter karo");
+
+return;
+
+}
+
+if(!commission){
+
+alert("Commission enter karo");
+
+return;
+
+}
+
+if(!file){
+
+alert("Gallery se image select karo");
+
+return;
+
+}
+
+
+document.getElementById("taskStatus")
+.textContent="Saving...";
+
+
+const image=
+await imageToBase64(file);
+
+
+await addDoc(
+collection(db,"tasks"),
+{
+
+name:name,
+
+price:price,
+
+commission:commission,
+
+image:image,
+
+createdAt:serverTimestamp(),
+
+order:Date.now()
+
+}
+);
+
+
+document.getElementById("taskStatus")
+.textContent="Task Saved ✓";
+
+
+document.getElementById("taskName").value="";
+
+document.getElementById("taskPrice").value="";
+
+document.getElementById("taskCommission").value="";
+
+document.getElementById("taskImage").value="";
+
+document.getElementById("imagePreview")
+.style.display="none";
+
+
+loadTasks();
+
+
+}catch(error){
+
+console.log(error);
+
+alert(error.message);
+
+document.getElementById("taskStatus")
+.textContent=error.message;
+
+}
+
+};
+
+
+/* LOAD TASKS */
+
+async function loadTasks(){
+
+const list=
+document.getElementById("taskList");
+
+try{
+
+const snap=
+await getDocs(
+collection(db,"tasks")
+);
+
+if(snap.empty){
+
+list.innerHTML="No tasks found.";
+
+return;
+
+}
+
+list.innerHTML="";
+
+snap.forEach(d=>{
+
+const task=d.data();
+
+const div=
+document.createElement("div");
+
+div.className="item";
+
+div.innerHTML=`
+
+${task.image?
+`<img src="${task.image}">`
+:""}
+
+<h4>
+${task.name||"Task"}
+</h4>
+
+<p>
+Price: ${task.price||0}
+</p>
+
+<p>
+Commission: ${task.commission||0}
+</p>
+
+<div class="row">
+
+<button class="small red">
+Delete
+</button>
+
+</div>
+
+`;
+
+
+div.querySelector(".red")
+.onclick=async()=>{
+
+if(!confirm("Delete task?"))
+return;
+
+await deleteDoc(
+doc(db,"tasks",d.id)
+);
+
+loadTasks();
+
+};
+
+
+list.appendChild(div);
+
+});
+
+}catch(error){
+
+console.log(error);
+
+list.innerHTML=
+"Unable to load tasks.";
+
+}
+
+}
+
+
+/* USERS */
+
+async function loadUsers(){
+
+const list=
+document.getElementById("userList");
+
+list.innerHTML="Loading users...";
+
+try{
+
+const snap=
+await getDocs(
+collection(db,"users")
+);
+
+if(snap.empty){
+
+list.innerHTML="No users.";
+
+return;
+
+}
+
+list.innerHTML="";
+
+snap.forEach(d=>{
+
+const u=d.data();
+
+const div=
+document.createElement("div");
+
+div.className="item";
+
+div.innerHTML=`
+
+<h4>
+${u.name||"User"}
+</h4>
+
+<p>
+Email: ${u.email||""}
+</p>
+
+<p>
+Balance: ${u.balance||0}
+</p>
+
+<p>
+Commission: ${u.commission||0}
+</p>
+
+<input
+class="input newBalance"
+type="number"
+placeholder="New balance"
+>
+
+<div class="row">
+
+<button class="small green">
+Update Balance
+</button>
+
+<button class="small red">
+Delete
+</button>
+
+</div>
+
+`;
+
+
+div.querySelector(".green")
+.onclick=async()=>{
+
+const balance=
+Number(
+div.querySelector(".newBalance").value
+);
+
+await updateDoc(
+doc(db,"users",d.id),
+{
+balance:balance
+}
+);
+
+alert("Balance updated");
+
+loadUsers();
+
+};
+
+
+div.querySelector(".red")
+.onclick=async()=>{
+
+if(!confirm("Delete user?"))
+return;
+
+await deleteDoc(
+doc(db,"users",d.id)
+);
+
+loadUsers();
+
+};
+
+
+list.appendChild(div);
+
+});
+
+}catch(error){
+
+list.innerHTML=
+"Unable to load users.";
+
+console.log(error);
+
+}
+
+}
+
+
+/* WITHDRAWS */
+
+async function loadWithdraws(){
+
+const list=
+document.getElementById("withdrawList");
+
+list.innerHTML=
+"Loading withdrawals...";
+
+try{
+
+const snap=
+await getDocs(
+collection(db,"withdraws")
+);
+
+if(snap.empty){
+
+list.innerHTML=
+"No withdrawal requests.";
+
+return;
+
+}
+
+list.innerHTML="";
+
+snap.forEach(d=>{
+
+const w=d.data();
+
+const div=
+document.createElement("div");
+
+div.className="item";
+
+div.innerHTML=`
+
+<h4>
+Withdrawal Request
+</h4>
+
+<p>
+User: ${w.userId||w.uid||""}
+</p>
+
+<p>
+Amount: ${w.amount||0}
+</p>
+
+<p>
+Method: ${w.method||w.paymentMethod||""}
+</p>
+
+<p>
+Status: ${w.status||"pending"}
+</p>
+
+<div class="row">
+
+<button class="small green">
+Approve
+</button>
+
+<button class="small red">
+Reject
+</button>
+
+</div>
+
+`;
+
+
+div.querySelector(".green")
+.onclick=async()=>{
+
+await updateDoc(
+doc(db,"withdraws",d.id),
+{
+status:"approved"
+}
+);
+
+loadWithdraws();
+
+};
+
+
+div.querySelector(".red")
+.onclick=async()=>{
+
+await updateDoc(
+doc(db,"withdraws",d.id),
+{
+status:"rejected"
+}
+);
+
+loadWithdraws();
+
+};
+
+
+list.appendChild(div);
+
+});
+
+}catch(error){
+
+list.innerHTML=
+"Unable to load withdrawals.";
+
+console.log(error);
+
+}
+
+}
+
+
+/* SUPPORT */
+
+async function loadSupport(){
+
+const list=
+document.getElementById("supportList");
+
+list.innerHTML=
+"Loading messages...";
+
+try{
+
+const snap=
+await getDocs(
+collection(db,"supportMessages")
+);
+
+if(snap.empty){
+
+list.innerHTML=
+"No messages.";
+
+return;
+
+}
+
+list.innerHTML="";
+
+snap.forEach(d=>{
+
+const m=d.data();
+
+const div=
+document.createElement("div");
+
+div.className="message";
+
+div.innerHTML=`
+
+<b>User:</b>
+${m.userId||m.uid||""}
+
+<br><br>
+
+<b>Message:</b>
+${m.message||m.text||""}
+
+`;
+
+div.onclick=()=>{
+
+selectedUserId=
+m.userId||m.uid||null;
+
+};
+
+list.appendChild(div);
+
+});
+
+}catch(error){
+
+list.innerHTML=
+"Unable to load support.";
+
+console.log(error);
+
+}
+
+}
+
+
+/* REPLY */
+
+document
+.getElementById("replyBtn")
+.onclick=async()=>{
+
+const text=
+document.getElementById("replyInput")
+.value.trim();
+
+if(!selectedUserId){
+
+alert("Pehle user message select karo");
+
+return;
+
+}
+
+if(!text){
+
+alert("Reply likho");
+
+return;
+
+}
+
+try{
+
+await addDoc(
+collection(db,"supportMessages"),
+{
+
+userId:selectedUserId,
+
+message:text,
+
+sender:"admin",
+
+createdAt:serverTimestamp()
+
+}
+);
+
+document.getElementById("replyInput")
+.value="";
+
+document.getElementById("supportStatus")
+.textContent="Reply sent ✓";
+
+loadSupport();
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+};
+
+
+/* LOGOUT */
+
 document
 .getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async () => {
+.onclick=async()=>{
 
-        await signOut(auth);
+await signOut(auth);
 
-        location.href =
-            "index.html";
+location.href="index.html";
 
-    }
-);
-
-
-onAuthStateChanged(
-    auth,
-    (user) => {
-
-        if(!user){
-
-            location.href =
-                "index.html";
-
-            return;
-
-        }
-
-
-        loadTasks();
-
-    }
-);
+};
 
 </script>
 
-
 </body>
-
 </html>
