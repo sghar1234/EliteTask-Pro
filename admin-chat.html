@@ -1,221 +1,255 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Customer Chat - Admin</title>
+<title>EliteTask Pro - Admin Chat</title>
 
 <style>
 
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f3f5f9;
+    background:#f4f7fb;
+    color:#172033;
+    padding-bottom:85px;
 }
 
-.chat-app{
-max-width:600px;
-height:100vh;
-margin:auto;
-background:white;
-display:flex;
-flex-direction:column;
-}
+/* TOP */
 
-/* HEADER */
-
-.header{
-background:#111827;
-color:white;
-padding:15px;
-display:flex;
-align-items:center;
-gap:12px;
+.topbar{
+    height:70px;
+    background:linear-gradient(135deg,#07152f,#1454a3);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 15px;
+    color:white;
 }
 
 .back{
-color:white;
-text-decoration:none;
-font-size:29px;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    color:white;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
 }
 
-.avatar{
-width:43px;
-height:43px;
-border-radius:50%;
-background:#2563eb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
+.title{
+    font-size:17px;
+    font-weight:bold;
 }
 
-.user-info{
-flex:1;
+.subtitle{
+    font-size:11px;
+    opacity:.7;
+    margin-top:3px;
 }
 
-.user-info h3{
-font-size:16px;
+/* CONTAINER */
+
+.container{
+    max-width:600px;
+    margin:auto;
+    padding:15px;
 }
 
-.user-info p{
-font-size:11px;
-margin-top:4px;
-opacity:.75;
+/* USER */
+
+.user-card{
+    background:white;
+    border-radius:18px;
+    padding:15px;
+    box-shadow:0 4px 18px rgba(20,40,80,.07);
+    margin-bottom:12px;
 }
 
-/* MESSAGES */
+.user-name{
+    font-size:17px;
+    font-weight:bold;
+}
 
-.messages{
-flex:1;
-overflow-y:auto;
-padding:15px;
-background:#f5f7fa;
+.user-email{
+    font-size:12px;
+    color:#8992a2;
+    margin-top:4px;
+    word-break:break-word;
+}
+
+/* CHAT */
+
+.chat-box{
+    background:#eef3f8;
+    border-radius:18px;
+    padding:15px;
+    min-height:430px;
+    max-height:calc(100vh - 245px);
+    overflow-y:auto;
 }
 
 .message{
-max-width:78%;
-padding:10px 12px;
-margin-bottom:10px;
-border-radius:13px;
-font-size:14px;
-line-height:1.45;
-word-break:break-word;
+    max-width:82%;
+    padding:11px 13px;
+    border-radius:15px;
+    margin-bottom:10px;
+    font-size:13px;
+    line-height:1.45;
+    word-break:break-word;
 }
 
 .user-message{
-margin-right:auto;
-background:white;
-border:1px solid #e5e5e5;
-border-bottom-left-radius:3px;
+    background:white;
+    color:#263241;
+    border-bottom-left-radius:4px;
+    margin-right:auto;
+    box-shadow:0 2px 7px rgba(0,0,0,.05);
 }
 
 .admin-message{
-margin-left:auto;
-background:#2563eb;
-color:white;
-border-bottom-right-radius:3px;
+    background:#1478ed;
+    color:white;
+    border-bottom-right-radius:4px;
+    margin-left:auto;
 }
 
 .time{
-display:block;
-font-size:9px;
-text-align:right;
-margin-top:5px;
-opacity:.65;
+    font-size:9px;
+    opacity:.6;
+    margin-top:5px;
 }
 
 .empty{
-text-align:center;
-color:#999;
-font-size:13px;
-padding:70px 20px;
+    text-align:center;
+    color:#8992a2;
+    padding:80px 20px;
+    font-size:13px;
+}
+
+.loading{
+    text-align:center;
+    color:#8992a2;
+    padding:80px 20px;
+    font-size:13px;
+}
+
+.error{
+    background:#fee2e2;
+    color:#b91c1c;
+    padding:15px;
+    border-radius:12px;
+    line-height:1.5;
 }
 
 /* INPUT */
 
-.input-area{
-display:flex;
-gap:8px;
-padding:10px;
-border-top:1px solid #eee;
-background:white;
+.message-area{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
 }
 
-#messageInput{
-flex:1;
-border:1px solid #ddd;
-border-radius:22px;
-padding:12px 15px;
-outline:none;
-font-size:14px;
+.message-input{
+    flex:1;
+    border:1px solid #dfe5ec;
+    background:white;
+    border-radius:14px;
+    padding:13px;
+    font-size:13px;
+    outline:none;
 }
 
-#sendBtn{
-width:45px;
-height:45px;
-border:none;
-border-radius:50%;
-background:#2563eb;
-color:white;
-font-size:18px;
+.send-btn{
+    width:52px;
+    border:0;
+    border-radius:14px;
+    background:linear-gradient(135deg,#1478ed,#25a5ff);
+    color:white;
+    font-size:20px;
+    cursor:pointer;
 }
 
-#sendBtn:disabled{
-opacity:.5;
+.send-btn:active{
+    transform:scale(.96);
 }
 
 </style>
 
 </head>
 
-
 <body>
 
+<div class="topbar">
 
-<div class="chat-app">
+    <a href="admin.html" class="back">
+        ←
+    </a>
 
+    <div>
+        <div class="title">
+            💬 Admin Chat
+        </div>
 
-<div class="header">
-
-<a href="users.html" class="back">
-‹
-</a>
-
-
-<div class="avatar">
-👤
-</div>
-
-
-<div class="user-info">
-
-<h3 id="userName">
-User
-</h3>
-
-<p>
-Customer Support Chat
-</p>
-
-</div>
+        <div class="subtitle">
+            Customer Support
+        </div>
+    </div>
 
 </div>
 
 
-<div class="messages" id="messages">
+<div class="container">
 
-<div class="empty" id="empty">
-No messages yet.
-</div>
+    <div class="user-card">
 
-</div>
+        <div class="user-name" id="userName">
+            Loading User...
+        </div>
+
+        <div class="user-email" id="userEmail">
+            Loading...
+        </div>
+
+    </div>
 
 
-<div class="input-area">
+    <div class="chat-box" id="chatBox">
 
-<input
-id="messageInput"
-type="text"
-placeholder="Type your reply..."
-autocomplete="off"
->
+        <div class="loading">
+            Loading conversation...
+        </div>
 
-<button id="sendBtn">
-➤
-</button>
+    </div>
 
-</div>
 
+    <div class="message-area">
+
+        <input
+            id="messageInput"
+            class="message-input"
+            type="text"
+            placeholder="Type your reply..."
+        >
+
+        <button
+            id="sendBtn"
+            class="send-btn"
+        >
+            ➤
+        </button>
+
+    </div>
 
 </div>
 
@@ -223,29 +257,51 @@ autocomplete="off"
 <script type="module">
 
 import {
-auth,
-db
+    auth,
+    db
 }
 from "./firebase.js";
 
 
 import {
-onAuthStateChanged
+    onAuthStateChanged
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
-collection,
-addDoc,
-query,
-orderBy,
-onSnapshot,
-serverTimestamp
+    collection,
+    addDoc,
+    query,
+    where,
+    getDocs,
+    serverTimestamp
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+
+/* ADMIN UID */
+
+const ADMIN_UID =
+"BLmacTdfuBVlQ0eEJWsQidnexY02";
+
+
+/* ELEMENTS */
+
+const chatBox =
+document.getElementById("chatBox");
+
+const messageInput =
+document.getElementById("messageInput");
+
+const sendBtn =
+document.getElementById("sendBtn");
+
+const userName =
+document.getElementById("userName");
+
+const userEmail =
+document.getElementById("userEmail");
 
 
 /* GET USER FROM URL */
@@ -255,310 +311,345 @@ new URLSearchParams(
 window.location.search
 );
 
-
-const userId =
+const targetUid =
 params.get("uid");
 
-
-const userName =
+const targetName =
 params.get("name") || "User";
 
 
-document.getElementById(
-"userName"
-).textContent =
-userName;
+userName.textContent =
+targetName;
 
 
-const messagesBox =
-document.getElementById(
-"messages"
-);
+if(!targetUid){
+
+    chatBox.innerHTML = `
+        <div class="error">
+            User ID missing.<br><br>
+            Please open chat from Admin Panel → Users.
+        </div>
+    `;
+
+    sendBtn.disabled = true;
+
+}
 
 
-const input =
-document.getElementById(
-"messageInput"
-);
-
-
-const sendBtn =
-document.getElementById(
-"sendBtn"
-);
-
-
-const empty =
-document.getElementById(
-"empty"
-);
-
-
-let adminUser = null;
-
-
-/* CHECK ADMIN LOGIN */
+/* AUTH */
 
 onAuthStateChanged(
 auth,
-(user)=>{
+async(user)=>{
 
-if(!user){
+    if(!user){
 
-window.location.href =
-"admin-login.html";
+        window.location.href =
+        "admin-login.html";
 
-return;
+        return;
 
-}
+    }
 
-adminUser = user;
 
-loadChat();
+    if(user.uid !== ADMIN_UID){
+
+        chatBox.innerHTML = `
+            <div class="error">
+                Access denied. This account is not the Admin account.
+            </div>
+        `;
+
+        sendBtn.disabled = true;
+
+        return;
+
+    }
+
+
+    if(targetUid){
+
+        await loadUserChat();
+
+    }
 
 });
-
-
-/* USER ID CHECK */
-
-if(!userId){
-
-alert("User not found.");
-
-window.location.href =
-"users.html";
-
-}
 
 
 /* LOAD CHAT */
 
-function loadChat(){
+async function loadUserChat(){
 
-const messagesRef =
-collection(
-db,
-"supportChats",
-userId,
-"messages"
-);
+    chatBox.innerHTML = `
+        <div class="loading">
+            Loading conversation...
+        </div>
+    `;
 
 
-const chatQuery =
-query(
-messagesRef,
-orderBy(
-"createdAt",
-"asc"
-)
-);
+    try{
+
+        const q =
+        query(
+            collection(
+                db,
+                "supportMessages"
+            ),
+            where(
+                "userId",
+                "==",
+                targetUid
+            )
+        );
 
 
-onSnapshot(
-chatQuery,
-(snapshot)=>{
+        const snapshot =
+        await getDocs(q);
 
 
-document
-.querySelectorAll(
-".message"
-)
-.forEach(
-(el)=>{
-el.remove();
+        const messages = [];
+
+
+        snapshot.forEach(
+            item=>{
+
+                messages.push({
+                    id:item.id,
+                    data:item.data()
+                });
+
+            }
+        );
+
+
+        /* SORT ON DEVICE */
+
+        messages.sort(
+            (a,b)=>{
+
+                const aTime =
+                a.data.createdAt?.seconds || 0;
+
+                const bTime =
+                b.data.createdAt?.seconds || 0;
+
+                return aTime - bTime;
+
+            }
+        );
+
+
+        chatBox.innerHTML = "";
+
+
+        if(messages.length === 0){
+
+            chatBox.innerHTML = `
+                <div class="empty">
+                    No messages yet.<br><br>
+                    Send a message to start the conversation.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        messages.forEach(
+            item=>{
+
+                const data =
+                item.data;
+
+
+                const div =
+                document.createElement("div");
+
+
+                if(data.sender === "admin"){
+
+                    div.className =
+                    "message admin-message";
+
+                }else{
+
+                    div.className =
+                    "message user-message";
+
+                }
+
+
+                const text =
+                document.createElement("div");
+
+                text.textContent =
+                data.message ||
+                data.text ||
+                "";
+
+
+                div.appendChild(text);
+
+
+                const time =
+                document.createElement("div");
+
+                time.className =
+                "time";
+
+
+                if(data.createdAt?.seconds){
+
+                    const date =
+                    new Date(
+                        data.createdAt.seconds * 1000
+                    );
+
+
+                    time.textContent =
+                    date.toLocaleString();
+
+                }else{
+
+                    time.textContent =
+                    "Just now";
+
+                }
+
+
+                div.appendChild(time);
+
+
+                chatBox.appendChild(div);
+
+            }
+        );
+
+
+        chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+
+        /* EMAIL */
+
+        const first =
+        messages[0]?.data;
+
+
+        if(first?.email){
+
+            userEmail.textContent =
+            first.email;
+
+        }else{
+
+            userEmail.textContent =
+            "Customer";
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        chatBox.innerHTML = `
+            <div class="error">
+                Unable to load chat.<br><br>
+                ${escapeHtml(error.message)}
+            </div>
+        `;
+
+    }
+
 }
-);
 
 
-if(snapshot.empty){
-
-empty.style.display =
-"block";
-
-}else{
-
-empty.style.display =
-"none";
-
-}
-
-
-snapshot.forEach(
-(doc)=>{
-
-
-const data =
-doc.data();
-
-
-const message =
-document.createElement(
-"div"
-);
-
-
-if(
-data.senderRole === "admin"
-){
-
-message.className =
-"message admin-message";
-
-}else{
-
-message.className =
-"message user-message";
-
-}
-
-
-const text =
-document.createElement(
-"div"
-);
-
-
-text.textContent =
-data.text;
-
-
-const time =
-document.createElement(
-"span"
-);
-
-
-time.className =
-"time";
-
-
-if(data.createdAt){
-
-time.textContent =
-data.createdAt
-.toDate()
-.toLocaleTimeString(
-[],
-{
-hour:"2-digit",
-minute:"2-digit"
-}
-);
-
-}else{
-
-time.textContent =
-"Sending...";
-
-}
-
-
-message.appendChild(
-text
-);
-
-message.appendChild(
-time
-);
-
-messagesBox.appendChild(
-message
-);
-
-
-});
-
-
-messagesBox.scrollTop =
-messagesBox.scrollHeight;
-
-
-},
-(error)=>{
-
-console.error(error);
-
-empty.textContent =
-"Unable to load chat: " +
-error.message;
-
-}
-);
-
-}
-
-
-/* ADMIN SEND REPLY */
+/* SEND ADMIN MESSAGE */
 
 async function sendMessage(){
 
-const text =
-input.value.trim();
+    const message =
+    messageInput.value.trim();
 
 
-if(
-!text ||
-!adminUser ||
-!userId
-){
+    if(!message){
 
-return;
+        return;
 
-}
+    }
 
 
-sendBtn.disabled =
-true;
+    if(!targetUid){
+
+        alert(
+            "User ID missing."
+        );
+
+        return;
+
+    }
 
 
-try{
+    try{
+
+        sendBtn.disabled = true;
 
 
-const messagesRef =
-collection(
-db,
-"supportChats",
-userId,
-"messages"
-);
+        await addDoc(
+
+            collection(
+                db,
+                "supportMessages"
+            ),
+
+            {
+
+                userId:
+                targetUid,
+
+                name:
+                targetName,
+
+                email:
+                userEmail.textContent || "",
+
+                message:
+                message,
+
+                sender:
+                "admin",
+
+                createdAt:
+                serverTimestamp()
+
+            }
+
+        );
 
 
-await addDoc(
-messagesRef,
-{
-
-text:text,
-
-senderId:
-adminUser.uid,
-
-senderRole:
-"admin",
-
-createdAt:
-serverTimestamp()
-
-}
-);
+        messageInput.value = "";
 
 
-input.value = "";
-
-input.focus();
+        await loadUserChat();
 
 
-}catch(error){
+    }catch(error){
 
-alert(
-"Reply failed: " +
-error.message
-);
-
-}
+        console.error(error);
 
 
-sendBtn.disabled =
-false;
+        alert(
+            "Message send nahi ho saka:\n" +
+            error.message
+        );
+
+    }
+
+
+    sendBtn.disabled = false;
 
 }
 
@@ -566,33 +657,44 @@ false;
 /* SEND BUTTON */
 
 sendBtn.addEventListener(
-"click",
-sendMessage
+    "click",
+    sendMessage
 );
 
 
-/* ENTER SEND */
+/* ENTER */
 
-input.addEventListener(
-"keydown",
-(event)=>{
+messageInput.addEventListener(
+    "keydown",
+    event=>{
 
-if(
-event.key === "Enter"
-){
+        if(event.key === "Enter"){
 
-event.preventDefault();
+            event.preventDefault();
 
-sendMessage();
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* ESCAPE */
+
+function escapeHtml(text){
+
+    return String(text)
+
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
-});
-
 </script>
 
-
 </body>
-
 </html>
-```
