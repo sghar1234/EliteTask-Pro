@@ -140,6 +140,55 @@ font-size:21px;
 margin-top:4px
 }
 
+/* RATING */
+
+.rating-box{
+margin-top:15px;
+padding:15px;
+background:#f7f9fa;
+border-radius:15px;
+text-align:center
+}
+
+.rating-title{
+font-size:14px;
+font-weight:bold;
+margin-bottom:10px
+}
+
+.stars{
+display:flex;
+justify-content:center;
+gap:7px
+}
+
+.star{
+font-size:34px;
+color:#c9c9c9;
+cursor:pointer;
+line-height:1
+}
+
+.star.active{
+color:#ffc107
+}
+
+.comment-box{
+margin-top:12px
+}
+
+.comment-box textarea{
+width:100%;
+height:90px;
+border:1px solid #dfe4e8;
+border-radius:12px;
+padding:12px;
+font-family:Arial,sans-serif;
+font-size:14px;
+resize:none;
+outline:none
+}
+
 button{
 width:100%;
 border:0;
@@ -292,7 +341,43 @@ $0.00
 </div>
 
 
-<button id="completeBtn">
+<!-- 5 STAR RATING -->
+
+<div class="rating-box">
+
+<div class="rating-title">
+Rate this order
+</div>
+
+<div class="stars">
+
+<span class="star" data-rating="1">★</span>
+<span class="star" data-rating="2">★</span>
+<span class="star" data-rating="3">★</span>
+<span class="star" data-rating="4">★</span>
+<span class="star" data-rating="5">★</span>
+
+</div>
+
+</div>
+
+
+<!-- COMMENT -->
+
+<div class="comment-box">
+
+<textarea
+id="orderComment"
+placeholder="Write your comment..."
+></textarea>
+
+</div>
+
+
+<button
+id="completeBtn"
+disabled
+>
 Complete Order
 </button>
 
@@ -415,6 +500,95 @@ let currentTask=null;
 
 let taskIndex=0;
 
+let selectedRating=0;
+
+
+/* =========================
+   RATING
+========================= */
+
+const stars=
+document.querySelectorAll(".star");
+
+const commentInput=
+document.getElementById("orderComment");
+
+const completeBtn=
+document.getElementById("completeBtn");
+
+
+function checkSubmit(){
+
+const comment=
+commentInput.value.trim();
+
+if(
+selectedRating>0 &&
+comment.length>0
+){
+
+completeBtn.disabled=false;
+
+}else{
+
+completeBtn.disabled=true;
+
+}
+
+}
+
+
+stars.forEach(
+star=>{
+
+star.addEventListener(
+"click",
+()=>{
+
+selectedRating=
+Number(
+star.dataset.rating
+);
+
+
+stars.forEach(
+s=>{
+
+const rating=
+Number(
+s.dataset.rating
+);
+
+if(
+rating<=selectedRating
+){
+
+s.classList.add("active");
+
+}else{
+
+s.classList.remove("active");
+
+}
+
+});
+
+checkSubmit();
+
+});
+
+});
+
+
+commentInput.addEventListener(
+"input",
+checkSubmit
+);
+
+
+/* =========================
+   LOGIN
+========================= */
 
 onAuthStateChanged(
 auth,
@@ -434,6 +608,10 @@ loadOrder();
 
 });
 
+
+/* =========================
+   LOAD ORDER
+========================= */
 
 async function loadOrder(){
 
@@ -612,21 +790,50 @@ document
 }
 
 
-document
-.getElementById("completeBtn")
-.onclick=
+/* =========================
+   COMPLETE ORDER
+========================= */
+
+completeBtn.onclick=
 async()=>{
 
 if(!currentTask)
 return;
 
 
-const button=
-document.getElementById("completeBtn");
+/* RATING CHECK */
 
-button.disabled=true;
+if(selectedRating===0){
 
-button.textContent=
+alert(
+"Please select a star rating."
+);
+
+return;
+
+}
+
+
+/* COMMENT CHECK */
+
+const comment=
+commentInput.value.trim();
+
+
+if(!comment){
+
+alert(
+"Please write a comment."
+);
+
+return;
+
+}
+
+
+completeBtn.disabled=true;
+
+completeBtn.textContent=
 "Completing...";
 
 
@@ -685,9 +892,9 @@ alert(
 required.toFixed(2)
 );
 
-button.disabled=false;
+completeBtn.disabled=false;
 
-button.textContent=
+completeBtn.textContent=
 "Complete Order";
 
 return;
@@ -728,7 +935,7 @@ commission-remaining;
 
 /*
 SIRF EARNED COMMISSION
-COMMISSION BOX MEIN ADD HOGI
+COMMISSION BOX MEIN ADD
 */
 
 newCommission+=
@@ -737,7 +944,7 @@ earned;
 
 /*
 TODAY'S COMMISSION
-PURANI TODAY COMMISSION + NEW COMMISSION
+PURANI + NEW
 */
 
 const oldTodayCommission=
@@ -764,15 +971,20 @@ await updateDoc(
 userRef,
 {
 
-balance:newBalance,
+balance:
+newBalance,
 
-commission:newCommission,
+commission:
+newCommission,
 
-todayCommission:newTodayCommission,
+todayCommission:
+newTodayCommission,
 
-completedTasks:completed,
+completedTasks:
+completed,
 
-currentTaskIndex:nextIndex
+currentTaskIndex:
+nextIndex
 
 }
 );
@@ -792,15 +1004,19 @@ console.log(error);
 
 alert(error.message);
 
-button.disabled=false;
+completeBtn.disabled=false;
 
-button.textContent=
+completeBtn.textContent=
 "Complete Order";
 
 }
 
 };
 
+
+/* =========================
+   NO TASK
+========================= */
 
 function showNoTask(){
 
