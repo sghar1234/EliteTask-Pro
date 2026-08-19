@@ -89,8 +89,6 @@ body{
     margin-top:5px;
 }
 
-/* BALANCE */
-
 .balance-card{
     background:linear-gradient(135deg,#081a3c,#1454a3);
     color:white;
@@ -109,8 +107,6 @@ body{
     font-size:30px;
     margin-top:7px;
 }
-
-/* FORM */
 
 .form-card{
     background:white;
@@ -160,8 +156,6 @@ input:focus{
     font-weight:bold;
     margin-top:4px;
 }
-
-/* HISTORY */
 
 .history-title{
     margin:22px 2px 12px;
@@ -226,8 +220,6 @@ input:focus{
     font-size:13px;
 }
 
-/* BOTTOM */
-
 .bottom-nav{
     position:fixed;
     bottom:0;
@@ -285,9 +277,6 @@ input:focus{
 
 <body>
 
-
-<!-- TOP BAR -->
-
 <div class="topbar">
 
     <a href="dashboard.html" class="back-btn">
@@ -311,7 +300,6 @@ input:focus{
 
 <div class="container">
 
-
     <div class="page-title">
 
         <h2>
@@ -325,8 +313,6 @@ input:focus{
     </div>
 
 
-    <!-- BALANCE -->
-
     <div class="balance-card">
 
         <span>
@@ -339,8 +325,6 @@ input:focus{
 
     </div>
 
-
-    <!-- FORM -->
 
     <div class="form-card">
 
@@ -411,8 +395,6 @@ input:focus{
     </div>
 
 
-    <!-- HISTORY -->
-
     <h3 class="history-title">
         Withdrawal History
     </h3>
@@ -430,10 +412,7 @@ input:focus{
 </div>
 
 
-<!-- BOTTOM -->
-
 <div class="bottom-nav">
-
 
     <a
         href="dashboard.html"
@@ -475,11 +454,8 @@ input:focus{
         Withdraw
     </a>
 
-
 </div>
 
-
-<!-- FIREBASE -->
 
 <script type="module">
 
@@ -538,7 +514,31 @@ const db =
 
 
 let currentUser = null;
+
+
+/*
+================================================
+IMPORTANT
+
+Firebase mein values alag rahengi:
+
+balance = original balance
+commission = original commission
+
+Withdraw page par:
+
+Available Balance =
+balance + commission
+
+Commission permanently balance mein
+convert nahi hogi.
+================================================
+*/
+
+
 let currentBalance = 0;
+let currentCommission = 0;
+let withdrawableBalance = 0;
 
 
 /* LOGIN */
@@ -563,7 +563,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
-/* LOAD BALANCE */
+/* LOAD BALANCE + COMMISSION */
 
 async function loadBalance(){
 
@@ -576,31 +576,63 @@ async function loadBalance(){
                 currentUser.uid
             );
 
+
         const snap =
             await getDoc(ref);
+
 
         if(snap.exists()){
 
             const data =
                 snap.data();
 
+
+            /*
+            Original balance
+            */
+
             currentBalance =
                 Number(
                     data.balance || 0
                 );
 
+
+            /*
+            Original commission
+            */
+
+            currentCommission =
+                Number(
+                    data.commission || 0
+                );
+
+
+            /*
+            Sirf Withdraw page par
+            dono ko available balance
+            mein combine kar rahe hain.
+            */
+
+            withdrawableBalance =
+                currentBalance +
+                currentCommission;
+
+
             document
                 .getElementById("balance")
                 .textContent =
                 "$" +
-                currentBalance.toFixed(2);
+                withdrawableBalance.toFixed(2);
 
         }
 
     }
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Balance error:",
+            error
+        );
 
     }
 
@@ -668,7 +700,12 @@ document
     }
 
 
-    if(amount > currentBalance){
+    /*
+    Balance + Commission
+    se zyada withdraw nahi ho sakta.
+    */
+
+    if(amount > withdrawableBalance){
 
         alert(
             "Available balance kam hai."
@@ -693,7 +730,11 @@ document
     try{
 
 
-        /* WITHDRAW REQUEST */
+        /*
+        ========================================
+        WITHDRAW REQUEST
+        ========================================
+        */
 
         await addDoc(
             collection(
@@ -727,7 +768,86 @@ document
         );
 
 
-        /* DEDUCT BALANCE */
+        /*
+        ========================================
+        DEDUCT AMOUNT
+        ========================================
+
+        Pehle Balance se amount deduct hoga.
+
+        Agar Balance kam hua to baqi amount
+        Commission se deduct hoga.
+
+        Example:
+
+        Balance = 100
+        Commission = 50
+        Withdraw = 120
+
+        New Balance = 0
+        New Commission = 30
+        ========================================
+        */
+
+
+        let remainingAmount =
+            amount;
+
+
+        let newBalance =
+            currentBalance;
+
+
+        let newCommission =
+            currentCommission;
+
+
+        /*
+        STEP 1:
+        Balance se deduction
+        */
+
+        if(newBalance >= remainingAmount){
+
+            newBalance =
+                newBalance -
+                remainingAmount;
+
+            remainingAmount = 0;
+
+        }
+        else{
+
+            remainingAmount =
+                remainingAmount -
+                newBalance;
+
+            newBalance = 0;
+
+        }
+
+
+        /*
+        STEP 2:
+        Agar amount abhi baqi hai
+        to Commission se deduction
+        */
+
+        if(remainingAmount > 0){
+
+            newCommission =
+                newCommission -
+                remainingAmount;
+
+            remainingAmount = 0;
+
+        }
+
+
+        /*
+        Firebase mein Balance aur Commission
+        alag-alag save honge.
+        */
 
         const userRef =
             doc(
@@ -737,30 +857,47 @@ document
             );
 
 
-        const newBalance =
-            currentBalance - amount;
-
-
         await updateDoc(
             userRef,
             {
 
                 balance:
-                    newBalance
+                    newBalance,
+
+                commission:
+                    newCommission
 
             }
         );
 
 
+        /*
+        Local values update
+        */
+
         currentBalance =
             newBalance;
 
+
+        currentCommission =
+            newCommission;
+
+
+        withdrawableBalance =
+            currentBalance +
+            currentCommission;
+
+
+        /*
+        Withdraw page par updated
+        total available balance show hoga.
+        */
 
         document
             .getElementById("balance")
             .textContent =
             "$" +
-            newBalance.toFixed(2);
+            withdrawableBalance.toFixed(2);
 
 
         document
