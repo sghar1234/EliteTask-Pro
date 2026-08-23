@@ -606,7 +606,11 @@ try{
 
 const userSnap=
 await getDoc(
-doc(db,"users",user.uid)
+doc(
+db,
+"users",
+user.uid
+)
 );
 
 
@@ -616,48 +620,72 @@ const u=
 userSnap.data();
 
 
+/* USER NAME */
+
 document
 .getElementById("userName")
 .textContent=
 u.name||"User";
 
 
+/* BALANCE */
+
 document
 .getElementById("balance")
 .textContent=
-"$"+Number(
+"$"+
+Number(
 u.balance||0
 ).toFixed(2);
+
+
+/* COMMISSION */
+
+const commission=
+Number(
+u.commission||0
+);
 
 
 document
 .getElementById("commission")
 .textContent=
-"$"+Number(
-u.commission||0
-).toFixed(2);
+"$"+
+commission.toFixed(2);
 
+
+/*
+========================================
+TODAY'S COMMISSION
+
+SAME AS COMMISSION
+========================================
+*/
+
+document
+.getElementById("todayCommission")
+.textContent=
+"$"+
+commission.toFixed(2);
+
+
+/* PENDING */
 
 document
 .getElementById("pending")
 .textContent=
-"$"+Number(
+"$"+
+Number(
 u.pending||0
 ).toFixed(2);
 
+
+/* COMPLETED TASKS */
 
 document
 .getElementById("completedTasks")
 .textContent=
 u.completedTasks||0;
-
-
-document
-.getElementById("todayCommission")
-.textContent=
-"$"+Number(
-u.todayCommission||0
-).toFixed(2);
 
 }
 
@@ -666,7 +694,10 @@ u.todayCommission||0
 
 const taskSnap=
 await getDocs(
-collection(db,"tasks")
+collection(
+db,
+"tasks"
+)
 );
 
 
