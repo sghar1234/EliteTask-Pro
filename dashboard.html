@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <title>EliteTask Pro Dashboard</title>
 
@@ -15,657 +17,664 @@
     padding:0;
 }
 
+html,
 body{
-    font-family:Arial,Helvetica,sans-serif;
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+}
+
+body{
+    font-family:Arial,sans-serif;
     background:
-    radial-gradient(circle at 20% 10%,#eee8ff 0,#fff 35%),
-    radial-gradient(circle at 90% 20%,#fff0e9 0,#fff 38%),
-    #faf9ff;
-    color:#171a38;
-    padding-bottom:105px;
+    linear-gradient(
+        135deg,
+        #f8f2ff,
+        #fff8fc,
+        #f7f0ff
+    );
+    color:#17172d;
+    padding-bottom:82px;
 }
 
-/* TOP */
 
-.top-area{
-    padding:25px 30px 5px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
+/* =========================
+   TOP AREA
+========================= */
 
-.menu-btn{
-    width:70px;
-    height:70px;
-    border-radius:22px;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 8px 25px rgba(70,40,120,.10);
-    font-size:30px;
-    color:#333653;
-}
-
-.top-right{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
-
-.notification{
-    width:68px;
-    height:68px;
-    border-radius:50%;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
+.logo-area{
     position:relative;
-    box-shadow:0 8px 25px rgba(70,40,120,.10);
+    text-align:center;
+    padding:14px 12px 5px;
 }
 
-.notification-badge{
-    position:absolute;
-    right:-1px;
-    top:-4px;
-    width:31px;
-    height:31px;
-    border-radius:50%;
-    background:#ff3e42;
-    color:white;
+.logo{
+    width:40px;
+    height:40px;
+    margin:auto;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:14px;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #6d32ff,
+        #9b5cff
+    );
+
+    color:white;
+    font-size:17px;
     font-weight:bold;
+
+    box-shadow:
+    0 6px 18px rgba(103,45,255,.20);
 }
+
+.logo-text{
+    margin-top:6px;
+    font-size:17px;
+    font-weight:bold;
+    color:#3e3b68;
+}
+
+
+/* PROFILE */
 
 .profile-btn{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background:white;
-    padding:5px;
-    box-shadow:0 8px 25px rgba(70,40,120,.12);
-    text-decoration:none;
-    overflow:hidden;
-}
+    position:absolute;
 
-.profile-btn-inner{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    background:linear-gradient(135deg,#ddd,#f7f7f7);
+    right:13px;
+    top:12px;
+
+    width:38px;
+    height:38px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:35px;
+
+    border-radius:50%;
+
+    background:white;
+
+    text-decoration:none;
+
+    box-shadow:
+    0 4px 15px rgba(0,0,0,.10);
+
+    font-size:18px;
 }
 
-/* WELCOME */
+
+/* =========================
+   WELCOME
+========================= */
 
 .welcome{
-    padding:25px 40px 20px;
+    margin:10px 12px;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    background:
+    rgba(255,255,255,.88);
+
+    box-shadow:
+    0 5px 20px rgba(80,60,120,.07);
 }
 
-.welcome-small{
-    font-size:25px;
-    color:#45496c;
+.welcome h2{
+    font-size:19px;
+    line-height:1.2;
 }
 
-.welcome h1{
-    margin-top:5px;
-    font-size:40px;
-    line-height:1.1;
-    color:#11152f;
-}
-
-.welcome h1 span{
-    color:#11152f;
+.welcome h2 span{
+    color:#15152d;
 }
 
 .welcome p{
-    margin-top:12px;
-    font-size:17px;
-    color:#555977;
+    margin-top:5px;
+
+    font-size:12px;
+
+    color:#6f6d86;
 }
 
-/* MAIN */
 
-.container{
-    padding:0 30px;
-}
-
-/* BALANCE */
+/* =========================
+   BALANCE CARD
+========================= */
 
 .balance-card{
-    min-height:350px;
-    border-radius:32px;
-    padding:35px;
-    color:white;
-    position:relative;
-    overflow:hidden;
+
+    margin:10px 12px;
+
+    padding:18px;
+
+    border-radius:20px;
+
     background:
-    radial-gradient(circle at 20% 20%,rgba(135,67,255,.95),transparent 40%),
-    radial-gradient(circle at 90% 30%,rgba(255,205,109,.9),transparent 45%),
-    linear-gradient(135deg,#7041ec,#a35ce5,#ffb27a);
-    box-shadow:0 15px 40px rgba(102,57,205,.18);
+    linear-gradient(
+        135deg,
+        #7436f5,
+        #a550e8,
+        #f4ae92
+    );
+
+    color:white;
+
+    box-shadow:
+    0 10px 30px rgba(101,54,220,.18);
+
+    position:relative;
+
+    overflow:hidden;
 }
 
 .balance-card:after{
+
     content:"";
+
     position:absolute;
-    width:450px;
-    height:450px;
-    right:-180px;
-    bottom:-250px;
+
+    width:220px;
+    height:220px;
+
+    right:-90px;
+    bottom:-120px;
+
     border-radius:50%;
-    background:rgba(255,255,255,.10);
+
+    background:
+    rgba(255,255,255,.12);
 }
 
-.balance-label{
-    font-size:18px;
-    font-weight:bold;
+.balance-title{
+
     position:relative;
     z-index:2;
-}
 
-.balance-label span{
-    margin-left:12px;
-    font-size:23px;
-}
-
-.balance-value{
-    font-size:58px;
+    font-size:12px;
     font-weight:bold;
-    margin-top:22px;
+}
+
+.balance{
+
     position:relative;
     z-index:2;
-}
 
-.balance-actions{
-    display:flex;
-    gap:25px;
-    margin-top:38px;
-    position:relative;
-    z-index:3;
-}
+    margin-top:5px;
 
-.action-btn{
-    height:68px;
-    border-radius:20px;
-    padding:0 30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    font-size:18px;
+    font-size:31px;
     font-weight:bold;
-    text-decoration:none;
-    border:none;
-}
-
-.add-btn{
-    color:white;
-    background:linear-gradient(135deg,#6531ed,#7938f4);
-    box-shadow:0 8px 20px rgba(73,31,205,.25);
-}
-
-.withdraw-btn{
-    color:#17182e;
-    background:white;
 }
 
 .balance-bottom{
-    position:absolute;
-    left:15px;
-    right:15px;
-    bottom:15px;
-    min-height:125px;
-    border-radius:25px;
-    background:rgba(25,20,74,.88);
-    backdrop-filter:blur(10px);
-    display:grid;
-    grid-template-columns:1fr 1fr;
+
+    position:relative;
     z-index:3;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    margin-top:14px;
 }
 
-.balance-stat{
-    padding:24px 28px;
-    display:flex;
-    align-items:center;
-    gap:18px;
+.balance-item{
+
+    padding:10px;
+
+    border-radius:13px;
+
+    background:
+    rgba(39,20,94,.72);
+
+    min-width:0;
 }
 
-.balance-stat+ .balance-stat{
-    border-left:1px solid rgba(255,255,255,.25);
+.balance-item span{
+
+    display:block;
+
+    font-size:10px;
+
+    color:#eeeaff;
 }
 
-.balance-icon{
-    width:54px;
-    height:54px;
-    border-radius:50%;
-    background:rgba(164,88,255,.35);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-}
+.balance-item strong{
 
-.balance-stat p{
+    display:block;
+
+    margin-top:4px;
+
     font-size:15px;
-    color:#ddd;
+
+    white-space:nowrap;
 }
 
-.balance-stat strong{
-    display:block;
-    margin-top:7px;
-    font-size:26px;
-}
 
-.balance-stat small{
-    display:block;
-    margin-top:5px;
-    color:#c5c5d8;
-    font-size:12px;
-}
-
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 .stats{
+
     display:grid;
+
     grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-top:25px;
+
+    gap:9px;
+
+    margin:10px 12px;
 }
 
 .stat-card{
-    min-height:145px;
-    background:rgba(255,255,255,.92);
-    border-radius:25px;
-    padding:25px;
-    display:flex;
-    align-items:center;
-    gap:20px;
-    box-shadow:0 9px 28px rgba(70,40,120,.08);
+
+    min-width:0;
+
+    padding:13px;
+
+    min-height:108px;
+
+    border-radius:16px;
+
+    background:white;
+
+    box-shadow:
+    0 5px 18px rgba(70,50,110,.07);
+
+    border:1px solid rgba(130,100,180,.08);
 }
 
 .stat-icon{
-    min-width:64px;
-    height:64px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
+
+    font-size:20px;
 }
 
-.icon-green{
-    background:#d9f7ed;
+.stat-card p{
+
+    margin-top:6px;
+
+    font-size:10px;
+
+    line-height:1.25;
+
+    color:#77758b;
 }
 
-.icon-yellow{
-    background:#fff0c9;
+.stat-card h3{
+
+    margin-top:4px;
+
+    font-size:20px;
+
+    color:#17172d;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
 
-.icon-blue{
-    background:#dceaff;
-}
 
-.icon-pink{
-    background:#ffe0ed;
-}
-
-.stat-info p{
-    color:#555977;
-    font-size:15px;
-}
-
-.stat-info h3{
-    margin-top:12px;
-    font-size:30px;
-    color:#11152f;
-}
-
-/* ORDER */
+/* =========================
+   CURRENT ORDER TITLE
+========================= */
 
 .section-title{
-    margin:30px 5px 15px;
+
     display:flex;
-    justify-content:space-between;
+
     align-items:center;
+
+    justify-content:space-between;
+
+    gap:8px;
+
+    margin:15px 12px 8px;
 }
 
 .section-title h3{
-    font-size:23px;
+
+    font-size:18px;
 }
 
 .section-title a{
-    text-decoration:none;
+
+    flex-shrink:0;
+
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7130f5,
+        #8b45ff
+    );
+
     color:white;
-    background:linear-gradient(135deg,#6531ed,#7938f4);
-    padding:15px 25px;
-    border-radius:14px;
+
+    text-decoration:none;
+
+    font-size:9px;
+
     font-weight:bold;
-    font-size:14px;
 }
 
-.current-order{
+
+/* =========================
+   CURRENT ORDER
+========================= */
+
+#currentOrder{
+
+    margin:0 12px;
+}
+
+.loading{
+
+    padding:25px 15px;
+
+    text-align:center;
+
+    border-radius:16px;
+
     background:white;
-    border-radius:27px;
-    padding:20px;
-    box-shadow:0 9px 28px rgba(70,40,120,.08);
+
+    color:#888;
+
+    font-size:12px;
 }
 
 .task-card{
+
     background:white;
-    border-radius:22px;
-    padding:0;
-    display:grid;
-    grid-template-columns:35% 65%;
+
+    border-radius:17px;
+
+    padding:12px;
+
+    box-shadow:
+    0 5px 18px rgba(70,50,110,.07);
+
     overflow:hidden;
 }
 
 .task-card img{
+
     width:100%;
-    height:190px;
+
+    height:160px;
+
     object-fit:cover;
-    border-radius:18px;
+
+    border-radius:12px;
+
+    display:block;
+
+    margin-bottom:11px;
 }
 
-.task-info{
-    padding:12px 20px;
+.task-card h3{
+
+    color:#17172d;
+
+    font-size:18px;
+
+    margin-bottom:6px;
 }
 
-.task-info h3{
-    font-size:21px;
-    color:#171a38;
-    margin-bottom:10px;
-}
+.task-card p{
 
-.task-info p{
-    font-size:13px;
-    color:#656980;
-    margin-top:7px;
+    font-size:11px;
+
+    color:#777;
+
+    margin-top:5px;
 }
 
 .task-commission{
-    color:#11a86b!important;
+
+    color:#12a263 !important;
+
     font-weight:bold;
 }
 
-/* PROGRESS */
+.open-task{
 
-.progress-card{
-    margin-top:25px;
-    padding:28px;
-    background:white;
-    border-radius:27px;
-    box-shadow:0 9px 28px rgba(70,40,120,.08);
-}
+    width:100%;
 
-.progress-title{
-    font-size:21px;
+    padding:11px;
+
+    margin-top:11px;
+
+    border:0;
+
+    border-radius:11px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7130f5,
+        #914aff
+    );
+
+    color:white;
+
+    font-size:12px;
+
     font-weight:bold;
 }
 
-.progress-inner{
-    margin-top:20px;
-    padding:22px;
-    border-radius:20px;
-    background:#faf8ff;
+
+/* =========================
+   GRAB BUTTON
+========================= */
+
+.grab-section{
+
+    margin:13px 12px;
 }
 
-.progress-top{
-    display:flex;
-    justify-content:space-between;
-    font-size:14px;
-    color:#343752;
+.grab-btn{
+
+    width:100%;
+
+    padding:12px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #7130f5,
+        #914aff
+    );
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:bold;
 }
 
-.progress-top strong{
-    color:#6937ed;
-}
 
-.progress-bar{
-    margin-top:18px;
-    height:12px;
-    background:#e9e8ef;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-fill{
-    height:100%;
-    width:90%;
-    background:linear-gradient(90deg,#6937ed,#8b4cff);
-    border-radius:20px;
-}
-
-/* LOADING */
-
-.loading{
-    padding:35px;
-    text-align:center;
-    color:#777;
-}
-
-/* BOTTOM */
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom-nav{
+
     position:fixed;
-    left:30px;
-    right:30px;
-    bottom:15px;
-    height:82px;
-    border-radius:42px;
-    background:rgba(255,255,255,.96);
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:65px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-around;
-    box-shadow:0 8px 35px rgba(40,30,80,.14);
-    z-index:1000;
+
+    background:white;
+
+    border-top:1px solid #eee8fa;
+
+    box-shadow:
+    0 -4px 20px rgba(50,30,90,.10);
+
+    z-index:9999;
 }
 
 .nav-item{
-    text-decoration:none;
-    color:#666875;
+
+    width:25%;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     justify-content:center;
-    gap:6px;
-    font-size:13px;
-    min-width:70px;
+
+    gap:3px;
+
+    color:#777;
+
+    text-decoration:none;
+
+    font-size:10px;
 }
 
 .nav-item span{
-    font-size:25px;
+
+    font-size:18px;
+
+    line-height:20px;
 }
 
 .nav-item.active{
-    color:#6d38ed;
+
+    color:#7130f5;
+
     font-weight:bold;
 }
 
 .nav-center{
-    width:62px;
-    height:62px;
-    margin-top:-30px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#6531ed,#8d4cff);
-    color:white;
+
+    width:40px;
+
+    height:40px;
+
+    margin-top:-17px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    font-size:27px;
-    border:5px solid #faf9ff;
-    box-shadow:0 8px 20px rgba(100,50,230,.3);
-}
 
-/* MOBILE */
+    border-radius:50%;
 
-@media(max-width:600px){
+    background:
+    linear-gradient(
+        135deg,
+        #7130f5,
+        #914aff
+    );
 
-.top-area{
-    padding:18px 18px 0;
-}
+    color:white;
 
-.menu-btn{
-    width:55px;
-    height:55px;
-    border-radius:18px;
-}
+    border:4px solid white;
 
-.top-right{
-    gap:10px;
-}
+    box-shadow:
+    0 5px 18px rgba(113,48,245,.30);
 
-.notification{
-    width:52px;
-    height:52px;
-    font-size:24px;
-}
-
-.profile-btn{
-    width:56px;
-    height:56px;
-}
-
-.welcome{
-    padding:25px 25px 20px;
-}
-
-.welcome-small{
-    font-size:20px;
-}
-
-.welcome h1{
-    font-size:31px;
-}
-
-.welcome p{
-    font-size:14px;
-}
-
-.container{
-    padding:0 15px;
-}
-
-.balance-card{
-    min-height:330px;
-    padding:25px;
-    border-radius:28px;
-}
-
-.balance-value{
-    font-size:50px;
-}
-
-.balance-actions{
-    gap:10px;
-}
-
-.action-btn{
-    flex:1;
-    padding:0 10px;
-    font-size:14px;
-}
-
-.balance-bottom{
-    min-height:105px;
-}
-
-.balance-stat{
-    padding:15px;
-    gap:8px;
-}
-
-.balance-icon{
-    width:42px;
-    height:42px;
-    min-width:42px;
-    font-size:19px;
-}
-
-.balance-stat p{
-    font-size:12px;
-}
-
-.balance-stat strong{
     font-size:18px;
 }
 
-.balance-stat small{
-    font-size:10px;
+
+/* =========================
+   SMALL PHONES
+========================= */
+
+@media(max-width:360px){
+
+    .welcome{
+        padding:12px;
+    }
+
+    .welcome h2{
+        font-size:17px;
+    }
+
+    .balance-card{
+        padding:15px;
+    }
+
+    .balance{
+        font-size:27px;
+    }
+
+    .balance-item strong{
+        font-size:13px;
+    }
+
+    .stat-card{
+        min-height:100px;
+        padding:11px;
+    }
+
+    .stat-card h3{
+        font-size:18px;
+    }
+
+    .task-card img{
+        height:145px;
+    }
 }
 
-.stats{
-    gap:12px;
+
+/* =========================
+   NORMAL MOBILE
+========================= */
+
+@media(min-width:361px) and (max-width:600px){
+
+    body{
+        font-size:14px;
+    }
+
 }
 
-.stat-card{
-    min-height:125px;
-    padding:15px;
-    gap:10px;
-    border-radius:20px;
-}
 
-.stat-icon{
-    min-width:48px;
-    width:48px;
-    height:48px;
-    font-size:23px;
-}
+/* =========================
+   PREVENT DESKTOP LOOK
+========================= */
 
-.stat-info p{
-    font-size:11px;
-}
+@media(min-width:601px){
 
-.stat-info h3{
-    font-size:23px;
-}
-
-.section-title{
-    margin-top:25px;
-}
-
-.section-title h3{
-    font-size:20px;
-}
-
-.section-title a{
-    padding:12px 15px;
-    font-size:11px;
-}
-
-.task-card{
-    display:block;
-}
-
-.task-card img{
-    height:190px;
-}
-
-.task-info{
-    padding:15px 5px 5px;
-}
-
-.current-order{
-    padding:15px;
-}
-
-.progress-card{
-    padding:20px;
-}
-
-.bottom-nav{
-    left:10px;
-    right:10px;
-    bottom:10px;
-}
+    body{
+        max-width:600px;
+        margin:auto;
+    }
 
 }
 
@@ -677,36 +686,27 @@ body{
 <body>
 
 
-<!-- TOP -->
+<!-- PROFILE -->
 
-<div class="top-area">
-
-<div class="menu-btn">
-☰
-</div>
-
-<div class="top-right">
-
-<div class="notification">
-
-♧
-
-<div class="notification-badge">
-3
-</div>
-
-</div>
-
-<a href="profile.html"
-class="profile-btn">
-
-<div class="profile-btn-inner">
+<a
+href="profile.html"
+class="profile-btn"
+>
 👤
-</div>
-
 </a>
 
-</div>
+
+<!-- LOGO -->
+
+<div class="logo-area">
+
+    <div class="logo">
+        ET
+    </div>
+
+    <div class="logo-text">
+        EliteTask Pro
+    </div>
 
 </div>
 
@@ -715,114 +715,67 @@ class="profile-btn">
 
 <div class="welcome">
 
-<div class="welcome-small">
-Welcome back,
-</div>
+    <h2>
+        Welcome,
+        <span id="userName">
+            User
+        </span>
+        👋
+    </h2>
 
-<h1>
-<span id="userName">
-User
-</span>
-👋
-</h1>
-
-<p>
-Complete tasks, earn more & grow with us.
-</p>
+    <p>
+        Manage your current order and earnings.
+    </p>
 
 </div>
-
-
-<div class="container">
 
 
 <!-- BALANCE -->
 
 <div class="balance-card">
 
-<div class="balance-label">
-Available Balance 👁
-</div>
+    <div class="balance-title">
+        Available Balance
+    </div>
 
-<div
-class="balance-value"
-id="balance"
->
-$0.00
-</div>
-
-
-<div class="balance-actions">
-
-<a href="#"
-class="action-btn add-btn"
->
-⊕ &nbsp; Add Funds
-</a>
-
-<a href="withdraw.html"
-class="action-btn withdraw-btn"
->
-⇧ &nbsp; Withdraw
-</a>
-
-</div>
+    <div
+    class="balance"
+    id="balance"
+    >
+        $0.00
+    </div>
 
 
-<div class="balance-bottom">
+    <div class="balance-bottom">
 
 
-<div class="balance-stat">
+        <div class="balance-item">
 
-<div class="balance-icon">
-▥
-</div>
+            <span>
+                Commission
+            </span>
 
-<div>
+            <strong id="commission">
+                $0.00
+            </strong>
 
-<p>
-Commission
-</p>
-
-<strong id="commission">
-$0.00
-</strong>
-
-<small>
-Total Earned
-</small>
-
-</div>
-
-</div>
+        </div>
 
 
-<div class="balance-stat">
+        <div class="balance-item">
 
-<div class="balance-icon">
-⌛
-</div>
+            <span>
+                Pending
+            </span>
 
-<div>
+            <strong id="pending">
+                $0.00
+            </strong>
 
-<p>
-Pending
-</p>
-
-<strong id="pending">
-$0.00
-</strong>
-
-<small>
-In Process
-</small>
-
-</div>
-
-</div>
+        </div>
 
 
-</div>
+    </div>
 
 </div>
 
@@ -832,88 +785,72 @@ In Process
 <div class="stats">
 
 
-<div class="stat-card">
+    <div class="stat-card">
 
-<div class="stat-icon icon-green">
-📋
-</div>
+        <div class="stat-icon">
+            📦
+        </div>
 
-<div class="stat-info">
+        <p>
+            Completed Tasks
+        </p>
 
-<p>
-Completed Tasks
-</p>
+        <h3 id="completedTasks">
+            0
+        </h3>
 
-<h3 id="completedTasks">
-0
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 
-<div class="stat-card">
+    <div class="stat-card">
 
-<div class="stat-icon icon-yellow">
-💰
-</div>
+        <div class="stat-icon">
+            💰
+        </div>
 
-<div class="stat-info">
+        <p>
+            Today's Commission
+        </p>
 
-<p>
-Today's Commission
-</p>
+        <h3 id="todayCommission">
+            $0.00
+        </h3>
 
-<h3 id="todayCommission">
-$0.00
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 
-<div class="stat-card">
+    <div class="stat-card">
 
-<div class="stat-icon icon-blue">
-📋
-</div>
+        <div class="stat-icon">
+            📋
+        </div>
 
-<div class="stat-info">
+        <p>
+            Total Tasks
+        </p>
 
-<p>
-Total Tasks
-</p>
+        <h3 id="totalTasks">
+            0
+        </h3>
 
-<h3 id="totalTasks">
-0
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 
-<div class="stat-card">
+    <div class="stat-card">
 
-<div class="stat-icon icon-pink">
-★
-</div>
+        <div class="stat-icon">
+            ⭐
+        </div>
 
-<div class="stat-info">
+        <p>
+            Task Level
+        </p>
 
-<p>
-Task Level
-</p>
+        <h3>
+            1
+        </h3>
 
-<h3>
-1
-</h3>
-
-</div>
-
-</div>
+    </div>
 
 
 </div>
@@ -923,66 +860,36 @@ Task Level
 
 <div class="section-title">
 
-<h3>
-Current Order
-</h3>
+    <h3>
+        Current Order
+    </h3>
 
-<a href="orders.html">
-View Order →
-</a>
-
-</div>
-
-
-<div
-id="currentOrder"
-class="current-order"
->
-
-<div class="loading">
-Loading current order...
-</div>
+    <a href="orders.html">
+        VIEW ORDER
+    </a>
 
 </div>
 
 
-<!-- PROGRESS -->
+<div id="currentOrder">
 
-<div class="progress-card">
-
-<div class="progress-title">
-Your Progress
-</div>
-
-<div class="progress-inner">
-
-<div class="progress-top">
-
-<span>
-You're doing great! Keep going 🚀
-</span>
-
-<strong id="progressText">
-0 / 0 Tasks
-</strong>
+    <div class="loading">
+        Loading current order...
+    </div>
 
 </div>
 
-<div class="progress-bar">
 
-<div
-id="progressFill"
-class="progress-fill"
-style="width:0%"
->
-</div>
+<!-- GRAB -->
 
-</div>
+<div class="grab-section">
 
-</div>
-
-</div>
-
+    <button
+    class="grab-btn"
+    onclick="location.href='orders.html'"
+    >
+        🚀 Start Grabbing Orders
+    </button>
 
 </div>
 
@@ -992,419 +899,433 @@ style="width:0%"
 <div class="bottom-nav">
 
 
-<a
-href="dashboard.html"
-class="nav-item active"
->
+    <a
+    href="dashboard.html"
+    class="nav-item active"
+    >
 
-<span>
-⌂
-</span>
+        <span>
+            ⌂
+        </span>
 
-Home
+        Home
 
-</a>
-
-
-<a
-href="orders.html"
-class="nav-item"
->
-
-<span>
-▣
-</span>
-
-Orders
-
-</a>
+    </a>
 
 
-<a
-href="support.html"
-class="nav-item"
->
+    <a
+    href="orders.html"
+    class="nav-item"
+    >
 
-<div class="nav-center">
-💬
+        <span>
+            ▣
+        </span>
+
+        Orders
+
+    </a>
+
+
+    <a
+    href="support.html"
+    class="nav-item"
+    >
+
+        <div class="nav-center">
+            💬
+        </div>
+
+        Support
+
+    </a>
+
+
+    <a
+    href="profile.html"
+    class="nav-item"
+    >
+
+        <span>
+            👤
+        </span>
+
+        Profile
+
+    </a>
+
+
 </div>
 
-Support
 
-</a>
-
-
-<a
-href="profile.html"
-class="nav-item"
->
-
-<span>
-♙
-</span>
-
-Profile
-
-</a>
-
-
-</div>
-
+<!-- FIREBASE -->
 
 <script type="module">
 
 
 import {
-initializeApp
+    initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 
 import {
-getAuth,
-onAuthStateChanged
+    getAuth,
+    onAuthStateChanged
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
-getFirestore,
-doc,
-getDoc,
-collection,
-getDocs
+    getFirestore,
+    doc,
+    getDoc,
+    collection,
+    getDocs
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-const firebaseConfig={
+const firebaseConfig = {
 
-apiKey:
-"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    apiKey:
+    "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-authDomain:
-"elitetask-pro.firebaseapp.com",
+    authDomain:
+    "elitetask-pro.firebaseapp.com",
 
-projectId:
-"elitetask-pro",
+    projectId:
+    "elitetask-pro",
 
-storageBucket:
-"elitetask-pro.firebasestorage.app",
+    storageBucket:
+    "elitetask-pro.firebasestorage.app",
 
-messagingSenderId:
-"504295275402",
+    messagingSenderId:
+    "504295275402",
 
-appId:
-"1:504295275402:web:cf744a5d4e82c72145a673"
+    appId:
+    "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
 
-const app=
-initializeApp(firebaseConfig);
+const app =
+    initializeApp(
+        firebaseConfig
+    );
 
-const auth=
-getAuth(app);
 
-const db=
-getFirestore(app);
+const auth =
+    getAuth(app);
 
+
+const db =
+    getFirestore(app);
+
+
+/* =========================
+   LOGIN
+========================= */
 
 onAuthStateChanged(
-auth,
-async user=>{
-
-if(!user){
-
-location.href="index.html";
-
-return;
-
-}
+    auth,
+    async user => {
 
 
-try{
+        if(!user){
+
+            location.href =
+            "index.html";
+
+            return;
+
+        }
 
 
-const userSnap=
-await getDoc(
-doc(
-db,
-"users",
-user.uid
-)
+        try{
+
+
+            /* USER DATA */
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(userSnap.exists()){
+
+
+                const u =
+                    userSnap.data();
+
+
+                document
+                .getElementById(
+                    "userName"
+                )
+                .textContent =
+                    u.name ||
+                    "User";
+
+
+                document
+                .getElementById(
+                    "balance"
+                )
+                .textContent =
+                    "$" +
+                    Number(
+                        u.balance || 0
+                    ).toFixed(2);
+
+
+                document
+                .getElementById(
+                    "commission"
+                )
+                .textContent =
+                    "$" +
+                    Number(
+                        u.commission || 0
+                    ).toFixed(2);
+
+
+                document
+                .getElementById(
+                    "pending"
+                )
+                .textContent =
+                    "$" +
+                    Number(
+                        u.pending || 0
+                    ).toFixed(2);
+
+
+                document
+                .getElementById(
+                    "completedTasks"
+                )
+                .textContent =
+                    u.completedTasks || 0;
+
+
+                document
+                .getElementById(
+                    "todayCommission"
+                )
+                .textContent =
+                    "$" +
+                    Number(
+                        u.todayCommission || 0
+                    ).toFixed(2);
+
+            }
+
+
+            /* =========================
+               TASKS
+            ========================= */
+
+            const taskSnap =
+                await getDocs(
+                    collection(
+                        db,
+                        "tasks"
+                    )
+                );
+
+
+            const tasks = [];
+
+
+            taskSnap.forEach(
+                d => {
+
+                    tasks.push({
+
+                        id:d.id,
+
+                        ...d.data()
+
+                    });
+
+                }
+            );
+
+
+            tasks.sort(
+                (a,b) =>
+                    Number(
+                        a.order || 0
+                    )
+                    -
+                    Number(
+                        b.order || 0
+                    )
+            );
+
+
+            document
+            .getElementById(
+                "totalTasks"
+            )
+            .textContent =
+                tasks.length;
+
+
+            const box =
+                document.getElementById(
+                    "currentOrder"
+                );
+
+
+            if(tasks.length === 0){
+
+                box.innerHTML = `
+
+                    <div class="loading">
+
+                        No task available yet.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /*
+               USER KA CURRENT TASK
+               INDEX SE SHOW HOGA
+            */
+
+            let currentIndex = 0;
+
+
+            if(userSnap.exists()){
+
+                currentIndex =
+                    Number(
+                        userSnap.data()
+                        .currentTaskIndex || 0
+                    );
+
+            }
+
+
+            if(
+                currentIndex >=
+                tasks.length
+            ){
+
+                box.innerHTML = `
+
+                    <div class="loading">
+
+                        🎉 All Tasks Completed
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            const task =
+                tasks[currentIndex];
+
+
+            box.innerHTML = `
+
+                <div class="task-card">
+
+
+                    ${
+                        task.image
+                        ?
+                        `
+                        <img
+                        src="${task.image}"
+                        alt="Task image"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <h3>
+                        ${task.name || "Current Task"}
+                    </h3>
+
+
+                    <p>
+                        Task Price:
+                        $${Number(
+                            task.price || 0
+                        ).toFixed(2)}
+                    </p>
+
+
+                    <p class="task-commission">
+                        Commission:
+                        +$${Number(
+                            task.commission || 0
+                        ).toFixed(2)}
+                    </p>
+
+
+                    <button
+                    class="open-task"
+                    onclick="location.href='orders.html'"
+                    >
+                        Open Task
+                    </button>
+
+
+                </div>
+
+            `;
+
+
+        }
+        catch(error){
+
+            console.log(error);
+
+
+            document
+            .getElementById(
+                "currentOrder"
+            )
+            .innerHTML = `
+
+                <div class="loading">
+
+                    Unable to load task.
+
+                </div>
+
+            `;
+
+        }
+
+
+    }
 );
 
-
-if(userSnap.exists()){
-
-const u=
-userSnap.data();
-
-
-document
-.getElementById("userName")
-.textContent=
-u.name||"User";
-
-
-document
-.getElementById("balance")
-.textContent=
-"$"+
-Number(
-u.balance||0
-).toFixed(2);
-
-
-const commission=
-Number(
-u.commission||0
-);
-
-
-document
-.getElementById("commission")
-.textContent=
-"$"+
-commission.toFixed(2);
-
-
-/* SAME COMMISSION */
-
-document
-.getElementById("todayCommission")
-.textContent=
-"$"+
-commission.toFixed(2);
-
-
-document
-.getElementById("pending")
-.textContent=
-"$"+
-Number(
-u.pending||0
-).toFixed(2);
-
-
-const completed=
-Number(
-u.completedTasks||0
-);
-
-
-document
-.getElementById("completedTasks")
-.textContent=
-completed;
-
-}
-
-
-/* TASKS */
-
-const taskSnap=
-await getDocs(
-collection(
-db,
-"tasks"
-)
-);
-
-
-const tasks=[];
-
-
-taskSnap.forEach(
-d=>{
-
-tasks.push({
-
-id:d.id,
-
-...d.data()
-
-});
-
-});
-
-
-tasks.sort(
-(a,b)=>
-Number(a.order||0)-
-Number(b.order||0)
-);
-
-
-document
-.getElementById("totalTasks")
-.textContent=
-tasks.length;
-
-
-/* PROGRESS */
-
-const completed=
-userSnap.exists()
-?
-Number(
-userSnap.data().completedTasks||0
-)
-:
-0;
-
-
-document
-.getElementById("progressText")
-.textContent=
-completed+
-" / "+
-tasks.length+
-" Tasks";
-
-
-const percentage=
-tasks.length>0
-?
-Math.min(
-completed/tasks.length*100,
-100
-)
-:
-0;
-
-
-document
-.getElementById("progressFill")
-.style.width=
-percentage+"%";
-
-
-/* CURRENT ORDER */
-
-const box=
-document.getElementById(
-"currentOrder"
-);
-
-
-if(tasks.length===0){
-
-box.innerHTML=`
-
-<div class="loading">
-No task available yet.
-</div>
-
-`;
-
-return;
-
-}
-
-
-const currentIndex=
-userSnap.exists()
-?
-Number(
-userSnap.data().currentTaskIndex||0
-)
-:
-0;
-
-
-if(currentIndex>=tasks.length){
-
-box.innerHTML=`
-
-<div class="loading">
-
-🎉 All Tasks Completed
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-const task=
-tasks[currentIndex];
-
-
-box.innerHTML=`
-
-<div class="task-card">
-
-${
-task.image
-?
-`
-<img
-src="${task.image}"
-alt="Task image"
->
-`
-:
-""
-}
-
-<div class="task-info">
-
-<h3>
-${task.name||"Current Task"}
-</h3>
-
-<p>
-Amount
-</p>
-
-<p>
-<strong>
-$${Number(task.price||0).toFixed(2)}
-</strong>
-</p>
-
-<p class="task-commission">
-Commission
-</p>
-
-<p class="task-commission">
-+$${Number(task.commission||0).toFixed(2)}
-</p>
-
-</div>
-
-</div>
-
-`;
-
-
-}catch(error){
-
-console.log(error);
-
-document
-.getElementById("currentOrder")
-.innerHTML=`
-
-<div class="loading">
-
-Unable to load task.
-
-</div>
-
-`;
-
-}
-
-});
 
 </script>
 
