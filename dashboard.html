@@ -1,377 +1,844 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>EliteTask Pro Dashboard</title>
 
 <style>
+
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#fffdf3,#f5e7a7,#fff5c5,#e4c85f);
-color:#3d2d00;
-padding-bottom:90px;
+    font-family:Arial,Helvetica,sans-serif;
+    background:
+    radial-gradient(circle at 20% 10%,#eee8ff 0,#fff 35%),
+    radial-gradient(circle at 90% 20%,#fff0e9 0,#fff 38%),
+    #faf9ff;
+    color:#171a38;
+    padding-bottom:105px;
+}
+
+/* TOP */
+
+.top-area{
+    padding:25px 30px 5px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.menu-btn{
+    width:70px;
+    height:70px;
+    border-radius:22px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 25px rgba(70,40,120,.10);
+    font-size:30px;
+    color:#333653;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.notification{
+    width:68px;
+    height:68px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    position:relative;
+    box-shadow:0 8px 25px rgba(70,40,120,.10);
+}
+
+.notification-badge{
+    position:absolute;
+    right:-1px;
+    top:-4px;
+    width:31px;
+    height:31px;
+    border-radius:50%;
+    background:#ff3e42;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .profile-btn{
-position:absolute;
-right:15px;
-top:15px;
-width:42px;
-height:42px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-background:white;
-text-decoration:none;
-box-shadow:0 4px 12px rgba(0,0,0,.15);
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:white;
+    padding:5px;
+    box-shadow:0 8px 25px rgba(70,40,120,.12);
+    text-decoration:none;
+    overflow:hidden;
 }
 
-.logo-area{
-text-align:center;
-padding:20px 15px 10px;
+.profile-btn-inner{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ddd,#f7f7f7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
 }
 
-.logo{
-width:48px;
-height:48px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:14px;
-background:#c79b20;
-color:white;
-font-size:20px;
-font-weight:bold;
-}
-
-.logo-text{
-margin-top:7px;
-font-size:20px;
-font-weight:bold;
-color:#725400;
-}
+/* WELCOME */
 
 .welcome{
-margin:15px;
-padding:18px;
-border-radius:18px;
-background:white;
-box-shadow:0 5px 18px rgba(0,0,0,.08);
+    padding:25px 40px 20px;
 }
 
-.welcome h2{
-font-size:20px;
+.welcome-small{
+    font-size:25px;
+    color:#45496c;
 }
 
-.welcome h2 span{
-color:#bd8e00;
+.welcome h1{
+    margin-top:5px;
+    font-size:40px;
+    line-height:1.1;
+    color:#11152f;
+}
+
+.welcome h1 span{
+    color:#11152f;
 }
 
 .welcome p{
-margin-top:7px;
-font-size:13px;
-color:#888;
+    margin-top:12px;
+    font-size:17px;
+    color:#555977;
 }
+
+/* MAIN */
+
+.container{
+    padding:0 30px;
+}
+
+/* BALANCE */
 
 .balance-card{
-margin:15px;
-padding:22px;
-border-radius:20px;
-background:linear-gradient(135deg,#795500,#d0a62b,#f1d66e,#b27e00);
-color:white;
+    min-height:350px;
+    border-radius:32px;
+    padding:35px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at 20% 20%,rgba(135,67,255,.95),transparent 40%),
+    radial-gradient(circle at 90% 30%,rgba(255,205,109,.9),transparent 45%),
+    linear-gradient(135deg,#7041ec,#a35ce5,#ffb27a);
+    box-shadow:0 15px 40px rgba(102,57,205,.18);
 }
 
-.balance-title{
-font-size:13px;
+.balance-card:after{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    right:-180px;
+    bottom:-250px;
+    border-radius:50%;
+    background:rgba(255,255,255,.10);
 }
 
-.balance{
-margin-top:7px;
-font-size:34px;
-font-weight:bold;
+.balance-label{
+    font-size:18px;
+    font-weight:bold;
+    position:relative;
+    z-index:2;
+}
+
+.balance-label span{
+    margin-left:12px;
+    font-size:23px;
+}
+
+.balance-value{
+    font-size:58px;
+    font-weight:bold;
+    margin-top:22px;
+    position:relative;
+    z-index:2;
+}
+
+.balance-actions{
+    display:flex;
+    gap:25px;
+    margin-top:38px;
+    position:relative;
+    z-index:3;
+}
+
+.action-btn{
+    height:68px;
+    border-radius:20px;
+    padding:0 30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:bold;
+    text-decoration:none;
+    border:none;
+}
+
+.add-btn{
+    color:white;
+    background:linear-gradient(135deg,#6531ed,#7938f4);
+    box-shadow:0 8px 20px rgba(73,31,205,.25);
+}
+
+.withdraw-btn{
+    color:#17182e;
+    background:white;
 }
 
 .balance-bottom{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-top:18px;
+    position:absolute;
+    left:15px;
+    right:15px;
+    bottom:15px;
+    min-height:125px;
+    border-radius:25px;
+    background:rgba(25,20,74,.88);
+    backdrop-filter:blur(10px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    z-index:3;
 }
 
-.balance-item{
-padding:11px;
-border-radius:12px;
-background:rgba(255,255,255,.17);
+.balance-stat{
+    padding:24px 28px;
+    display:flex;
+    align-items:center;
+    gap:18px;
 }
 
-.balance-item span{
-display:block;
-font-size:11px;
+.balance-stat+ .balance-stat{
+    border-left:1px solid rgba(255,255,255,.25);
 }
 
-.balance-item strong{
-display:block;
-margin-top:4px;
-font-size:16px;
+.balance-icon{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:rgba(164,88,255,.35);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
 }
+
+.balance-stat p{
+    font-size:15px;
+    color:#ddd;
+}
+
+.balance-stat strong{
+    display:block;
+    margin-top:7px;
+    font-size:26px;
+}
+
+.balance-stat small{
+    display:block;
+    margin-top:5px;
+    color:#c5c5d8;
+    font-size:12px;
+}
+
+/* STATS */
 
 .stats{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin:15px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:25px;
 }
 
 .stat-card{
-padding:16px;
-border-radius:17px;
-background:white;
-border:1px solid #ead78c;
-box-shadow:0 5px 17px rgba(0,0,0,.07);
+    min-height:145px;
+    background:rgba(255,255,255,.92);
+    border-radius:25px;
+    padding:25px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    box-shadow:0 9px 28px rgba(70,40,120,.08);
 }
 
 .stat-icon{
-font-size:22px;
+    min-width:64px;
+    height:64px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
 }
 
-.stat-card p{
-margin-top:9px;
-font-size:12px;
-color:#777;
+.icon-green{
+    background:#d9f7ed;
 }
 
-.stat-card h3{
-margin-top:5px;
-font-size:21px;
-color:#745600;
+.icon-yellow{
+    background:#fff0c9;
 }
+
+.icon-blue{
+    background:#dceaff;
+}
+
+.icon-pink{
+    background:#ffe0ed;
+}
+
+.stat-info p{
+    color:#555977;
+    font-size:15px;
+}
+
+.stat-info h3{
+    margin-top:12px;
+    font-size:30px;
+    color:#11152f;
+}
+
+/* ORDER */
 
 .section-title{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin:20px 15px 10px;
+    margin:30px 5px 15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.section-title h3{
+    font-size:23px;
 }
 
 .section-title a{
-padding:7px 10px;
-border-radius:8px;
-background:#c59a20;
-color:white;
-text-decoration:none;
-font-size:10px;
-font-weight:bold;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#6531ed,#7938f4);
+    padding:15px 25px;
+    border-radius:14px;
+    font-weight:bold;
+    font-size:14px;
 }
 
-#currentOrder{
-margin:0 15px;
-}
-
-.loading{
-padding:25px;
-text-align:center;
-border-radius:17px;
-background:white;
-color:#888;
+.current-order{
+    background:white;
+    border-radius:27px;
+    padding:20px;
+    box-shadow:0 9px 28px rgba(70,40,120,.08);
 }
 
 .task-card{
-background:white;
-border-radius:17px;
-padding:14px;
-box-shadow:0 5px 17px rgba(0,0,0,.08);
+    background:white;
+    border-radius:22px;
+    padding:0;
+    display:grid;
+    grid-template-columns:35% 65%;
+    overflow:hidden;
 }
 
 .task-card img{
-width:100%;
-height:190px;
-object-fit:cover;
-border-radius:13px;
-display:block;
-margin-bottom:12px;
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    border-radius:18px;
 }
 
-.task-card h3{
-color:#5d4500;
-margin-bottom:7px;
+.task-info{
+    padding:12px 20px;
 }
 
-.task-card p{
-font-size:13px;
-color:#777;
-margin-top:5px;
+.task-info h3{
+    font-size:21px;
+    color:#171a38;
+    margin-bottom:10px;
+}
+
+.task-info p{
+    font-size:13px;
+    color:#656980;
+    margin-top:7px;
 }
 
 .task-commission{
-color:#16894f!important;
-font-weight:bold;
+    color:#11a86b!important;
+    font-weight:bold;
 }
 
-.open-task{
-width:100%;
-padding:13px;
-margin-top:12px;
-border:0;
-border-radius:11px;
-background:#b48600;
-color:white;
-font-weight:bold;
+/* PROGRESS */
+
+.progress-card{
+    margin-top:25px;
+    padding:28px;
+    background:white;
+    border-radius:27px;
+    box-shadow:0 9px 28px rgba(70,40,120,.08);
 }
 
-.grab-section{
-margin:18px 15px;
+.progress-title{
+    font-size:21px;
+    font-weight:bold;
 }
 
-.grab-btn{
-width:100%;
-padding:15px;
-border:0;
-border-radius:14px;
-background:#b48600;
-color:white;
-font-size:15px;
-font-weight:bold;
+.progress-inner{
+    margin-top:20px;
+    padding:22px;
+    border-radius:20px;
+    background:#faf8ff;
 }
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    color:#343752;
+}
+
+.progress-top strong{
+    color:#6937ed;
+}
+
+.progress-bar{
+    margin-top:18px;
+    height:12px;
+    background:#e9e8ef;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:90%;
+    background:linear-gradient(90deg,#6937ed,#8b4cff);
+    border-radius:20px;
+}
+
+/* LOADING */
+
+.loading{
+    padding:35px;
+    text-align:center;
+    color:#777;
+}
+
+/* BOTTOM */
 
 .bottom-nav{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-height:72px;
-display:flex;
-align-items:center;
-justify-content:space-around;
-background:white;
-border-top:1px solid #e3cf76;
-box-shadow:0 -4px 18px rgba(0,0,0,.1);
+    position:fixed;
+    left:30px;
+    right:30px;
+    bottom:15px;
+    height:82px;
+    border-radius:42px;
+    background:rgba(255,255,255,.96);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    box-shadow:0 8px 35px rgba(40,30,80,.14);
+    z-index:1000;
 }
 
 .nav-item{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:4px;
-color:#777;
-text-decoration:none;
-font-size:11px;
+    text-decoration:none;
+    color:#666875;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    font-size:13px;
+    min-width:70px;
 }
 
 .nav-item span{
-font-size:20px;
+    font-size:25px;
 }
 
 .nav-item.active{
-color:#a87900;
-font-weight:bold;
+    color:#6d38ed;
+    font-weight:bold;
 }
 
 .nav-center{
-width:43px;
-height:43px;
-margin-top:-18px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:50%;
-background:#d1a52c;
-color:white;
-border:4px solid white;
+    width:62px;
+    height:62px;
+    margin-top:-30px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6531ed,#8d4cff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    border:5px solid #faf9ff;
+    box-shadow:0 8px 20px rgba(100,50,230,.3);
 }
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.top-area{
+    padding:18px 18px 0;
+}
+
+.menu-btn{
+    width:55px;
+    height:55px;
+    border-radius:18px;
+}
+
+.top-right{
+    gap:10px;
+}
+
+.notification{
+    width:52px;
+    height:52px;
+    font-size:24px;
+}
+
+.profile-btn{
+    width:56px;
+    height:56px;
+}
+
+.welcome{
+    padding:25px 25px 20px;
+}
+
+.welcome-small{
+    font-size:20px;
+}
+
+.welcome h1{
+    font-size:31px;
+}
+
+.welcome p{
+    font-size:14px;
+}
+
+.container{
+    padding:0 15px;
+}
+
+.balance-card{
+    min-height:330px;
+    padding:25px;
+    border-radius:28px;
+}
+
+.balance-value{
+    font-size:50px;
+}
+
+.balance-actions{
+    gap:10px;
+}
+
+.action-btn{
+    flex:1;
+    padding:0 10px;
+    font-size:14px;
+}
+
+.balance-bottom{
+    min-height:105px;
+}
+
+.balance-stat{
+    padding:15px;
+    gap:8px;
+}
+
+.balance-icon{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    font-size:19px;
+}
+
+.balance-stat p{
+    font-size:12px;
+}
+
+.balance-stat strong{
+    font-size:18px;
+}
+
+.balance-stat small{
+    font-size:10px;
+}
+
+.stats{
+    gap:12px;
+}
+
+.stat-card{
+    min-height:125px;
+    padding:15px;
+    gap:10px;
+    border-radius:20px;
+}
+
+.stat-icon{
+    min-width:48px;
+    width:48px;
+    height:48px;
+    font-size:23px;
+}
+
+.stat-info p{
+    font-size:11px;
+}
+
+.stat-info h3{
+    font-size:23px;
+}
+
+.section-title{
+    margin-top:25px;
+}
+
+.section-title h3{
+    font-size:20px;
+}
+
+.section-title a{
+    padding:12px 15px;
+    font-size:11px;
+}
+
+.task-card{
+    display:block;
+}
+
+.task-card img{
+    height:190px;
+}
+
+.task-info{
+    padding:15px 5px 5px;
+}
+
+.current-order{
+    padding:15px;
+}
+
+.progress-card{
+    padding:20px;
+}
+
+.bottom-nav{
+    left:10px;
+    right:10px;
+    bottom:10px;
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<a href="profile.html" class="profile-btn">
+
+<!-- TOP -->
+
+<div class="top-area">
+
+<div class="menu-btn">
+☰
+</div>
+
+<div class="top-right">
+
+<div class="notification">
+
+♧
+
+<div class="notification-badge">
+3
+</div>
+
+</div>
+
+<a href="profile.html"
+class="profile-btn">
+
+<div class="profile-btn-inner">
 👤
+</div>
+
 </a>
 
-<div class="logo-area">
-
-<div class="logo">
-ET
-</div>
-
-<div class="logo-text">
-EliteTask Pro
 </div>
 
 </div>
 
+
+<!-- WELCOME -->
 
 <div class="welcome">
 
-<h2>
-Welcome,
-<span id="userName">User</span>
+<div class="welcome-small">
+Welcome back,
+</div>
+
+<h1>
+<span id="userName">
+User
+</span>
 👋
-</h2>
+</h1>
 
 <p>
-Manage your current order and earnings.
+Complete tasks, earn more & grow with us.
 </p>
 
 </div>
 
 
+<div class="container">
+
+
+<!-- BALANCE -->
+
 <div class="balance-card">
 
-<div class="balance-title">
-Available Balance
+<div class="balance-label">
+Available Balance 👁
 </div>
 
-<div class="balance" id="balance">
+<div
+class="balance-value"
+id="balance"
+>
 $0.00
 </div>
 
+
+<div class="balance-actions">
+
+<a href="#"
+class="action-btn add-btn"
+>
+⊕ &nbsp; Add Funds
+</a>
+
+<a href="withdraw.html"
+class="action-btn withdraw-btn"
+>
+⇧ &nbsp; Withdraw
+</a>
+
+</div>
+
+
 <div class="balance-bottom">
 
-<div class="balance-item">
 
-<span>
+<div class="balance-stat">
+
+<div class="balance-icon">
+▥
+</div>
+
+<div>
+
+<p>
 Commission
-</span>
+</p>
 
 <strong id="commission">
 $0.00
 </strong>
 
+<small>
+Total Earned
+</small>
+
 </div>
 
-<div class="balance-item">
+</div>
 
-<span>
+
+<div class="balance-stat">
+
+<div class="balance-icon">
+⌛
+</div>
+
+<div>
+
+<p>
 Pending
-</span>
+</p>
 
 <strong id="pending">
 $0.00
 </strong>
 
-</div>
+<small>
+In Process
+</small>
 
 </div>
 
 </div>
 
+
+</div>
+
+</div>
+
+
+<!-- STATS -->
 
 <div class="stats">
 
+
 <div class="stat-card">
 
-<div class="stat-icon">
-📦
+<div class="stat-icon icon-green">
+📋
 </div>
+
+<div class="stat-info">
 
 <p>
 Completed Tasks
@@ -383,12 +850,16 @@ Completed Tasks
 
 </div>
 
+</div>
+
 
 <div class="stat-card">
 
-<div class="stat-icon">
+<div class="stat-icon icon-yellow">
 💰
 </div>
+
+<div class="stat-info">
 
 <p>
 Today's Commission
@@ -400,12 +871,16 @@ $0.00
 
 </div>
 
+</div>
+
 
 <div class="stat-card">
 
-<div class="stat-icon">
+<div class="stat-icon icon-blue">
 📋
 </div>
+
+<div class="stat-info">
 
 <p>
 Total Tasks
@@ -417,12 +892,16 @@ Total Tasks
 
 </div>
 
+</div>
+
 
 <div class="stat-card">
 
-<div class="stat-icon">
-⭐
+<div class="stat-icon icon-pink">
+★
 </div>
+
+<div class="stat-info">
 
 <p>
 Task Level
@@ -437,6 +916,11 @@ Task Level
 </div>
 
 
+</div>
+
+
+<!-- CURRENT ORDER -->
+
 <div class="section-title">
 
 <h3>
@@ -444,13 +928,16 @@ Current Order
 </h3>
 
 <a href="orders.html">
-VIEW ORDER
+View Order →
 </a>
 
 </div>
 
 
-<div id="currentOrder">
+<div
+id="currentOrder"
+class="current-order"
+>
 
 <div class="loading">
 Loading current order...
@@ -459,26 +946,60 @@ Loading current order...
 </div>
 
 
-<div class="grab-section">
+<!-- PROGRESS -->
 
-<button
-class="grab-btn"
-onclick="location.href='orders.html'"
+<div class="progress-card">
+
+<div class="progress-title">
+Your Progress
+</div>
+
+<div class="progress-inner">
+
+<div class="progress-top">
+
+<span>
+You're doing great! Keep going 🚀
+</span>
+
+<strong id="progressText">
+0 / 0 Tasks
+</strong>
+
+</div>
+
+<div class="progress-bar">
+
+<div
+id="progressFill"
+class="progress-fill"
+style="width:0%"
 >
-🚀 Start Grabbing Orders
-</button>
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 
+</div>
+
+
+<!-- BOTTOM -->
+
 <div class="bottom-nav">
+
 
 <a
 href="dashboard.html"
 class="nav-item active"
 >
 
-<span>⌂</span>
+<span>
+⌂
+</span>
 
 Home
 
@@ -490,7 +1011,9 @@ href="orders.html"
 class="nav-item"
 >
 
-<span>▣</span>
+<span>
+▣
+</span>
 
 Orders
 
@@ -516,16 +1039,20 @@ href="profile.html"
 class="nav-item"
 >
 
-<span>👤</span>
+<span>
+♙
+</span>
 
 Profile
 
 </a>
 
+
 </div>
 
 
 <script type="module">
+
 
 import {
 initializeApp
@@ -602,8 +1129,6 @@ return;
 try{
 
 
-/* USER DATA */
-
 const userSnap=
 await getDoc(
 doc(
@@ -620,15 +1145,11 @@ const u=
 userSnap.data();
 
 
-/* USER NAME */
-
 document
 .getElementById("userName")
 .textContent=
 u.name||"User";
 
-
-/* BALANCE */
 
 document
 .getElementById("balance")
@@ -638,8 +1159,6 @@ Number(
 u.balance||0
 ).toFixed(2);
 
-
-/* COMMISSION */
 
 const commission=
 Number(
@@ -654,13 +1173,7 @@ document
 commission.toFixed(2);
 
 
-/*
-========================================
-TODAY'S COMMISSION
-
-SAME AS COMMISSION
-========================================
-*/
+/* SAME COMMISSION */
 
 document
 .getElementById("todayCommission")
@@ -668,8 +1181,6 @@ document
 "$"+
 commission.toFixed(2);
 
-
-/* PENDING */
 
 document
 .getElementById("pending")
@@ -680,12 +1191,16 @@ u.pending||0
 ).toFixed(2);
 
 
-/* COMPLETED TASKS */
+const completed=
+Number(
+u.completedTasks||0
+);
+
 
 document
 .getElementById("completedTasks")
 .textContent=
-u.completedTasks||0;
+completed;
 
 }
 
@@ -731,6 +1246,46 @@ document
 tasks.length;
 
 
+/* PROGRESS */
+
+const completed=
+userSnap.exists()
+?
+Number(
+userSnap.data().completedTasks||0
+)
+:
+0;
+
+
+document
+.getElementById("progressText")
+.textContent=
+completed+
+" / "+
+tasks.length+
+" Tasks";
+
+
+const percentage=
+tasks.length>0
+?
+Math.min(
+completed/tasks.length*100,
+100
+)
+:
+0;
+
+
+document
+.getElementById("progressFill")
+.style.width=
+percentage+"%";
+
+
+/* CURRENT ORDER */
+
 const box=
 document.getElementById(
 "currentOrder"
@@ -742,8 +1297,33 @@ if(tasks.length===0){
 box.innerHTML=`
 
 <div class="loading">
-
 No task available yet.
+</div>
+
+`;
+
+return;
+
+}
+
+
+const currentIndex=
+userSnap.exists()
+?
+Number(
+userSnap.data().currentTaskIndex||0
+)
+:
+0;
+
+
+if(currentIndex>=tasks.length){
+
+box.innerHTML=`
+
+<div class="loading">
+
+🎉 All Tasks Completed
 
 </div>
 
@@ -755,7 +1335,7 @@ return;
 
 
 const task=
-tasks[0];
+tasks[currentIndex];
 
 
 box.innerHTML=`
@@ -775,26 +1355,31 @@ alt="Task image"
 ""
 }
 
+<div class="task-info">
+
 <h3>
 ${task.name||"Current Task"}
 </h3>
 
 <p>
-Task Price:
+Amount
+</p>
+
+<p>
+<strong>
 $${Number(task.price||0).toFixed(2)}
+</strong>
 </p>
 
 <p class="task-commission">
-Commission:
+Commission
+</p>
+
+<p class="task-commission">
 +$${Number(task.commission||0).toFixed(2)}
 </p>
 
-<button
-class="open-task"
-onclick="location.href='orders.html'"
->
-Open Task
-</button>
+</div>
 
 </div>
 
@@ -822,6 +1407,7 @@ Unable to load task.
 });
 
 </script>
+
 
 </body>
 </html>
