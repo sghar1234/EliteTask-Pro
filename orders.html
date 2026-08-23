@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
 <title>EliteTask Pro - Orders</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
 body{
 font-family:Arial,sans-serif;
 background:#f5f8fa;
 color:#172033;
-padding-bottom:90px
+padding-bottom:90px;
 }
 
 .topbar{
@@ -21,36 +31,36 @@ background:linear-gradient(135deg,#063b46,#078d91);
 display:flex;
 align-items:center;
 padding:0 15px;
-color:white
+color:white;
 }
 
 .back{
 color:white;
 text-decoration:none;
 font-size:25px;
-margin-right:15px
+margin-right:15px;
 }
 
 .logo{
 font-weight:bold;
-font-size:18px
+font-size:18px;
 }
 
 .container{
 max-width:600px;
 margin:auto;
-padding:20px 15px
+padding:20px 15px;
 }
 
 h1{
 font-size:28px;
-margin-bottom:5px
+margin-bottom:5px;
 }
 
 .subtitle{
 color:#8992a2;
 font-size:13px;
-margin-bottom:18px
+margin-bottom:18px;
 }
 
 .balance{
@@ -58,24 +68,24 @@ background:linear-gradient(135deg,#07545d,#09a3a0);
 color:white;
 border-radius:20px;
 padding:20px;
-margin-bottom:18px
+margin-bottom:18px;
 }
 
 .balance small{
-opacity:.8
+opacity:.8;
 }
 
 .balance strong{
 display:block;
 font-size:32px;
-margin-top:5px
+margin-top:5px;
 }
 
 .card{
 background:white;
 border-radius:22px;
 padding:16px;
-box-shadow:0 6px 20px rgba(0,0,0,.08)
+box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
 
 .task-image{
@@ -84,40 +94,40 @@ height:300px;
 object-fit:contain;
 background:#f3f6f7;
 border-radius:18px;
-margin-bottom:15px
+margin-bottom:15px;
 }
 
 .task-name{
 font-size:24px;
 font-weight:bold;
-margin-bottom:12px
+margin-bottom:12px;
 }
 
 .details{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:10px
+gap:10px;
 }
 
 .box{
 background:#f7f9fa;
 padding:14px;
-border-radius:14px
+border-radius:14px;
 }
 
 .box small{
 display:block;
 color:#8992a2;
 font-size:10px;
-margin-bottom:5px
+margin-bottom:5px;
 }
 
 .box strong{
-font-size:19px
+font-size:19px;
 }
 
 .commission{
-color:#15965a
+color:#15965a;
 }
 
 .required{
@@ -125,19 +135,31 @@ margin-top:12px;
 padding:14px;
 background:#fff6e5;
 border:1px solid #ffe1a6;
-border-radius:14px
+border-radius:14px;
 }
 
 .required small{
 display:block;
-color:#9b7634
+color:#9b7634;
 }
 
 .required strong{
 display:block;
 color:#c47b00;
 font-size:21px;
-margin-top:4px
+margin-top:4px;
+}
+
+.insufficient{
+margin-top:10px;
+padding:12px;
+background:#fff0f0;
+border:1px solid #ffcaca;
+border-radius:12px;
+color:#d33a3a;
+font-size:13px;
+font-weight:bold;
+text-align:center;
 }
 
 /* RATING */
@@ -147,34 +169,34 @@ margin-top:15px;
 padding:15px;
 background:#f7f9fa;
 border-radius:15px;
-text-align:center
+text-align:center;
 }
 
 .rating-title{
 font-size:14px;
 font-weight:bold;
-margin-bottom:10px
+margin-bottom:10px;
 }
 
 .stars{
 display:flex;
 justify-content:center;
-gap:7px
+gap:7px;
 }
 
 .star{
 font-size:34px;
 color:#c9c9c9;
 cursor:pointer;
-line-height:1
+line-height:1;
 }
 
 .star.active{
-color:#ffc107
+color:#ffc107;
 }
 
 .comment-box{
-margin-top:12px
+margin-top:12px;
 }
 
 .comment-box textarea{
@@ -186,7 +208,7 @@ padding:12px;
 font-family:Arial,sans-serif;
 font-size:14px;
 resize:none;
-outline:none
+outline:none;
 }
 
 button{
@@ -198,11 +220,11 @@ margin-top:14px;
 background:linear-gradient(135deg,#078d91,#0bb9b0);
 color:white;
 font-weight:bold;
-font-size:15px
+font-size:15px;
 }
 
 button:disabled{
-background:#aaa
+background:#aaa;
 }
 
 .message{
@@ -210,7 +232,7 @@ text-align:center;
 background:white;
 padding:35px 20px;
 border-radius:20px;
-color:#777
+color:#777;
 }
 
 .bottom{
@@ -223,34 +245,39 @@ background:white;
 display:flex;
 justify-content:space-around;
 align-items:center;
-box-shadow:0 -4px 15px rgba(0,0,0,.1)
+box-shadow:0 -4px 15px rgba(0,0,0,.1);
 }
 
 .bottom a{
 text-decoration:none;
 color:#777;
 font-size:11px;
-text-align:center
+text-align:center;
 }
 
 .bottom span{
 display:block;
 font-size:20px;
-margin-bottom:3px
+margin-bottom:3px;
 }
 
 .active{
 color:#078d91!important;
-font-weight:bold
+font-weight:bold;
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="topbar">
 
-<a href="dashboard.html" class="back">
+<a href="dashboard.html"
+class="back">
 ←
 </a>
 
@@ -263,7 +290,10 @@ EliteTask Pro
 
 <div class="container">
 
-<h1>My Order</h1>
+
+<h1>
+My Order
+</h1>
 
 <p class="subtitle">
 Complete your order and earn commission.
@@ -272,7 +302,9 @@ Complete your order and earn commission.
 
 <div class="balance">
 
-<small>Available Balance</small>
+<small>
+Available Balance
+</small>
 
 <strong id="balance">
 $0.00
@@ -281,18 +313,25 @@ $0.00
 </div>
 
 
-<div id="loading" class="message">
+<div id="loading"
+class="message">
+
 Loading current order...
+
 </div>
 
 
-<div id="taskBox" class="card" style="display:none">
+<div id="taskBox"
+class="card"
+style="display:none">
+
 
 <img
 id="taskImage"
 class="task-image"
 alt="Task"
 >
+
 
 <div
 id="taskName"
@@ -304,9 +343,12 @@ Task
 
 <div class="details">
 
+
 <div class="box">
 
-<small>ORDER AMOUNT</small>
+<small>
+ORDER AMOUNT
+</small>
 
 <strong id="taskPrice">
 $0.00
@@ -317,13 +359,16 @@ $0.00
 
 <div class="box commission">
 
-<small>COMMISSION</small>
+<small>
+COMMISSION
+</small>
 
 <strong id="taskCommission">
 +$0.00
 </strong>
 
 </div>
+
 
 </div>
 
@@ -341,7 +386,16 @@ $0.00
 </div>
 
 
-<!-- 5 STAR RATING -->
+<div
+id="insufficientBox"
+class="insufficient"
+style="display:none"
+>
+Insufficient balance for this order.
+</div>
+
+
+<!-- RATING -->
 
 <div class="rating-box">
 
@@ -351,11 +405,40 @@ Rate this order
 
 <div class="stars">
 
-<span class="star" data-rating="1">★</span>
-<span class="star" data-rating="2">★</span>
-<span class="star" data-rating="3">★</span>
-<span class="star" data-rating="4">★</span>
-<span class="star" data-rating="5">★</span>
+<span
+class="star"
+data-rating="1"
+>
+★
+</span>
+
+<span
+class="star"
+data-rating="2"
+>
+★
+</span>
+
+<span
+class="star"
+data-rating="3"
+>
+★
+</span>
+
+<span
+class="star"
+data-rating="4"
+>
+★
+</span>
+
+<span
+class="star"
+data-rating="5"
+>
+★
+</span>
 
 </div>
 
@@ -381,6 +464,7 @@ disabled
 Complete Order
 </button>
 
+
 </div>
 
 
@@ -404,35 +488,63 @@ No more tasks are available.
 
 </div>
 
+
 </div>
 
 
 <div class="bottom">
 
+
 <a href="dashboard.html">
-<span>⌂</span>
+
+<span>
+⌂
+</span>
+
 Home
+
 </a>
 
-<a href="orders.html" class="active">
-<span>▣</span>
+
+<a href="orders.html"
+class="active">
+
+<span>
+▣
+</span>
+
 Orders
+
 </a>
+
 
 <a href="support.html">
-<span>💬</span>
+
+<span>
+💬
+</span>
+
 Support
+
 </a>
 
+
 <a href="profile.html">
-<span>👤</span>
+
+<span>
+👤
+</span>
+
 Profile
+
 </a>
+
 
 </div>
 
 
 <script type="module">
+
 
 import {
 initializeApp
@@ -487,8 +599,10 @@ appId:
 const app=
 initializeApp(firebaseConfig);
 
+
 const auth=
 getAuth(app);
+
 
 const db=
 getFirestore(app);
@@ -507,14 +621,21 @@ let selectedRating=0;
    RATING
 ========================= */
 
+
 const stars=
 document.querySelectorAll(".star");
 
+
 const commentInput=
-document.getElementById("orderComment");
+document.getElementById(
+"orderComment"
+);
+
 
 const completeBtn=
-document.getElementById("completeBtn");
+document.getElementById(
+"completeBtn"
+);
 
 
 function checkSubmit(){
@@ -522,9 +643,18 @@ function checkSubmit(){
 const comment=
 commentInput.value.trim();
 
+
+/*
+ONLY RATING + COMMENT
+AND SUFFICIENT BALANCE
+*/
+
 if(
 selectedRating>0 &&
-comment.length>0
+comment.length>0 &&
+currentTask &&
+window.currentUserBalance >=
+Number(currentTask.price||0)
 ){
 
 completeBtn.disabled=false;
@@ -559,6 +689,7 @@ Number(
 s.dataset.rating
 );
 
+
 if(
 rating<=selectedRating
 ){
@@ -572,6 +703,7 @@ s.classList.remove("active");
 }
 
 });
+
 
 checkSubmit();
 
@@ -590,6 +722,7 @@ checkSubmit
    LOGIN
 ========================= */
 
+
 onAuthStateChanged(
 auth,
 async user=>{
@@ -602,9 +735,12 @@ return;
 
 }
 
-userId=user.uid;
 
-loadOrder();
+userId=
+user.uid;
+
+
+await loadOrder();
 
 });
 
@@ -613,14 +749,21 @@ loadOrder();
    LOAD ORDER
 ========================= */
 
+
 async function loadOrder(){
 
 try{
 
+
 const userSnap=
 await getDoc(
-doc(db,"users",userId)
+doc(
+db,
+"users",
+userId
+)
 );
+
 
 if(!userSnap.exists()){
 
@@ -635,17 +778,37 @@ const user=
 userSnap.data();
 
 
+/*
+BALANCE ONLY
+COMMISSION IS NOT USED
+*/
+
 const balance=
-Number(user.balance||0);
+Number(
+user.balance||0
+);
+
 
 const commission=
-Number(user.commission||0);
+Number(
+user.commission||0
+);
+
+
+/*
+SAVE CURRENT BALANCE
+FOR BUTTON CHECK
+*/
+
+window.currentUserBalance=
+balance;
 
 
 document
 .getElementById("balance")
 .textContent=
-"$"+balance.toFixed(2);
+"$"+
+balance.toFixed(2);
 
 
 taskIndex=
@@ -654,20 +817,29 @@ user.currentTaskIndex||0
 );
 
 
+/* LOAD TASKS */
+
 const snap=
 await getDocs(
-collection(db,"tasks")
+collection(
+db,
+"tasks"
+)
 );
 
 
 const tasks=[];
 
 
-snap.forEach(d=>{
+snap.forEach(
+d=>{
 
 tasks.push({
+
 id:d.id,
+
 ...d.data()
+
 });
 
 });
@@ -679,6 +851,8 @@ Number(a.order||0)-
 Number(b.order||0)
 );
 
+
+/* NO TASK */
 
 if(
 tasks.length===0 ||
@@ -709,57 +883,106 @@ currentTask.commission||0
 
 
 /*
-BALANCE + COMMISSION
-DONO NEXT TASK KE LIYE USE HONGE
-*/
+==================================
+IMPORTANT
 
-const usable=
-balance+commission;
+REQUIRED DEPOSIT ONLY USES BALANCE
+
+COMMISSION IS COMPLETELY IGNORED
+
+Example:
+
+Balance = 800
+Order = 1500
+Commission = 3500
+
+Required = 1500 - 800
+Required = 700
+==================================
+*/
 
 
 const required=
 Math.max(
-price-usable,
+price-balance,
 0
 );
 
 
 document
 .getElementById("loading")
-.style.display="none";
+.style.display=
+"none";
 
 
 document
 .getElementById("taskBox")
-.style.display="block";
+.style.display=
+"block";
 
 
 document
 .getElementById("taskName")
 .textContent=
-currentTask.name||"Task";
+currentTask.name||
+"Task";
 
 
 document
 .getElementById("taskPrice")
 .textContent=
-"$"+price.toFixed(2);
+"$"+
+price.toFixed(2);
 
 
 document
 .getElementById("taskCommission")
 .textContent=
-"+$"+earned.toFixed(2);
+"+$"+
+earned.toFixed(2);
 
 
 document
 .getElementById("required")
 .textContent=
-"$"+required.toFixed(2);
+"$"+
+required.toFixed(2);
 
+
+/*
+INSUFFICIENT BALANCE MESSAGE
+*/
+
+const insufficientBox=
+document.getElementById(
+"insufficientBox"
+);
+
+
+if(balance<price){
+
+insufficientBox.style.display=
+"block";
+
+insufficientBox.textContent=
+"Insufficient balance. You need $"+
+required.toFixed(2)+
+" more balance to complete this order.";
+
+}else{
+
+insufficientBox.style.display=
+"none";
+
+}
+
+
+/* IMAGE */
 
 const image=
-document.getElementById("taskImage");
+document.getElementById(
+"taskImage"
+);
 
 
 if(currentTask.image){
@@ -767,18 +990,31 @@ if(currentTask.image){
 image.src=
 currentTask.image;
 
-image.style.display="block";
+image.style.display=
+"block";
 
 }else{
 
-image.style.display="none";
+image.style.display=
+"none";
 
 }
 
 
+/*
+UPDATE BUTTON
+*/
+
+checkSubmit();
+
+
 }catch(error){
 
-console.log(error);
+console.log(
+"Load order error:",
+error
+);
+
 
 document
 .getElementById("loading")
@@ -794,6 +1030,7 @@ document
    COMPLETE ORDER
 ========================= */
 
+
 completeBtn.onclick=
 async()=>{
 
@@ -801,7 +1038,7 @@ if(!currentTask)
 return;
 
 
-/* RATING CHECK */
+/* RATING */
 
 if(selectedRating===0){
 
@@ -814,7 +1051,7 @@ return;
 }
 
 
-/* COMMENT CHECK */
+/* COMMENT */
 
 const comment=
 commentInput.value.trim();
@@ -823,7 +1060,7 @@ commentInput.value.trim();
 if(!comment){
 
 alert(
-"Please write a comment."
+"Please write your comment."
 );
 
 return;
@@ -831,7 +1068,9 @@ return;
 }
 
 
-completeBtn.disabled=true;
+completeBtn.disabled=
+true;
+
 
 completeBtn.textContent=
 "Completing...";
@@ -839,60 +1078,29 @@ completeBtn.textContent=
 
 try{
 
+
 const userRef=
-doc(db,"users",userId);
+doc(
+db,
+"users",
+userId
+);
 
 
 const userSnap=
-await getDoc(userRef);
-
-
-const user=
-userSnap.data();
-
-
-let balance=
-Number(user.balance||0);
-
-let commission=
-Number(user.commission||0);
-
-
-const price=
-Number(
-currentTask.price||0
-);
-
-const earned=
-Number(
-currentTask.commission||0
+await getDoc(
+userRef
 );
 
 
-const usable=
-balance+commission;
-
-
-const required=
-Math.max(
-price-usable,
-0
-);
-
-
-/*
-AGAR BALANCE + COMMISSION
-TASK KE LIYE KAFI NAHI
-*/
-
-if(required>0){
+if(!userSnap.exists()){
 
 alert(
-"Insufficient amount.\n\nRequired: $"+
-required.toFixed(2)
+"User account not found."
 );
 
-completeBtn.disabled=false;
+completeBtn.disabled=
+false;
 
 completeBtn.textContent=
 "Complete Order";
@@ -902,60 +1110,139 @@ return;
 }
 
 
+const user=
+userSnap.data();
+
+
 /*
-PEHLE BALANCE USE HOGA
-PHIR COMMISSION
+==================================
+GET CURRENT BALANCE
+==================================
 */
 
-let newBalance=0;
+let balance=
+Number(
+user.balance||0
+);
 
-let newCommission=0;
+
+let commission=
+Number(
+user.commission||0
+);
 
 
-if(balance>=price){
+const price=
+Number(
+currentTask.price||0
+);
 
-newBalance=
-balance-price;
 
-newCommission=
-commission;
+const earned=
+Number(
+currentTask.commission||0
+);
 
-}else{
 
-const remaining=
+/*
+==================================
+IMPORTANT SECURITY CHECK
+
+ONLY BALANCE CAN PAY FOR ORDER.
+
+COMMISSION CANNOT PAY FOR ORDER.
+==================================
+*/
+
+
+if(balance<price){
+
+const required=
 price-balance;
 
-newBalance=0;
 
-newCommission=
-commission-remaining;
+alert(
+"Insufficient balance.\n\n"+
+"Order Amount: $"+
+price.toFixed(2)+
+"\n"+
+"Your Balance: $"+
+balance.toFixed(2)+
+"\n"+
+"Required: $"+
+required.toFixed(2)
+);
+
+
+completeBtn.disabled=
+false;
+
+
+completeBtn.textContent=
+"Complete Order";
+
+
+return;
 
 }
 
 
 /*
-SIRF EARNED COMMISSION
-COMMISSION BOX MEIN ADD
+==================================
+DEDUCT ORDER PRICE FROM BALANCE
+==================================
 */
 
-newCommission+=
+const newBalance=
+balance-price;
+
+
+/*
+==================================
+ADD ORDER AMOUNT + EARNED
+COMMISSION
+
+The order amount moves from Balance
+into Commission.
+
+Earned commission is also added.
+
+Example:
+
+Balance = 1500
+Order = 1500
+Earned commission = 3500
+
+New Balance = 0
+New Commission =
+old Commission + 1500 + 3500
+==================================
+*/
+
+const newCommission=
+commission+
+price+
 earned;
 
 
 /*
+==================================
 TODAY'S COMMISSION
-PURANI + NEW
+
+Dashboard uses the same commission
+value, so keep it synchronized.
+==================================
 */
 
-const oldTodayCommission=
-Number(
-user.todayCommission||0
-);
-
 const newTodayCommission=
-oldTodayCommission+
-earned;
+newCommission;
 
+
+/*
+==================================
+COMPLETED TASKS
+==================================
+*/
 
 const completed=
 Number(
@@ -963,9 +1250,21 @@ user.completedTasks||0
 )+1;
 
 
+/*
+==================================
+NEXT TASK
+==================================
+*/
+
 const nextIndex=
 taskIndex+1;
 
+
+/*
+==================================
+SAVE FIREBASE
+==================================
+*/
 
 await updateDoc(
 userRef,
@@ -990,21 +1289,41 @@ nextIndex
 );
 
 
+/*
+==================================
+SUCCESS
+==================================
+*/
+
 alert(
 "Order completed successfully!"
 );
 
+
+/*
+RESET PAGE
+*/
 
 location.reload();
 
 
 }catch(error){
 
-console.log(error);
+console.log(
+"Complete order error:",
+error
+);
 
-alert(error.message);
 
-completeBtn.disabled=false;
+alert(
+"Order complete nahi ho saka.\n\n"+
+error.message
+);
+
+
+completeBtn.disabled=
+false;
+
 
 completeBtn.textContent=
 "Complete Order";
@@ -1018,23 +1337,31 @@ completeBtn.textContent=
    NO TASK
 ========================= */
 
+
 function showNoTask(){
 
 document
 .getElementById("loading")
-.style.display="none";
+.style.display=
+"none";
+
 
 document
 .getElementById("taskBox")
-.style.display="none";
+.style.display=
+"none";
+
 
 document
 .getElementById("noTask")
-.style.display="block";
+.style.display=
+"block";
 
 }
 
 </script>
 
+
 </body>
+
 </html>
