@@ -12,39 +12,34 @@
 
 <title>Customer Service - EliteTask Pro</title>
 
-
 <style>
 
 /* =========================
    RESET
 ========================= */
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
+body{
+    font-family:Arial,Helvetica,sans-serif;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    min-height: 100vh;
+    min-height:100vh;
 
     background:
-        linear-gradient(
-            135deg,
-            #fffdf7,
-            #f7efd2,
-            #fffaf0
-        );
+    linear-gradient(
+        135deg,
+        #fffdf7,
+        #f7efd2,
+        #fffaf0
+    );
 
-    color: #222;
+    color:#222;
 
-    padding-bottom: 90px;
+    padding-bottom:90px;
 }
 
 
@@ -52,103 +47,91 @@ body {
    TOP AREA
 ========================= */
 
-.top-area {
+.top-area{
+    display:flex;
 
-    display: flex;
+    align-items:center;
+    justify-content:center;
 
-    align-items: center;
+    position:relative;
 
-    justify-content: center;
-
-    position: relative;
-
-    padding: 22px 20px 16px;
+    padding:22px 20px 16px;
 }
 
+.back-btn{
+    position:absolute;
 
-.back-btn {
+    left:18px;
+    top:20px;
 
-    position: absolute;
+    width:42px;
+    height:42px;
 
-    left: 18px;
-    top: 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    width: 42px;
-    height: 42px;
+    text-decoration:none;
 
-    display: flex;
+    background:#ffffff;
 
-    align-items: center;
-    justify-content: center;
+    border:1px solid
+    rgba(212,175,55,.30);
 
-    text-decoration: none;
+    border-radius:13px;
 
-    background: #ffffff;
+    color:#9a7410;
 
-    border: 1px solid
-        rgba(212,175,55,.30);
-
-    border-radius: 13px;
-
-    color: #9a7410;
-
-    font-size: 25px;
+    font-size:25px;
 
     box-shadow:
-        0 5px 18px
-        rgba(120,90,20,.10);
+    0 5px 18px
+    rgba(120,90,20,.10);
 }
 
+.logo-area{
+    display:flex;
 
-.logo-area {
+    align-items:center;
 
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
+    gap:10px;
 }
 
+.logo{
+    width:44px;
+    height:44px;
 
-.logo {
+    display:flex;
 
-    width: 44px;
-    height: 44px;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 13px;
+    border-radius:13px;
 
     background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #f5df8b
-        );
+    linear-gradient(
+        135deg,
+        #d4af37,
+        #f5df8b
+    );
 
-    color: white;
+    color:white;
 
-    font-weight: 800;
+    font-weight:800;
 
-    font-size: 17px;
+    font-size:17px;
 
     box-shadow:
-        0 5px 15px
-        rgba(180,140,30,.20);
+    0 5px 15px
+    rgba(180,140,30,.20);
 }
 
+.logo-text{
+    font-size:20px;
 
-.logo-text {
+    font-weight:800;
 
-    font-size: 20px;
-
-    font-weight: 800;
-
-    color: #7a5a0a;
-
+    color:#7a5a0a;
 }
 
 
@@ -156,15 +139,14 @@ body {
    MAIN
 ========================= */
 
-.container {
+.container{
+    width:100%;
 
-    width: 100%;
+    max-width:600px;
 
-    max-width: 600px;
+    margin:auto;
 
-    margin: auto;
-
-    padding: 10px 16px 30px;
+    padding:10px 16px 30px;
 }
 
 
@@ -172,60 +154,53 @@ body {
    SERVICE HEADER
 ========================= */
 
-.service-header {
+.service-header{
+    text-align:center;
 
-    text-align: center;
-
-    padding: 18px 10px 20px;
+    padding:18px 10px 20px;
 }
 
+.service-icon{
+    width:68px;
+    height:68px;
 
-.service-icon {
+    margin:auto;
 
-    width: 68px;
-    height: 68px;
+    display:flex;
 
-    margin: auto;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 22px;
+    border-radius:22px;
 
     background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #f3d875
-        );
+    linear-gradient(
+        135deg,
+        #d4af37,
+        #f3d875
+    );
 
-    font-size: 31px;
+    font-size:31px;
 
     box-shadow:
-        0 8px 25px
-        rgba(180,140,30,.20);
+    0 8px 25px
+    rgba(180,140,30,.20);
 }
 
+.service-header h2{
+    margin-top:14px;
 
-.service-header h2 {
+    font-size:23px;
 
-    margin-top: 14px;
-
-    font-size: 23px;
-
-    color: #5f4707;
+    color:#5f4707;
 }
 
+.service-header p{
+    margin-top:6px;
 
-.service-header p {
+    font-size:14px;
 
-    margin-top: 6px;
-
-    font-size: 14px;
-
-    color: #777;
+    color:#777;
 }
 
 
@@ -233,43 +208,37 @@ body {
    SUPPORT CARD
 ========================= */
 
-.support-card {
-
+.support-card{
     background:
-        rgba(255,255,255,.94);
+    rgba(255,255,255,.94);
 
-    border-radius: 22px;
+    border-radius:22px;
 
-    padding: 18px;
+    padding:18px;
 
     border:
-        1px solid
-        rgba(212,175,55,.28);
+    1px solid
+    rgba(212,175,55,.28);
 
     box-shadow:
-        0 10px 35px
-        rgba(120,90,20,.12);
+    0 10px 35px
+    rgba(120,90,20,.12);
 }
 
+.support-card h3{
+    font-size:18px;
 
-.support-card h3 {
-
-    font-size: 18px;
-
-    color: #5e4606;
+    color:#5e4606;
 }
 
+.support-card > p{
+    margin-top:5px;
 
-.support-card > p {
+    margin-bottom:15px;
 
-    margin-top: 5px;
+    color:#777;
 
-    margin-bottom: 15px;
-
-    color: #777;
-
-    font-size: 13px;
-
+    font-size:13px;
 }
 
 
@@ -277,48 +246,43 @@ body {
    CHAT BOX
 ========================= */
 
-.chat-box {
+.chat-box{
+    height:330px;
 
-    height: 330px;
+    overflow-y:auto;
 
-    overflow-y: auto;
+    padding:12px;
 
-    padding: 12px;
+    border-radius:16px;
 
-    border-radius: 16px;
-
-    background:
-        #faf8f0;
+    background:#faf8f0;
 
     border:
-        1px solid
-        rgba(212,175,55,.18);
+    1px solid
+    rgba(212,175,55,.18);
 
-    display: flex;
+    display:flex;
 
-    flex-direction: column;
+    flex-direction:column;
 
-    gap: 10px;
+    gap:10px;
 }
 
+.empty-chat{
+    flex:1;
 
-.empty-chat {
+    display:flex;
 
-    flex: 1;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
+    text-align:center;
 
-    align-items: center;
+    color:#999;
 
-    justify-content: center;
+    font-size:13px;
 
-    text-align: center;
-
-    color: #999;
-
-    font-size: 13px;
-
-    padding: 20px;
+    padding:20px;
 }
 
 
@@ -326,74 +290,65 @@ body {
    MESSAGES
 ========================= */
 
-.chat-message {
+.chat-message{
+    max-width:82%;
 
-    max-width: 82%;
+    padding:10px 13px;
 
-    padding: 10px 13px;
+    border-radius:15px;
 
-    border-radius: 15px;
+    font-size:14px;
 
-    font-size: 14px;
+    line-height:1.4;
 
-    line-height: 1.4;
-
-    word-break: break-word;
+    word-break:break-word;
 }
 
-
-.user-message {
-
-    align-self: flex-end;
+.user-message{
+    align-self:flex-end;
 
     background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #e7ca63
-        );
+    linear-gradient(
+        135deg,
+        #d4af37,
+        #e7ca63
+    );
 
-    color: white;
+    color:white;
 
-    border-bottom-right-radius: 4px;
+    border-bottom-right-radius:4px;
 }
 
+.admin-message{
+    align-self:flex-start;
 
-.admin-message {
+    background:white;
 
-    align-self: flex-start;
-
-    background: white;
-
-    color: #333;
+    color:#333;
 
     border:
-        1px solid
-        rgba(212,175,55,.22);
+    1px solid
+    rgba(212,175,55,.22);
 
     box-shadow:
-        0 3px 10px
-        rgba(0,0,0,.05);
+    0 3px 10px
+    rgba(0,0,0,.05);
 
-    border-bottom-left-radius: 4px;
+    border-bottom-left-radius:4px;
 }
 
+.message-label{
+    font-size:10px;
 
-.message-label {
+    font-weight:700;
 
-    font-size: 10px;
+    margin-bottom:3px;
 
-    font-weight: 700;
-
-    margin-bottom: 3px;
-
-    opacity: .75;
+    opacity:.75;
 }
 
-
-.message-text {
-
-    white-space: pre-wrap;
+.message-text{
+    white-space:pre-wrap;
 }
 
 
@@ -401,83 +356,181 @@ body {
    MESSAGE AREA
 ========================= */
 
-.message-area {
+.message-area{
+    display:flex;
 
-    display: flex;
+    gap:8px;
 
-    gap: 8px;
-
-    margin-top: 12px;
+    margin-top:12px;
 }
 
+.message-input{
+    flex:1;
 
-.message-input {
+    height:46px;
 
-    flex: 1;
+    border-radius:14px;
 
-    height: 46px;
+    border:1px solid #ddd;
 
-    border-radius: 14px;
+    outline:none;
 
-    border:
-        1px solid
-        #ddd;
+    padding:0 14px;
 
-    outline: none;
+    font-size:14px;
 
-    padding:
-        0 14px;
-
-    font-size: 14px;
-
-    background: white;
+    background:white;
 }
 
-
-.message-input:focus {
-
-    border-color:
-        #d4af37;
+.message-input:focus{
+    border-color:#d4af37;
 
     box-shadow:
-        0 0 0 3px
-        rgba(212,175,55,.10);
+    0 0 0 3px
+    rgba(212,175,55,.10);
 }
 
+.send-btn{
+    width:48px;
+    height:46px;
 
-.send-btn {
+    border:none;
 
-    width: 48px;
-    height: 46px;
-
-    border: none;
-
-    border-radius: 14px;
+    border-radius:14px;
 
     background:
-        linear-gradient(
-            135deg,
-            #c9a227,
-            #e4c75e
-        );
+    linear-gradient(
+        135deg,
+        #c9a227,
+        #e4c75e
+    );
 
-    color: white;
+    color:white;
 
-    font-size: 20px;
+    font-size:20px;
 
-    cursor: pointer;
+    cursor:pointer;
 
     box-shadow:
-        0 5px 15px
-        rgba(180,140,30,.18);
+    0 5px 15px
+    rgba(180,140,30,.18);
+}
+
+.send-btn:disabled{
+    opacity:.55;
+
+    cursor:not-allowed;
 }
 
 
-.send-btn:disabled {
+/* =========================
+   DIRECT CONTACT
+========================= */
 
-    opacity: .55;
+.direct-contact{
+    margin-top:18px;
 
-    cursor: not-allowed;
+    padding:16px;
+
+    background:white;
+
+    border-radius:18px;
+
+    border:
+    1px solid
+    rgba(212,175,55,.25);
+
+    box-shadow:
+    0 6px 20px
+    rgba(120,90,20,.08);
+}
+
+.direct-contact h3{
+    font-size:17px;
+
+    color:#5e4606;
+}
+
+.direct-contact > p{
+    margin-top:5px;
+
+    margin-bottom:12px;
+
+    color:#777;
+
+    font-size:12px;
+}
+
+.contact-buttons{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
+}
+
+.contact-btn{
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    width:100%;
+
+    padding:12px;
+
+    border-radius:13px;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.15s;
+}
+
+.contact-btn:active{
+    transform:scale(.98);
+}
+
+.contact-btn-icon{
+    width:35px;
+    height:35px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.20);
+
+    font-size:21px;
+}
+
+.contact-btn strong{
+    display:block;
+
+    font-size:14px;
+}
+
+.contact-btn small{
+    display:block;
+
+    margin-top:2px;
+
+    font-size:10px;
+
+    opacity:.85;
+}
+
+.whatsapp{
+    background:#25D366;
+}
+
+.telegram{
+    background:#229ED9;
 }
 
 
@@ -485,75 +538,62 @@ body {
    QUICK HELP
 ========================= */
 
-.quick-title {
+.quick-title{
+    margin:25px 4px 12px;
 
-    margin:
-        25px 4px 12px;
+    font-size:18px;
 
-    font-size: 18px;
-
-    color: #5e4606;
+    color:#5e4606;
 }
 
-
-.quick-grid {
-
-    display: grid;
+.quick-grid{
+    display:grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+    repeat(2,1fr);
 
-    gap: 12px;
+    gap:12px;
 }
 
+.quick-btn{
+    border:none;
 
-.quick-btn {
-
-    border: none;
-
-    background: white;
+    background:white;
 
     border:
-        1px solid
-        rgba(212,175,55,.25);
+    1px solid
+    rgba(212,175,55,.25);
 
-    border-radius: 17px;
+    border-radius:17px;
 
-    padding: 15px 10px;
+    padding:15px 10px;
 
-    cursor: pointer;
+    cursor:pointer;
 
     box-shadow:
-        0 6px 20px
-        rgba(120,90,20,.08);
+    0 6px 20px
+    rgba(120,90,20,.08);
 
-    color: #5e4606;
+    color:#5e4606;
 
     transition:
-        transform .15s ease;
+    transform .15s ease;
 }
 
-
-.quick-btn:active {
-
-    transform:
-        scale(.97);
+.quick-btn:active{
+    transform:scale(.97);
 }
 
+.quick-btn div{
+    font-size:24px;
 
-.quick-btn div {
-
-    font-size: 24px;
-
-    margin-bottom: 5px;
+    margin-bottom:5px;
 }
 
+.quick-btn span{
+    font-size:13px;
 
-.quick-btn span {
-
-    font-size: 13px;
-
-    font-weight: 600;
+    font-weight:600;
 }
 
 
@@ -561,115 +601,118 @@ body {
    BOTTOM NAV
 ========================= */
 
-.bottom-nav {
+.bottom-nav{
+    position:fixed;
 
-    position: fixed;
+    left:0;
+    right:0;
+    bottom:0;
 
-    left: 0;
-    right: 0;
-    bottom: 0;
+    height:72px;
 
-    height: 72px;
+    display:flex;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: space-around;
+    align-items:center;
+    justify-content:space-around;
 
     background:
-        rgba(255,255,255,.97);
+    rgba(255,255,255,.97);
 
     border-top:
-        1px solid
-        rgba(212,175,55,.25);
+    1px solid
+    rgba(212,175,55,.25);
 
     box-shadow:
-        0 -5px 20px
-        rgba(80,60,20,.08);
+    0 -5px 20px
+    rgba(80,60,20,.08);
 
-    z-index: 100;
+    z-index:100;
 }
 
+.nav-item{
+    text-decoration:none;
 
-.nav-item {
+    color:#888;
 
-    text-decoration: none;
+    font-size:11px;
 
-    color: #888;
+    display:flex;
 
-    font-size: 11px;
+    flex-direction:column;
 
-    display: flex;
+    align-items:center;
+    justify-content:center;
 
-    flex-direction: column;
+    gap:4px;
 
-    align-items: center;
+    width:25%;
 
-    justify-content: center;
-
-    gap: 4px;
-
-    width: 25%;
-
-    height: 100%;
+    height:100%;
 }
 
-
-.nav-item span {
-
-    font-size: 21px;
+.nav-item span{
+    font-size:21px;
 }
 
+.nav-item.active{
+    color:#b38a13;
 
-.nav-item.active {
-
-    color: #b38a13;
-
-    font-weight: 700;
+    font-weight:700;
 }
 
+.nav-center{
+    width:42px;
+    height:42px;
 
-.nav-center {
+    margin-top:-19px;
 
-    width: 42px;
-    height: 42px;
+    display:flex;
 
-    margin-top: -19px;
+    align-items:center;
+    justify-content:center;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
+    border-radius:50%;
 
     background:
-        linear-gradient(
-            135deg,
-            #d4af37,
-            #efd477
-        );
+    linear-gradient(
+        135deg,
+        #d4af37,
+        #efd477
+    );
 
-    color: white;
+    color:white;
 
-    font-size: 20px;
+    font-size:20px;
 
-    border: 4px solid #fff;
+    border:4px solid #fff;
 
     box-shadow:
-        0 5px 16px
-        rgba(180,140,30,.22);
+    0 5px 16px
+    rgba(180,140,30,.22);
 }
 
 
-@media (max-width: 380px) {
+/* =========================
+   SMALL MOBILE
+========================= */
 
-    .chat-box {
-        height: 290px;
+@media(max-width:380px){
+
+    .chat-box{
+        height:290px;
     }
 
-    .service-header h2 {
-        font-size: 21px;
+    .service-header h2{
+        font-size:21px;
+    }
+
+    .logo-text{
+        font-size:18px;
+    }
+
+    .container{
+        padding-left:12px;
+        padding-right:12px;
     }
 
 }
@@ -695,7 +738,6 @@ body {
         ←
     </a>
 
-
     <div class="logo-area">
 
         <div class="logo">
@@ -709,7 +751,6 @@ body {
     </div>
 
 </div>
-
 
 
 <div class="container">
@@ -736,9 +777,8 @@ body {
 </div>
 
 
-
 <!-- =========================
-     SUPPORT CARD
+     SUPPORT CHAT
 ========================= -->
 
 <div class="support-card">
@@ -774,7 +814,6 @@ body {
             autocomplete="off"
         >
 
-
         <button
             class="send-btn"
             id="sendBtn"
@@ -787,6 +826,84 @@ body {
 
 </div>
 
+
+<!-- =========================
+     DIRECT CONTACT
+========================= -->
+
+<div class="direct-contact">
+
+    <h3>
+        Direct Contact
+    </h3>
+
+    <p>
+        Contact our support team directly.
+    </p>
+
+
+    <div class="contact-buttons">
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            href="https://wa.me/923125917677"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-btn whatsapp"
+        >
+
+            <div class="contact-btn-icon">
+                🟢
+            </div>
+
+            <div>
+
+                <strong>
+                    WhatsApp
+                </strong>
+
+                <small>
+                    Chat with us on WhatsApp
+                </small>
+
+            </div>
+
+        </a>
+
+
+        <!-- TELEGRAM -->
+
+        <a
+            href="https://t.me/Helpcenter21"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-btn telegram"
+        >
+
+            <div class="contact-btn-icon">
+                🔵
+            </div>
+
+            <div>
+
+                <strong>
+                    Telegram
+                </strong>
+
+                <small>
+                    Chat with us on Telegram
+                </small>
+
+            </div>
+
+        </a>
+
+
+    </div>
+
+</div>
 
 
 <!-- =========================
@@ -864,10 +981,10 @@ body {
 
     </button>
 
-</div>
 
 </div>
 
+</div>
 
 
 <!-- =========================
@@ -932,12 +1049,12 @@ body {
 
     </a>
 
+
 </div>
 
 
-
 <!-- =========================
-     FIREBASE SUPPORT
+     FIREBASE
 ========================= -->
 
 <script type="module">
@@ -945,14 +1062,16 @@ body {
 import {
     initializeApp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 
 import {
     getAuth,
     onAuthStateChanged
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
@@ -964,8 +1083,8 @@ import {
     onSnapshot,
     serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 /* =========================
@@ -975,25 +1094,24 @@ from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
     authDomain:
-        "elitetask-pro.firebaseapp.com",
+    "elitetask-pro.firebaseapp.com",
 
     projectId:
-        "elitetask-pro",
+    "elitetask-pro",
 
     storageBucket:
-        "elitetask-pro.firebasestorage.app",
+    "elitetask-pro.firebasestorage.app",
 
     messagingSenderId:
-        "504295275402",
+    "504295275402",
 
     appId:
-        "1:504295275402:web:cf744a5d4e82c72145a673"
+    "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
-
 
 
 /* =========================
@@ -1001,16 +1119,15 @@ const firebaseConfig = {
 ========================= */
 
 const app =
-    initializeApp(firebaseConfig);
-
+    initializeApp(
+        firebaseConfig
+    );
 
 const auth =
     getAuth(app);
 
-
 const db =
     getFirestore(app);
-
 
 
 /* =========================
@@ -1018,19 +1135,24 @@ const db =
 ========================= */
 
 const chatBox =
-    document.getElementById("chatBox");
-
+    document.getElementById(
+        "chatBox"
+    );
 
 const messageInput =
-    document.getElementById("messageInput");
-
+    document.getElementById(
+        "messageInput"
+    );
 
 const sendBtn =
-    document.getElementById("sendBtn");
+    document.getElementById(
+        "sendBtn"
+    );
 
 
 let currentUser = null;
 
+let unsubscribeMessages = null;
 
 
 /* =========================
@@ -1041,14 +1163,27 @@ onAuthStateChanged(
     auth,
     (user) => {
 
-        if (!user) {
+        if(!user){
 
             currentUser = null;
 
+            if(unsubscribeMessages){
+
+                unsubscribeMessages();
+
+                unsubscribeMessages = null;
+
+            }
+
             chatBox.innerHTML = `
+
                 <div class="empty-chat">
-                    Please login to use Customer Service.
+
+                    Please login to use
+                    Customer Service.
+
                 </div>
+
             `;
 
             messageInput.disabled = true;
@@ -1056,6 +1191,7 @@ onAuthStateChanged(
             sendBtn.disabled = true;
 
             return;
+
         }
 
 
@@ -1066,18 +1202,39 @@ onAuthStateChanged(
         sendBtn.disabled = false;
 
 
-        loadMessages(user.uid);
+        loadMessages(
+            user.uid
+        );
 
     }
 );
 
 
-
 /* =========================
-   LOAD CHAT
+   LOAD MESSAGES
 ========================= */
 
-function loadMessages(uid) {
+function loadMessages(uid){
+
+    if(unsubscribeMessages){
+
+        unsubscribeMessages();
+
+        unsubscribeMessages = null;
+
+    }
+
+
+    chatBox.innerHTML = `
+
+        <div class="empty-chat">
+
+            Loading conversation...
+
+        </div>
+
+    `;
+
 
     const messagesRef =
         collection(
@@ -1089,6 +1246,7 @@ function loadMessages(uid) {
     const q =
         query(
             messagesRef,
+
             where(
                 "userId",
                 "==",
@@ -1097,185 +1255,249 @@ function loadMessages(uid) {
         );
 
 
-    onSnapshot(
-        q,
-        (snapshot) => {
+    unsubscribeMessages =
+        onSnapshot(
 
-            if (snapshot.empty) {
+            q,
 
-                chatBox.innerHTML = `
-                    <div class="empty-chat">
-                        No messages yet.<br>
-                        Send us a message and our support team will respond.
-                    </div>
-                `;
+            (snapshot) => {
 
-                return;
-            }
+                if(snapshot.empty){
 
+                    chatBox.innerHTML = `
 
-            const messages = [];
+                        <div class="empty-chat">
 
+                            No messages yet.<br>
 
-            snapshot.forEach(
-                (doc) => {
+                            Send us a message and
+                            our support team will respond.
 
-                    messages.push({
+                        </div>
 
-                        id: doc.id,
+                    `;
 
-                        ...doc.data()
-
-                    });
+                    return;
 
                 }
-            );
 
 
-            messages.sort(
-                (a, b) => {
-
-                    const timeA =
-                        a.createdAt &&
-                        typeof a.createdAt.toMillis === "function"
-                            ? a.createdAt.toMillis()
-                            : 0;
+                const messages = [];
 
 
-                    const timeB =
-                        b.createdAt &&
-                        typeof b.createdAt.toMillis === "function"
-                            ? b.createdAt.toMillis()
-                            : 0;
+                snapshot.forEach(
+                    (docSnap) => {
+
+                        const data =
+                            docSnap.data();
 
 
-                    return timeA - timeB;
+                        messages.push({
 
-                }
-            );
+                            id:
+                                docSnap.id,
 
+                            ...data
 
-            chatBox.innerHTML = "";
-
-
-            messages.forEach(
-                (msg) => {
-
-                    const message =
-                        document.createElement("div");
-
-
-                    const sender =
-                        String(
-                            msg.sender ||
-                            msg.from ||
-                            "user"
-                        ).toLowerCase();
-
-
-                    if (
-                        sender === "admin" ||
-                        sender === "support"
-                    ) {
-
-                        message.className =
-                            "chat-message admin-message";
-
-
-                        message.innerHTML = `
-                            <div class="message-label">
-                                Customer Support
-                            </div>
-
-                            <div class="message-text"></div>
-                        `;
-
-                    } else {
-
-                        message.className =
-                            "chat-message user-message";
-
-
-                        message.innerHTML = `
-                            <div class="message-label">
-                                You
-                            </div>
-
-                            <div class="message-text"></div>
-                        `;
+                        });
 
                     }
+                );
 
 
-                    const text =
-                        message.querySelector(
-                            ".message-text"
+                /* SORT LOCALLY */
+
+                messages.sort(
+                    (a,b) => {
+
+                        const timeA =
+                            getMessageTime(
+                                a.createdAt
+                            );
+
+                        const timeB =
+                            getMessageTime(
+                                b.createdAt
+                            );
+
+                        return timeA - timeB;
+
+                    }
+                );
+
+
+                chatBox.innerHTML = "";
+
+
+                messages.forEach(
+                    (msg) => {
+
+                        const message =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        const sender =
+                            String(
+                                msg.sender ||
+                                msg.from ||
+                                "user"
+                            ).toLowerCase();
+
+
+                        const isAdmin =
+                            sender === "admin" ||
+                            sender === "support";
+
+
+                        if(isAdmin){
+
+                            message.className =
+                                "chat-message admin-message";
+
+
+                            message.innerHTML = `
+
+                                <div class="message-label">
+
+                                    Customer Support
+
+                                </div>
+
+                                <div
+                                    class="message-text"
+                                ></div>
+
+                            `;
+
+                        }
+                        else{
+
+                            message.className =
+                                "chat-message user-message";
+
+
+                            message.innerHTML = `
+
+                                <div class="message-label">
+
+                                    You
+
+                                </div>
+
+                                <div
+                                    class="message-text"
+                                ></div>
+
+                            `;
+
+                        }
+
+
+                        const text =
+                            message.querySelector(
+                                ".message-text"
+                            );
+
+
+                        text.textContent =
+                            msg.message ||
+                            msg.text ||
+                            "";
+
+
+                        chatBox.appendChild(
+                            message
                         );
 
-
-                    text.textContent =
-                        msg.message ||
-                        msg.text ||
-                        "";
+                    }
+                );
 
 
-                    chatBox.appendChild(
-                        message
-                    );
+                chatBox.scrollTop =
+                    chatBox.scrollHeight;
 
-                }
-            );
+            },
 
 
-            chatBox.scrollTop =
-                chatBox.scrollHeight;
+            (error) => {
 
-        },
-
-
-        (error) => {
-
-            console.error(
-                "Support chat error:",
-                error
-            );
+                console.error(
+                    "Support chat error:",
+                    error
+                );
 
 
-            chatBox.innerHTML = `
-                <div class="empty-chat">
-                    Unable to load conversation.
-                </div>
-            `;
+                chatBox.innerHTML = `
 
-        }
-    );
+                    <div class="empty-chat">
+
+                        Unable to load conversation.
+
+                        <br><br>
+
+                        Please try again later.
+
+                    </div>
+
+                `;
+
+            }
+
+        );
 
 }
 
+
+/* =========================
+   MESSAGE TIME
+========================= */
+
+function getMessageTime(timestamp){
+
+    if(
+        timestamp &&
+        typeof timestamp.toMillis ===
+        "function"
+    ){
+
+        return timestamp.toMillis();
+
+    }
+
+    return 0;
+
+}
 
 
 /* =========================
    SEND MESSAGE
 ========================= */
 
-async function sendMessage(text) {
+async function sendMessage(text){
 
-    if (!currentUser) {
+    if(!currentUser){
 
         alert(
             "Please login first."
         );
 
         return;
+
     }
 
 
     text =
-        String(text || "").trim();
+        String(
+            text || ""
+        ).trim();
 
 
-    if (!text) {
+    if(!text){
+
         return;
+
     }
 
 
@@ -1284,7 +1506,7 @@ async function sendMessage(text) {
     messageInput.disabled = true;
 
 
-    try {
+    try{
 
         await addDoc(
 
@@ -1320,8 +1542,8 @@ async function sendMessage(text) {
 
         messageInput.value = "";
 
-
-    } catch (error) {
+    }
+    catch(error){
 
         console.error(
             "Send message error:",
@@ -1329,9 +1551,23 @@ async function sendMessage(text) {
         );
 
 
-        alert(
-            "Message could not be sent. Please try again."
-        );
+        if(
+            error.code ===
+            "permission-denied"
+        ){
+
+            alert(
+                "Permission denied. Firestore Rules check karo."
+            );
+
+        }
+        else{
+
+            alert(
+                "Message could not be sent. Please try again."
+            );
+
+        }
 
     }
 
@@ -1343,7 +1579,6 @@ async function sendMessage(text) {
     messageInput.focus();
 
 }
-
 
 
 /* =========================
@@ -1362,7 +1597,6 @@ sendBtn.addEventListener(
 );
 
 
-
 /* =========================
    ENTER KEY
 ========================= */
@@ -1371,9 +1605,9 @@ messageInput.addEventListener(
     "keydown",
     (event) => {
 
-        if (
+        if(
             event.key === "Enter"
-        ) {
+        ){
 
             event.preventDefault();
 
@@ -1387,21 +1621,20 @@ messageInput.addEventListener(
 );
 
 
-
 /* =========================
    QUICK HELP
 ========================= */
 
 window.sendQuick =
-    function(text) {
+function(text){
 
-        sendMessage(text);
+    sendMessage(
+        text
+    );
 
-    };
-
+};
 
 </script>
 
 </body>
-
 </html>
