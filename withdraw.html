@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -220,6 +221,40 @@ input:focus{
     font-size:13px;
 }
 
+/* =========================
+   WITHDRAW LOCK
+========================= */
+
+.withdraw-locked{
+    background:white;
+    border-radius:20px;
+    padding:30px 20px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(20,40,80,.07);
+    margin-bottom:18px;
+}
+
+.withdraw-locked-icon{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.withdraw-locked h3{
+    font-size:20px;
+    margin-bottom:8px;
+    color:#172033;
+}
+
+.withdraw-locked p{
+    font-size:13px;
+    color:#8992a2;
+    line-height:1.5;
+}
+
+.withdraw-locked strong{
+    color:#1677e8;
+}
+
 .bottom-nav{
     position:fixed;
     bottom:0;
@@ -269,6 +304,10 @@ input:focus{
     font-size:24px;
     box-shadow:0 8px 20px rgba(20,120,237,.35);
     border:5px solid #f4f7fb;
+}
+
+.hidden{
+    display:none !important;
 }
 
 </style>
@@ -326,7 +365,36 @@ input:focus{
     </div>
 
 
-    <div class="form-card">
+    <!-- LOCK MESSAGE -->
+
+    <div
+        class="withdraw-locked hidden"
+        id="withdrawLocked"
+    >
+
+        <div class="withdraw-locked-icon">
+            🔒
+        </div>
+
+        <h3>
+            Withdrawal Locked
+        </h3>
+
+        <p>
+            You must complete
+            <strong>10 tasks</strong>
+            before you can withdraw your earnings.
+        </p>
+
+    </div>
+
+
+    <!-- WITHDRAW FORM -->
+
+    <div
+        class="form-card"
+        id="withdrawForm"
+    >
 
         <div class="form-title">
             Withdrawal Details
@@ -388,6 +456,7 @@ input:focus{
         <button
             class="withdraw-btn"
             id="withdrawBtn"
+            type="button"
         >
             Submit Withdrawal
         </button>
@@ -408,7 +477,6 @@ input:focus{
 
     </div>
 
-
 </div>
 
 
@@ -418,8 +486,11 @@ input:focus{
         href="dashboard.html"
         class="nav-item"
     >
+
         <span>⌂</span>
+
         Home
+
     </a>
 
 
@@ -427,8 +498,11 @@ input:focus{
         href="orders.html"
         class="nav-item"
     >
+
         <span>▣</span>
+
         Tasks
+
     </a>
 
 
@@ -449,9 +523,13 @@ input:focus{
     <a
         href="withdraw.html"
         class="nav-item active"
+        id="withdrawNav"
     >
+
         <span>💳</span>
+
         Withdraw
+
     </a>
 
 </div>
@@ -486,19 +564,29 @@ import {
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
 const firebaseConfig = {
 
-    apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    apiKey:
+        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-    authDomain: "elitetask-pro.firebaseapp.com",
+    authDomain:
+        "elitetask-pro.firebaseapp.com",
 
-    projectId: "elitetask-pro",
+    projectId:
+        "elitetask-pro",
 
-    storageBucket: "elitetask-pro.firebasestorage.app",
+    storageBucket:
+        "elitetask-pro.firebasestorage.app",
 
-    messagingSenderId: "504295275402",
+    messagingSenderId:
+        "504295275402",
 
-    appId: "1:504295275402:web:8c480445c5510fa645a673"
+    appId:
+        "1:504295275402:web:8c480445c5510fa645a673"
 
 };
 
@@ -513,341 +601,88 @@ const db =
     getFirestore(app);
 
 
+/* =========================
+   VARIABLES
+========================= */
+
 let currentUser = null;
 
-
-/*
-================================================
-IMPORTANT
-
-Firebase mein values alag rahengi:
-
-balance = original balance
-commission = original commission
-
-Withdraw page par:
-
-Available Balance =
-balance + commission
-
-Commission permanently balance mein
-convert nahi hogi.
-================================================
-*/
-
-
 let currentBalance = 0;
+
 let currentCommission = 0;
+
 let withdrawableBalance = 0;
 
+let completedTasks = 0;
 
-/* LOGIN */
-
-onAuthStateChanged(auth, async (user) => {
-
-    if(!user){
-
-        window.location.href =
-            "index.html";
-
-        return;
-
-    }
-
-    currentUser = user;
-
-    await loadBalance();
-
-    await loadHistory();
-
-});
+let withdrawalAllowed = false;
 
 
-/* LOAD BALANCE + COMMISSION */
+/* =========================
+   ELEMENTS
+========================= */
 
-async function loadBalance(){
+const balanceElement =
+    document.getElementById("balance");
 
-    try{
+const withdrawForm =
+    document.getElementById("withdrawForm");
 
-        const ref =
-            doc(
-                db,
-                "users",
-                currentUser.uid
-            );
+const withdrawLocked =
+    document.getElementById("withdrawLocked");
 
+const withdrawNav =
+    document.getElementById("withdrawNav");
 
-        const snap =
-            await getDoc(ref);
-
-
-        if(snap.exists()){
-
-            const data =
-                snap.data();
+const withdrawBtn =
+    document.getElementById("withdrawBtn");
 
 
-            /*
-            Original balance
-            */
+/* =========================
+   AUTH
+========================= */
 
-            currentBalance =
-                Number(
-                    data.balance || 0
-                );
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
+        if(!user){
 
-            /*
-            Original commission
-            */
+            window.location.href =
+                "index.html";
 
-            currentCommission =
-                Number(
-                    data.commission || 0
-                );
-
-
-            /*
-            Sirf Withdraw page par
-            dono ko available balance
-            mein combine kar rahe hain.
-            */
-
-            withdrawableBalance =
-                currentBalance +
-                currentCommission;
-
-
-            document
-                .getElementById("balance")
-                .textContent =
-                "$" +
-                withdrawableBalance.toFixed(2);
+            return;
 
         }
 
-    }
-    catch(error){
+        currentUser = user;
 
-        console.error(
-            "Balance error:",
-            error
-        );
+        await loadUserData();
 
-    }
+        if(withdrawalAllowed){
 
-}
-
-
-/* SUBMIT WITHDRAW */
-
-document
-.getElementById("withdrawBtn")
-.addEventListener("click", async () => {
-
-
-    const method =
-        document
-        .getElementById("method")
-        .value;
-
-
-    const account =
-        document
-        .getElementById("account")
-        .value
-        .trim();
-
-
-    const amount =
-        Number(
-            document
-            .getElementById("amount")
-            .value
-        );
-
-
-    if(!method){
-
-        alert(
-            "Payment method select karo."
-        );
-
-        return;
-
-    }
-
-
-    if(!account){
-
-        alert(
-            "Account number enter karo."
-        );
-
-        return;
-
-    }
-
-
-    if(!amount || amount <= 0){
-
-        alert(
-            "Valid amount enter karo."
-        );
-
-        return;
-
-    }
-
-
-    /*
-    Balance + Commission
-    se zyada withdraw nahi ho sakta.
-    */
-
-    if(amount > withdrawableBalance){
-
-        alert(
-            "Available balance kam hai."
-        );
-
-        return;
-
-    }
-
-
-    const btn =
-        document
-        .getElementById("withdrawBtn");
-
-
-    btn.disabled = true;
-
-    btn.textContent =
-        "Submitting...";
-
-
-    try{
-
-
-        /*
-        ========================================
-        WITHDRAW REQUEST
-        ========================================
-        */
-
-        await addDoc(
-            collection(
-                db,
-                "withdraws"
-            ),
-            {
-
-                userId:
-                    currentUser.uid,
-
-                email:
-                    currentUser.email || "",
-
-                method:
-                    method,
-
-                account:
-                    account,
-
-                amount:
-                    amount,
-
-                status:
-                    "pending",
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-        );
-
-
-        /*
-        ========================================
-        DEDUCT AMOUNT
-        ========================================
-
-        Pehle Balance se amount deduct hoga.
-
-        Agar Balance kam hua to baqi amount
-        Commission se deduct hoga.
-
-        Example:
-
-        Balance = 100
-        Commission = 50
-        Withdraw = 120
-
-        New Balance = 0
-        New Commission = 30
-        ========================================
-        */
-
-
-        let remainingAmount =
-            amount;
-
-
-        let newBalance =
-            currentBalance;
-
-
-        let newCommission =
-            currentCommission;
-
-
-        /*
-        STEP 1:
-        Balance se deduction
-        */
-
-        if(newBalance >= remainingAmount){
-
-            newBalance =
-                newBalance -
-                remainingAmount;
-
-            remainingAmount = 0;
+            showWithdraw();
 
         }
         else{
 
-            remainingAmount =
-                remainingAmount -
-                newBalance;
-
-            newBalance = 0;
+            lockWithdraw();
 
         }
 
+        await loadHistory();
 
-        /*
-        STEP 2:
-        Agar amount abhi baqi hai
-        to Commission se deduction
-        */
-
-        if(remainingAmount > 0){
-
-            newCommission =
-                newCommission -
-                remainingAmount;
-
-            remainingAmount = 0;
-
-        }
+    }
+);
 
 
-        /*
-        Firebase mein Balance aur Commission
-        alag-alag save honge.
-        */
+/* =========================
+   LOAD USER DATA
+========================= */
+
+async function loadUserData(){
+
+    try{
 
         const userRef =
             doc(
@@ -857,92 +692,550 @@ document
             );
 
 
-        await updateDoc(
-            userRef,
-            {
-
-                balance:
-                    newBalance,
-
-                commission:
-                    newCommission
-
-            }
-        );
+        const snap =
+            await getDoc(userRef);
 
 
-        /*
-        Local values update
-        */
+        if(!snap.exists()){
+
+            lockWithdraw();
+
+            return;
+
+        }
+
+
+        const data =
+            snap.data();
+
+
+        /* =========================
+           BALANCE
+        ========================= */
 
         currentBalance =
-            newBalance;
+            Number(
+                data.balance || 0
+            );
 
+
+        /* =========================
+           COMMISSION
+        ========================= */
 
         currentCommission =
-            newCommission;
+            Number(
+                data.commission || 0
+            );
 
+
+        /* =========================
+           COMPLETED TASKS
+        =========================
+
+           Main field:
+           completedTasks
+
+           Extra fallback fields bhi
+           rakhe hain taake agar tumhare
+           existing user data mein naam
+           thora different ho to bhi kaam kare.
+        */
+
+        completedTasks =
+            Number(
+                data.completedTasks ??
+                data.completed ??
+                data.tasksCompleted ??
+                0
+            );
+
+
+        /* =========================
+           WITHDRAW BALANCE
+        ========================= */
 
         withdrawableBalance =
             currentBalance +
             currentCommission;
 
 
-        /*
-        Withdraw page par updated
-        total available balance show hoga.
-        */
-
-        document
-            .getElementById("balance")
-            .textContent =
+        balanceElement.textContent =
             "$" +
             withdrawableBalance.toFixed(2);
 
 
-        document
-            .getElementById("method")
-            .value = "";
+        /* =========================
+           10 TASK CHECK
+        ========================= */
 
+        if(completedTasks >= 10){
 
-        document
-            .getElementById("account")
-            .value = "";
+            withdrawalAllowed = true;
 
+        }
+        else{
 
-        document
-            .getElementById("amount")
-            .value = "";
+            withdrawalAllowed = false;
 
-
-        alert(
-            "Withdrawal request submit ho gayi."
-        );
-
-
-        await loadHistory();
+        }
 
     }
     catch(error){
 
-        console.error(error);
-
-        alert(
-            "Withdrawal submit nahi ho saki."
+        console.error(
+            "User data error:",
+            error
         );
+
+        withdrawalAllowed = false;
+
+        lockWithdraw();
 
     }
 
-
-    btn.disabled = false;
-
-    btn.textContent =
-        "Submit Withdrawal";
-
-});
+}
 
 
-/* LOAD HISTORY */
+/* =========================
+   SHOW WITHDRAW
+========================= */
+
+function showWithdraw(){
+
+    withdrawForm.classList.remove(
+        "hidden"
+    );
+
+    withdrawLocked.classList.add(
+        "hidden"
+    );
+
+    withdrawNav.classList.remove(
+        "hidden"
+    );
+
+}
+
+
+/* =========================
+   LOCK WITHDRAW
+========================= */
+
+function lockWithdraw(){
+
+    withdrawalAllowed = false;
+
+    withdrawForm.classList.add(
+        "hidden"
+    );
+
+    withdrawLocked.classList.remove(
+        "hidden"
+    );
+
+    /*
+    Bottom navigation se bhi
+    Withdraw option hide.
+    */
+
+    withdrawNav.classList.add(
+        "hidden"
+    );
+
+}
+
+
+/* =========================
+   SUBMIT WITHDRAW
+========================= */
+
+withdrawBtn.addEventListener(
+    "click",
+    async () => {
+
+        /*
+        IMPORTANT SECURITY CHECK
+
+        Agar user ke 10 tasks complete
+        nahi hue to request bilkul
+        submit nahi hogi.
+        */
+
+        if(!withdrawalAllowed){
+
+            alert(
+                "Withdrawal unlock hone ke liye pehle 10 tasks complete karo."
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Firebase se dobara user data
+        check kar rahe hain.
+
+        Isse page old value par
+        withdrawal submit nahi karega.
+        */
+
+        try{
+
+            const latestUserRef =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const latestSnap =
+                await getDoc(
+                    latestUserRef
+                );
+
+
+            if(!latestSnap.exists()){
+
+                alert(
+                    "User account data nahi mila."
+                );
+
+                return;
+
+            }
+
+
+            const latestData =
+                latestSnap.data();
+
+
+            const latestCompletedTasks =
+                Number(
+                    latestData.completedTasks ??
+                    latestData.completed ??
+                    latestData.tasksCompleted ??
+                    0
+                );
+
+
+            /*
+            FINAL 10 TASK CHECK
+            */
+
+            if(latestCompletedTasks < 10){
+
+                alert(
+                    "Pehle 10 tasks complete karo. Withdrawal abhi locked hai."
+                );
+
+                lockWithdraw();
+
+                return;
+
+            }
+
+
+            const method =
+                document
+                .getElementById("method")
+                .value;
+
+
+            const account =
+                document
+                .getElementById("account")
+                .value
+                .trim();
+
+
+            const amount =
+                Number(
+                    document
+                    .getElementById("amount")
+                    .value
+                );
+
+
+            if(!method){
+
+                alert(
+                    "Payment method select karo."
+                );
+
+                return;
+
+            }
+
+
+            if(!account){
+
+                alert(
+                    "Account number enter karo."
+                );
+
+                return;
+
+            }
+
+
+            if(!amount || amount <= 0){
+
+                alert(
+                    "Valid amount enter karo."
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Latest balance + commission
+            */
+
+            const latestBalance =
+                Number(
+                    latestData.balance || 0
+                );
+
+
+            const latestCommission =
+                Number(
+                    latestData.commission || 0
+                );
+
+
+            const latestWithdrawable =
+                latestBalance +
+                latestCommission;
+
+
+            if(amount > latestWithdrawable){
+
+                alert(
+                    "Available balance kam hai."
+                );
+
+                return;
+
+            }
+
+
+            withdrawBtn.disabled = true;
+
+            withdrawBtn.textContent =
+                "Submitting...";
+
+
+            /*
+            =========================
+            CREATE WITHDRAW REQUEST
+            =========================
+            */
+
+            await addDoc(
+
+                collection(
+                    db,
+                    "withdraws"
+                ),
+
+                {
+
+                    userId:
+                        currentUser.uid,
+
+                    email:
+                        currentUser.email || "",
+
+                    method:
+                        method,
+
+                    account:
+                        account,
+
+                    amount:
+                        amount,
+
+                    status:
+                        "pending",
+
+                    completedTasks:
+                        latestCompletedTasks,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+
+            );
+
+
+            /*
+            =========================
+            DEDUCT BALANCE
+            =========================
+
+            Pehle balance se deduction.
+
+            Agar balance kam hua to
+            commission se remaining amount
+            deduct hoga.
+            */
+
+
+            let remainingAmount =
+                amount;
+
+
+            let newBalance =
+                latestBalance;
+
+
+            let newCommission =
+                latestCommission;
+
+
+            /*
+            STEP 1
+            Balance deduction
+            */
+
+            if(newBalance >= remainingAmount){
+
+                newBalance =
+                    newBalance -
+                    remainingAmount;
+
+                remainingAmount = 0;
+
+            }
+            else{
+
+                remainingAmount =
+                    remainingAmount -
+                    newBalance;
+
+                newBalance = 0;
+
+            }
+
+
+            /*
+            STEP 2
+            Commission deduction
+            */
+
+            if(remainingAmount > 0){
+
+                newCommission =
+                    newCommission -
+                    remainingAmount;
+
+                remainingAmount = 0;
+
+            }
+
+
+            /*
+            Firebase update
+            */
+
+            await updateDoc(
+
+                latestUserRef,
+
+                {
+
+                    balance:
+                        newBalance,
+
+                    commission:
+                        newCommission
+
+                }
+
+            );
+
+
+            /*
+            Local values update
+            */
+
+            currentBalance =
+                newBalance;
+
+
+            currentCommission =
+                newCommission;
+
+
+            withdrawableBalance =
+                currentBalance +
+                currentCommission;
+
+
+            balanceElement.textContent =
+                "$" +
+                withdrawableBalance.toFixed(2);
+
+
+            /*
+            Clear form
+            */
+
+            document
+            .getElementById("method")
+            .value = "";
+
+
+            document
+            .getElementById("account")
+            .value = "";
+
+
+            document
+            .getElementById("amount")
+            .value = "";
+
+
+            alert(
+                "Withdrawal request submit ho gayi."
+            );
+
+
+            await loadHistory();
+
+        }
+        catch(error){
+
+            console.error(
+                "Withdrawal error:",
+                error
+            );
+
+            alert(
+                "Withdrawal submit nahi ho saki."
+            );
+
+        }
+
+
+        withdrawBtn.disabled = false;
+
+        withdrawBtn.textContent =
+            "Submit Withdrawal";
+
+    }
+);
+
+
+/* =========================
+   LOAD HISTORY
+========================= */
 
 async function loadHistory(){
 
@@ -964,11 +1257,13 @@ async function loadHistory(){
         const q =
             query(
                 ref,
+
                 where(
                     "userId",
                     "==",
                     currentUser.uid
                 ),
+
                 orderBy(
                     "createdAt",
                     "desc"
@@ -1000,75 +1295,78 @@ async function loadHistory(){
         }
 
 
-        snapshot.forEach((item) => {
+        snapshot.forEach(
+            (item) => {
 
-            const data =
-                item.data();
-
-
-            const amount =
-                Number(
-                    data.amount || 0
-                );
+                const data =
+                    item.data();
 
 
-            const status =
-                data.status ||
-                "pending";
+                const amount =
+                    Number(
+                        data.amount || 0
+                    );
 
 
-            const date =
-                data.createdAt
-                ?.toDate
-                ? data.createdAt
-                    .toDate()
-                    .toLocaleString()
-                : "Just now";
+                const status =
+                    data.status ||
+                    "pending";
 
 
-            const card =
-                document.createElement(
-                    "div"
-                );
+                const date =
+                    data.createdAt
+                    ?.toDate
+                    ? data.createdAt
+                        .toDate()
+                        .toLocaleString()
+                    : "Just now";
 
 
-            card.className =
-                "history-card";
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
 
-            card.innerHTML = `
+                card.className =
+                    "history-card";
 
-                <div class="history-top">
 
-                    <div class="method">
-                        ${data.method || "Payment"}
+                card.innerHTML = `
+
+                    <div class="history-top">
+
+                        <div class="method">
+                            ${data.method || "Payment"}
+                        </div>
+
+                        <div class="amount">
+                            $${amount.toFixed(2)}
+                        </div>
+
                     </div>
 
-                    <div class="amount">
-                        $${amount.toFixed(2)}
+                    <div class="history-bottom">
+
+                        <span>
+                            ${date}
+                        </span>
+
+                        <span class="status ${status}">
+                            ${status.toUpperCase()}
+                        </span>
+
                     </div>
 
-                </div>
+                `;
 
 
-                <div class="history-bottom">
+                history.appendChild(
+                    card
+                );
 
-                    <span>
-                        ${date}
-                    </span>
-
-                    <span class="status ${status}">
-                        ${status.toUpperCase()}
-                    </span>
-
-                </div>
-
-            `;
-
-
-            history.appendChild(card);
-
-        });
+            }
+        );
 
     }
     catch(error){
@@ -1094,7 +1392,6 @@ async function loadHistory(){
 }
 
 </script>
-
 
 </body>
 </html>
