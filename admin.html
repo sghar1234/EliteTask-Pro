@@ -1,33 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>EliteTask Pro Admin</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
+    font-family:Arial,sans-serif;
     background:#f7edbd;
     color:#3d2d00;
     padding:15px 15px 40px;
 }
 
-.container{max-width:700px;margin:auto}
+.container{
+    max-width:700px;
+    margin:auto;
+}
 
 .header{
-    background:linear-gradient(135deg,#806000,#d9b43d,#967000);
+    background:linear-gradient(
+        135deg,
+        #806000,
+        #d9b43d,
+        #967000
+    );
     color:white;
     padding:18px;
     border-radius:18px;
     margin-bottom:15px;
     display:flex;
     justify-content:space-between;
-    align-items:center
+    align-items:center;
 }
 
-.header h2{font-size:25px}
+.header h2{
+    font-size:25px;
+}
 
 .logout{
     background:white;
@@ -35,14 +54,14 @@ body{
     border:0;
     padding:10px 14px;
     border-radius:9px;
-    font-weight:bold
+    font-weight:bold;
 }
 
 .tabs{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:7px;
-    margin-bottom:15px
+    margin-bottom:15px;
 }
 
 .tab{
@@ -52,23 +71,35 @@ body{
     background:white;
     color:#725300;
     font-weight:bold;
-    font-size:12px
+    font-size:12px;
+    cursor:pointer;
 }
 
-.tab.active{background:#b48600;color:white}
+.tab.active{
+    background:#b48600;
+    color:white;
+}
 
-.panel{display:none}
-.panel.active{display:block}
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
 
 .card{
     background:white;
     border-radius:18px;
     padding:18px;
     margin-bottom:15px;
-    box-shadow:0 5px 18px rgba(0,0,0,.10)
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
 }
 
-.card h3{color:#715200;margin-bottom:14px}
+.card h3{
+    color:#715200;
+    margin-bottom:14px;
+}
 
 .input{
     width:100%;
@@ -76,7 +107,7 @@ body{
     border:1px solid #dbc879;
     border-radius:10px;
     margin-bottom:10px;
-    outline:none
+    outline:none;
 }
 
 .preview{
@@ -85,7 +116,7 @@ body{
     object-fit:cover;
     border-radius:14px;
     display:none;
-    margin-bottom:10px
+    margin-bottom:10px;
 }
 
 .main-btn{
@@ -93,9 +124,19 @@ body{
     padding:14px;
     border:0;
     border-radius:11px;
-    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
+    background:linear-gradient(
+        135deg,
+        #9d7200,
+        #dfba45,
+        #9d7200
+    );
     color:white;
-    font-weight:bold
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.main-btn:disabled{
+    opacity:.6;
 }
 
 .item{
@@ -103,7 +144,7 @@ body{
     border-radius:14px;
     padding:13px;
     margin-top:10px;
-    background:#fffdf7
+    background:#fffdf7;
 }
 
 .item img{
@@ -111,13 +152,25 @@ body{
     height:170px;
     object-fit:cover;
     border-radius:10px;
-    margin-bottom:9px
+    margin-bottom:9px;
 }
 
-.item h4{margin-bottom:6px;color:#624700}
-.item p{font-size:13px;color:#777;margin:4px 0}
+.item h4{
+    margin-bottom:6px;
+    color:#624700;
+}
 
-.row{display:flex;gap:7px;margin-top:10px}
+.item p{
+    font-size:13px;
+    color:#777;
+    margin:4px 0;
+}
+
+.row{
+    display:flex;
+    gap:7px;
+    margin-top:10px;
+}
 
 .small{
     flex:1;
@@ -126,43 +179,106 @@ body{
     border-radius:8px;
     background:#b48600;
     color:white;
-    font-weight:bold
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.red{background:#b33b2e}
-.green{background:#218c55}
-.blue{background:#2868b2}
+.red{
+    background:#b33b2e;
+}
 
-.status{text-align:center;margin-top:10px;font-size:13px;color:#777}
+.green{
+    background:#218c55;
+}
+
+.blue{
+    background:#2868b2;
+}
+
+.status{
+    text-align:center;
+    margin-top:10px;
+    font-size:13px;
+    color:#777;
+}
+
+
+/* USERS */
+
+.user-card{
+    border:1px solid #ead99a;
+    border-radius:14px;
+    padding:14px;
+    margin-top:10px;
+    background:#fffdf7;
+}
+
+.user-name{
+    font-size:16px;
+    font-weight:bold;
+    color:#624700;
+}
+
+.user-email{
+    font-size:12px;
+    color:#777;
+    margin-top:4px;
+    word-break:break-word;
+}
+
+.user-balance{
+    font-size:13px;
+    margin-top:8px;
+    color:#218c55;
+    font-weight:bold;
+}
+
+.user-commission{
+    font-size:13px;
+    margin-top:4px;
+    color:#b48600;
+    font-weight:bold;
+}
 
 .user-actions{
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
     gap:7px;
-    margin-top:10px
+    margin-top:10px;
 }
 
 .user-actions button{
-    padding:11px 7px;
+    padding:11px 5px;
     border:0;
     border-radius:9px;
     color:white;
     font-weight:bold;
-    font-size:11px
+    font-size:11px;
+    cursor:pointer;
 }
 
-.balance-btn{background:#218c55}
-.support-btn{background:#2868b2}
-.delete-btn{background:#b33b2e}
+.balance-btn{
+    background:#218c55;
+}
+
+.support-btn{
+    background:#2868b2;
+}
+
+.delete-btn{
+    background:#b33b2e;
+}
 
 .user-support{
     display:none;
     margin-top:12px;
     border-top:1px solid #ead99a;
-    padding-top:12px
+    padding-top:12px;
 }
 
-.user-support.active{display:block}
+.user-support.active{
+    display:block;
+}
 
 .chat-box{
     height:260px;
@@ -173,7 +289,7 @@ body{
     padding:10px;
     display:flex;
     flex-direction:column;
-    gap:8px
+    gap:8px;
 }
 
 .chat-empty{
@@ -183,7 +299,7 @@ body{
     justify-content:center;
     text-align:center;
     color:#999;
-    font-size:12px
+    font-size:12px;
 }
 
 .chat-message{
@@ -192,14 +308,14 @@ body{
     border-radius:12px;
     font-size:12px;
     line-height:1.4;
-    word-break:break-word
+    word-break:break-word;
 }
 
 .chat-user{
     align-self:flex-end;
     background:#e4c75e;
     color:white;
-    border-bottom-right-radius:3px
+    border-bottom-right-radius:3px;
 }
 
 .chat-admin{
@@ -207,20 +323,20 @@ body{
     background:white;
     border:1px solid #ead99a;
     color:#333;
-    border-bottom-left-radius:3px
+    border-bottom-left-radius:3px;
 }
 
 .chat-label{
     font-size:9px;
     font-weight:bold;
     margin-bottom:3px;
-    opacity:.7
+    opacity:.7;
 }
 
 .reply-area{
     display:flex;
     gap:6px;
-    margin-top:8px
+    margin-top:8px;
 }
 
 .reply-input{
@@ -230,7 +346,7 @@ body{
     padding:0 10px;
     border:1px solid #dbc879;
     border-radius:9px;
-    outline:none
+    outline:none;
 }
 
 .reply-send{
@@ -240,101 +356,311 @@ body{
     background:#2868b2;
     color:white;
     font-size:17px;
-    font-weight:bold
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .no-data{
     padding:15px;
     text-align:center;
     color:#888;
-    font-size:13px
+    font-size:13px;
 }
 
-.withdraw-pending{color:#b48600;font-weight:bold}
-.withdraw-approved{color:#218c55;font-weight:bold}
-.withdraw-rejected{color:#b33b2e;font-weight:bold}
+
+/* WITHDRAW */
+
+.withdraw-card{
+    border:1px solid #ead99a;
+    border-radius:14px;
+    padding:14px;
+    margin-top:10px;
+    background:#fffdf7;
+}
+
+.withdraw-name{
+    font-weight:bold;
+    color:#624700;
+    font-size:15px;
+}
+
+.withdraw-email{
+    font-size:11px;
+    color:#888;
+    margin-top:3px;
+    word-break:break-word;
+}
+
+.withdraw-amount{
+    font-size:19px;
+    font-weight:bold;
+    color:#b48600;
+    margin-top:9px;
+}
+
+.withdraw-info{
+    font-size:12px;
+    color:#666;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+.withdraw-pending{
+    color:#b48600;
+    font-weight:bold;
+}
+
+.withdraw-approved{
+    color:#218c55;
+    font-weight:bold;
+}
+
+.withdraw-rejected{
+    color:#b33b2e;
+    font-weight:bold;
+}
 
 @media(max-width:380px){
-    body{padding:10px 10px 30px}
-    .header h2{font-size:19px}
-    .header{padding:14px}
-    .tab{font-size:10px;padding:11px 3px}
-    .card{padding:14px}
+
+    body{
+        padding:10px 10px 35px;
+    }
+
+    .header{
+        padding:15px;
+    }
+
+    .header h2{
+        font-size:20px;
+    }
+
+    .tabs{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .tab{
+        font-size:10px;
+    }
+
+    .card{
+        padding:14px;
+    }
+
+    .user-actions{
+        grid-template-columns:1fr 1fr 1fr;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
+
+<!-- HEADER -->
+
 <div class="header">
-    <h2>EliteTask Pro Admin</h2>
-    <button class="logout" id="logoutBtn">Logout</button>
+
+    <h2>
+        EliteTask Pro Admin
+    </h2>
+
+    <button
+        class="logout"
+        id="logoutBtn"
+        type="button"
+    >
+        Logout
+    </button>
+
 </div>
+
+
+<!-- TABS -->
 
 <div class="tabs">
-    <button class="tab active" data-tab="tasks">Tasks</button>
-    <button class="tab" data-tab="users">Users</button>
-    <button class="tab" data-tab="withdraws">Withdraws</button>
-</div>
 
-<div id="tasks" class="panel active">
+    <button
+        class="tab active"
+        data-tab="tasks"
+        type="button"
+    >
+        Tasks
+    </button>
 
-<div class="card">
-    <h3>Add New Task</h3>
+    <button
+        class="tab"
+        data-tab="users"
+        type="button"
+    >
+        Users
+    </button>
 
-    <input id="taskName" class="input" placeholder="Task name">
-    <input id="taskPrice" class="input" type="number" placeholder="Task price">
-    <input id="taskCommission" class="input" type="number" placeholder="Commission">
-
-    <input id="taskImage" class="input" type="file" accept="image/*">
-
-    <img id="imagePreview" class="preview">
-
-    <button id="saveTask" class="main-btn">Save Task</button>
-
-    <div id="taskStatus" class="status">Ready</div>
-</div>
-
-<div class="card">
-    <h3>Tasks</h3>
-    <div id="taskList">Loading tasks...</div>
-</div>
+    <button
+        class="tab"
+        data-tab="withdraws"
+        type="button"
+    >
+        Withdraws
+    </button>
 
 </div>
 
-<div id="users" class="panel">
 
-<div class="card">
-    <h3>Users</h3>
-    <div id="userList">Loading users...</div>
+<!-- =========================
+     TASKS
+========================= -->
+
+<div
+    id="tasks"
+    class="panel active"
+>
+
+    <div class="card">
+
+        <h3>
+            Add New Task
+        </h3>
+
+        <input
+            id="taskName"
+            class="input"
+            placeholder="Task name"
+        >
+
+        <input
+            id="taskPrice"
+            class="input"
+            type="number"
+            placeholder="Task price"
+        >
+
+        <input
+            id="taskCommission"
+            class="input"
+            type="number"
+            placeholder="Commission"
+        >
+
+        <input
+            id="taskImage"
+            class="input"
+            type="file"
+            accept="image/*"
+        >
+
+        <img
+            id="imagePreview"
+            class="preview"
+        >
+
+        <button
+            id="saveTask"
+            class="main-btn"
+            type="button"
+        >
+            Save Task
+        </button>
+
+        <div
+            id="taskStatus"
+            class="status"
+        >
+            Ready
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Tasks
+        </h3>
+
+        <div id="taskList">
+            Loading tasks...
+        </div>
+
+    </div>
+
 </div>
 
+
+<!-- =========================
+     USERS
+========================= -->
+
+<div
+    id="users"
+    class="panel"
+>
+
+    <div class="card">
+
+        <h3>
+            Users
+        </h3>
+
+        <div id="userList">
+            Loading users...
+        </div>
+
+    </div>
+
 </div>
 
-<div id="withdraws" class="panel">
 
-<div class="card">
-    <h3>Withdraw Requests</h3>
-    <div id="withdrawList">Loading withdrawals...</div>
+<!-- =========================
+     WITHDRAWS
+========================= -->
+
+<div
+    id="withdraws"
+    class="panel"
+>
+
+    <div class="card">
+
+        <h3>
+            Withdraw Requests
+        </h3>
+
+        <div id="withdrawList">
+            Loading withdrawals...
+        </div>
+
+    </div>
+
 </div>
 
-</div>
 
 </div>
+
 
 <script type="module">
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+/* =========================
+   FIREBASE
+========================= */
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged,
     signOut
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -348,603 +674,616 @@ import {
     where,
     serverTimestamp
 }
-from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from
+"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-const firebaseConfig={
-    apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-    authDomain:"elitetask-pro.firebaseapp.com",
-    projectId:"elitetask-pro",
-    storageBucket:"elitetask-pro.firebasestorage.app",
-    messagingSenderId:"504295275402",
-    appId:"1:504295275402:web:cf744a5d4e82c72145a673"
-};
+const firebaseConfig = {
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+    apiKey:
+    "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
-let currentAdmin=null;
+    authDomain:
+    "elitetask-pro.firebaseapp.com",
 
-onAuthStateChanged(auth,async user=>{
+    projectId:
+    "elitetask-pro",
 
-    if(!user){
-        location.href="index.html";
-        return;
-    }
+    storageBucket:
+    "elitetask-pro.firebasestorage.app",
 
-    currentAdmin=user;
-    loadTasks();
+    messagingSenderId:
+    "504295275402",
 
-});
+    appId:
+    "1:504295275402:web:cf744a5d4e82c72145a673"
 
-
-document.querySelectorAll(".tab").forEach(button=>{
-
-    button.onclick=()=>{
-
-        document.querySelectorAll(".tab")
-        .forEach(x=>x.classList.remove("active"));
-
-        document.querySelectorAll(".panel")
-        .forEach(x=>x.classList.remove("active"));
-
-        button.classList.add("active");
-
-        document
-        .getElementById(button.dataset.tab)
-        .classList.add("active");
-
-        if(button.dataset.tab==="tasks") loadTasks();
-        if(button.dataset.tab==="users") loadUsers();
-        if(button.dataset.tab==="withdraws") loadWithdraws();
-
-    };
-
-});
-
-
-document.getElementById("logoutBtn").onclick=async()=>{
-    await signOut(auth);
-    location.href="index.html";
 };
 
 
-document.getElementById("taskImage").addEventListener("change",function(){
+const app =
+    initializeApp(firebaseConfig);
 
-    const file=this.files[0];
-    const preview=document.getElementById("imagePreview");
+const auth =
+    getAuth(app);
 
-    if(!file){
-        preview.style.display="none";
-        return;
-    }
-
-    preview.src=URL.createObjectURL(file);
-    preview.style.display="block";
-
-});
+const db =
+    getFirestore(app);
 
 
-function compressImage(file){
-
-    return new Promise((resolve,reject)=>{
-
-        const reader=new FileReader();
-
-        reader.onload=e=>{
-
-            const img=new Image();
-
-            img.onload=()=>{
-
-                const canvas=document.createElement("canvas");
-
-                let w=img.width;
-                let h=img.height;
-                const max=350;
-
-                if(w>h){
-
-                    if(w>max){
-                        h=h*max/w;
-                        w=max;
-                    }
-
-                }else{
-
-                    if(h>max){
-                        w=w*max/h;
-                        h=max;
-                    }
-
-                }
-
-                canvas.width=Math.round(w);
-                canvas.height=Math.round(h);
-
-                canvas
-                .getContext("2d")
-                .drawImage(img,0,0,canvas.width,canvas.height);
-
-                resolve(
-                    canvas.toDataURL("image/jpeg",.35)
-                );
-
-            };
-
-            img.onerror=reject;
-            img.src=e.target.result;
-
-        };
-
-        reader.onerror=reject;
-        reader.readAsDataURL(file);
-
-    });
-
-}
+let currentAdmin = null;
 
 
-document.getElementById("saveTask").onclick=async()=>{
+/* =========================
+   AUTH
+========================= */
 
-    try{
+onAuthStateChanged(
+    auth,
+    async user => {
 
-        const name=document.getElementById("taskName").value.trim();
-        const price=Number(document.getElementById("taskPrice").value);
-        const commission=Number(document.getElementById("taskCommission").value);
-        const file=document.getElementById("taskImage").files[0];
+        if(!user){
 
-        if(!name||!price||!commission||!file){
-            alert("Task name, price, commission and image required.");
+            location.href =
+            "index.html";
+
             return;
+
         }
 
-        document.getElementById("taskStatus").textContent="Compressing image...";
-
-        const image=await compressImage(file);
-
-        document.getElementById("taskStatus").textContent="Saving task...";
-
-        await addDoc(collection(db,"tasks"),{
-            name,
-            price,
-            commission,
-            image,
-            createdAt:serverTimestamp(),
-            order:Date.now()
-        });
-
-        document.getElementById("taskStatus").textContent="Task saved successfully ✓";
-
-        document.getElementById("taskName").value="";
-        document.getElementById("taskPrice").value="";
-        document.getElementById("taskCommission").value="";
-        document.getElementById("taskImage").value="";
-        document.getElementById("imagePreview").style.display="none";
+        currentAdmin = user;
 
         loadTasks();
 
-    }catch(error){
+    }
+);
 
-        console.error(error);
-        document.getElementById("taskStatus").textContent=error.message;
-        alert(error.message);
+
+/* =========================
+   TABS
+========================= */
+
+document
+.querySelectorAll(".tab")
+.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            document
+            .querySelectorAll(".tab")
+            .forEach(tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            document
+            .querySelectorAll(".panel")
+            .forEach(panel => {
+
+                panel.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            const tabName =
+                button.dataset.tab;
+
+
+            document
+            .getElementById(tabName)
+            .classList.add("active");
+
+
+            if(tabName === "tasks"){
+
+                loadTasks();
+
+            }
+
+
+            if(tabName === "users"){
+
+                loadUsers();
+
+            }
+
+
+            if(tabName === "withdraws"){
+
+                loadWithdraws();
+
+            }
+
+        }
+    );
+
+});
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+.getElementById("logoutBtn")
+.addEventListener(
+    "click",
+    async () => {
+
+        try{
+
+            await signOut(auth);
+
+            location.href =
+                "index.html";
+
+        }
+        catch(error){
+
+            alert(
+                "Logout failed."
+            );
+
+        }
 
     }
+);
 
-};
 
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+document
+.getElementById("taskImage")
+.addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+        const preview =
+            document.getElementById(
+                "imagePreview"
+            );
+
+
+        if(!file){
+
+            preview.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display =
+            "block";
+
+    }
+);
+
+
+/* =========================
+   COMPRESS IMAGE
+========================= */
+
+function compressImage(file){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                event => {
+
+                    const img =
+                        new Image();
+
+
+                    img.onload =
+                        () => {
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+
+                            let width =
+                                img.width;
+
+                            let height =
+                                img.height;
+
+
+                            const max =
+                                350;
+
+
+                            if(width > height){
+
+                                if(width > max){
+
+                                    height =
+                                        height *
+                                        max /
+                                        width;
+
+                                    width =
+                                        max;
+
+                                }
+
+                            }
+                            else{
+
+                                if(height > max){
+
+                                    width =
+                                        width *
+                                        max /
+                                        height;
+
+                                    height =
+                                        max;
+
+                                }
+
+                            }
+
+
+                            canvas.width =
+                                Math.round(width);
+
+                            canvas.height =
+                                Math.round(height);
+
+
+                            const ctx =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+
+                            ctx.drawImage(
+                                img,
+                                0,
+                                0,
+                                canvas.width,
+                                canvas.height
+                            );
+
+
+                            resolve(
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    .35
+                                )
+                            );
+
+                        };
+
+
+                    img.onerror =
+                        reject;
+
+
+                    img.src =
+                        event.target.result;
+
+                };
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* =========================
+   SAVE TASK
+========================= */
+
+document
+.getElementById("saveTask")
+.addEventListener(
+    "click",
+    async () => {
+
+        const name =
+            document
+            .getElementById("taskName")
+            .value
+            .trim();
+
+
+        const price =
+            Number(
+                document
+                .getElementById("taskPrice")
+                .value
+            );
+
+
+        const commission =
+            Number(
+                document
+                .getElementById(
+                    "taskCommission"
+                )
+                .value
+            );
+
+
+        const file =
+            document
+            .getElementById("taskImage")
+            .files[0];
+
+
+        if(
+            !name ||
+            !price ||
+            !commission ||
+            !file
+        ){
+
+            alert(
+                "Task name, price, commission and image required."
+            );
+
+            return;
+
+        }
+
+
+        const status =
+            document.getElementById(
+                "taskStatus"
+            );
+
+
+        const btn =
+            document.getElementById(
+                "saveTask"
+            );
+
+
+        btn.disabled = true;
+
+        status.textContent =
+            "Compressing image...";
+
+
+        try{
+
+            const image =
+                await compressImage(file);
+
+
+            status.textContent =
+                "Saving task...";
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "tasks"
+                ),
+                {
+
+                    name:
+                        name,
+
+                    price:
+                        price,
+
+                    commission:
+                        commission,
+
+                    image:
+                        image,
+
+                    order:
+                        Date.now(),
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            document
+            .getElementById("taskName")
+            .value = "";
+
+
+            document
+            .getElementById("taskPrice")
+            .value = "";
+
+
+            document
+            .getElementById(
+                "taskCommission"
+            )
+            .value = "";
+
+
+            document
+            .getElementById("taskImage")
+            .value = "";
+
+
+            document
+            .getElementById("imagePreview")
+            .style.display =
+                "none";
+
+
+            status.textContent =
+                "Task saved successfully ✓";
+
+
+            await loadTasks();
+
+        }
+        catch(error){
+
+            console.error(
+                "Save task error:",
+                error
+            );
+
+
+            status.textContent =
+                error.message;
+
+
+            alert(
+                error.message
+            );
+
+        }
+
+
+        btn.disabled = false;
+
+    }
+);
+
+
+/* =========================
+   LOAD TASKS
+========================= */
 
 async function loadTasks(){
 
-    const list=document.getElementById("taskList");
-    list.innerHTML="Loading tasks...";
-
-    try{
-
-        const snap=await getDocs(collection(db,"tasks"));
-
-        if(snap.empty){
-            list.innerHTML="No tasks found.";
-            return;
-        }
-
-        const tasks=[];
-
-        snap.forEach(d=>{
-            tasks.push({
-                id:d.id,
-                ...d.data()
-            });
-        });
-
-        tasks.sort((a,b)=>
-            Number(a.order||0)-Number(b.order||0)
+    const list =
+        document.getElementById(
+            "taskList"
         );
 
-        list.innerHTML="";
 
-        tasks.forEach(task=>{
+    list.innerHTML =
+        "Loading tasks...";
 
-            const div=document.createElement("div");
-            div.className="item";
-
-            div.innerHTML=`
-                ${task.image?`<img src="${task.image}">`:""}
-
-                <h4>${escapeHtml(task.name||"Task")}</h4>
-
-                <p>Price: ${task.price||0} PKR</p>
-
-                <p>Commission: ${task.commission||0} PKR</p>
-
-                <div class="row">
-                    <button class="small red">Delete</button>
-                </div>
-            `;
-
-            div.querySelector(".red").onclick=async()=>{
-
-                if(!confirm("Delete this task?")) return;
-
-                await deleteDoc(doc(db,"tasks",task.id));
-                loadTasks();
-
-            };
-
-            list.appendChild(div);
-
-        });
-
-    }catch(error){
-
-        console.error(error);
-        list.innerHTML="Unable to load tasks.";
-
-    }
-
-}
-
-
-/* =========================
-   USERS
-========================= */
-
-async function loadUsers(){
-
-    const list=document.getElementById("userList");
-    list.innerHTML="Loading users...";
 
     try{
 
-        const snap=await getDocs(collection(db,"users"));
-
-        if(snap.empty){
-            list.innerHTML='<div class="no-data">No users found.</div>';
-            return;
-        }
-
-        list.innerHTML="";
-
-        snap.forEach(userDoc=>{
-
-            const user=userDoc.data();
-            const uid=userDoc.id;
-
-            if(user.role==="admin") return;
-
-            const div=document.createElement("div");
-            div.className="item";
-
-            const name=escapeHtml(user.name||"User");
-            const email=escapeHtml(user.email||"");
-            const balance=Number(user.balance||0);
-            const commission=Number(user.commission||0);
-            const completed=Number(
-                user.completedTasks ||
-                user.completed ||
-                user.tasksCompleted ||
-                0
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "tasks"
+                )
             );
 
-            div.innerHTML=`
 
-                <h4>${name}</h4>
+        if(snapshot.empty){
 
-                <p>Email: ${email}</p>
-
-                <p>Balance: <b>${balance.toFixed(2)} PKR</b></p>
-
-                <p>Commission: <b>${commission.toFixed(2)} PKR</b></p>
-
-                <p>Completed Tasks: <b>${completed}</b></p>
-
-                <div class="user-actions">
-
-                    <button class="balance-btn">
-                        Edit Balance
-                    </button>
-
-                    <button class="support-btn">
-                        Customer Service
-                    </button>
-
-                    <button class="delete-btn">
-                        Delete User
-                    </button>
-
-                </div>
-
-                <div class="user-support">
-
-                    <div class="chat-box">
-                        <div class="chat-empty">
-                            Loading messages...
-                        </div>
-                    </div>
-
-                    <div class="reply-area">
-
-                        <input
-                            class="reply-input"
-                            placeholder="Reply to user..."
-                        >
-
-                        <button class="reply-send">
-                            ➤
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-
-            const supportBox=
-                div.querySelector(".user-support");
-
-            const chatBox=
-                div.querySelector(".chat-box");
-
-            const replyInput=
-                div.querySelector(".reply-input");
-
-            const replySend=
-                div.querySelector(".reply-send");
-
-
-            div.querySelector(".balance-btn").onclick=async()=>{
-
-                const current=Number(user.balance||0);
-
-                const value=prompt(
-                    "Enter new balance (PKR):",
-                    current
-                );
-
-                if(value===null) return;
-
-                const newBalance=Number(value);
-
-                if(isNaN(newBalance)||newBalance<0){
-                    alert("Invalid balance.");
-                    return;
-                }
-
-                try{
-
-                    await updateDoc(
-                        doc(db,"users",uid),
-                        {balance:newBalance}
-                    );
-
-                    alert("Balance updated.");
-                    loadUsers();
-
-                }catch(error){
-
-                    alert(error.message);
-
-                }
-
-            };
-
-
-            div.querySelector(".delete-btn").onclick=async()=>{
-
-                if(!confirm(
-                    "Delete this user? Their login account will also be disabled."
-                )) return;
-
-                try{
-
-                    /*
-                    IMPORTANT:
-                    Browser Firebase client cannot securely delete
-                    another user's Firebase Authentication account.
-
-                    This deletes the Firestore user record and creates
-                    a blocked flag. The login page must check this flag.
-                    */
-
-                    await deleteDoc(
-                        doc(db,"users",uid)
-                    );
-
-                    alert(
-                        "User data deleted. Login ko block karne ke liye index.html mein blocked-user check zaroor hona chahiye."
-                    );
-
-                    loadUsers();
-
-                }catch(error){
-
-                    console.error(error);
-                    alert(error.message);
-
-                }
-
-            };
-
-
-            div.querySelector(".support-btn").onclick=()=>{
-
-                supportBox.classList.toggle("active");
-
-                if(
-                    supportBox.classList.contains("active")
-                ){
-
-                    loadUserMessages(
-                        uid,
-                        chatBox
-                    );
-
-                }
-
-            };
-
-
-            replySend.onclick=()=>{
-
-                sendAdminReply(
-                    uid,
-                    user.email||"",
-                    replyInput,
-                    replySend,
-                    chatBox
-                );
-
-            };
-
-
-            replyInput.addEventListener("keydown",event=>{
-
-                if(event.key==="Enter"){
-
-                    event.preventDefault();
-
-                    sendAdminReply(
-                        uid,
-                        user.email||"",
-                        replyInput,
-                        replySend,
-                        chatBox
-                    );
-
-                }
-
-            });
-
-
-            list.appendChild(div);
-
-        });
-
-    }catch(error){
-
-        console.error(error);
-        list.innerHTML=
-            '<div class="no-data">Unable to load users.</div>';
-
-    }
-
-}
-
-
-/* =========================
-   USER MESSAGES
-========================= */
-
-async function loadUserMessages(uid,chatBox){
-
-    chatBox.innerHTML=
-        '<div class="chat-empty">Loading messages...</div>';
-
-    try{
-
-        const q=query(
-            collection(db,"supportMessages"),
-            where("userId","==",uid)
-        );
-
-        const snap=await getDocs(q);
-
-        if(snap.empty){
-
-            chatBox.innerHTML=
-                '<div class="chat-empty">No messages yet.</div>';
+            list.innerHTML =
+                '<div class="no-data">No tasks found.</div>';
 
             return;
 
         }
 
-        const messages=[];
 
-        snap.forEach(d=>{
+        const tasks = [];
 
-            messages.push({
-                id:d.id,
-                ...d.data()
-            });
 
-        });
+        snapshot.forEach(
+            item => {
 
-        messages.sort((a,b)=>{
+                tasks.push({
 
-            const aTime=
-                a.createdAt?.toMillis
-                ? a.createdAt.toMillis()
-                : 0;
+                    id:
+                        item.id,
 
-            const bTime=
-                b.createdAt?.toMillis
-                ? b.createdAt.toMillis()
-                : 0;
+                    ...item.data()
 
-            return aTime-bTime;
+                });
 
-        });
+            }
+        );
 
-        chatBox.innerHTML="";
 
-        messages.forEach(msg=>{
+        tasks.sort(
+            (a,b) =>
+                Number(a.order || 0) -
+                Number(b.order || 0)
+        );
 
-            const box=document.createElement("div");
 
-            const sender=
-                String(
-                    msg.sender||
-                    msg.from||
-                    "user"
-                ).toLowerCase();
+        list.innerHTML = "";
 
-            const admin=
-                sender==="admin"||
-                sender==="support";
 
-            box.className=
-                "chat-message "+
-                (admin?"chat-admin":"chat-user");
+        tasks.forEach(
+            task => {
 
-            box.innerHTML=`
+                const div =
+                    document.createElement(
+                        "div"
+                    );
 
-                <div class="chat-label">
-                    ${admin?"Admin":"User"}
-                </div>
 
-                <div></div>
-            `;
+                div.className =
+                    "item";
 
-            box.querySelector("div:last-child")
-                .textContent=
-                msg.message||
-                msg.text||
-                "";
 
-            chatBox.appendChild(box);
+                div.innerHTML = `
 
-        });
+                    ${
+                        task.image
+                        ?
+                        `
+                        <img
+                            src="${task.image}"
+                        >
+                        `
+                        :
+                        ""
+                    }
 
-        chatBox.scrollTop=chatBox.sc
+                    <h4>
+                        ${escapeHTML(
+                            task.name ||
+                            "Task"
+                        )}
+                    </h4>
+
+                    <p>
+                        Price:
+                        PKR ${Number(
+                            task.price || 0
+    
