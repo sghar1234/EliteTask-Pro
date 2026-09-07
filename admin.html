@@ -4,7 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
 
 <title>EliteTask Pro Admin</title>
 
@@ -29,18 +33,26 @@ body{
 }
 
 .header{
-    background:linear-gradient(
+    background:
+    linear-gradient(
         135deg,
         #806000,
         #d9b43d,
         #967000
     );
+
     color:white;
+
     padding:18px;
+
     border-radius:18px;
+
     margin-bottom:15px;
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 }
 
@@ -59,20 +71,29 @@ body{
 
 .tabs{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+    repeat(3,1fr);
+
     gap:7px;
+
     margin-bottom:15px;
 }
 
 .tab{
     padding:12px 4px;
+
     border:0;
+
     border-radius:9px;
+
     background:white;
+
     color:#725300;
+
     font-weight:bold;
+
     font-size:12px;
-    cursor:pointer;
 }
 
 .tab.active{
@@ -90,10 +111,16 @@ body{
 
 .card{
     background:white;
+
     border-radius:18px;
+
     padding:18px;
+
     margin-bottom:15px;
-    box-shadow:0 5px 18px rgba(0,0,0,.10);
+
+    box-shadow:
+    0 5px 18px
+    rgba(0,0,0,.10);
 }
 
 .card h3{
@@ -103,55 +130,75 @@ body{
 
 .input{
     width:100%;
+
     padding:13px;
+
     border:1px solid #dbc879;
+
     border-radius:10px;
+
     margin-bottom:10px;
+
     outline:none;
 }
 
 .preview{
     width:100%;
+
     max-height:230px;
+
     object-fit:cover;
+
     border-radius:14px;
+
     display:none;
+
     margin-bottom:10px;
 }
 
 .main-btn{
     width:100%;
+
     padding:14px;
+
     border:0;
+
     border-radius:11px;
-    background:linear-gradient(
+
+    background:
+    linear-gradient(
         135deg,
         #9d7200,
         #dfba45,
         #9d7200
     );
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
 
-.main-btn:disabled{
-    opacity:.6;
+    color:white;
+
+    font-weight:bold;
 }
 
 .item{
     border:1px solid #ead99a;
+
     border-radius:14px;
+
     padding:13px;
+
     margin-top:10px;
+
     background:#fffdf7;
 }
 
 .item img{
     width:100%;
+
     height:170px;
+
     object-fit:cover;
+
     border-radius:10px;
+
     margin-bottom:9px;
 }
 
@@ -168,19 +215,26 @@ body{
 
 .row{
     display:flex;
+
     gap:7px;
+
     margin-top:10px;
 }
 
 .small{
     flex:1;
+
     padding:10px;
+
     border:0;
+
     border-radius:8px;
+
     background:#b48600;
+
     color:white;
+
     font-weight:bold;
-    cursor:pointer;
 }
 
 .red{
@@ -197,64 +251,42 @@ body{
 
 .status{
     text-align:center;
+
     margin-top:10px;
+
     font-size:13px;
+
     color:#777;
 }
 
 
-/* USERS */
-
-.user-card{
-    border:1px solid #ead99a;
-    border-radius:14px;
-    padding:14px;
-    margin-top:10px;
-    background:#fffdf7;
-}
-
-.user-name{
-    font-size:16px;
-    font-weight:bold;
-    color:#624700;
-}
-
-.user-email{
-    font-size:12px;
-    color:#777;
-    margin-top:4px;
-    word-break:break-word;
-}
-
-.user-balance{
-    font-size:13px;
-    margin-top:8px;
-    color:#218c55;
-    font-weight:bold;
-}
-
-.user-commission{
-    font-size:13px;
-    margin-top:4px;
-    color:#b48600;
-    font-weight:bold;
-}
+/* =========================
+   USER SUPPORT
+========================= */
 
 .user-actions{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
+
+    grid-template-columns:
+    1fr 1fr;
+
     gap:7px;
+
     margin-top:10px;
 }
 
 .user-actions button{
-    padding:11px 5px;
+    padding:11px 7px;
+
     border:0;
+
     border-radius:9px;
+
     color:white;
+
     font-weight:bold;
+
     font-size:11px;
-    cursor:pointer;
 }
 
 .balance-btn{
@@ -271,8 +303,12 @@ body{
 
 .user-support{
     display:none;
+
     margin-top:12px;
-    border-top:1px solid #ead99a;
+
+    border-top:
+    1px solid #ead99a;
+
     padding-top:12px;
 }
 
@@ -282,172 +318,174 @@ body{
 
 .chat-box{
     height:260px;
+
     overflow-y:auto;
+
     background:#faf7e8;
-    border:1px solid #ead99a;
+
+    border:
+    1px solid #ead99a;
+
     border-radius:12px;
+
     padding:10px;
+
     display:flex;
+
     flex-direction:column;
+
     gap:8px;
 }
 
 .chat-empty{
     flex:1;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     text-align:center;
+
     color:#999;
+
     font-size:12px;
 }
 
 .chat-message{
     max-width:85%;
+
     padding:9px 11px;
+
     border-radius:12px;
+
     font-size:12px;
+
     line-height:1.4;
+
     word-break:break-word;
 }
 
 .chat-user{
     align-self:flex-end;
+
     background:#e4c75e;
+
     color:white;
+
     border-bottom-right-radius:3px;
 }
 
 .chat-admin{
     align-self:flex-start;
+
     background:white;
+
     border:1px solid #ead99a;
+
     color:#333;
+
     border-bottom-left-radius:3px;
 }
 
 .chat-label{
     font-size:9px;
+
     font-weight:bold;
+
     margin-bottom:3px;
+
     opacity:.7;
 }
 
 .reply-area{
     display:flex;
+
     gap:6px;
+
     margin-top:8px;
 }
 
 .reply-input{
     flex:1;
+
     min-width:0;
+
     height:42px;
+
     padding:0 10px;
+
     border:1px solid #dbc879;
+
     border-radius:9px;
+
     outline:none;
 }
 
 .reply-send{
     width:48px;
+
     border:0;
+
     border-radius:9px;
+
     background:#2868b2;
+
     color:white;
+
     font-size:17px;
+
     font-weight:bold;
-    cursor:pointer;
 }
 
 .no-data{
     padding:15px;
+
     text-align:center;
+
     color:#888;
+
     font-size:13px;
 }
 
 
-/* WITHDRAW */
-
-.withdraw-card{
-    border:1px solid #ead99a;
-    border-radius:14px;
-    padding:14px;
-    margin-top:10px;
-    background:#fffdf7;
-}
-
-.withdraw-name{
-    font-weight:bold;
-    color:#624700;
-    font-size:15px;
-}
-
-.withdraw-email{
-    font-size:11px;
-    color:#888;
-    margin-top:3px;
-    word-break:break-word;
-}
-
-.withdraw-amount{
-    font-size:19px;
-    font-weight:bold;
-    color:#b48600;
-    margin-top:9px;
-}
-
-.withdraw-info{
-    font-size:12px;
-    color:#666;
-    margin-top:5px;
-    line-height:1.5;
-}
+/* =========================
+   WITHDRAW
+========================= */
 
 .withdraw-pending{
     color:#b48600;
+
     font-weight:bold;
 }
 
 .withdraw-approved{
     color:#218c55;
+
     font-weight:bold;
 }
 
 .withdraw-rejected{
     color:#b33b2e;
+
     font-weight:bold;
 }
 
+
 @media(max-width:380px){
-
-    body{
-        padding:10px 10px 35px;
-    }
-
-    .header{
-        padding:15px;
-    }
 
     .header h2{
         font-size:20px;
     }
 
     .tabs{
-        grid-template-columns:repeat(3,1fr);
+        grid-template-columns:
+        repeat(3,1fr);
     }
 
     .tab{
         font-size:10px;
-    }
-
-    .card{
-        padding:14px;
-    }
-
-    .user-actions{
-        grid-template-columns:1fr 1fr 1fr;
     }
 
 }
@@ -456,12 +494,16 @@ body{
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
@@ -472,7 +514,6 @@ body{
     <button
         class="logout"
         id="logoutBtn"
-        type="button"
     >
         Logout
     </button>
@@ -480,14 +521,15 @@ body{
 </div>
 
 
-<!-- TABS -->
+<!-- =========================
+     TABS
+========================= -->
 
 <div class="tabs">
 
     <button
         class="tab active"
         data-tab="tasks"
-        type="button"
     >
         Tasks
     </button>
@@ -495,7 +537,6 @@ body{
     <button
         class="tab"
         data-tab="users"
-        type="button"
     >
         Users
     </button>
@@ -503,7 +544,6 @@ body{
     <button
         class="tab"
         data-tab="withdraws"
-        type="button"
     >
         Withdraws
     </button>
@@ -561,7 +601,6 @@ body{
         <button
             id="saveTask"
             class="main-btn"
-            type="button"
         >
             Save Task
         </button>
@@ -644,8 +683,9 @@ body{
 
 <script type="module">
 
+
 /* =========================
-   FIREBASE
+   FIREBASE IMPORTS
 ========================= */
 
 import {
@@ -654,6 +694,7 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged,
@@ -661,6 +702,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -677,6 +719,10 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -702,10 +748,14 @@ const firebaseConfig = {
 
 
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
@@ -731,7 +781,14 @@ onAuthStateChanged(
 
         }
 
+
         currentAdmin = user;
+
+
+        /*
+        Admin page open hone ke baad
+        directly Tasks load.
+        */
 
         loadTasks();
 
@@ -747,68 +804,66 @@ document
 .querySelectorAll(".tab")
 .forEach(button => {
 
-    button.addEventListener(
-        "click",
-        () => {
+    button.onclick = () => {
 
-            document
-            .querySelectorAll(".tab")
-            .forEach(tab => {
-
-                tab.classList.remove(
-                    "active"
-                );
-
-            });
+        document
+        .querySelectorAll(".tab")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
 
 
-            document
-            .querySelectorAll(".panel")
-            .forEach(panel => {
-
-                panel.classList.remove(
-                    "active"
-                );
-
-            });
+        document
+        .querySelectorAll(".panel")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
 
 
-            button.classList.add(
-                "active"
-            );
+        button.classList.add(
+            "active"
+        );
 
 
-            const tabName =
-                button.dataset.tab;
+        document
+        .getElementById(
+            button.dataset.tab
+        )
+        .classList.add(
+            "active"
+        );
 
 
-            document
-            .getElementById(tabName)
-            .classList.add("active");
+        if(
+            button.dataset.tab ===
+            "tasks"
+        ){
 
-
-            if(tabName === "tasks"){
-
-                loadTasks();
-
-            }
-
-
-            if(tabName === "users"){
-
-                loadUsers();
-
-            }
-
-
-            if(tabName === "withdraws"){
-
-                loadWithdraws();
-
-            }
+            loadTasks();
 
         }
-    );
+
+
+        if(
+            button.dataset.tab ===
+            "users"
+        ){
+
+            loadUsers();
+
+        }
+
+
+        if(
+            button.dataset.tab ===
+            "withdraws"
+        ){
+
+            loadWithdraws();
+
+        }
+
+    };
 
 });
 
@@ -819,28 +874,14 @@ document
 
 document
 .getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async () => {
+.onclick = async () => {
 
-        try{
+    await signOut(auth);
 
-            await signOut(auth);
+    location.href =
+    "index.html";
 
-            location.href =
-                "index.html";
-
-        }
-        catch(error){
-
-            alert(
-                "Logout failed."
-            );
-
-        }
-
-    }
-);
+};
 
 
 /* =========================
@@ -873,7 +914,10 @@ document
 
 
         preview.src =
-            URL.createObjectURL(file);
+            URL.createObjectURL(
+                file
+            );
+
 
         preview.style.display =
             "block";
@@ -896,7 +940,7 @@ function compressImage(file){
 
 
             reader.onload =
-                event => {
+                e => {
 
                     const img =
                         new Image();
@@ -911,10 +955,10 @@ function compressImage(file){
                                 );
 
 
-                            let width =
+                            let w =
                                 img.width;
 
-                            let height =
+                            let h =
                                 img.height;
 
 
@@ -922,32 +966,28 @@ function compressImage(file){
                                 350;
 
 
-                            if(width > height){
+                            if(w > h){
 
-                                if(width > max){
+                                if(w > max){
 
-                                    height =
-                                        height *
-                                        max /
-                                        width;
+                                    h =
+                                    h * max / w;
 
-                                    width =
-                                        max;
+                                    w =
+                                    max;
 
                                 }
 
                             }
                             else{
 
-                                if(height > max){
+                                if(h > max){
 
-                                    width =
-                                        width *
-                                        max /
-                                        height;
+                                    w =
+                                    w * max / h;
 
-                                    height =
-                                        max;
+                                    h =
+                                    max;
 
                                 }
 
@@ -955,19 +995,15 @@ function compressImage(file){
 
 
                             canvas.width =
-                                Math.round(width);
+                                Math.round(w);
 
                             canvas.height =
-                                Math.round(height);
+                                Math.round(h);
 
 
-                            const ctx =
-                                canvas.getContext(
-                                    "2d"
-                                );
-
-
-                            ctx.drawImage(
+                            canvas
+                            .getContext("2d")
+                            .drawImage(
                                 img,
                                 0,
                                 0,
@@ -991,7 +1027,7 @@ function compressImage(file){
 
 
                     img.src =
-                        event.target.result;
+                        e.target.result;
 
                 };
 
@@ -1000,7 +1036,9 @@ function compressImage(file){
                 reject;
 
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(
+                file
+            );
 
         }
     );
@@ -1014,13 +1052,15 @@ function compressImage(file){
 
 document
 .getElementById("saveTask")
-.addEventListener(
-    "click",
-    async () => {
+.onclick = async () => {
+
+    try{
 
         const name =
             document
-            .getElementById("taskName")
+            .getElementById(
+                "taskName"
+            )
             .value
             .trim();
 
@@ -1028,7 +1068,9 @@ document
         const price =
             Number(
                 document
-                .getElementById("taskPrice")
+                .getElementById(
+                    "taskPrice"
+                )
                 .value
             );
 
@@ -1045,7 +1087,9 @@ document
 
         const file =
             document
-            .getElementById("taskImage")
+            .getElementById(
+                "taskImage"
+            )
             .files[0];
 
 
@@ -1065,121 +1109,126 @@ document
         }
 
 
-        const status =
-            document.getElementById(
-                "taskStatus"
-            );
-
-
-        const btn =
-            document.getElementById(
-                "saveTask"
-            );
-
-
-        btn.disabled = true;
-
-        status.textContent =
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
             "Compressing image...";
 
 
-        try{
-
-            const image =
-                await compressImage(file);
-
-
-            status.textContent =
-                "Saving task...";
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "tasks"
-                ),
-                {
-
-                    name:
-                        name,
-
-                    price:
-                        price,
-
-                    commission:
-                        commission,
-
-                    image:
-                        image,
-
-                    order:
-                        Date.now(),
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
+        const image =
+            await compressImage(
+                file
             );
 
 
-            document
-            .getElementById("taskName")
-            .value = "";
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            "Saving task...";
 
 
-            document
-            .getElementById("taskPrice")
-            .value = "";
+        await addDoc(
+            collection(
+                db,
+                "tasks"
+            ),
+            {
+
+                name:
+                    name,
+
+                price:
+                    price,
+
+                commission:
+                    commission,
+
+                image:
+                    image,
+
+                createdAt:
+                    serverTimestamp(),
+
+                order:
+                    Date.now()
+
+            }
+        );
 
 
-            document
-            .getElementById(
-                "taskCommission"
-            )
-            .value = "";
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            "Task saved successfully ✓";
 
 
-            document
-            .getElementById("taskImage")
-            .value = "";
+        document
+        .getElementById(
+            "taskName"
+        )
+        .value = "";
 
 
-            document
-            .getElementById("imagePreview")
-            .style.display =
-                "none";
+        document
+        .getElementById(
+            "taskPrice"
+        )
+        .value = "";
 
 
-            status.textContent =
-                "Task saved successfully ✓";
+        document
+        .getElementById(
+            "taskCommission"
+        )
+        .value = "";
 
 
-            await loadTasks();
-
-        }
-        catch(error){
-
-            console.error(
-                "Save task error:",
-                error
-            );
+        document
+        .getElementById(
+            "taskImage"
+        )
+        .value = "";
 
 
-            status.textContent =
-                error.message;
+        document
+        .getElementById(
+            "imagePreview"
+        )
+        .style.display =
+            "none";
 
 
-            alert(
-                error.message
-            );
-
-        }
-
-
-        btn.disabled = false;
+        loadTasks();
 
     }
-);
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            error.message;
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+};
 
 
 /* =========================
@@ -1200,7 +1249,7 @@ async function loadTasks(){
 
     try{
 
-        const snapshot =
+        const snap =
             await getDocs(
                 collection(
                     db,
@@ -1209,10 +1258,10 @@ async function loadTasks(){
             );
 
 
-        if(snapshot.empty){
+        if(snap.empty){
 
             list.innerHTML =
-                '<div class="no-data">No tasks found.</div>';
+                "No tasks found.";
 
             return;
 
@@ -1222,15 +1271,15 @@ async function loadTasks(){
         const tasks = [];
 
 
-        snapshot.forEach(
-            item => {
+        snap.forEach(
+            d => {
 
                 tasks.push({
 
                     id:
-                        item.id,
+                        d.id,
 
-                    ...item.data()
+                    ...d.data()
 
                 });
 
@@ -1240,7 +1289,8 @@ async function loadTasks(){
 
         tasks.sort(
             (a,b) =>
-                Number(a.order || 0) -
+                Number(a.order || 0)
+                -
                 Number(b.order || 0)
         );
 
@@ -1276,14 +1326,107 @@ async function loadTasks(){
                     }
 
                     <h4>
-                        ${escapeHTML(
-                            task.name ||
-                            "Task"
-                        )}
+                        ${task.name || "Task"}
                     </h4>
 
                     <p>
                         Price:
-                        PKR ${Number(
-                            task.price || 0
-    
+                        ${task.price || 0}
+                    </p>
+
+                    <p>
+                        Commission:
+                        ${task.commission || 0}
+                    </p>
+
+                    <div class="row">
+
+                        <button
+                            class="small red"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                div
+                .querySelector(".red")
+                .onclick =
+                async () => {
+
+                    if(
+                        !confirm(
+                            "Delete this task?"
+                        )
+                    ){
+
+                        return;
+
+                    }
+
+
+                    await deleteDoc(
+                        doc(
+                            db,
+                            "tasks",
+                            task.id
+                        )
+                    );
+
+
+                    loadTasks();
+
+                };
+
+
+                list.appendChild(
+                    div
+                );
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Tasks error:",
+            error
+        );
+
+
+        list.innerHTML =
+            "Unable to load tasks.";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD USERS
+========================= */
+
+async function loadUsers(){
+
+    const list =
+        document.getElementById(
+            "userList"
+        );
+
+
+    list.innerHTML =
+        "Loading users...";
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "users"
+                )
