@@ -1,192 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EliteTask Pro - Customer Service</title>
+<title>Customer Service - EliteTask Pro</title>
 
 <style>
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#f5f0ff;
-    color:#17152d;
-    padding-bottom:90px;
+    min-height:100vh;
+    background:linear-gradient(135deg,#fffdf7,#f7efd2,#fffaf0);
+    color:#222;
+    padding-bottom:85px;
 }
 
-/* TOP BAR */
+/* TOP */
 
 .top-area{
-    height:70px;
-    background:#ffffff;
+    height:68px;
     display:flex;
     align-items:center;
     justify-content:center;
     position:relative;
-    border-bottom:1px solid #eee8ff;
+    padding:10px 15px;
 }
 
 .back-btn{
     position:absolute;
-    left:16px;
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    background:#f4efff;
+    left:15px;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:white;
+    border:1px solid #eadca9;
     display:flex;
     align-items:center;
     justify-content:center;
+    color:#9a7410;
     text-decoration:none;
-    color:#6d35e8;
-    font-size:25px;
+    font-size:24px;
+    box-shadow:0 4px 14px rgba(120,90,20,.10);
 }
 
 .logo-area{
     display:flex;
     align-items:center;
-    gap:9px;
+    gap:8px;
 }
 
 .logo{
     width:40px;
     height:40px;
     border-radius:12px;
-    background:linear-gradient(135deg,#6d28ff,#a64cff);
+    background:linear-gradient(135deg,#d4af37,#f0d878);
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
+    font-size:16px;
     font-weight:bold;
 }
 
 .logo-text{
     font-size:18px;
-    font-weight:800;
-    color:#30245f;
+    font-weight:bold;
+    color:#745707;
 }
 
-/* MAIN */
+/* CONTAINER */
 
 .container{
     width:100%;
-    max-width:500px;
+    max-width:430px;
     margin:auto;
-    padding:15px 14px 30px;
+    padding:5px 12px 25px;
 }
 
 /* HEADER */
 
 .service-header{
     text-align:center;
-    padding:12px 5px 18px;
+    padding:12px 5px 16px;
 }
 
 .service-icon{
-    width:62px;
-    height:62px;
+    width:58px;
+    height:58px;
     margin:auto;
-    border-radius:20px;
-    background:linear-gradient(135deg,#7134ef,#a14ff5);
+    border-radius:18px;
+    background:linear-gradient(135deg,#d4af37,#efd477);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:29px;
-    box-shadow:0 8px 22px rgba(111,52,239,.22);
+    font-size:27px;
+    box-shadow:0 7px 20px rgba(180,140,30,.18);
 }
 
 .service-header h2{
-    margin-top:11px;
-    font-size:22px;
+    margin-top:10px;
+    font-size:21px;
+    color:#604807;
 }
 
 .service-header p{
     margin-top:5px;
-    font-size:13px;
-    color:#77738c;
+    font-size:12px;
+    color:#888;
 }
 
-/* CONTACT BUTTONS */
-
-.contact-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:13px;
-}
-
-.contact-btn{
-    height:47px;
-    border:none;
-    border-radius:14px;
-    color:white;
-    font-size:14px;
-    font-weight:bold;
-    text-decoration:none;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-}
-
-.whatsapp{
-    background:#25D366;
-}
-
-.telegram{
-    background:#229ED9;
-}
-
-/* SUPPORT CARD */
+/* CARD */
 
 .support-card{
     background:white;
-    border-radius:22px;
-    padding:16px;
-    box-shadow:0 7px 25px rgba(50,30,100,.08);
+    border-radius:20px;
+    padding:13px;
+    border:1px solid #eadca9;
+    box-shadow:0 7px 25px rgba(120,90,20,.10);
 }
 
 .support-card h3{
-    font-size:18px;
+    font-size:16px;
+    color:#604807;
 }
 
 .support-card > p{
-    margin-top:5px;
-    margin-bottom:12px;
-    color:#77738c;
-    font-size:12px;
+    margin-top:4px;
+    margin-bottom:10px;
+    font-size:11px;
+    color:#888;
 }
 
 /* CHAT */
 
 .chat-box{
-    height:380px;
+    height:340px;
     overflow-y:auto;
     padding:10px;
-    border-radius:17px;
-    background:#faf9ff;
-    border:1px solid #eee8ff;
+    border-radius:15px;
+    background:#faf8f0;
+    border:1px solid #eee3b9;
     display:flex;
     flex-direction:column;
-    gap:9px;
+    gap:8px;
 }
 
 .empty-chat{
     flex:1;
-    min-height:250px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    color:#9995a8;
-    font-size:13px;
+    color:#999;
+    font-size:12px;
     padding:20px;
 }
 
@@ -194,16 +166,16 @@ body{
 
 .chat-message{
     max-width:82%;
-    padding:9px 12px;
-    border-radius:15px;
-    font-size:14px;
-    line-height:1.4;
+    padding:9px 11px;
+    border-radius:14px;
+    font-size:13px;
+    line-height:1.35;
     word-break:break-word;
 }
 
 .user-message{
     align-self:flex-end;
-    background:linear-gradient(135deg,#7134ef,#9149f4);
+    background:linear-gradient(135deg,#d4af37,#e8cc68);
     color:white;
     border-bottom-right-radius:4px;
 }
@@ -212,139 +184,168 @@ body{
     align-self:flex-start;
     background:white;
     color:#333;
-    border:1px solid #e8e1fa;
-    box-shadow:0 3px 10px rgba(0,0,0,.05);
+    border:1px solid #eadca9;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
     border-bottom-left-radius:4px;
 }
 
 .message-label{
-    font-size:10px;
+    font-size:9px;
     font-weight:bold;
     margin-bottom:3px;
-    opacity:.7;
+    opacity:.75;
 }
 
 .message-text{
     white-space:pre-wrap;
 }
 
+/* IMAGE */
+
 .chat-image{
     width:100%;
-    max-width:270px;
-    max-height:280px;
+    max-width:220px;
+    max-height:230px;
     object-fit:contain;
-    border-radius:11px;
-    margin-top:5px;
+    border-radius:10px;
     display:block;
+    margin-top:5px;
+    background:#eee;
+    cursor:pointer;
 }
 
-/* MESSAGE AREA */
+/* INPUT */
 
 .message-area{
     display:flex;
+    gap:6px;
+    margin-top:9px;
     align-items:center;
-    gap:7px;
-    margin-top:10px;
-}
-
-.gallery-btn{
-    width:45px;
-    height:45px;
-    flex-shrink:0;
-    border:none;
-    border-radius:13px;
-    background:#f0eaff;
-    color:#7035ed;
-    font-size:21px;
-    cursor:pointer;
 }
 
 .message-input{
     flex:1;
-    height:45px;
-    border:1px solid #ddd8e8;
-    border-radius:13px;
+    min-width:0;
+    height:44px;
+    border-radius:12px;
+    border:1px solid #ddd;
     outline:none;
-    padding:0 12px;
+    padding:0 11px;
     font-size:13px;
     background:white;
 }
 
 .message-input:focus{
-    border-color:#7838ef;
-    box-shadow:0 0 0 3px rgba(120,56,239,.08);
+    border-color:#d4af37;
 }
 
-.send-btn{
-    width:45px;
-    height:45px;
+/* GALLERY */
+
+.gallery-btn{
+    width:42px;
+    height:44px;
     flex-shrink:0;
     border:none;
-    border-radius:13px;
-    background:linear-gradient(135deg,#7134ef,#974bf5);
-    color:white;
-    font-size:19px;
+    border-radius:12px;
+    background:#f7f1d9;
+    color:#a27a0d;
+    font-size:20px;
     cursor:pointer;
 }
 
-.send-btn:disabled,
-.gallery-btn:disabled{
-    opacity:.5;
+.send-btn{
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#c9a227,#e4c75e);
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.55;
     cursor:not-allowed;
 }
 
-.file-name{
+/* PREVIEW */
+
+.preview-box{
     display:none;
-    font-size:11px;
-    color:#77738c;
-    margin-top:6px;
-    padding-left:4px;
+    position:relative;
+    margin-top:8px;
+    padding:7px;
+    background:#faf8f0;
+    border-radius:12px;
+}
+
+.preview-box img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border-radius:9px;
+}
+
+.remove-preview{
+    position:absolute;
+    top:2px;
+    left:78px;
+    width:22px;
+    height:22px;
+    border:none;
+    border-radius:50%;
+    background:#e33;
+    color:white;
+    font-size:12px;
 }
 
 /* QUICK HELP */
 
 .quick-title{
-    margin:22px 2px 11px;
-    font-size:18px;
+    margin:18px 2px 9px;
+    font-size:16px;
+    color:#604807;
 }
 
 .quick-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
+    gap:9px;
 }
 
 .quick-btn{
-    border:none;
+    border:1px solid #eadca9;
     background:white;
-    border-radius:16px;
-    padding:14px 8px;
+    border-radius:14px;
+    padding:11px 8px;
     cursor:pointer;
-    box-shadow:0 5px 18px rgba(50,30,100,.07);
-    color:#38236f;
+    box-shadow:0 4px 13px rgba(120,90,20,.07);
+    color:#604807;
 }
 
 .quick-btn div{
-    font-size:23px;
-    margin-bottom:5px;
+    font-size:21px;
+    margin-bottom:4px;
 }
 
 .quick-btn span{
-    font-size:12px;
+    font-size:11px;
     font-weight:bold;
 }
 
-/* BOTTOM NAV */
+/* BOTTOM */
 
 .bottom-nav{
     position:fixed;
     left:0;
     right:0;
     bottom:0;
-    height:72px;
-    background:rgba(255,255,255,.98);
-    border-top:1px solid #eee8ff;
-    box-shadow:0 -5px 20px rgba(50,30,100,.08);
+    height:70px;
+    background:white;
+    border-top:1px solid #eadca9;
+    box-shadow:0 -4px 18px rgba(80,60,20,.08);
     display:flex;
     align-items:center;
     justify-content:space-around;
@@ -355,13 +356,13 @@ body{
     width:25%;
     height:100%;
     text-decoration:none;
-    color:#8a8795;
+    color:#888;
+    font-size:10px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
     gap:3px;
-    font-size:10px;
 }
 
 .nav-item span{
@@ -369,35 +370,25 @@ body{
 }
 
 .nav-item.active{
-    color:#7134ef;
+    color:#b38a13;
     font-weight:bold;
 }
 
 .nav-center{
-    width:47px;
-    height:47px;
-    margin-top:-19px;
+    width:42px;
+    height:42px;
+    margin-top:-17px;
     border-radius:50%;
-    background:linear-gradient(135deg,#7134ef,#984bf5);
+    background:linear-gradient(135deg,#d4af37,#efd477);
     color:white;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:21px;
+    font-size:19px;
     border:4px solid white;
-    box-shadow:0 6px 18px rgba(113,52,239,.3);
 }
 
-/* UPLOAD */
-
-.uploading{
-    text-align:center;
-    font-size:12px;
-    color:#7134ef;
-    padding:5px;
-}
-
-/* SMALL MOBILE */
+/* MOBILE */
 
 @media(max-width:380px){
 
@@ -407,19 +398,13 @@ body{
     }
 
     .chat-box{
-        height:350px;
-    }
-
-    .chat-message{
-        max-width:86%;
+        height:310px;
     }
 
     .logo-text{
-        font-size:16px;
+        font-size:17px;
     }
-
 }
-
 </style>
 </head>
 
@@ -450,7 +435,7 @@ body{
 
 <div class="container">
 
-<!-- SERVICE HEADER -->
+<!-- HEADER -->
 
 <div class="service-header">
 
@@ -469,30 +454,7 @@ body{
 </div>
 
 
-<!-- DIRECT CONTACT -->
-
-<div class="contact-buttons">
-
-    <a
-        class="contact-btn whatsapp"
-        href="https://wa.me/923125917677"
-        target="_blank"
-    >
-        💬 WhatsApp
-    </a>
-
-    <a
-        class="contact-btn telegram"
-        href="https://t.me/Helpcenter21"
-        target="_blank"
-    >
-        ✈️ Telegram
-    </a>
-
-</div>
-
-
-<!-- CHAT -->
+<!-- SUPPORT -->
 
 <div class="support-card">
 
@@ -501,7 +463,7 @@ body{
     </h3>
 
     <p>
-        Send us a message and our support team will respond.
+        Send a message or photo to customer support.
     </p>
 
 
@@ -511,18 +473,32 @@ body{
     >
 
         <div class="empty-chat">
-            Connecting to customer service...
+            Loading conversation...
         </div>
 
     </div>
 
 
-    <!-- UPLOAD STATUS -->
+    <!-- IMAGE PREVIEW -->
 
     <div
-        id="uploadStatus"
-        class="file-name"
+        class="preview-box"
+        id="previewBox"
     >
+
+        <img
+            id="previewImage"
+            alt="Preview"
+        >
+
+        <button
+            class="remove-preview"
+            id="removePreview"
+            type="button"
+        >
+            ×
+        </button>
+
     </div>
 
 
@@ -530,20 +506,21 @@ body{
 
     <div class="message-area">
 
-        <button
-            type="button"
-            class="gallery-btn"
-            id="galleryBtn"
-        >
-            📎
-        </button>
-
         <input
             type="file"
             id="imageInput"
             accept="image/*"
-            style="display:none;"
+            hidden
         >
+
+        <button
+            class="gallery-btn"
+            id="galleryBtn"
+            type="button"
+            title="Gallery"
+        >
+            🖼️
+        </button>
 
         <input
             type="text"
@@ -554,9 +531,9 @@ body{
         >
 
         <button
-            type="button"
             class="send-btn"
             id="sendBtn"
+            type="button"
         >
             ➤
         </button>
@@ -572,7 +549,6 @@ body{
     Quick Help
 </h3>
 
-
 <div class="quick-grid">
 
     <button
@@ -583,7 +559,6 @@ body{
         <span>Task Help</span>
     </button>
 
-
     <button
         class="quick-btn"
         onclick="sendQuick('I need help with withdrawal.')"
@@ -592,7 +567,6 @@ body{
         <span>Withdrawal</span>
     </button>
 
-
     <button
         class="quick-btn"
         onclick="sendQuick('I have a problem with my account.')"
@@ -600,7 +574,6 @@ body{
         <div>👤</div>
         <span>Account</span>
     </button>
-
 
     <button
         class="quick-btn"
@@ -619,42 +592,24 @@ body{
 
 <div class="bottom-nav">
 
-    <a
-        href="dashboard.html"
-        class="nav-item"
-    >
+    <a href="dashboard.html" class="nav-item">
         <span>⌂</span>
         Home
     </a>
 
-
-    <a
-        href="orders.html"
-        class="nav-item"
-    >
+    <a href="orders.html" class="nav-item">
         <span>▣</span>
         Tasks
     </a>
 
-
-    <a
-        href="support.html"
-        class="nav-item active"
-    >
-
+    <a href="support.html" class="nav-item active">
         <div class="nav-center">
             💬
         </div>
-
         Support
-
     </a>
 
-
-    <a
-        href="profile.html"
-        class="nav-item"
-    >
+    <a href="profile.html" class="nav-item">
         <span>👤</span>
         Profile
     </a>
@@ -662,24 +617,18 @@ body{
 </div>
 
 
-<!-- FIREBASE -->
-
 <script type="module">
 
 import {
     initializeApp
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -690,9 +639,7 @@ import {
     onSnapshot,
     serverTimestamp
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 import {
     getStorage,
@@ -700,11 +647,10 @@ import {
     uploadBytes,
     getDownloadURL
 }
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
 
 
-/* FIREBASE CONFIG */
+/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -724,12 +670,10 @@ const firebaseConfig = {
     "504295275402",
 
     appId:
-    "1:504295275402:web:8c480445c5510fa645a673"
+    "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
-
-/* INITIALIZE */
 
 const app =
     initializeApp(firebaseConfig);
@@ -761,11 +705,18 @@ const galleryBtn =
 const imageInput =
     document.getElementById("imageInput");
 
-const uploadStatus =
-    document.getElementById("uploadStatus");
+const previewBox =
+    document.getElementById("previewBox");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+const removePreview =
+    document.getElementById("removePreview");
 
 
 let currentUser = null;
+let selectedImage = null;
 let unsubscribeMessages = null;
 
 
@@ -775,154 +726,59 @@ let unsubscribeMessages = null;
 
 onAuthStateChanged(
     auth,
-    async (user) => {
+    user => {
 
         if(!user){
 
-            window.location.href =
-                "index.html";
+            currentUser = null;
+
+            if(unsubscribeMessages){
+                unsubscribeMessages();
+                unsubscribeMessages = null;
+            }
+
+            chatBox.innerHTML = `
+                <div class="empty-chat">
+                    Please login to use Customer Service.
+                </div>
+            `;
+
+            messageInput.disabled = true;
+            sendBtn.disabled = true;
+            galleryBtn.disabled = true;
 
             return;
-
         }
 
 
         currentUser = user;
 
-
         messageInput.disabled = false;
         sendBtn.disabled = false;
         galleryBtn.disabled = false;
 
-
-        await createWelcomeMessage(
-            user
-        );
-
-
-        loadMessages(
-            user.uid
-        );
+        loadMessages(user.uid);
 
     }
 );
 
 
 /* =========================
-   NEW USER WELCOME
-========================= */
-
-async function createWelcomeMessage(user){
-
-    try{
-
-        const messagesRef =
-            collection(
-                db,
-                "supportMessages"
-            );
-
-
-        const q =
-            query(
-                messagesRef,
-                where(
-                    "userId",
-                    "==",
-                    user.uid
-                )
-            );
-
-
-        let found = false;
-
-
-        const unsubscribe =
-            onSnapshot(
-                q,
-                (snapshot) => {
-
-                    found =
-                        !snapshot.empty;
-
-                }
-            );
-
-
-        setTimeout(
-            async () => {
-
-                unsubscribe();
-
-
-                if(found){
-                    return;
-                }
-
-
-                await addDoc(
-                    messagesRef,
-                    {
-
-                        userId:
-                            user.uid,
-
-                        userEmail:
-                            user.email || "",
-
-                        message:
-                            "Welcome to EliteTask Pro Customer Support. How can we help you today?",
-
-                        sender:
-                            "admin",
-
-                        status:
-                            "new",
-
-                        createdAt:
-                            serverTimestamp()
-
-                    }
-                );
-
-            },
-            1200
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Welcome message error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================
-   LOAD CHAT
+   LOAD USER CHAT
 ========================= */
 
 function loadMessages(uid){
 
     if(unsubscribeMessages){
-
         unsubscribeMessages();
-
         unsubscribeMessages = null;
-
     }
 
 
     chatBox.innerHTML = `
-
         <div class="empty-chat">
             Loading conversation...
         </div>
-
     `;
 
 
@@ -932,6 +788,15 @@ function loadMessages(uid){
             "supportMessages"
         );
 
+
+    /*
+    IMPORTANT:
+
+    Sirf current user ke messages
+    load honge.
+
+    Har user ki chat alag rahegi.
+    */
 
     const q =
         query(
@@ -946,26 +811,19 @@ function loadMessages(uid){
 
     unsubscribeMessages =
         onSnapshot(
-
             q,
-
-            (snapshot) => {
+            snapshot => {
 
                 if(snapshot.empty){
 
                     chatBox.innerHTML = `
-
                         <div class="empty-chat">
-
-                            No messages yet.<br>
-                            Send us a message.
-
+                            No messages yet.<br><br>
+                            Send us a message and our support team will respond.
                         </div>
-
                     `;
 
                     return;
-
                 }
 
 
@@ -973,37 +831,22 @@ function loadMessages(uid){
 
 
                 snapshot.forEach(
-                    (docSnap) => {
-
-                        const data =
-                            docSnap.data();
-
+                    docSnap => {
 
                         messages.push({
-
-                            id:
-                                docSnap.id,
-
-                            ...data
-
+                            id:docSnap.id,
+                            ...docSnap.data()
                         });
 
                     }
                 );
 
 
-                /* LOCAL SORT */
-
                 messages.sort(
                     (a,b) => {
 
-                        return getMessageTime(
-                            a.createdAt
-                        )
-                        -
-                        getMessageTime(
-                            b.createdAt
-                        );
+                        return getTime(a.createdAt)
+                             - getTime(b.createdAt);
 
                     }
                 );
@@ -1013,13 +856,7 @@ function loadMessages(uid){
 
 
                 messages.forEach(
-                    (msg) => {
-
-                        const message =
-                            document.createElement(
-                                "div"
-                            );
-
+                    msg => {
 
                         const sender =
                             String(
@@ -1034,158 +871,424 @@ function loadMessages(uid){
                             sender === "support";
 
 
+                        const message =
+                            document.createElement("div");
+
+
                         message.className =
                             isAdmin
-                            ?
-                            "chat-message admin-message"
-                            :
-                            "chat-message user-message";
+                            ? "chat-message admin-message"
+                            : "chat-message user-message";
 
 
                         const label =
                             isAdmin
-                            ?
-                            "Customer Support"
-                            :
-                            "You";
+                            ? "Customer Support"
+                            : "You";
 
 
-                        const labelElement =
-                            document.createElement(
-                                "div"
+                        message.innerHTML = `
+                            <div class="message-label">
+                                ${label}
+                            </div>
+
+                            <div class="message-text"></div>
+                        `;
+
+
+                        const text =
+                            message.querySelector(
+                                ".message-text"
                             );
 
 
-                        labelElement.className =
-                            "message-label";
-
-
-                        labelElement.textContent =
-                            label;
-
-
-                        message.appendChild(
-                            labelElement
-                        );
-
-
-                        /* TEXT */
-
-                        const text =
+                        text.textContent =
                             msg.message ||
                             msg.text ||
                             "";
 
 
-                        if(text){
+                        /*
+                        IMAGE MESSAGE
+                        */
 
-                            const textElement =
-                                document.createElement(
-                                    "div"
-                                );
+                        if(msg.imageUrl){
 
+                            const img =
+                                document.createElement("img");
 
-                            textElement.className =
-                                "message-text";
-
-
-                            textElement.textContent =
-                                text;
-
-
-                            message.appendChild(
-                                textElement
-                            );
-
-                        }
-
-
-                        /* IMAGE */
-
-                        const imageUrl =
-                            msg.imageUrl ||
-                            msg.image ||
-                            msg.photoURL ||
-                            "";
-
-
-                        if(imageUrl){
-
-                            const image =
-                                document.createElement(
-                                    "img"
-                                );
-
-
-                            image.className =
+                            img.className =
                                 "chat-image";
 
+                            img.src =
+                                msg.imageUrl;
 
-                            image.src =
-                                imageUrl;
+                            img.alt =
+                                "Sent image";
 
-
-                            image.alt =
-                                "Attachment";
-
-
-                            image.loading =
-                                "lazy";
-
-
-                            image.onclick =
-                            function(){
-
-                                window.open(
-                                    imageUrl,
-                                    "_blank"
-                                );
-
-                            };
+                            img.onclick =
+                                () => {
+                                    window.open(
+                                        msg.imageUrl,
+                                        "_blank"
+                                    );
+                                };
 
 
-                            message.appendChild(
-                                image
-                            );
+                            text.after(img);
 
                         }
 
 
-                        chatBox.appendChild(
-                            message
-                        );
+                        chatBox.appendChild(message);
 
                     }
                 );
 
 
-                /* ALWAYS SCROLL BOTTOM */
-
-                setTimeout(
-                    () => {
-
-                        chatBox.scrollTop =
-                            chatBox.scrollHeight;
-
-                    },
-                    50
-                );
+                chatBox.scrollTop =
+                    chatBox.scrollHeight;
 
             },
 
 
-            (error) => {
+            error => {
 
                 console.error(
-                    "Chat error:",
+                    "CHAT ERROR:",
                     error
                 );
 
 
                 chatBox.innerHTML = `
-
                     <div class="empty-chat">
-
                         Unable to load conversation.<br><br>
+                        Please check Firebase rules.
+                    </div>
+                `;
 
- 
+            }
+        );
+
+}
+
+
+/* TIME */
+
+function getTime(timestamp){
+
+    if(
+        timestamp &&
+        typeof timestamp.toMillis === "function"
+    ){
+        return timestamp.toMillis();
+    }
+
+    return 0;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+galleryBtn.addEventListener(
+    "click",
+    () => {
+
+        imageInput.click();
+
+    }
+);
+
+
+/* SELECT IMAGE */
+
+imageInput.addEventListener(
+    "change",
+    () => {
+
+        const file =
+            imageInput.files[0];
+
+
+        if(!file){
+            return;
+        }
+
+
+        /*
+        5MB LIMIT
+        */
+
+        if(file.size > 5 * 1024 * 1024){
+
+            alert(
+                "Image 5MB se kam honi chahiye."
+            );
+
+            imageInput.value = "";
+            return;
+
+        }
+
+
+        if(!file.type.startsWith("image/")){
+
+            alert(
+                "Sirf image select karo."
+            );
+
+            imageInput.value = "";
+            return;
+
+        }
+
+
+        selectedImage = file;
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            event => {
+
+                previewImage.src =
+                    event.target.result;
+
+                previewBox.style.display =
+                    "block";
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* REMOVE IMAGE */
+
+removePreview.addEventListener(
+    "click",
+    () => {
+
+        selectedImage = null;
+
+        imageInput.value = "";
+
+        previewBox.style.display =
+            "none";
+
+        previewImage.src = "";
+
+    }
+);
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendMessage(){
+
+    if(!currentUser){
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+
+    }
+
+
+    const text =
+        messageInput.value.trim();
+
+
+    if(!text && !selectedImage){
+
+        return;
+
+    }
+
+
+    sendBtn.disabled = true;
+    galleryBtn.disabled = true;
+    messageInput.disabled = true;
+
+    sendBtn.textContent = "...";
+
+
+    try{
+
+        let imageUrl = "";
+
+
+        /*
+        UPLOAD IMAGE
+        */
+
+        if(selectedImage){
+
+            const fileName =
+                Date.now() +
+                "_" +
+                selectedImage.name
+                .replace(
+                    /[^a-zA-Z0-9._-]/g,
+                    "_"
+                );
+
+
+            const imageRef =
+                ref(
+                    storage,
+                    "supportImages/" +
+                    currentUser.uid +
+                    "/" +
+                    fileName
+                );
+
+
+            const uploadResult =
+                await uploadBytes(
+                    imageRef,
+                    selectedImage
+                );
+
+
+            imageUrl =
+                await getDownloadURL(
+                    uploadResult.ref
+                );
+
+        }
+
+
+        /*
+        FIRESTORE MESSAGE
+
+        userId current logged-in user ka hai,
+        isliye har user ki chat separate rahegi.
+        */
+
+        await addDoc(
+            collection(
+                db,
+                "supportMessages"
+            ),
+            {
+
+                userId:
+                    currentUser.uid,
+
+                userEmail:
+                    currentUser.email || "",
+
+                message:
+                    text,
+
+                imageUrl:
+                    imageUrl,
+
+                sender:
+                    "user",
+
+                status:
+                    "new",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        messageInput.value = "";
+
+        selectedImage = null;
+
+        imageInput.value = "";
+
+        previewBox.style.display =
+            "none";
+
+        previewImage.src = "";
+
+    }
+    catch(error){
+
+        console.error(
+            "SEND ERROR:",
+            error
+        );
+
+
+        alert(
+            "Message send nahi ho saka: " +
+            error.message
+        );
+
+    }
+
+
+    sendBtn.disabled = false;
+    galleryBtn.disabled = false;
+    messageInput.disabled = false;
+
+    sendBtn.textContent = "➤";
+
+    messageInput.focus();
+
+}
+
+
+/* SEND BUTTON */
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* ENTER */
+
+messageInput.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Enter"
+        ){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* QUICK HELP */
+
+window.sendQuick =
+function(text){
+
+    messageInput.value =
+        text;
+
+    sendMessage();
+
+};
+
+</script>
+
+</body>
+</html>
