@@ -1,345 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Customer Service - EliteTask Pro</title>
 
 <style>
-
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    min-height:100%;
 }
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    min-height:100vh;
-    background:linear-gradient(135deg,#fffdf7,#f7efd2,#fffaf0);
-    color:#222;
-    padding-bottom:90px;
+    background:#f7f8fc;
+    color:#172033;
+    padding-bottom:82px;
 }
 
-/* TOP */
+/* =========================
+   TOP BAR
+========================= */
 
 .top-area{
+    height:72px;
+    background:linear-gradient(135deg,#6d35f5,#9146f5);
+    color:white;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     position:relative;
-    padding:22px 20px 16px;
+
+    box-shadow:0 4px 18px rgba(85,50,180,.18);
 }
 
 .back-btn{
     position:absolute;
-    left:18px;
-    top:20px;
+    left:15px;
+
     width:42px;
     height:42px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     text-decoration:none;
-    background:#fff;
-    border:1px solid rgba(212,175,55,.30);
-    border-radius:13px;
-    color:#9a7410;
-    font-size:25px;
-    box-shadow:0 5px 18px rgba(120,90,20,.10);
+
+    color:white;
+    font-size:28px;
+    font-weight:300;
+
+    border-radius:50%;
+    background:rgba(255,255,255,.13);
 }
 
 .logo-area{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:9px;
 }
 
 .logo{
-    width:44px;
-    height:44px;
+    width:39px;
+    height:39px;
+
+    border-radius:12px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:13px;
-    background:linear-gradient(135deg,#d4af37,#f5df8b);
-    color:#fff;
+
+    background:rgba(255,255,255,.18);
+
+    color:white;
+
+    font-size:15px;
     font-weight:800;
-    font-size:17px;
 }
 
 .logo-text{
-    font-size:20px;
+    font-size:18px;
     font-weight:800;
-    color:#7a5a0a;
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .container{
     width:100%;
     max-width:600px;
+
     margin:auto;
-    padding:10px 16px 30px;
+
+    padding:12px 14px 25px;
 }
 
-/* HEADER */
+/* =========================
+   SUPPORT HEADER
+========================= */
 
 .service-header{
     text-align:center;
-    padding:18px 10px 20px;
+
+    padding:8px 5px 15px;
 }
 
 .service-icon{
-    width:68px;
-    height:68px;
+    width:58px;
+    height:58px;
+
     margin:auto;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:22px;
-    background:linear-gradient(135deg,#d4af37,#f3d875);
-    font-size:31px;
-    box-shadow:0 8px 25px rgba(180,140,30,.20);
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #7138f5,
+        #a05bf5
+    );
+
+    color:white;
+
+    font-size:27px;
+
+    box-shadow:
+        0 8px 22px
+        rgba(105,55,230,.22);
 }
 
 .service-header h2{
-    margin-top:14px;
-    font-size:23px;
-    color:#5f4707;
+    margin-top:9px;
+
+    font-size:21px;
+
+    color:#191c35;
 }
 
 .service-header p{
-    margin-top:6px;
-    font-size:14px;
-    color:#777;
+    margin-top:4px;
+
+    font-size:13px;
+
+    color:#7d8498;
 }
 
-/* SUPPORT */
+/* =========================
+   CHAT CARD
+========================= */
 
 .support-card{
-    background:rgba(255,255,255,.94);
-    border-radius:22px;
-    padding:18px;
-    border:1px solid rgba(212,175,55,.28);
-    box-shadow:0 10px 35px rgba(120,90,20,.12);
+    background:white;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 8px 30px
+        rgba(25,30,70,.08);
+
+    border:1px solid #ececf4;
 }
 
-.support-card h3{
-    font-size:18px;
-    color:#5e4606;
-}
+/* =========================
+   CHAT HEADER
+========================= */
 
-.support-card > p{
-    margin-top:5px;
-    margin-bottom:15px;
-    color:#777;
-    font-size:13px;
-}
+.chat-header{
+    height:70px;
 
-/* CHAT */
-
-.chat-box{
-    height:330px;
-    overflow-y:auto;
-    padding:12px;
-    border-radius:16px;
-    background:#faf8f0;
-    border:1px solid rgba(212,175,55,.18);
     display:flex;
-    flex-direction:column;
-    gap:10px;
+    align-items:center;
+
+    padding:10px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4f1ff,
+            #ffffff
+        );
+
+    border-bottom:1px solid #ededf4;
 }
 
-.empty-chat{
-    flex:1;
+.support-avatar{
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    text-align:center;
-    color:#999;
-    font-size:13px;
-    padding:20px;
+
+    background:linear-gradient(
+        135deg,
+        #7138f5,
+        #a45cf5
+    );
+
+    color:white;
+
+    font-size:23px;
+
+    margin-right:11px;
 }
 
-/* MESSAGES */
+.support-info{
+    flex:1;
+}
+
+.support-name{
+    font-size:15px;
+    font-weight:800;
+
+    color:#24263b;
+}
+
+.online{
+    margin-top:3px;
+
+    font-size:11px;
+
+    color:#22a35a;
+}
+
+.online-dot{
+    display:inline-block;
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#22b55d;
+
+    margin-right:4px;
+}
+
+/* =========================
+   CHAT BOX
+========================= */
+
+.chat-box{
+    height:430px;
+
+    overflow-y:auto;
+
+    padding:15px 11px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8f9fd,
+            #ffffff
+        );
+
+    display:flex;
+    flex-direction:column;
+
+    gap:10px;
+}
+
+/* scrollbar */
+
+.chat-box::-webkit-scrollbar{
+    width:5px;
+}
+
+.chat-box::-webkit-scrollbar-thumb{
+    background:#cfcfe0;
+    border-radius:10px;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty-chat{
+    margin:auto;
+
+    text-align:center;
+
+    color:#9aa0b0;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    padding:25px;
+}
+
+/* =========================
+   MESSAGES
+========================= */
 
 .chat-message{
     max-width:82%;
-    padding:10px 13px;
-    border-radius:15px;
+
+    padding:9px 11px;
+
+    border-radius:16px;
+
     font-size:14px;
+
     line-height:1.4;
+
     word-break:break-word;
+
+    position:relative;
 }
 
 .user-message{
     align-self:flex-end;
-    background:linear-gradient(135deg,#d4af37,#e7ca63);
-    color:#fff;
-    border-bottom-right-radius:4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d35f5,
+            #8744f5
+        );
+
+    color:white;
+
+    border-bottom-right-radius:5px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(105,55,230,.14);
 }
 
 .admin-message{
     align-self:flex-start;
-    background:#fff;
-    color:#333;
-    border:1px solid rgba(212,175,55,.22);
-    box-shadow:0 3px 10px rgba(0,0,0,.05);
-    border-bottom-left-radius:4px;
+
+    background:white;
+
+    color:#292b37;
+
+    border:1px solid #ececf3;
+
+    border-bottom-left-radius:5px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(30,35,70,.06);
 }
 
 .message-label{
     font-size:10px;
-    font-weight:700;
+
+    font-weight:800;
+
     margin-bottom:3px;
-    opacity:.75;
+
+    opacity:.68;
 }
 
 .message-text{
     white-space:pre-wrap;
+
+    font-size:14px;
 }
 
-/* INPUT */
+/* =========================
+   MESSAGE IMAGE
+========================= */
+
+.message-image{
+    display:block;
+
+    width:100%;
+    max-width:300px;
+
+    max-height:300px;
+
+    object-fit:cover;
+
+    border-radius:11px;
+
+    margin-top:3px;
+
+    cursor:pointer;
+}
+
+/* =========================
+   TIME
+========================= */
+
+.message-time{
+    display:block;
+
+    text-align:right;
+
+    font-size:9px;
+
+    margin-top:4px;
+
+    opacity:.58;
+}
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+.preview-area{
+    display:none;
+
+    padding:8px 12px;
+
+    background:#fafaff;
+
+    border-top:1px solid #eeeeF5;
+
+    align-items:center;
+
+    gap:8px;
+}
+
+.preview-area.show{
+    display:flex;
+}
+
+.preview-image{
+    width:55px;
+    height:55px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    border:1px solid #ddd;
+}
+
+.preview-info{
+    flex:1;
+
+    font-size:11px;
+
+    color:#777;
+}
+
+.remove-image{
+    width:28px;
+    height:28px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#eee;
+
+    color:#555;
+
+    font-size:16px;
+}
+
+/* =========================
+   MESSAGE AREA
+========================= */
 
 .message-area{
+    min-height:67px;
+
+    padding:10px 11px;
+
     display:flex;
-    gap:8px;
-    margin-top:12px;
+
+    align-items:center;
+
+    gap:7px;
+
+    background:white;
+
+    border-top:1px solid #eeeeF5;
+}
+
+.attach-btn{
+    width:43px;
+    height:43px;
+
+    flex:none;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f0eff8;
+
+    color:#6d35f5;
+
+    font-size:23px;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .message-input{
     flex:1;
-    height:46px;
-    border-radius:14px;
-    border:1px solid #ddd;
+
+    min-width:0;
+
+    height:43px;
+
+    border:1px solid #e2e3eb;
+
+    border-radius:22px;
+
+    padding:0 15px;
+
     outline:none;
-    padding:0 14px;
-    font-size:14px;
-    background:#fff;
+
+    font-size:13px;
+
+    background:#fafbfe;
+
+    color:#222;
 }
 
 .message-input:focus{
-    border-color:#d4af37;
+    border-color:#8250f5;
+
+    background:white;
 }
 
 .send-btn{
-    width:48px;
-    height:46px;
+    width:43px;
+    height:43px;
+
+    flex:none;
+
     border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#c9a227,#e4c75e);
-    color:#fff;
-    font-size:20px;
-    cursor:pointer;
-}
 
-.send-btn:disabled{
-    opacity:.55;
-}
+    border-radius:50%;
 
-/* =========================
-   DIRECT CONTACT
-========================= */
+    background:
+        linear-gradient(
+            135deg,
+            #6d35f5,
+            #934bf5
+        );
 
-.direct-contact{
-    margin-top:18px;
-    padding:18px;
-    background:#fff;
-    border-radius:20px;
-    border:1px solid rgba(212,175,55,.28);
-    box-shadow:0 8px 25px rgba(120,90,20,.10);
-}
+    color:white;
 
-.direct-title{
     font-size:19px;
-    font-weight:700;
-    color:#5e4606;
-    margin-bottom:5px;
-}
 
-.direct-subtitle{
-    color:#777;
-    font-size:13px;
-    margin-bottom:14px;
-}
+    cursor:pointer;
 
-.contact-buttons{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.contact-btn{
-    width:100%;
-    min-height:58px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:10px 14px;
-    border-radius:15px;
-    text-decoration:none;
-    color:#fff;
-}
-
-.contact-icon{
-    width:38px;
-    height:38px;
-    border-radius:11px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:rgba(255,255,255,.20);
-    font-size:21px;
+
+    box-shadow:
+        0 5px 14px
+        rgba(105,55,230,.25);
 }
 
-.contact-info strong{
-    display:block;
-    font-size:15px;
+.send-btn:disabled{
+    opacity:.45;
 }
 
-.contact-info span{
-    display:block;
-    font-size:11px;
-    margin-top:3px;
-    opacity:.9;
+/* hidden file */
+
+#imageInput{
+    display:none;
 }
 
-.whatsapp-btn{
-    background:#25D366;
-}
-
-.telegram-btn{
-    background:#229ED9;
-}
-
-/* QUICK HELP */
+/* =========================
+   QUICK HELP
+========================= */
 
 .quick-title{
-    margin:25px 4px 12px;
+    margin:19px 4px 10px;
+
     font-size:18px;
-    color:#5e4606;
+
+    color:#191c35;
 }
 
 .quick-grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:9px;
 }
 
 .quick-btn{
-    border:none;
-    background:#fff;
-    border:1px solid rgba(212,175,55,.25);
+    border:1px solid #ececf4;
+
+    background:white;
+
     border-radius:17px;
-    padding:15px 10px;
+
+    padding:13px 8px;
+
     cursor:pointer;
-    box-shadow:0 6px 20px rgba(120,90,20,.08);
-    color:#5e4606;
+
+    color:#292b3b;
+
+    box-shadow:
+        0 5px 17px
+        rgba(30,35,70,.06);
 }
 
 .quick-btn:active{
@@ -347,43 +629,66 @@ body{
 }
 
 .quick-btn div{
-    font-size:24px;
-    margin-bottom:5px;
+    font-size:21px;
+
+    margin-bottom:4px;
 }
 
 .quick-btn span{
-    font-size:13px;
-    font-weight:600;
+    font-size:12px;
+
+    font-weight:700;
 }
 
-/* BOTTOM NAV */
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom-nav{
     position:fixed;
+
     left:0;
     right:0;
     bottom:0;
-    height:72px;
+
+    height:70px;
+
     display:flex;
+
     align-items:center;
     justify-content:space-around;
-    background:rgba(255,255,255,.97);
-    border-top:1px solid rgba(212,175,55,.25);
-    box-shadow:0 -5px 20px rgba(80,60,20,.08);
-    z-index:100;
+
+    background:
+        rgba(255,255,255,.98);
+
+    border-top:1px solid #ececf3;
+
+    box-shadow:
+        0 -5px 20px
+        rgba(30,35,70,.08);
+
+    z-index:1000;
 }
 
 .nav-item{
-    text-decoration:none;
-    color:#888;
-    font-size:11px;
+    width:25%;
+
+    height:100%;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
     justify-content:center;
-    gap:4px;
-    width:25%;
-    height:100%;
+
+    gap:3px;
+
+    text-decoration:none;
+
+    color:#7f8596;
+
+    font-size:10px;
 }
 
 .nav-item span{
@@ -391,59 +696,86 @@ body{
 }
 
 .nav-item.active{
-    color:#b38a13;
-    font-weight:700;
+    color:#7138f5;
+
+    font-weight:800;
 }
 
 .nav-center{
-    width:42px;
-    height:42px;
-    margin-top:-19px;
+    width:46px;
+    height:46px;
+
+    margin-top:-18px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     border-radius:50%;
-    background:linear-gradient(135deg,#d4af37,#efd477);
-    color:#fff;
-    font-size:20px;
-    border:4px solid #fff;
-    box-shadow:0 5px 16px rgba(180,140,30,.22);
+
+    background:
+        linear-gradient(
+            135deg,
+            #7138f5,
+            #984ef5
+        );
+
+    color:white;
+
+    font-size:22px;
+
+    border:4px solid white;
+
+    box-shadow:
+        0 6px 18px
+        rgba(105,55,230,.25);
 }
 
-/* MOBILE */
+/* =========================
+   SMALL MOBILE
+========================= */
 
 @media(max-width:380px){
 
-    .chat-box{
-        height:290px;
-    }
-
-    .service-header h2{
-        font-size:21px;
-    }
-
-    .logo-text{
-        font-size:18px;
-    }
-
     .container{
-        padding-left:12px;
-        padding-right:12px;
+        padding-left:10px;
+        padding-right:10px;
     }
 
+    .chat-box{
+        height:390px;
+    }
+
+    .chat-message{
+        max-width:86%;
+        font-size:13px;
+    }
+
+    .message-input{
+        font-size:12px;
+    }
+
+    .quick-grid{
+        gap:7px;
+    }
 }
 
 </style>
-
 </head>
 
 <body>
 
-<!-- TOP -->
+<!-- =========================
+     TOP AREA
+========================= -->
 
 <div class="top-area">
 
-    <a href="dashboard.html" class="back-btn">
+    <a
+        href="dashboard.html"
+        class="back-btn"
+    >
         ←
     </a>
 
@@ -464,8 +796,9 @@ body{
 
 <div class="container">
 
-
-<!-- SERVICE HEADER -->
+<!-- =========================
+     SERVICE HEADER
+========================= -->
 
 <div class="service-header">
 
@@ -478,25 +811,44 @@ body{
     </h2>
 
     <p>
-        How can we help you today?
+        We're here to help you anytime.
     </p>
 
 </div>
 
 
-<!-- LIVE SUPPORT -->
+<!-- =========================
+     CHAT
+========================= -->
 
 <div class="support-card">
 
-    <h3>
-        Live Support
-    </h3>
+    <div class="chat-header">
 
-    <p>
-        Send us a message and our support team will respond.
-    </p>
+        <div class="support-avatar">
+            👨‍💼
+        </div>
 
-    <div class="chat-box" id="chatBox">
+        <div class="support-info">
+
+            <div class="support-name">
+                Customer Support
+            </div>
+
+            <div class="online">
+                <span class="online-dot"></span>
+                Online
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="chat-box"
+        id="chatBox"
+    >
 
         <div class="empty-chat">
             Loading conversation...
@@ -505,20 +857,64 @@ body{
     </div>
 
 
+    <!-- IMAGE PREVIEW -->
+
+    <div
+        class="preview-area"
+        id="previewArea"
+    >
+
+        <img
+            id="previewImage"
+            class="preview-image"
+            alt="Preview"
+        >
+
+        <div class="preview-info">
+            Image selected
+        </div>
+
+        <button
+            type="button"
+            class="remove-image"
+            id="removeImage"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <!-- MESSAGE INPUT -->
+
     <div class="message-area">
+
+        <button
+            type="button"
+            class="attach-btn"
+            id="attachBtn"
+        >
+            +
+        </button>
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+        >
 
         <input
             type="text"
             id="messageInput"
             class="message-input"
-            placeholder="Type your message..."
+            placeholder="Type a message..."
             autocomplete="off"
         >
 
         <button
+            type="button"
             class="send-btn"
             id="sendBtn"
-            type="button"
         >
             ➤
         </button>
@@ -529,90 +925,12 @@ body{
 
 
 <!-- =========================
-     DIRECT WHATSAPP / TELEGRAM
+     QUICK HELP
 ========================= -->
-
-<div class="direct-contact">
-
-    <div class="direct-title">
-        Direct Contact
-    </div>
-
-    <div class="direct-subtitle">
-        Contact our support team directly.
-    </div>
-
-
-    <div class="contact-buttons">
-
-
-        <!-- WHATSAPP -->
-
-        <a
-            class="contact-btn whatsapp-btn"
-            href="https://wa.me/923125917677"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-
-            <div class="contact-icon">
-                💬
-            </div>
-
-            <div class="contact-info">
-
-                <strong>
-                    WhatsApp
-                </strong>
-
-                <span>
-                    +92 312 5917677
-                </span>
-
-            </div>
-
-        </a>
-
-
-        <!-- TELEGRAM -->
-
-        <a
-            class="contact-btn telegram-btn"
-            href="https://t.me/Helpcenter21"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-
-            <div class="contact-icon">
-                ✈️
-            </div>
-
-            <div class="contact-info">
-
-                <strong>
-                    Telegram
-                </strong>
-
-                <span>
-                    @Helpcenter21
-                </span>
-
-            </div>
-
-        </a>
-
-
-    </div>
-
-</div>
-
-
-<!-- QUICK HELP -->
 
 <h3 class="quick-title">
     Quick Help
 </h3>
-
 
 <div class="quick-grid">
 
@@ -620,13 +938,8 @@ body{
         class="quick-btn"
         onclick="sendQuick('I need help with my tasks.')"
     >
-
         <div>📦</div>
-
-        <span>
-            Task Help
-        </span>
-
+        <span>Task Help</span>
     </button>
 
 
@@ -634,13 +947,8 @@ body{
         class="quick-btn"
         onclick="sendQuick('I need help with withdrawal.')"
     >
-
         <div>💳</div>
-
-        <span>
-            Withdrawal
-        </span>
-
+        <span>Withdrawal</span>
     </button>
 
 
@@ -648,13 +956,8 @@ body{
         class="quick-btn"
         onclick="sendQuick('I have a problem with my account.')"
     >
-
         <div>👤</div>
-
-        <span>
-            Account
-        </span>
-
+        <span>Account</span>
     </button>
 
 
@@ -662,13 +965,8 @@ body{
         class="quick-btn"
         onclick="sendQuick('I need help with my balance.')"
     >
-
         <div>💰</div>
-
-        <span>
-            Balance
-        </span>
-
+        <span>Balance</span>
     </button>
 
 </div>
@@ -676,7 +974,9 @@ body{
 </div>
 
 
-<!-- BOTTOM NAV -->
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <div class="bottom-nav">
 
@@ -684,11 +984,8 @@ body{
         href="dashboard.html"
         class="nav-item"
     >
-
         <span>⌂</span>
-
         Home
-
     </a>
 
 
@@ -696,11 +993,8 @@ body{
         href="orders.html"
         class="nav-item"
     >
-
         <span>▣</span>
-
         Tasks
-
     </a>
 
 
@@ -722,31 +1016,30 @@ body{
         href="profile.html"
         class="nav-item"
     >
-
         <span>👤</span>
-
         Profile
-
     </a>
 
 </div>
 
+
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
 import {
     initializeApp
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 
 import {
     getAuth,
     onAuthStateChanged
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 
 import {
@@ -756,36 +1049,51 @@ import {
     query,
     where,
     onSnapshot,
-    serverTimestamp
+    serverTimestamp,
+    getDocs
 }
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* FIREBASE CONFIG */
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-storage.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
     apiKey:
-    "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+        "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
 
     authDomain:
-    "elitetask-pro.firebaseapp.com",
+        "elitetask-pro.firebaseapp.com",
 
     projectId:
-    "elitetask-pro",
+        "elitetask-pro",
 
     storageBucket:
-    "elitetask-pro.firebasestorage.app",
+        "elitetask-pro.firebasestorage.app",
 
     messagingSenderId:
-    "504295275402",
+        "504295275402",
 
     appId:
-    "1:504295275402:web:cf744a5d4e82c72145a673"
+        "1:504295275402:web:cf744a5d4e82c72145a673"
 
 };
 
+
+/* =========================
+   INITIALIZE
+========================= */
 
 const app =
     initializeApp(firebaseConfig);
@@ -796,6 +1104,13 @@ const auth =
 const db =
     getFirestore(app);
 
+const storage =
+    getStorage(app);
+
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const chatBox =
     document.getElementById("chatBox");
@@ -806,17 +1121,36 @@ const messageInput =
 const sendBtn =
     document.getElementById("sendBtn");
 
+const attachBtn =
+    document.getElementById("attachBtn");
+
+const imageInput =
+    document.getElementById("imageInput");
+
+const previewArea =
+    document.getElementById("previewArea");
+
+const previewImage =
+    document.getElementById("previewImage");
+
+const removeImage =
+    document.getElementById("removeImage");
+
 
 let currentUser = null;
 
 let unsubscribeMessages = null;
 
+let selectedImage = null;
 
-/* AUTH */
+
+/* =========================
+   AUTH
+========================= */
 
 onAuthStateChanged(
     auth,
-    (user) => {
+    async (user) => {
 
         if(!user){
 
@@ -831,38 +1165,119 @@ onAuthStateChanged(
             }
 
             chatBox.innerHTML = `
-
                 <div class="empty-chat">
-
-                    Please login to use
-                    Customer Service.
-
+                    Please login to use Customer Service.
                 </div>
-
             `;
 
             messageInput.disabled = true;
-
             sendBtn.disabled = true;
+            attachBtn.disabled = true;
 
             return;
-
         }
 
 
         currentUser = user;
 
         messageInput.disabled = false;
-
         sendBtn.disabled = false;
+        attachBtn.disabled = false;
 
-        loadMessages(user.uid);
+
+        await createWelcomeMessage(
+            user.uid
+        );
+
+
+        loadMessages(
+            user.uid
+        );
 
     }
 );
 
 
-/* LOAD MESSAGES */
+/* =========================
+   NEW USER WELCOME MESSAGE
+========================= */
+
+async function createWelcomeMessage(uid){
+
+    try{
+
+        const messagesRef =
+            collection(
+                db,
+                "supportMessages"
+            );
+
+
+        const q =
+            query(
+                messagesRef,
+                where(
+                    "userId",
+                    "==",
+                    uid
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        /*
+         Sirf bilkul new user ke liye
+         automatic support message.
+        */
+
+        if(snapshot.empty){
+
+            await addDoc(
+                messagesRef,
+                {
+
+                    userId:
+                        uid,
+
+                    userEmail:
+                        currentUser.email || "",
+
+                    message:
+                        "Welcome to EliteTask Pro Customer Support! 👋\nHow can we help you today?",
+
+                    sender:
+                        "admin",
+
+                    status:
+                        "sent",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Welcome message error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
 
 function loadMessages(uid){
 
@@ -876,11 +1291,9 @@ function loadMessages(uid){
 
 
     chatBox.innerHTML = `
-
         <div class="empty-chat">
             Loading conversation...
         </div>
-
     `;
 
 
@@ -894,7 +1307,11 @@ function loadMessages(uid){
     const q =
         query(
             messagesRef,
-            where("userId","==",uid)
+            where(
+                "userId",
+                "==",
+                uid
+            )
         );
 
 
@@ -908,16 +1325,10 @@ function loadMessages(uid){
                 if(snapshot.empty){
 
                     chatBox.innerHTML = `
-
                         <div class="empty-chat">
-
                             No messages yet.<br>
-
-                            Send us a message and
-                            our support team will respond.
-
+                            Send us a message and our support team will respond.
                         </div>
-
                     `;
 
                     return;
@@ -931,11 +1342,16 @@ function loadMessages(uid){
                 snapshot.forEach(
                     (docSnap) => {
 
+                        const data =
+                            docSnap.data();
+
+
                         messages.push({
 
-                            id:docSnap.id,
+                            id:
+                                docSnap.id,
 
-                            ...docSnap.data()
+                            ...data
 
                         });
 
@@ -943,15 +1359,22 @@ function loadMessages(uid){
                 );
 
 
+                /*
+                Local sorting.
+                Firestore index ki zaroorat nahi.
+                */
+
                 messages.sort(
                     (a,b) => {
 
-                        return getMessageTime(
-                            a.createdAt
-                        )
-                        -
-                        getMessageTime(
-                            b.createdAt
+                        return (
+                            getMessageTime(
+                                a.createdAt
+                            )
+                            -
+                            getMessageTime(
+                                b.createdAt
+                            )
                         );
 
                     }
@@ -962,268 +1385,4 @@ function loadMessages(uid){
 
 
                 messages.forEach(
-                    (msg) => {
-
-                        const message =
-                            document.createElement("div");
-
-
-                        const sender =
-                            String(
-                                msg.sender ||
-                                msg.from ||
-                                "user"
-                            ).toLowerCase();
-
-
-                        const isAdmin =
-                            sender === "admin" ||
-                            sender === "support";
-
-
-                        message.className =
-                            isAdmin
-                            ?
-                            "chat-message admin-message"
-                            :
-                            "chat-message user-message";
-
-
-                        message.innerHTML = `
-
-                            <div class="message-label">
-
-                                ${
-                                    isAdmin
-                                    ?
-                                    "Customer Support"
-                                    :
-                                    "You"
-                                }
-
-                            </div>
-
-                            <div class="message-text"></div>
-
-                        `;
-
-
-                        const text =
-                            message.querySelector(
-                                ".message-text"
-                            );
-
-
-                        text.textContent =
-                            msg.message ||
-                            msg.text ||
-                            "";
-
-
-                        chatBox.appendChild(
-                            message
-                        );
-
-                    }
-                );
-
-
-                chatBox.scrollTop =
-                    chatBox.scrollHeight;
-
-            },
-
-
-            (error) => {
-
-                console.error(
-                    "Support chat error:",
-                    error
-                );
-
-                chatBox.innerHTML = `
-
-                    <div class="empty-chat">
-
-                        Unable to load conversation.
-
-                    </div>
-
-                `;
-
-            }
-
-        );
-
-}
-
-
-/* MESSAGE TIME */
-
-function getMessageTime(timestamp){
-
-    if(
-        timestamp &&
-        typeof timestamp.toMillis ===
-        "function"
-    ){
-
-        return timestamp.toMillis();
-
-    }
-
-    return 0;
-
-}
-
-
-/* SEND */
-
-async function sendMessage(text){
-
-    if(!currentUser){
-
-        alert("Please login first.");
-
-        return;
-
-    }
-
-
-    text =
-        String(text || "").trim();
-
-
-    if(!text){
-
-        return;
-
-    }
-
-
-    sendBtn.disabled = true;
-
-    messageInput.disabled = true;
-
-
-    try{
-
-        await addDoc(
-
-            collection(
-                db,
-                "supportMessages"
-            ),
-
-            {
-
-                userId:
-                    currentUser.uid,
-
-                userEmail:
-                    currentUser.email || "",
-
-                message:
-                    text,
-
-                sender:
-                    "user",
-
-                status:
-                    "new",
-
-                createdAt:
-                    serverTimestamp()
-
-            }
-
-        );
-
-
-        messageInput.value = "";
-
-    }
-    catch(error){
-
-        console.error(
-            error
-        );
-
-
-        if(
-            error.code ===
-            "permission-denied"
-        ){
-
-            alert(
-                "Permission denied. Firestore Rules check karo."
-            );
-
-        }
-        else{
-
-            alert(
-                "Message could not be sent."
-            );
-
-        }
-
-    }
-
-
-    sendBtn.disabled = false;
-
-    messageInput.disabled = false;
-
-    messageInput.focus();
-
-}
-
-
-/* SEND BUTTON */
-
-sendBtn.addEventListener(
-    "click",
-    () => {
-
-        sendMessage(
-            messageInput.value
-        );
-
-    }
-);
-
-
-/* ENTER */
-
-messageInput.addEventListener(
-    "keydown",
-    (event) => {
-
-        if(event.key === "Enter"){
-
-            event.preventDefault();
-
-            sendMessage(
-                messageInput.value
-            );
-
-        }
-
-    }
-);
-
-
-/* QUICK HELP */
-
-window.sendQuick =
-function(text){
-
-    sendMessage(text);
-
-};
-
-</script>
-
-</body>
-</html>
+                    (msg) => 
