@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1.0"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>EliteTask Pro Admin</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -33,19 +25,11 @@ body{
 }
 
 .header{
-    background:
-    linear-gradient(
-        135deg,
-        #806000,
-        #d9b43d,
-        #967000
-    );
-
+    background:linear-gradient(135deg,#806000,#d9b43d,#967000);
     color:white;
     padding:18px;
     border-radius:18px;
     margin-bottom:15px;
-
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -66,7 +50,7 @@ body{
 
 .tabs{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:7px;
     margin-bottom:15px;
 }
@@ -78,7 +62,8 @@ body{
     background:white;
     color:#725300;
     font-weight:bold;
-    font-size:12px;
+    font-size:11px;
+    cursor:pointer;
 }
 
 .tab.active{
@@ -99,10 +84,7 @@ body{
     border-radius:18px;
     padding:18px;
     margin-bottom:15px;
-
-    box-shadow:
-    0 5px 18px
-    rgba(0,0,0,.10);
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
 }
 
 .card h3{
@@ -117,6 +99,12 @@ body{
     border-radius:10px;
     margin-bottom:10px;
     outline:none;
+    font-size:14px;
+}
+
+textarea.input{
+    min-height:90px;
+    resize:vertical;
 }
 
 .preview{
@@ -133,17 +121,14 @@ body{
     padding:14px;
     border:0;
     border-radius:11px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #9d7200,
-        #dfba45,
-        #9d7200
-    );
-
+    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
     color:white;
     font-weight:bold;
+    cursor:pointer;
+}
+
+.main-btn:disabled{
+    opacity:.6;
 }
 
 .item{
@@ -170,7 +155,7 @@ body{
 .item p{
     font-size:13px;
     color:#777;
-    margin:4px 0;
+    margin:5px 0;
 }
 
 .row{
@@ -187,6 +172,7 @@ body{
     background:#b48600;
     color:white;
     font-weight:bold;
+    cursor:pointer;
 }
 
 .red{
@@ -208,226 +194,109 @@ body{
     color:#777;
 }
 
+.loading{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:15px;
+    color:#888;
+}
 
-/* =========================
-   USER
-========================= */
+.no-data{
+    padding:18px;
+    text-align:center;
+    color:#888;
+    background:white;
+    border-radius:14px;
+}
 
-.user-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:7px;
+.message{
+    background:#faf7e8;
+    padding:12px;
+    border-radius:12px;
+    margin-top:9px;
+    font-size:13px;
+    cursor:pointer;
+    border:1px solid #ead99a;
+}
+
+.message.selected{
+    border:2px solid #2868b2;
+}
+
+.message img{
+    max-width:180px;
+    max-height:180px;
+    border-radius:10px;
+    margin-top:8px;
+}
+
+.support-user-title{
+    font-weight:bold;
+    color:#624700;
+    margin-bottom:8px;
+}
+
+.chat-area{
     margin-top:10px;
 }
 
-.user-actions button{
-    padding:11px 7px;
-    border:0;
-    border-radius:9px;
-    color:white;
-    font-weight:bold;
-    font-size:11px;
-}
-
-.balance-btn{
-    background:#218c55;
-}
-
-.support-btn{
-    background:#2868b2;
-}
-
-.delete-btn{
-    background:#b33b2e;
-}
-
-.user-support{
-    display:none;
-    margin-top:12px;
-    border-top:1px solid #ead99a;
-    padding-top:12px;
-}
-
-.user-support.active{
-    display:block;
-}
-
-.chat-box{
-    height:260px;
-    overflow-y:auto;
-    background:#faf7e8;
-    border:1px solid #ead99a;
-    border-radius:12px;
-    padding:10px;
-
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-
-.chat-empty{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#999;
-    font-size:12px;
-}
-
 .chat-message{
-    max-width:85%;
     padding:9px 11px;
-    border-radius:12px;
+    border-radius:11px;
+    margin-top:6px;
+    max-width:90%;
     font-size:12px;
     line-height:1.4;
     word-break:break-word;
 }
 
 .chat-user{
-    align-self:flex-end;
+    margin-left:auto;
     background:#e4c75e;
     color:white;
-    border-bottom-right-radius:3px;
 }
 
 .chat-admin{
-    align-self:flex-start;
     background:white;
     border:1px solid #ead99a;
-    color:#333;
-    border-bottom-left-radius:3px;
 }
 
-.chat-label{
-    font-size:9px;
-    font-weight:bold;
-    margin-bottom:3px;
-    opacity:.7;
-}
-
-.reply-area{
+.reply-box{
     display:flex;
     gap:6px;
-    margin-top:8px;
+    margin-top:10px;
 }
 
-.reply-input{
+.reply-box input{
     flex:1;
     min-width:0;
-    height:42px;
-    padding:0 10px;
+    padding:11px;
     border:1px solid #dbc879;
     border-radius:9px;
     outline:none;
 }
 
-.reply-send{
-    width:48px;
+.reply-box button{
+    width:55px;
     border:0;
     border-radius:9px;
     background:#2868b2;
     color:white;
-    font-size:17px;
     font-weight:bold;
 }
 
-.no-data{
-    padding:15px;
-    text-align:center;
-    color:#888;
-    font-size:13px;
-}
-
-
-/* =========================
-   WITHDRAW
-========================= */
-
-.withdraw-pending{
-    color:#b48600;
-    font-weight:bold;
-}
-
-.withdraw-approved{
-    color:#218c55;
-    font-weight:bold;
-}
-
-.withdraw-rejected{
-    color:#b33b2e;
-    font-weight:bold;
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-    display:none;
-
-    position:fixed;
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    z-index:5000;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:15px;
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-box{
-    width:100%;
-    max-width:400px;
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    box-shadow:0 10px 35px rgba(0,0,0,.25);
-}
-
-.modal-box h3{
-    color:#715200;
-    margin-bottom:15px;
-}
-
-.modal-buttons{
+.user-actions{
     display:flex;
     gap:7px;
-    margin-top:8px;
+    margin-top:10px;
 }
 
-.modal-buttons button{
+.user-actions button{
     flex:1;
-    padding:12px;
-    border:0;
-    border-radius:9px;
-    color:white;
-    font-weight:bold;
 }
-
-.cancel-btn{
-    background:#777;
-}
-
-.save-btn{
-    background:#218c55;
-}
-
 
 @media(max-width:380px){
-
     .header h2{
         font-size:20px;
     }
@@ -436,249 +305,192 @@ body{
         font-size:10px;
     }
 
+    .row{
+        flex-direction:column;
+    }
+
+    .user-actions{
+        flex-direction:column;
+    }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
 <div class="container">
 
-
-<!-- HEADER -->
-
 <div class="header">
+    <h2>EliteTask Pro Admin</h2>
 
-    <h2>
-        EliteTask Pro Admin
-    </h2>
-
-    <button
-        class="logout"
-        id="logoutBtn"
-    >
+    <button class="logout" id="logoutBtn">
         Logout
     </button>
-
 </div>
-
-
-<!-- TABS -->
 
 <div class="tabs">
 
-    <button
-        class="tab active"
-        data-tab="tasks"
-    >
+    <button class="tab active" data-tab="tasks">
         Tasks
     </button>
 
-    <button
-        class="tab"
-        data-tab="users"
-    >
+    <button class="tab" data-tab="users">
         Users
     </button>
 
-    <button
-        class="tab"
-        data-tab="withdraws"
-    >
+    <button class="tab" data-tab="withdraws">
         Withdraws
+    </button>
+
+    <button class="tab" data-tab="support">
+        Support
     </button>
 
 </div>
 
 
-<!-- =========================
-     TASKS
-========================= -->
+<!-- TASKS -->
 
-<div
-    id="tasks"
-    class="panel active"
+<div id="tasks" class="panel active">
+
+<div class="card">
+
+<h3>Add New Task</h3>
+
+<input
+    id="taskName"
+    class="input"
+    placeholder="Task name"
 >
 
-    <div class="card">
+<input
+    id="taskPrice"
+    class="input"
+    type="number"
+    placeholder="Task price"
+>
 
-        <h3>
-            Add New Task
-        </h3>
+<input
+    id="taskCommission"
+    class="input"
+    type="number"
+    placeholder="Commission"
+>
+
+<input
+    id="taskImage"
+    class="input"
+    type="file"
+    accept="image/*"
+>
+
+<img id="imagePreview" class="preview">
+
+<button id="saveTask" class="main-btn">
+    Save Task
+</button>
+
+<div id="taskStatus" class="status">
+    Ready
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Tasks</h3>
+
+<div id="taskList">
+    Loading tasks...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- USERS -->
+
+<div id="users" class="panel">
+
+<div class="card">
+
+<h3>Users</h3>
+
+<div id="userList">
+    Loading users...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WITHDRAWS -->
+
+<div id="withdraws" class="panel">
+
+<div class="card">
+
+<h3>Withdraw Requests</h3>
+
+<div id="withdrawList">
+    Loading withdrawals...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SUPPORT -->
+
+<div id="support" class="panel">
+
+<div class="card">
+
+<h3>Customer Service</h3>
+
+<div id="supportList">
+    Loading messages...
+</div>
+
+<div id="selectedSupport"
+     style="display:none;margin-top:15px">
+
+    <div class="support-user-title" id="selectedUserTitle">
+        Customer
+    </div>
+
+    <div id="chatArea" class="chat-area"></div>
+
+    <div class="reply-box">
 
         <input
-            id="taskName"
-            class="input"
-            placeholder="Task name"
+            id="replyInput"
+            type="text"
+            placeholder="Type reply..."
         >
 
-        <input
-            id="taskPrice"
-            class="input"
-            type="number"
-            placeholder="Task price"
-        >
-
-        <input
-            id="taskCommission"
-            class="input"
-            type="number"
-            placeholder="Commission"
-        >
-
-        <input
-            id="taskImage"
-            class="input"
-            type="file"
-            accept="image/*"
-        >
-
-        <img
-            id="imagePreview"
-            class="preview"
-        >
-
-        <button
-            id="saveTask"
-            class="main-btn"
-        >
-            Save Task
+        <button id="replyBtn">
+            ➤
         </button>
 
-        <div
-            id="taskStatus"
-            class="status"
-        >
-            Ready
-        </div>
-
     </div>
 
-
-    <div class="card">
-
-        <h3>
-            Tasks
-        </h3>
-
-        <div id="taskList">
-            Loading tasks...
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     USERS
-========================= -->
-
-<div
-    id="users"
-    class="panel"
->
-
-    <div class="card">
-
-        <h3>
-            Users
-        </h3>
-
-        <div id="userList">
-            Loading users...
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     WITHDRAWS
-========================= -->
-
-<div
-    id="withdraws"
-    class="panel"
->
-
-    <div class="card">
-
-        <h3>
-            Withdraw Requests
-        </h3>
-
-        <div id="withdrawList">
-            Loading withdrawals...
-        </div>
-
-    </div>
+    <div id="supportStatus" class="status"></div>
 
 </div>
 
 </div>
 
-
-<!-- BALANCE MODAL -->
-
-<div
-    class="modal"
-    id="balanceModal"
->
-
-    <div class="modal-box">
-
-        <h3>
-            Edit User Balance
-        </h3>
-
-        <input
-            id="editBalance"
-            class="input"
-            type="number"
-            placeholder="Balance"
-        >
-
-        <input
-            id="editCommission"
-            class="input"
-            type="number"
-            placeholder="Commission"
-        >
-
-        <div class="modal-buttons">
-
-            <button
-                class="cancel-btn"
-                id="cancelBalance"
-            >
-                Cancel
-            </button>
-
-            <button
-                class="save-btn"
-                id="saveBalance"
-            >
-                Save
-            </button>
-
-        </div>
-
-    </div>
+</div>
 
 </div>
 
 
 <script type="module">
-
-
-/* =========================
-   FIREBASE
-========================= */
 
 import {
     initializeApp
@@ -701,10 +513,10 @@ import {
     collection,
     addDoc,
     getDocs,
+    getDoc,
     updateDoc,
     deleteDoc,
     doc,
-    getDoc,
     query,
     where,
     serverTimestamp
@@ -712,6 +524,10 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
 
@@ -746,9 +562,33 @@ const db =
     getFirestore(app);
 
 
+/* =========================
+   ADMIN UID
+========================= */
+
+const ADMIN_UID =
+"BLmacTdfuBVlQ0eEJWsQidnexY02";
+
+
 let currentAdmin = null;
 
 let selectedUserId = null;
+
+
+/* =========================
+   SAFE HTML
+========================= */
+
+function safe(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
 
 
 /* =========================
@@ -768,7 +608,29 @@ onAuthStateChanged(
 
         }
 
+
+        /*
+        Admin UID check
+        */
+
+        if(user.uid !== ADMIN_UID){
+
+            alert(
+                "Admin access required."
+            );
+
+            await signOut(auth);
+
+            location.href =
+                "index.html";
+
+            return;
+
+        }
+
+
         currentAdmin = user;
+
 
         loadTasks();
 
@@ -786,13 +648,17 @@ document
 
     button.addEventListener(
         "click",
-        () => {
+        function(){
+
+            const target =
+                this.dataset.tab;
+
 
             document
             .querySelectorAll(".tab")
-            .forEach(x => {
+            .forEach(btn => {
 
-                x.classList.remove(
+                btn.classList.remove(
                     "active"
                 );
 
@@ -801,57 +667,59 @@ document
 
             document
             .querySelectorAll(".panel")
-            .forEach(x => {
+            .forEach(panel => {
 
-                x.classList.remove(
+                panel.classList.remove(
                     "active"
                 );
 
             });
 
 
-            button.classList.add(
+            this.classList.add(
                 "active"
             );
 
 
             const panel =
                 document.getElementById(
-                    button.dataset.tab
+                    target
                 );
 
 
-            panel.classList.add(
-                "active"
-            );
+            if(panel){
+
+                panel.classList.add(
+                    "active"
+                );
+
+            }
 
 
-            if(
-                button.dataset.tab ===
-                "tasks"
-            ){
+            if(target === "tasks"){
 
                 loadTasks();
 
             }
 
 
-            if(
-                button.dataset.tab ===
-                "users"
-            ){
+            if(target === "users"){
 
                 loadUsers();
 
             }
 
 
-            if(
-                button.dataset.tab ===
-                "withdraws"
-            ){
+            if(target === "withdraws"){
 
                 loadWithdraws();
+
+            }
+
+
+            if(target === "support"){
+
+                loadSupport();
 
             }
 
@@ -871,10 +739,19 @@ document
     "click",
     async () => {
 
-        await signOut(auth);
+        try{
 
-        location.href =
-            "index.html";
+            await signOut(auth);
+
+            location.href =
+                "index.html";
+
+        }
+        catch(error){
+
+            alert(error.message);
+
+        }
 
     }
 );
@@ -910,9 +787,7 @@ document
 
 
         preview.src =
-            URL.createObjectURL(
-                file
-            );
+            URL.createObjectURL(file);
 
         preview.style.display =
             "block";
@@ -935,125 +810,110 @@ function compressImage(file){
 
 
             reader.onload =
-                event => {
+            event => {
 
-                    const img =
-                        new Image();
-
-
-                    img.onload =
-                        () => {
-
-                            const canvas =
-                                document.createElement(
-                                    "canvas"
-                                );
+                const img =
+                    new Image();
 
 
-                            let width =
-                                img.width;
+                img.onload =
+                () => {
 
-                            let height =
-                                img.height;
-
-
-                            const max =
-                                350;
+                    const canvas =
+                        document.createElement(
+                            "canvas"
+                        );
 
 
-                            if(
-                                width >
-                                height
-                            ){
+                    let width =
+                        img.width;
 
-                                if(
-                                    width >
-                                    max
-                                ){
-
-                                    height =
-                                        height *
-                                        max /
-                                        width;
-
-                                    width =
-                                        max;
-
-                                }
-
-                            }
-                            else{
-
-                                if(
-                                    height >
-                                    max
-                                ){
-
-                                    width =
-                                        width *
-                                        max /
-                                        height;
-
-                                    height =
-                                        max;
-
-                                }
-
-                            }
+                    let height =
+                        img.height;
 
 
-                            canvas.width =
-                                Math.round(
-                                    width
-                                );
-
-                            canvas.height =
-                                Math.round(
-                                    height
-                                );
+                    const max =
+                        350;
 
 
-                            const ctx =
-                                canvas.getContext(
-                                    "2d"
-                                );
+                    if(
+                        width > max ||
+                        height > max
+                    ){
+
+                        if(width > height){
+
+                            height =
+                                height *
+                                max /
+                                width;
+
+                            width =
+                                max;
+
+                        }
+                        else{
+
+                            width =
+                                width *
+                                max /
+                                height;
+
+                            height =
+                                max;
+
+                        }
+
+                    }
 
 
-                            ctx.drawImage(
-                                img,
-                                0,
-                                0,
-                                canvas.width,
-                                canvas.height
-                            );
+                    canvas.width =
+                        Math.round(width);
+
+                    canvas.height =
+                        Math.round(height);
 
 
-                            resolve(
-                                canvas.toDataURL(
-                                    "image/jpeg",
-                                    .35
-                                )
-                            );
-
-                        };
+                    const ctx =
+                        canvas.getContext(
+                            "2d"
+                        );
 
 
-                    img.onerror =
-                        reject;
+                    ctx.drawImage(
+                        img,
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
 
-                    img.src =
-                        event.target.result;
+
+                    resolve(
+                        canvas.toDataURL(
+                            "image/jpeg",
+                            .35
+                        )
+                    );
 
                 };
+
+
+                img.onerror =
+                    reject;
+
+
+                img.src =
+                    event.target.result;
+
+            };
 
 
             reader.onerror =
                 reject;
 
 
-            reader.readAsDataURL(
-                file
-            );
+            reader.readAsDataURL(file);
 
         }
     );
@@ -1070,6 +930,17 @@ document
 .addEventListener(
     "click",
     async () => {
+
+        const status =
+            document.getElementById(
+                "taskStatus"
+            );
+
+        const button =
+            document.getElementById(
+                "saveTask"
+            );
+
 
         try{
 
@@ -1112,8 +983,8 @@ document
 
             if(
                 !name ||
-                !price ||
-                !commission ||
+                price <= 0 ||
+                commission < 0 ||
                 !file
             ){
 
@@ -1126,20 +997,15 @@ document
             }
 
 
-            const status =
-                document.getElementById(
-                    "taskStatus"
-                );
-
+            button.disabled =
+                true;
 
             status.textContent =
                 "Compressing image...";
 
 
             const image =
-                await compressImage(
-                    file
-                );
+                await compressImage(file);
 
 
             status.textContent =
@@ -1165,11 +1031,11 @@ document
                     image:
                         image,
 
-                    createdAt:
-                        serverTimestamp(),
-
                     order:
-                        Date.now()
+                        Date.now(),
+
+                    createdAt:
+                        serverTimestamp()
 
                 }
             );
@@ -1179,47 +1045,64 @@ document
                 "Task saved successfully ✓";
 
 
-            document.getElementById(
+            document
+            .getElementById(
                 "taskName"
-            ).value = "";
+            )
+            .value = "";
 
 
-            document.getElementById(
+            document
+            .getElementById(
                 "taskPrice"
-            ).value = "";
+            )
+            .value = "";
 
 
-            document.getElementById(
+            document
+            .getElementById(
                 "taskCommission"
-            ).value = "";
+            )
+            .value = "";
 
 
-            document.getElementById(
+            document
+            .getElementById(
                 "taskImage"
-            ).value = "";
+            )
+            .value = "";
 
 
-            document.getElementById(
+            document
+            .getElementById(
                 "imagePreview"
-            ).style.display =
+            )
+            .style.display =
                 "none";
 
 
-            loadTasks();
+            await loadTasks();
 
         }
         catch(error){
 
-            console.error(error);
+            console.error(
+                "Save task:",
+                error
+            );
 
-            document.getElementById(
-                "taskStatus"
-            ).textContent =
+            status.textContent =
                 error.message;
 
             alert(
                 error.message
             );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
 
         }
 
@@ -1240,7 +1123,7 @@ async function loadTasks(){
 
 
     list.innerHTML =
-        "Loading tasks...";
+        '<div class="loading">Loading tasks...</div>';
 
 
     try{
@@ -1257,7 +1140,7 @@ async function loadTasks(){
         if(snap.empty){
 
             list.innerHTML =
-                "No tasks found.";
+                '<div class="no-data">No tasks found.</div>';
 
             return;
 
@@ -1293,4 +1176,1217 @@ async function loadTasks(){
         list.innerHTML = "";
 
 
-    
+        tasks.forEach(
+            task => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "item";
+
+
+                div.innerHTML = `
+
+                    ${
+                        task.image
+                        ?
+                        `<img src="${safe(task.image)}">`
+                        :
+                        ""
+                    }
+
+                    <h4>
+                        ${safe(task.name || "Task")}
+                    </h4>
+
+                    <p>
+                        Price: PKR ${Number(task.price || 0).toFixed(2)}
+                    </p>
+
+                    <p>
+                        Commission: PKR ${Number(task.commission || 0).toFixed(2)}
+                    </p>
+
+                    <div class="row">
+
+                        <button
+                            class="small red delete-task"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                div
+                .querySelector(
+                    ".delete-task"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        if(
+                            !confirm(
+                                "Delete this task?"
+                            )
+                        ){
+
+                            return;
+
+                        }
+
+
+                        try{
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "tasks",
+                                    task.id
+                                )
+                            );
+
+
+                            await loadTasks();
+
+                        }
+                        catch(error){
+
+                            alert(
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Tasks error:",
+            error
+        );
+
+
+        list.innerHTML =
+            `<div class="no-data">
+                Unable to load tasks.<br>
+                ${safe(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =========================
+   LOAD USERS
+========================= */
+
+async function loadUsers(){
+
+    const list =
+        document.getElementById(
+            "userList"
+        );
+
+
+    list.innerHTML =
+        '<div class="loading">Loading users...</div>';
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "users"
+                )
+            );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+                '<div class="no-data">No users found.</div>';
+
+            return;
+
+        }
+
+
+        list.innerHTML = "";
+
+
+        snap.forEach(
+            item => {
+
+                const user =
+                    item.data();
+
+
+                /*
+                Admin ko Users list mein
+                khud show nahi karna.
+                */
+
+                if(item.id === ADMIN_UID){
+
+                    return;
+
+                }
+
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "item";
+
+
+                div.innerHTML = `
+
+                    <h4>
+                        ${safe(user.name || "User")}
+                    </h4>
+
+                    <p>
+                        Email:
+                        ${safe(user.email || "")}
+                    </p>
+
+                    <p>
+                        Balance:
+                        PKR ${Number(user.balance || 0).toFixed(2)}
+                    </p>
+
+                    <p>
+                        Commission:
+                        PKR ${Number(user.commission || 0).toFixed(2)}
+                    </p>
+
+                    <input
+                        class="input newBalance"
+                        type="number"
+                        min="0"
+                        placeholder="New balance"
+                    >
+
+                    <div class="user-actions">
+
+                        <button
+                            class="small green update-balance"
+                        >
+                            Update Balance
+                        </button>
+
+                        <button
+                            class="small blue open-support"
+                        >
+                            Support
+                        </button>
+
+                        <button
+                            class="small red delete-user"
+                        >
+                            Delete User
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="user-support"
+                        style="display:none"
+                    >
+                    </div>
+
+                `;
+
+
+                /* UPDATE BALANCE */
+
+                div
+                .querySelector(
+                    ".update-balance"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        const input =
+                            div.querySelector(
+                                ".newBalance"
+                            );
+
+
+                        const value =
+                            Number(
+                                input.value
+                            );
+
+
+                        if(
+                            !Number.isFinite(value) ||
+                            value < 0
+                        ){
+
+                            alert(
+                                "Valid balance enter karo."
+                            );
+
+                            return;
+
+                        }
+
+
+                        try{
+
+                            await updateDoc(
+                                doc(
+                                    db,
+                                    "users",
+                                    item.id
+                                ),
+                                {
+
+                                    balance:
+                                        value
+
+                                }
+                            );
+
+
+                            alert(
+                                "Balance updated successfully."
+                            );
+
+
+                            loadUsers();
+
+                        }
+                        catch(error){
+
+                            console.error(
+                                error
+                            );
+
+                            alert(
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                /* SUPPORT */
+
+                div
+                .querySelector(
+                    ".open-support"
+                )
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        selectedUserId =
+                            item.id;
+
+
+                        document
+                        .querySelector(
+                            '[data-tab="support"]'
+                        )
+                        .click();
+
+
+                        setTimeout(
+                            () => {
+
+                                loadSupport(
+                                    selectedUserId
+                                );
+
+                            },
+                            100
+                        );
+
+                    }
+                );
+
+
+                /* DELETE USER */
+
+                div
+                .querySelector(
+                    ".delete-user"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        if(
+                            !confirm(
+                                "Delete this user from Firestore?"
+                            )
+                        ){
+
+                            return;
+
+                        }
+
+
+                        try{
+
+                            /*
+                            Client Firebase SDK se
+                            kisi doosre user ka
+                            Authentication account
+                            delete nahi kiya ja sakta.
+
+                            Yahan user ka Firestore
+                            document delete hoga.
+                            */
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "users",
+                                    item.id
+                                )
+                            );
+
+
+                            alert(
+                                "User deleted from users list."
+                            );
+
+
+                            loadUsers();
+
+                        }
+                        catch(error){
+
+                            console.error(
+                                error
+                            );
+
+                            alert(
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Users error:",
+            error
+        );
+
+
+        list.innerHTML =
+            `<div class="no-data">
+                Unable to load users.<br>
+                ${safe(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =========================
+   LOAD WITHDRAWS
+========================= */
+
+async function loadWithdraws(){
+
+    const list =
+        document.getElementById(
+            "withdrawList"
+        );
+
+
+    list.innerHTML =
+        '<div class="loading">Loading withdrawals...</div>';
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "withdraws"
+                )
+            );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+                '<div class="no-data">No withdrawal requests.</div>';
+
+            return;
+
+        }
+
+
+        const withdrawals = [];
+
+
+        snap.forEach(
+            item => {
+
+                withdrawals.push({
+
+                    id:
+                        item.id,
+
+                    ...item.data()
+
+                });
+
+            }
+        );
+
+
+        withdrawals.sort(
+            (a,b) => {
+
+                const aTime =
+                    a.createdAt?.seconds || 0;
+
+                const bTime =
+                    b.createdAt?.seconds || 0;
+
+                return bTime - aTime;
+
+            }
+        );
+
+
+        list.innerHTML = "";
+
+
+        withdrawals.forEach(
+            withdrawal => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "item";
+
+
+                const status =
+                    String(
+                        withdrawal.status ||
+                        "pending"
+                    )
+                    .toLowerCase();
+
+
+                div.innerHTML = `
+
+                    <h4>
+                        Withdrawal Request
+                    </h4>
+
+                    <p>
+                        User ID:
+                        ${safe(
+                            withdrawal.userId ||
+                            withdrawal.uid ||
+                            ""
+                        )}
+                    </p>
+
+                    <p>
+                        Amount:
+                        PKR ${Number(
+                            withdrawal.amount || 0
+                        ).toFixed(2)}
+                    </p>
+
+                    <p>
+                        Method:
+                        ${safe(
+                            withdrawal.method ||
+                            withdrawal.paymentMethod ||
+                            ""
+                        )}
+                    </p>
+
+                    <p>
+                        Account:
+                        ${safe(
+                            withdrawal.account ||
+                            withdrawal.accountNumber ||
+                            ""
+                        )}
+                    </p>
+
+                    <p>
+                        Status:
+                        <b>${safe(status.toUpperCase())}</b>
+                    </p>
+
+                    <div class="row">
+
+                        <button
+                            class="small green approve"
+                            ${status !== "pending" ? "disabled" : ""}
+                        >
+                            Approve
+                        </button>
+
+                        <button
+                            class="small red reject"
+                            ${status !== "pending" ? "disabled" : ""}
+                        >
+                            Reject
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                const approve =
+                    div.querySelector(
+                        ".approve"
+                    );
+
+
+                const reject =
+                    div.querySelector(
+                        ".reject"
+                    );
+
+
+                approve.addEventListener(
+                    "click",
+                    async () => {
+
+                        await changeWithdrawStatus(
+                            withdrawal.id,
+                            "approved"
+                        );
+
+                    }
+                );
+
+
+                reject.addEventListener(
+                    "click",
+                    async () => {
+
+                        await changeWithdrawStatus(
+                            withdrawal.id,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Withdraw error:",
+            error
+        );
+
+
+        list.innerHTML =
+            `<div class="no-data">
+                Unable to load withdrawals.<br>
+                ${safe(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =========================
+   WITHDRAW STATUS
+========================= */
+
+async function changeWithdrawStatus(
+    withdrawId,
+    status
+){
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "withdraws",
+                withdrawId
+            ),
+            {
+
+                status:
+                    status,
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        await loadWithdraws();
+
+    }
+    catch(error){
+
+        console.error(
+            error
+        );
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOAD SUPPORT
+========================= */
+
+async function loadSupport(
+    focusUserId = null
+){
+
+    const list =
+        document.getElementById(
+            "supportList"
+        );
+
+
+    list.innerHTML =
+        '<div class="loading">Loading messages...</div>';
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "supportMessages"
+                )
+            );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+                '<div class="no-data">No support messages.</div>';
+
+            document
+            .getElementById(
+                "selectedSupport"
+            )
+            .style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        const users = {};
+
+
+        snap.forEach(
+            item => {
+
+                const message =
+                    item.data();
+
+
+                const uid =
+                    message.userId ||
+                    message.uid;
+
+
+                if(!uid){
+
+                    return;
+
+                }
+
+
+                if(!users[uid]){
+
+                    users[uid] = [];
+
+                }
+
+
+                users[uid].push({
+
+                    id:
+                        item.id,
+
+                    ...message
+
+                });
+
+            }
+        );
+
+
+        list.innerHTML = "";
+
+
+        Object.keys(users)
+        .forEach(
+            uid => {
+
+                const messages =
+                    users[uid];
+
+
+                messages.sort(
+                    (a,b) =>
+                        (a.createdAt?.seconds || 0) -
+                        (b.createdAt?.seconds || 0)
+                );
+
+
+                const last =
+                    messages[
+                        messages.length - 1
+                    ];
+
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "message";
+
+
+                div.innerHTML = `
+
+                    <b>
+                        User ID:
+                    </b>
+
+                    ${safe(uid)}
+
+                    <br>
+
+                    <span style="color:#777">
+                        ${safe(
+                            last.message ||
+                            last.text ||
+                            ""
+                        )}
+                    </span>
+
+                `;
+
+
+                if(
+                    focusUserId &&
+                    uid === focusUserId
+                ){
+
+                    div.classList.add(
+                        "selected"
+                    );
+
+                }
+
+
+                div.addEventListener(
+                    "click",
+                    () => {
+
+                        selectedUserId =
+                            uid;
+
+                        document
+                        .querySelectorAll(
+                            ".message"
+                        )
+                        .forEach(
+                            x =>
+                            x.classList.remove(
+                                "selected"
+                            )
+                        );
+
+                        div.classList.add(
+                            "selected"
+                        );
+
+                        showUserChat(
+                            uid,
+                            users[uid]
+                        );
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+
+        /*
+        Agar Users se Support open hua
+        to us user ka chat automatically
+        open.
+        */
+
+        if(focusUserId){
+
+            if(users[focusUserId]){
+
+                selectedUserId =
+                    focusUserId;
+
+                showUserChat(
+                    focusUserId,
+                    users[focusUserId]
+                );
+
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Support error:",
+            error
+        );
+
+
+        list.innerHTML =
+            `<div class="no-data">
+                Unable to load support.<br>
+                ${safe(error.message)}
+            </div>`;
+
+    }
+
+}
+
+
+/* =========================
+   SHOW USER CHAT
+========================= */
+
+function showUserChat(
+    uid,
+    messages
+){
+
+    selectedUserId =
+        uid;
+
+
+    const box =
+        document.getElementById(
+            "selectedSupport"
+        );
+
+
+    const title =
+        document.getElementById(
+            "selectedUserTitle"
+        );
+
+
+    const chat =
+        document.getElementById(
+            "chatArea"
+        );
+
+
+    box.style.display =
+        "block";
+
+
+    title.textContent =
+        "Customer: " + uid;
+
+
+    chat.innerHTML = "";
+
+
+    messages.forEach(
+        message => {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            const sender =
+                String(
+                    message.sender ||
+                    "user"
+                )
+                .toLowerCase();
+
+
+            div.className =
+                "chat-message " +
+                (
+                    sender === "admin"
+                    ?
+                    "chat-admin"
+                    :
+                    "chat-user"
+                );
+
+
+            let html =
+                safe(
+                    message.message ||
+                    message.text ||
+                    ""
+                );
+
+
+            if(message.image){
+
+                html +=
+                    `<br>
+                     <img
+                        src="${safe(message.image)}"
+                     >`;
+
+            }
+
+
+            div.innerHTML =
+                html;
+
+
+            chat.appendChild(div);
+
+        }
+    );
+
+
+    chat.scrollTop =
+        chat.scrollHeight;
+
+}
+
+
+/* =========================
+   ADMIN REPLY
+========================= */
+
+document
+.getElementById("replyBtn")
+.addEventListener(
+    "click",
+    async () => {
+
+        const input =
+            document.getElementById(
+                "replyInput"
+            );
+
+
+        const status =
+            document.getElementById(
+                "supportStatus"
+            );
+
+
+        const text =
+            input.value.trim();
+
+
+        if(!selectedUserId){
+
+            alert(
+                "Pehle customer select karo."
+            );
+
+            return;
+
+        }
+
+
+        if(!text){
+
+            alert(
+                "Reply likho."
+            );
+
+            return;
+
+        }
+
+
+        const button =
+            document.getElementById(
+                "replyBtn"
+            );
+
+
+        button.disabled =
+            true;
+
+
+        try{
+
+            await addDoc(
+                collection(
+                    db,
+                    "supportMessages"
+                ),
+                {
+
+                    userId:
+                        selectedUserId,
+
+                    message:
+                        text,
+
+                    sender:
+                        "admin",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            input.value = "";
+
+
+            status.textContent =
+                "Reply sent ✓";
+
+
+            await loadSupport(
+                selectedUserId
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Reply error:",
+                error
+            );
+
+
+            status.textContent =
+                error.message;
+
+
+            alert(
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ENTER TO SEND
+========================= */
+
+document
+.getElementById("replyInput")
+.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key === "Enter"
+        ){
+
+            event.preventDefault();
+
+            document
+            .getElementById(
+                "replyBtn"
+            )
+            .click();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
