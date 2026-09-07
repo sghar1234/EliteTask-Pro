@@ -6,161 +6,260 @@
 <title>EliteTask Pro Admin</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 
 body{
-font-family:Arial,sans-serif;
-background:#f7edbd;
-color:#3d2d00;
-padding:15px
+    background:#f7edbd;
+    color:#3d2d00;
+    padding:15px 15px 40px;
 }
 
-.container{
-max-width:700px;
-margin:auto
-}
+.container{max-width:700px;margin:auto}
 
 .header{
-background:linear-gradient(135deg,#806000,#d9b43d,#967000);
-color:white;
-padding:18px;
-border-radius:18px;
-margin-bottom:15px;
-display:flex;
-justify-content:space-between;
-align-items:center
+    background:linear-gradient(135deg,#806000,#d9b43d,#967000);
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center
 }
 
+.header h2{font-size:25px}
+
 .logout{
-background:white;
-color:#806000;
-border:0;
-padding:10px 14px;
-border-radius:9px;
-font-weight:bold
+    background:white;
+    color:#806000;
+    border:0;
+    padding:10px 14px;
+    border-radius:9px;
+    font-weight:bold
 }
 
 .tabs{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:7px;
-margin-bottom:15px
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+    margin-bottom:15px
 }
 
 .tab{
-padding:11px 4px;
-border:0;
-border-radius:9px;
-background:white;
-color:#725300;
-font-weight:bold;
-font-size:11px
+    padding:12px 4px;
+    border:0;
+    border-radius:9px;
+    background:white;
+    color:#725300;
+    font-weight:bold;
+    font-size:12px
 }
 
-.tab.active{
-background:#b48600;
-color:white
-}
+.tab.active{background:#b48600;color:white}
 
 .panel{display:none}
 .panel.active{display:block}
 
 .card{
-background:white;
-border-radius:18px;
-padding:18px;
-margin-bottom:15px;
-box-shadow:0 5px 18px rgba(0,0,0,.1)
+    background:white;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 5px 18px rgba(0,0,0,.10)
 }
 
-.card h3{
-color:#715200;
-margin-bottom:14px
-}
+.card h3{color:#715200;margin-bottom:14px}
 
 .input{
-width:100%;
-padding:13px;
-border:1px solid #dbc879;
-border-radius:10px;
-margin-bottom:10px
+    width:100%;
+    padding:13px;
+    border:1px solid #dbc879;
+    border-radius:10px;
+    margin-bottom:10px;
+    outline:none
 }
 
 .preview{
-width:100%;
-max-height:220px;
-object-fit:cover;
-border-radius:12px;
-display:none;
-margin-bottom:10px
+    width:100%;
+    max-height:230px;
+    object-fit:cover;
+    border-radius:14px;
+    display:none;
+    margin-bottom:10px
 }
 
 .main-btn{
-width:100%;
-padding:14px;
-border:0;
-border-radius:11px;
-background:#b48600;
-color:white;
-font-weight:bold
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:11px;
+    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
+    color:white;
+    font-weight:bold
 }
 
 .item{
-border:1px solid #ead99a;
-border-radius:14px;
-padding:13px;
-margin-top:10px
+    border:1px solid #ead99a;
+    border-radius:14px;
+    padding:13px;
+    margin-top:10px;
+    background:#fffdf7
 }
 
 .item img{
-width:100%;
-height:170px;
-object-fit:cover;
-border-radius:10px
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:9px
 }
 
-.item h4{
-margin:8px 0;
-color:#624700
-}
+.item h4{margin-bottom:6px;color:#624700}
+.item p{font-size:13px;color:#777;margin:4px 0}
 
-.item p{
-font-size:13px;
-color:#777;
-margin:4px 0
-}
-
-.row{
-display:flex;
-gap:7px;
-margin-top:10px
-}
+.row{display:flex;gap:7px;margin-top:10px}
 
 .small{
-flex:1;
-padding:10px;
-border:0;
-border-radius:8px;
-background:#b48600;
-color:white
+    flex:1;
+    padding:10px;
+    border:0;
+    border-radius:8px;
+    background:#b48600;
+    color:white;
+    font-weight:bold
 }
 
 .red{background:#b33b2e}
 .green{background:#218c55}
+.blue{background:#2868b2}
 
-.status{
-text-align:center;
-margin-top:10px;
-font-size:13px;
-color:#777
+.status{text-align:center;margin-top:10px;font-size:13px;color:#777}
+
+.user-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:7px;
+    margin-top:10px
 }
 
-.message{
-background:#faf7e8;
-padding:11px;
-border-radius:10px;
-margin-top:8px;
-font-size:13px
+.user-actions button{
+    padding:11px 7px;
+    border:0;
+    border-radius:9px;
+    color:white;
+    font-weight:bold;
+    font-size:11px
+}
+
+.balance-btn{background:#218c55}
+.support-btn{background:#2868b2}
+.delete-btn{background:#b33b2e}
+
+.user-support{
+    display:none;
+    margin-top:12px;
+    border-top:1px solid #ead99a;
+    padding-top:12px
+}
+
+.user-support.active{display:block}
+
+.chat-box{
+    height:260px;
+    overflow-y:auto;
+    background:#faf7e8;
+    border:1px solid #ead99a;
+    border-radius:12px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px
+}
+
+.chat-empty{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#999;
+    font-size:12px
+}
+
+.chat-message{
+    max-width:85%;
+    padding:9px 11px;
+    border-radius:12px;
+    font-size:12px;
+    line-height:1.4;
+    word-break:break-word
+}
+
+.chat-user{
+    align-self:flex-end;
+    background:#e4c75e;
+    color:white;
+    border-bottom-right-radius:3px
+}
+
+.chat-admin{
+    align-self:flex-start;
+    background:white;
+    border:1px solid #ead99a;
+    color:#333;
+    border-bottom-left-radius:3px
+}
+
+.chat-label{
+    font-size:9px;
+    font-weight:bold;
+    margin-bottom:3px;
+    opacity:.7
+}
+
+.reply-area{
+    display:flex;
+    gap:6px;
+    margin-top:8px
+}
+
+.reply-input{
+    flex:1;
+    min-width:0;
+    height:42px;
+    padding:0 10px;
+    border:1px solid #dbc879;
+    border-radius:9px;
+    outline:none
+}
+
+.reply-send{
+    width:48px;
+    border:0;
+    border-radius:9px;
+    background:#2868b2;
+    color:white;
+    font-size:17px;
+    font-weight:bold
+}
+
+.no-data{
+    padding:15px;
+    text-align:center;
+    color:#888;
+    font-size:13px
+}
+
+.withdraw-pending{color:#b48600;font-weight:bold}
+.withdraw-approved{color:#218c55;font-weight:bold}
+.withdraw-rejected{color:#b33b2e;font-weight:bold}
+
+@media(max-width:380px){
+    body{padding:10px 10px 30px}
+    .header h2{font-size:19px}
+    .header{padding:14px}
+    .tab{font-size:10px;padding:11px 3px}
+    .card{padding:14px}
 }
 </style>
 </head>
@@ -170,165 +269,60 @@ font-size:13px
 <div class="container">
 
 <div class="header">
-<h2>EliteTask Pro Admin</h2>
-<button class="logout" id="logoutBtn">Logout</button>
+    <h2>EliteTask Pro Admin</h2>
+    <button class="logout" id="logoutBtn">Logout</button>
 </div>
 
 <div class="tabs">
-
-<button class="tab active" data-tab="tasks">
-Tasks
-</button>
-
-<button class="tab" data-tab="users">
-Users
-</button>
-
-<button class="tab" data-tab="withdraws">
-Withdraws
-</button>
-
-<button class="tab" data-tab="support">
-Support
-</button>
-
+    <button class="tab active" data-tab="tasks">Tasks</button>
+    <button class="tab" data-tab="users">Users</button>
+    <button class="tab" data-tab="withdraws">Withdraws</button>
 </div>
-
-
-<!-- TASKS -->
 
 <div id="tasks" class="panel active">
 
 <div class="card">
+    <h3>Add New Task</h3>
 
-<h3>Add New Task</h3>
+    <input id="taskName" class="input" placeholder="Task name">
+    <input id="taskPrice" class="input" type="number" placeholder="Task price">
+    <input id="taskCommission" class="input" type="number" placeholder="Commission">
 
-<input
-id="taskName"
-class="input"
-placeholder="Task name"
->
+    <input id="taskImage" class="input" type="file" accept="image/*">
 
-<input
-id="taskPrice"
-class="input"
-type="number"
-placeholder="Task price"
->
+    <img id="imagePreview" class="preview">
 
-<input
-id="taskCommission"
-class="input"
-type="number"
-placeholder="Commission"
->
+    <button id="saveTask" class="main-btn">Save Task</button>
 
-<input
-id="taskImage"
-class="input"
-type="file"
-accept="image/*"
->
-
-<img
-id="imagePreview"
-class="preview"
->
-
-<button
-id="saveTask"
-class="main-btn"
->
-Save Task
-</button>
-
-<div id="taskStatus" class="status">
-Ready
+    <div id="taskStatus" class="status">Ready</div>
 </div>
-
-</div>
-
 
 <div class="card">
-
-<h3>Tasks</h3>
-
-<div id="taskList">
-Loading tasks...
+    <h3>Tasks</h3>
+    <div id="taskList">Loading tasks...</div>
 </div>
 
 </div>
-
-</div>
-
-
-<!-- USERS -->
 
 <div id="users" class="panel">
 
 <div class="card">
-
-<h3>Users</h3>
-
-<div id="userList">
-Loading users...
+    <h3>Users</h3>
+    <div id="userList">Loading users...</div>
 </div>
 
 </div>
-
-</div>
-
-
-<!-- WITHDRAWS -->
 
 <div id="withdraws" class="panel">
 
 <div class="card">
-
-<h3>Withdraw Requests</h3>
-
-<div id="withdrawList">
-Loading withdrawals...
+    <h3>Withdraw Requests</h3>
+    <div id="withdrawList">Loading withdrawals...</div>
 </div>
 
 </div>
 
 </div>
-
-
-<!-- SUPPORT -->
-
-<div id="support" class="panel">
-
-<div class="card">
-
-<h3>Customer Service</h3>
-
-<div id="supportList">
-Loading messages...
-</div>
-
-<input
-id="replyInput"
-class="input"
-placeholder="Type reply..."
->
-
-<button
-id="replyBtn"
-class="main-btn"
->
-Send Reply
-</button>
-
-<div id="supportStatus" class="status"></div>
-
-</div>
-
-</div>
-
-</div>
-
 
 <script type="module">
 
@@ -336,752 +330,621 @@ import {initializeApp}
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
-getAuth,
-onAuthStateChanged,
-signOut
+    getAuth,
+    onAuthStateChanged,
+    signOut
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-getDocs,
-updateDoc,
-deleteDoc,
-doc,
-serverTimestamp
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    deleteDoc,
+    doc,
+    query,
+    where,
+    serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
 const firebaseConfig={
-
-apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-
-authDomain:"elitetask-pro.firebaseapp.com",
-
-projectId:"elitetask-pro",
-
-storageBucket:"elitetask-pro.firebasestorage.app",
-
-messagingSenderId:"504295275402",
-
-appId:"1:504295275402:web:cf744a5d4e82c72145a673"
-
+    apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+    authDomain:"elitetask-pro.firebaseapp.com",
+    projectId:"elitetask-pro",
+    storageBucket:"elitetask-pro.firebasestorage.app",
+    messagingSenderId:"504295275402",
+    appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 };
-
 
 const app=initializeApp(firebaseConfig);
-
 const auth=getAuth(app);
-
 const db=getFirestore(app);
 
-let selectedUserId=null;
+let currentAdmin=null;
 
+onAuthStateChanged(auth,async user=>{
 
-/* TABS */
+    if(!user){
+        location.href="index.html";
+        return;
+    }
 
-document.querySelectorAll(".tab").forEach(btn=>{
-
-btn.onclick=()=>{
-
-document.querySelectorAll(".tab")
-.forEach(x=>x.classList.remove("active"));
-
-document.querySelectorAll(".panel")
-.forEach(x=>x.classList.remove("active"));
-
-btn.classList.add("active");
-
-document
-.getElementById(btn.dataset.tab)
-.classList.add("active");
-
-if(btn.dataset.tab==="tasks") loadTasks();
-
-if(btn.dataset.tab==="users") loadUsers();
-
-if(btn.dataset.tab==="withdraws") loadWithdraws();
-
-if(btn.dataset.tab==="support") loadSupport();
-
-};
+    currentAdmin=user;
+    loadTasks();
 
 });
 
 
-/* LOGIN */
+document.querySelectorAll(".tab").forEach(button=>{
 
-onAuthStateChanged(auth,user=>{
+    button.onclick=()=>{
 
-if(!user){
+        document.querySelectorAll(".tab")
+        .forEach(x=>x.classList.remove("active"));
 
-location.href="index.html";
+        document.querySelectorAll(".panel")
+        .forEach(x=>x.classList.remove("active"));
 
-return;
+        button.classList.add("active");
 
-}
+        document
+        .getElementById(button.dataset.tab)
+        .classList.add("active");
 
-loadTasks();
+        if(button.dataset.tab==="tasks") loadTasks();
+        if(button.dataset.tab==="users") loadUsers();
+        if(button.dataset.tab==="withdraws") loadWithdraws();
 
-});
-
-
-/* IMAGE PREVIEW */
-
-document
-.getElementById("taskImage")
-.addEventListener("change",function(){
-
-const file=this.files[0];
-
-const img=
-document.getElementById("imagePreview");
-
-if(!file){
-
-img.style.display="none";
-
-return;
-
-}
-
-img.src=URL.createObjectURL(file);
-
-img.style.display="block";
+    };
 
 });
 
 
-/* IMAGE TO BASE64 */
-
-function imageToBase64(file){
-
-return new Promise((resolve,reject)=>{
-
-const reader=new FileReader();
-
-reader.onload=()=>{
-resolve(reader.result);
-};
-
-reader.onerror=reject;
-
-reader.readAsDataURL(file);
-
-});
-
-}
-
-
-/* SAVE TASK */
-
-document
-.getElementById("saveTask")
-.onclick=async()=>{
-
-try{
-
-const name=
-document.getElementById("taskName")
-.value.trim();
-
-const price=
-Number(
-document.getElementById("taskPrice").value
-);
-
-const commission=
-Number(
-document.getElementById("taskCommission").value
-);
-
-const file=
-document.getElementById("taskImage")
-.files[0];
-
-
-if(!name){
-
-alert("Task name enter karo");
-
-return;
-
-}
-
-if(!price){
-
-alert("Task price enter karo");
-
-return;
-
-}
-
-if(!commission){
-
-alert("Commission enter karo");
-
-return;
-
-}
-
-if(!file){
-
-alert("Gallery se image select karo");
-
-return;
-
-}
-
-
-document.getElementById("taskStatus")
-.textContent="Saving...";
-
-
-const image=
-await imageToBase64(file);
-
-
-await addDoc(
-collection(db,"tasks"),
-{
-
-name:name,
-
-price:price,
-
-commission:commission,
-
-image:image,
-
-createdAt:serverTimestamp(),
-
-order:Date.now()
-
-}
-);
-
-
-document.getElementById("taskStatus")
-.textContent="Task Saved ✓";
-
-
-document.getElementById("taskName").value="";
-
-document.getElementById("taskPrice").value="";
-
-document.getElementById("taskCommission").value="";
-
-document.getElementById("taskImage").value="";
-
-document.getElementById("imagePreview")
-.style.display="none";
-
-
-loadTasks();
-
-
-}catch(error){
-
-console.log(error);
-
-alert(error.message);
-
-document.getElementById("taskStatus")
-.textContent=error.message;
-
-}
-
+document.getElementById("logoutBtn").onclick=async()=>{
+    await signOut(auth);
+    location.href="index.html";
 };
 
 
-/* LOAD TASKS */
+document.getElementById("taskImage").addEventListener("change",function(){
+
+    const file=this.files[0];
+    const preview=document.getElementById("imagePreview");
+
+    if(!file){
+        preview.style.display="none";
+        return;
+    }
+
+    preview.src=URL.createObjectURL(file);
+    preview.style.display="block";
+
+});
+
+
+function compressImage(file){
+
+    return new Promise((resolve,reject)=>{
+
+        const reader=new FileReader();
+
+        reader.onload=e=>{
+
+            const img=new Image();
+
+            img.onload=()=>{
+
+                const canvas=document.createElement("canvas");
+
+                let w=img.width;
+                let h=img.height;
+                const max=350;
+
+                if(w>h){
+
+                    if(w>max){
+                        h=h*max/w;
+                        w=max;
+                    }
+
+                }else{
+
+                    if(h>max){
+                        w=w*max/h;
+                        h=max;
+                    }
+
+                }
+
+                canvas.width=Math.round(w);
+                canvas.height=Math.round(h);
+
+                canvas
+                .getContext("2d")
+                .drawImage(img,0,0,canvas.width,canvas.height);
+
+                resolve(
+                    canvas.toDataURL("image/jpeg",.35)
+                );
+
+            };
+
+            img.onerror=reject;
+            img.src=e.target.result;
+
+        };
+
+        reader.onerror=reject;
+        reader.readAsDataURL(file);
+
+    });
+
+}
+
+
+document.getElementById("saveTask").onclick=async()=>{
+
+    try{
+
+        const name=document.getElementById("taskName").value.trim();
+        const price=Number(document.getElementById("taskPrice").value);
+        const commission=Number(document.getElementById("taskCommission").value);
+        const file=document.getElementById("taskImage").files[0];
+
+        if(!name||!price||!commission||!file){
+            alert("Task name, price, commission and image required.");
+            return;
+        }
+
+        document.getElementById("taskStatus").textContent="Compressing image...";
+
+        const image=await compressImage(file);
+
+        document.getElementById("taskStatus").textContent="Saving task...";
+
+        await addDoc(collection(db,"tasks"),{
+            name,
+            price,
+            commission,
+            image,
+            createdAt:serverTimestamp(),
+            order:Date.now()
+        });
+
+        document.getElementById("taskStatus").textContent="Task saved successfully ✓";
+
+        document.getElementById("taskName").value="";
+        document.getElementById("taskPrice").value="";
+        document.getElementById("taskCommission").value="";
+        document.getElementById("taskImage").value="";
+        document.getElementById("imagePreview").style.display="none";
+
+        loadTasks();
+
+    }catch(error){
+
+        console.error(error);
+        document.getElementById("taskStatus").textContent=error.message;
+        alert(error.message);
+
+    }
+
+};
+
 
 async function loadTasks(){
 
-const list=
-document.getElementById("taskList");
+    const list=document.getElementById("taskList");
+    list.innerHTML="Loading tasks...";
 
-try{
+    try{
 
-const snap=
-await getDocs(
-collection(db,"tasks")
-);
+        const snap=await getDocs(collection(db,"tasks"));
 
-if(snap.empty){
+        if(snap.empty){
+            list.innerHTML="No tasks found.";
+            return;
+        }
 
-list.innerHTML="No tasks found.";
+        const tasks=[];
 
-return;
+        snap.forEach(d=>{
+            tasks.push({
+                id:d.id,
+                ...d.data()
+            });
+        });
 
-}
+        tasks.sort((a,b)=>
+            Number(a.order||0)-Number(b.order||0)
+        );
 
-list.innerHTML="";
+        list.innerHTML="";
 
-snap.forEach(d=>{
+        tasks.forEach(task=>{
 
-const task=d.data();
+            const div=document.createElement("div");
+            div.className="item";
 
-const div=
-document.createElement("div");
+            div.innerHTML=`
+                ${task.image?`<img src="${task.image}">`:""}
 
-div.className="item";
+                <h4>${escapeHtml(task.name||"Task")}</h4>
 
-div.innerHTML=`
+                <p>Price: ${task.price||0} PKR</p>
 
-${task.image?
-`<img src="${task.image}">`
-:""}
+                <p>Commission: ${task.commission||0} PKR</p>
 
-<h4>
-${task.name||"Task"}
-</h4>
+                <div class="row">
+                    <button class="small red">Delete</button>
+                </div>
+            `;
 
-<p>
-Price: ${task.price||0}
-</p>
+            div.querySelector(".red").onclick=async()=>{
 
-<p>
-Commission: ${task.commission||0}
-</p>
+                if(!confirm("Delete this task?")) return;
 
-<div class="row">
+                await deleteDoc(doc(db,"tasks",task.id));
+                loadTasks();
 
-<button class="small red">
-Delete
-</button>
+            };
 
-</div>
+            list.appendChild(div);
 
-`;
+        });
 
+    }catch(error){
 
-div.querySelector(".red")
-.onclick=async()=>{
+        console.error(error);
+        list.innerHTML="Unable to load tasks.";
 
-if(!confirm("Delete task?"))
-return;
-
-await deleteDoc(
-doc(db,"tasks",d.id)
-);
-
-loadTasks();
-
-};
-
-
-list.appendChild(div);
-
-});
-
-}catch(error){
-
-console.log(error);
-
-list.innerHTML=
-"Unable to load tasks.";
-
-}
+    }
 
 }
 
 
-/* USERS */
+/* =========================
+   USERS
+========================= */
 
 async function loadUsers(){
 
-const list=
-document.getElementById("userList");
+    const list=document.getElementById("userList");
+    list.innerHTML="Loading users...";
 
-list.innerHTML="Loading users...";
+    try{
 
-try{
+        const snap=await getDocs(collection(db,"users"));
 
-const snap=
-await getDocs(
-collection(db,"users")
-);
+        if(snap.empty){
+            list.innerHTML='<div class="no-data">No users found.</div>';
+            return;
+        }
 
-if(snap.empty){
+        list.innerHTML="";
 
-list.innerHTML="No users.";
+        snap.forEach(userDoc=>{
 
-return;
+            const user=userDoc.data();
+            const uid=userDoc.id;
 
-}
+            if(user.role==="admin") return;
 
-list.innerHTML="";
+            const div=document.createElement("div");
+            div.className="item";
 
-snap.forEach(d=>{
+            const name=escapeHtml(user.name||"User");
+            const email=escapeHtml(user.email||"");
+            const balance=Number(user.balance||0);
+            const commission=Number(user.commission||0);
+            const completed=Number(
+                user.completedTasks ||
+                user.completed ||
+                user.tasksCompleted ||
+                0
+            );
 
-const u=d.data();
+            div.innerHTML=`
 
-const div=
-document.createElement("div");
+                <h4>${name}</h4>
 
-div.className="item";
+                <p>Email: ${email}</p>
 
-div.innerHTML=`
+                <p>Balance: <b>${balance.toFixed(2)} PKR</b></p>
 
-<h4>
-${u.name||"User"}
-</h4>
+                <p>Commission: <b>${commission.toFixed(2)} PKR</b></p>
 
-<p>
-Email: ${u.email||""}
-</p>
+                <p>Completed Tasks: <b>${completed}</b></p>
 
-<p>
-Balance: ${u.balance||0}
-</p>
+                <div class="user-actions">
 
-<p>
-Commission: ${u.commission||0}
-</p>
+                    <button class="balance-btn">
+                        Edit Balance
+                    </button>
 
-<input
-class="input newBalance"
-type="number"
-placeholder="New balance"
->
+                    <button class="support-btn">
+                        Customer Service
+                    </button>
 
-<div class="row">
+                    <button class="delete-btn">
+                        Delete User
+                    </button>
 
-<button class="small green">
-Update Balance
-</button>
+                </div>
 
-<button class="small red">
-Delete
-</button>
+                <div class="user-support">
 
-</div>
+                    <div class="chat-box">
+                        <div class="chat-empty">
+                            Loading messages...
+                        </div>
+                    </div>
 
-`;
+                    <div class="reply-area">
 
+                        <input
+                            class="reply-input"
+                            placeholder="Reply to user..."
+                        >
 
-div.querySelector(".green")
-.onclick=async()=>{
+                        <button class="reply-send">
+                            ➤
+                        </button>
 
-const balance=
-Number(
-div.querySelector(".newBalance").value
-);
+                    </div>
 
-await updateDoc(
-doc(db,"users",d.id),
-{
-balance:balance
-}
-);
+                </div>
+            `;
 
-alert("Balance updated");
 
-loadUsers();
+            const supportBox=
+                div.querySelector(".user-support");
 
-};
+            const chatBox=
+                div.querySelector(".chat-box");
 
+            const replyInput=
+                div.querySelector(".reply-input");
 
-div.querySelector(".red")
-.onclick=async()=>{
+            const replySend=
+                div.querySelector(".reply-send");
 
-if(!confirm("Delete user?"))
-return;
 
-await deleteDoc(
-doc(db,"users",d.id)
-);
+            div.querySelector(".balance-btn").onclick=async()=>{
 
-loadUsers();
+                const current=Number(user.balance||0);
 
-};
+                const value=prompt(
+                    "Enter new balance (PKR):",
+                    current
+                );
 
+                if(value===null) return;
 
-list.appendChild(div);
+                const newBalance=Number(value);
 
-});
+                if(isNaN(newBalance)||newBalance<0){
+                    alert("Invalid balance.");
+                    return;
+                }
 
-}catch(error){
+                try{
 
-list.innerHTML=
-"Unable to load users.";
+                    await updateDoc(
+                        doc(db,"users",uid),
+                        {balance:newBalance}
+                    );
 
-console.log(error);
+                    alert("Balance updated.");
+                    loadUsers();
 
-}
+                }catch(error){
 
-}
+                    alert(error.message);
 
+                }
 
-/* WITHDRAWS */
+            };
 
-async function loadWithdraws(){
 
-const list=
-document.getElementById("withdrawList");
+            div.querySelector(".delete-btn").onclick=async()=>{
 
-list.innerHTML=
-"Loading withdrawals...";
+                if(!confirm(
+                    "Delete this user? Their login account will also be disabled."
+                )) return;
 
-try{
+                try{
 
-const snap=
-await getDocs(
-collection(db,"withdraws")
-);
+                    /*
+                    IMPORTANT:
+                    Browser Firebase client cannot securely delete
+                    another user's Firebase Authentication account.
 
-if(snap.empty){
+                    This deletes the Firestore user record and creates
+                    a blocked flag. The login page must check this flag.
+                    */
 
-list.innerHTML=
-"No withdrawal requests.";
+                    await deleteDoc(
+                        doc(db,"users",uid)
+                    );
 
-return;
+                    alert(
+                        "User data deleted. Login ko block karne ke liye index.html mein blocked-user check zaroor hona chahiye."
+                    );
 
-}
+                    loadUsers();
 
-list.innerHTML="";
+                }catch(error){
 
-snap.forEach(d=>{
+                    console.error(error);
+                    alert(error.message);
 
-const w=d.data();
+                }
 
-const div=
-document.createElement("div");
+            };
 
-div.className="item";
 
-div.innerHTML=`
+            div.querySelector(".support-btn").onclick=()=>{
 
-<h4>
-Withdrawal Request
-</h4>
+                supportBox.classList.toggle("active");
 
-<p>
-User: ${w.userId||w.uid||""}
-</p>
+                if(
+                    supportBox.classList.contains("active")
+                ){
 
-<p>
-Amount: ${w.amount||0}
-</p>
+                    loadUserMessages(
+                        uid,
+                        chatBox
+                    );
 
-<p>
-Method: ${w.method||w.paymentMethod||""}
-</p>
+                }
 
-<p>
-Status: ${w.status||"pending"}
-</p>
+            };
 
-<div class="row">
 
-<button class="small green">
-Approve
-</button>
+            replySend.onclick=()=>{
 
-<button class="small red">
-Reject
-</button>
+                sendAdminReply(
+                    uid,
+                    user.email||"",
+                    replyInput,
+                    replySend,
+                    chatBox
+                );
 
-</div>
+            };
 
-`;
 
+            replyInput.addEventListener("keydown",event=>{
 
-div.querySelector(".green")
-.onclick=async()=>{
+                if(event.key==="Enter"){
 
-await updateDoc(
-doc(db,"withdraws",d.id),
-{
-status:"approved"
-}
-);
+                    event.preventDefault();
 
-loadWithdraws();
+                    sendAdminReply(
+                        uid,
+                        user.email||"",
+                        replyInput,
+                        replySend,
+                        chatBox
+                    );
 
-};
+                }
 
+            });
 
-div.querySelector(".red")
-.onclick=async()=>{
 
-await updateDoc(
-doc(db,"withdraws",d.id),
-{
-status:"rejected"
-}
-);
+            list.appendChild(div);
 
-loadWithdraws();
+        });
 
-};
+    }catch(error){
 
+        console.error(error);
+        list.innerHTML=
+            '<div class="no-data">Unable to load users.</div>';
 
-list.appendChild(div);
-
-});
-
-}catch(error){
-
-list.innerHTML=
-"Unable to load withdrawals.";
-
-console.log(error);
-
-}
+    }
 
 }
 
 
-/* SUPPORT */
+/* =========================
+   USER MESSAGES
+========================= */
 
-async function loadSupport(){
+async function loadUserMessages(uid,chatBox){
 
-const list=
-document.getElementById("supportList");
+    chatBox.innerHTML=
+        '<div class="chat-empty">Loading messages...</div>';
 
-list.innerHTML=
-"Loading messages...";
+    try{
 
-try{
+        const q=query(
+            collection(db,"supportMessages"),
+            where("userId","==",uid)
+        );
 
-const snap=
-await getDocs(
-collection(db,"supportMessages")
-);
+        const snap=await getDocs(q);
 
-if(snap.empty){
+        if(snap.empty){
 
-list.innerHTML=
-"No messages.";
+            chatBox.innerHTML=
+                '<div class="chat-empty">No messages yet.</div>';
 
-return;
+            return;
 
-}
+        }
 
-list.innerHTML="";
+        const messages=[];
 
-snap.forEach(d=>{
+        snap.forEach(d=>{
 
-const m=d.data();
+            messages.push({
+                id:d.id,
+                ...d.data()
+            });
 
-const div=
-document.createElement("div");
+        });
 
-div.className="message";
+        messages.sort((a,b)=>{
 
-div.innerHTML=`
+            const aTime=
+                a.createdAt?.toMillis
+                ? a.createdAt.toMillis()
+                : 0;
 
-<b>User:</b>
-${m.userId||m.uid||""}
+            const bTime=
+                b.createdAt?.toMillis
+                ? b.createdAt.toMillis()
+                : 0;
 
-<br><br>
+            return aTime-bTime;
 
-<b>Message:</b>
-${m.message||m.text||""}
+        });
 
-`;
+        chatBox.innerHTML="";
 
-div.onclick=()=>{
+        messages.forEach(msg=>{
 
-selectedUserId=
-m.userId||m.uid||null;
+            const box=document.createElement("div");
 
-};
+            const sender=
+                String(
+                    msg.sender||
+                    msg.from||
+                    "user"
+                ).toLowerCase();
 
-list.appendChild(div);
+            const admin=
+                sender==="admin"||
+                sender==="support";
 
-});
+            box.className=
+                "chat-message "+
+                (admin?"chat-admin":"chat-user");
 
-}catch(error){
+            box.innerHTML=`
 
-list.innerHTML=
-"Unable to load support.";
+                <div class="chat-label">
+                    ${admin?"Admin":"User"}
+                </div>
 
-console.log(error);
+                <div></div>
+            `;
 
-}
+            box.querySelector("div:last-child")
+                .textContent=
+                msg.message||
+                msg.text||
+                "";
 
-}
+            chatBox.appendChild(box);
 
+        });
 
-/* REPLY */
-
-document
-.getElementById("replyBtn")
-.onclick=async()=>{
-
-const text=
-document.getElementById("replyInput")
-.value.trim();
-
-if(!selectedUserId){
-
-alert("Pehle user message select karo");
-
-return;
-
-}
-
-if(!text){
-
-alert("Reply likho");
-
-return;
-
-}
-
-try{
-
-await addDoc(
-collection(db,"supportMessages"),
-{
-
-userId:selectedUserId,
-
-message:text,
-
-sender:"admin",
-
-createdAt:serverTimestamp()
-
-}
-);
-
-document.getElementById("replyInput")
-.value="";
-
-document.getElementById("supportStatus")
-.textContent="Reply sent ✓";
-
-loadSupport();
-
-}catch(error){
-
-alert(error.message);
-
-}
-
-};
-
-
-/* LOGOUT */
-
-document
-.getElementById("logoutBtn")
-.onclick=async()=>{
-
-await signOut(auth);
-
-location.href="index.html";
-
-};
-
-</script>
-
-</body>
-</html>
+        chatBox.scrollTop=chatBox.sc
