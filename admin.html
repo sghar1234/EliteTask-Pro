@@ -42,12 +42,17 @@ body{
     );
 
     color:white;
+
     padding:18px;
+
     border-radius:18px;
+
     margin-bottom:15px;
 
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 }
 
@@ -66,18 +71,28 @@ body{
 
 .tabs{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+    repeat(3,1fr);
+
     gap:7px;
+
     margin-bottom:15px;
 }
 
 .tab{
     padding:12px 4px;
+
     border:0;
+
     border-radius:9px;
+
     background:white;
+
     color:#725300;
+
     font-weight:bold;
+
     font-size:12px;
 }
 
@@ -96,8 +111,11 @@ body{
 
 .card{
     background:white;
+
     border-radius:18px;
+
     padding:18px;
+
     margin-bottom:15px;
 
     box-shadow:
@@ -112,26 +130,39 @@ body{
 
 .input{
     width:100%;
+
     padding:13px;
+
     border:1px solid #dbc879;
+
     border-radius:10px;
+
     margin-bottom:10px;
+
     outline:none;
 }
 
 .preview{
     width:100%;
+
     max-height:230px;
+
     object-fit:cover;
+
     border-radius:14px;
+
     display:none;
+
     margin-bottom:10px;
 }
 
 .main-btn{
     width:100%;
+
     padding:14px;
+
     border:0;
+
     border-radius:11px;
 
     background:
@@ -143,22 +174,31 @@ body{
     );
 
     color:white;
+
     font-weight:bold;
 }
 
 .item{
     border:1px solid #ead99a;
+
     border-radius:14px;
+
     padding:13px;
+
     margin-top:10px;
+
     background:#fffdf7;
 }
 
 .item img{
     width:100%;
+
     height:170px;
+
     object-fit:cover;
+
     border-radius:10px;
+
     margin-bottom:9px;
 }
 
@@ -175,17 +215,25 @@ body{
 
 .row{
     display:flex;
+
     gap:7px;
+
     margin-top:10px;
 }
 
 .small{
     flex:1;
+
     padding:10px;
+
     border:0;
+
     border-radius:8px;
+
     background:#b48600;
+
     color:white;
+
     font-weight:bold;
 }
 
@@ -203,29 +251,41 @@ body{
 
 .status{
     text-align:center;
+
     margin-top:10px;
+
     font-size:13px;
+
     color:#777;
 }
 
 
 /* =========================
-   USER
+   USER SUPPORT
 ========================= */
 
 .user-actions{
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+    1fr 1fr;
+
     gap:7px;
+
     margin-top:10px;
 }
 
 .user-actions button{
     padding:11px 7px;
+
     border:0;
+
     border-radius:9px;
+
     color:white;
+
     font-weight:bold;
+
     font-size:11px;
 }
 
@@ -243,8 +303,12 @@ body{
 
 .user-support{
     display:none;
+
     margin-top:12px;
-    border-top:1px solid #ead99a;
+
+    border-top:
+    1px solid #ead99a;
+
     padding-top:12px;
 }
 
@@ -254,88 +318,134 @@ body{
 
 .chat-box{
     height:260px;
+
     overflow-y:auto;
+
     background:#faf7e8;
-    border:1px solid #ead99a;
+
+    border:
+    1px solid #ead99a;
+
     border-radius:12px;
+
     padding:10px;
 
     display:flex;
+
     flex-direction:column;
+
     gap:8px;
 }
 
 .chat-empty{
     flex:1;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     text-align:center;
+
     color:#999;
+
     font-size:12px;
 }
 
 .chat-message{
     max-width:85%;
+
     padding:9px 11px;
+
     border-radius:12px;
+
     font-size:12px;
+
     line-height:1.4;
+
     word-break:break-word;
 }
 
 .chat-user{
     align-self:flex-end;
+
     background:#e4c75e;
+
     color:white;
+
     border-bottom-right-radius:3px;
 }
 
 .chat-admin{
     align-self:flex-start;
+
     background:white;
+
     border:1px solid #ead99a;
+
     color:#333;
+
     border-bottom-left-radius:3px;
 }
 
 .chat-label{
     font-size:9px;
+
     font-weight:bold;
+
     margin-bottom:3px;
+
     opacity:.7;
 }
 
 .reply-area{
     display:flex;
+
     gap:6px;
+
     margin-top:8px;
 }
 
 .reply-input{
     flex:1;
+
     min-width:0;
+
     height:42px;
+
     padding:0 10px;
+
     border:1px solid #dbc879;
+
     border-radius:9px;
+
     outline:none;
 }
 
 .reply-send{
     width:48px;
+
     border:0;
+
     border-radius:9px;
+
     background:#2868b2;
+
     color:white;
+
     font-size:17px;
+
     font-weight:bold;
 }
 
 .no-data{
     padding:15px;
+
     text-align:center;
+
     color:#888;
+
     font-size:13px;
 }
 
@@ -346,83 +456,20 @@ body{
 
 .withdraw-pending{
     color:#b48600;
+
     font-weight:bold;
 }
 
 .withdraw-approved{
     color:#218c55;
+
     font-weight:bold;
 }
 
 .withdraw-rejected{
     color:#b33b2e;
+
     font-weight:bold;
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-    display:none;
-
-    position:fixed;
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    z-index:5000;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:15px;
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-box{
-    width:100%;
-    max-width:400px;
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    box-shadow:0 10px 35px rgba(0,0,0,.25);
-}
-
-.modal-box h3{
-    color:#715200;
-    margin-bottom:15px;
-}
-
-.modal-buttons{
-    display:flex;
-    gap:7px;
-    margin-top:8px;
-}
-
-.modal-buttons button{
-    flex:1;
-    padding:12px;
-    border:0;
-    border-radius:9px;
-    color:white;
-    font-weight:bold;
-}
-
-.cancel-btn{
-    background:#777;
-}
-
-.save-btn{
-    background:#218c55;
 }
 
 
@@ -430,6 +477,11 @@ body{
 
     .header h2{
         font-size:20px;
+    }
+
+    .tabs{
+        grid-template-columns:
+        repeat(3,1fr);
     }
 
     .tab{
@@ -445,10 +497,13 @@ body{
 
 <body>
 
+
 <div class="container">
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
@@ -466,7 +521,9 @@ body{
 </div>
 
 
-<!-- TABS -->
+<!-- =========================
+     TABS
+========================= -->
 
 <div class="tabs">
 
@@ -620,55 +677,6 @@ body{
 
 </div>
 
-</div>
-
-
-<!-- BALANCE MODAL -->
-
-<div
-    class="modal"
-    id="balanceModal"
->
-
-    <div class="modal-box">
-
-        <h3>
-            Edit User Balance
-        </h3>
-
-        <input
-            id="editBalance"
-            class="input"
-            type="number"
-            placeholder="Balance"
-        >
-
-        <input
-            id="editCommission"
-            class="input"
-            type="number"
-            placeholder="Commission"
-        >
-
-        <div class="modal-buttons">
-
-            <button
-                class="cancel-btn"
-                id="cancelBalance"
-            >
-                Cancel
-            </button>
-
-            <button
-                class="save-btn"
-                id="saveBalance"
-            >
-                Save
-            </button>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -677,7 +685,7 @@ body{
 
 
 /* =========================
-   FIREBASE
+   FIREBASE IMPORTS
 ========================= */
 
 import {
@@ -704,7 +712,6 @@ import {
     updateDoc,
     deleteDoc,
     doc,
-    getDoc,
     query,
     where,
     serverTimestamp
@@ -712,6 +719,10 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -737,18 +748,20 @@ const firebaseConfig = {
 
 
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
 
 
 let currentAdmin = null;
-
-let selectedUserId = null;
 
 
 /* =========================
@@ -762,13 +775,20 @@ onAuthStateChanged(
         if(!user){
 
             location.href =
-                "index.html";
+            "index.html";
 
             return;
 
         }
 
+
         currentAdmin = user;
+
+
+        /*
+        Admin page open hone ke baad
+        directly Tasks load.
+        */
 
         loadTasks();
 
@@ -784,79 +804,66 @@ document
 .querySelectorAll(".tab")
 .forEach(button => {
 
-    button.addEventListener(
-        "click",
-        () => {
+    button.onclick = () => {
 
-            document
-            .querySelectorAll(".tab")
-            .forEach(x => {
-
-                x.classList.remove(
-                    "active"
-                );
-
-            });
+        document
+        .querySelectorAll(".tab")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
 
 
-            document
-            .querySelectorAll(".panel")
-            .forEach(x => {
-
-                x.classList.remove(
-                    "active"
-                );
-
-            });
+        document
+        .querySelectorAll(".panel")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
 
 
-            button.classList.add(
-                "active"
-            );
+        button.classList.add(
+            "active"
+        );
 
 
-            const panel =
-                document.getElementById(
-                    button.dataset.tab
-                );
+        document
+        .getElementById(
+            button.dataset.tab
+        )
+        .classList.add(
+            "active"
+        );
 
 
-            panel.classList.add(
-                "active"
-            );
+        if(
+            button.dataset.tab ===
+            "tasks"
+        ){
 
-
-            if(
-                button.dataset.tab ===
-                "tasks"
-            ){
-
-                loadTasks();
-
-            }
-
-
-            if(
-                button.dataset.tab ===
-                "users"
-            ){
-
-                loadUsers();
-
-            }
-
-
-            if(
-                button.dataset.tab ===
-                "withdraws"
-            ){
-
-                loadWithdraws();
-
-            }
+            loadTasks();
 
         }
-    );
+
+
+        if(
+            button.dataset.tab ===
+            "users"
+        ){
+
+            loadUsers();
+
+        }
+
+
+        if(
+            button.dataset.tab ===
+            "withdraws"
+        ){
+
+            loadWithdraws();
+
+        }
+
+    };
 
 });
 
@@ -867,17 +874,14 @@ document
 
 document
 .getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async () => {
+.onclick = async () => {
 
-        await signOut(auth);
+    await signOut(auth);
 
-        location.href =
-            "index.html";
+    location.href =
+    "index.html";
 
-    }
-);
+};
 
 
 /* =========================
@@ -914,6 +918,7 @@ document
                 file
             );
 
+
         preview.style.display =
             "block";
 
@@ -935,7 +940,7 @@ function compressImage(file){
 
 
             reader.onload =
-                event => {
+                e => {
 
                     const img =
                         new Image();
@@ -950,10 +955,10 @@ function compressImage(file){
                                 );
 
 
-                            let width =
+                            let w =
                                 img.width;
 
-                            let height =
+                            let h =
                                 img.height;
 
 
@@ -961,41 +966,28 @@ function compressImage(file){
                                 350;
 
 
-                            if(
-                                width >
-                                height
-                            ){
+                            if(w > h){
 
-                                if(
-                                    width >
-                                    max
-                                ){
+                                if(w > max){
 
-                                    height =
-                                        height *
-                                        max /
-                                        width;
+                                    h =
+                                    h * max / w;
 
-                                    width =
-                                        max;
+                                    w =
+                                    max;
 
                                 }
 
                             }
                             else{
 
-                                if(
-                                    height >
-                                    max
-                                ){
+                                if(h > max){
 
-                                    width =
-                                        width *
-                                        max /
-                                        height;
+                                    w =
+                                    w * max / h;
 
-                                    height =
-                                        max;
+                                    h =
+                                    max;
 
                                 }
 
@@ -1003,23 +995,15 @@ function compressImage(file){
 
 
                             canvas.width =
-                                Math.round(
-                                    width
-                                );
+                                Math.round(w);
 
                             canvas.height =
-                                Math.round(
-                                    height
-                                );
+                                Math.round(h);
 
 
-                            const ctx =
-                                canvas.getContext(
-                                    "2d"
-                                );
-
-
-                            ctx.drawImage(
+                            canvas
+                            .getContext("2d")
+                            .drawImage(
                                 img,
                                 0,
                                 0,
@@ -1041,8 +1025,9 @@ function compressImage(file){
                     img.onerror =
                         reject;
 
+
                     img.src =
-                        event.target.result;
+                        e.target.result;
 
                 };
 
@@ -1067,164 +1052,183 @@ function compressImage(file){
 
 document
 .getElementById("saveTask")
-.addEventListener(
-    "click",
-    async () => {
+.onclick = async () => {
 
-        try{
+    try{
 
-            const name =
+        const name =
+            document
+            .getElementById(
+                "taskName"
+            )
+            .value
+            .trim();
+
+
+        const price =
+            Number(
                 document
                 .getElementById(
-                    "taskName"
+                    "taskPrice"
                 )
                 .value
-                .trim();
+            );
 
 
-            const price =
-                Number(
-                    document
-                    .getElementById(
-                        "taskPrice"
-                    )
-                    .value
-                );
-
-
-            const commission =
-                Number(
-                    document
-                    .getElementById(
-                        "taskCommission"
-                    )
-                    .value
-                );
-
-
-            const file =
+        const commission =
+            Number(
                 document
                 .getElementById(
-                    "taskImage"
+                    "taskCommission"
                 )
-                .files[0];
-
-
-            if(
-                !name ||
-                !price ||
-                !commission ||
-                !file
-            ){
-
-                alert(
-                    "Task name, price, commission and image required."
-                );
-
-                return;
-
-            }
-
-
-            const status =
-                document.getElementById(
-                    "taskStatus"
-                );
-
-
-            status.textContent =
-                "Compressing image...";
-
-
-            const image =
-                await compressImage(
-                    file
-                );
-
-
-            status.textContent =
-                "Saving task...";
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "tasks"
-                ),
-                {
-
-                    name:
-                        name,
-
-                    price:
-                        price,
-
-                    commission:
-                        commission,
-
-                    image:
-                        image,
-
-                    createdAt:
-                        serverTimestamp(),
-
-                    order:
-                        Date.now()
-
-                }
+                .value
             );
 
 
-            status.textContent =
-                "Task saved successfully ✓";
-
-
-            document.getElementById(
-                "taskName"
-            ).value = "";
-
-
-            document.getElementById(
-                "taskPrice"
-            ).value = "";
-
-
-            document.getElementById(
-                "taskCommission"
-            ).value = "";
-
-
-            document.getElementById(
+        const file =
+            document
+            .getElementById(
                 "taskImage"
-            ).value = "";
+            )
+            .files[0];
 
 
-            document.getElementById(
-                "imagePreview"
-            ).style.display =
-                "none";
-
-
-            loadTasks();
-
-        }
-        catch(error){
-
-            console.error(error);
-
-            document.getElementById(
-                "taskStatus"
-            ).textContent =
-                error.message;
+        if(
+            !name ||
+            !price ||
+            !commission ||
+            !file
+        ){
 
             alert(
-                error.message
+                "Task name, price, commission and image required."
             );
+
+            return;
 
         }
 
+
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            "Compressing image...";
+
+
+        const image =
+            await compressImage(
+                file
+            );
+
+
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            "Saving task...";
+
+
+        await addDoc(
+            collection(
+                db,
+                "tasks"
+            ),
+            {
+
+                name:
+                    name,
+
+                price:
+                    price,
+
+                commission:
+                    commission,
+
+                image:
+                    image,
+
+                createdAt:
+                    serverTimestamp(),
+
+                order:
+                    Date.now()
+
+            }
+        );
+
+
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            "Task saved successfully ✓";
+
+
+        document
+        .getElementById(
+            "taskName"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "taskPrice"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "taskCommission"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "taskImage"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "imagePreview"
+        )
+        .style.display =
+            "none";
+
+
+        loadTasks();
+
     }
-);
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        document
+        .getElementById(
+            "taskStatus"
+        )
+        .textContent =
+            error.message;
+
+
+        alert(
+            error.message
+        );
+
+    }
+
+};
 
 
 /* =========================
@@ -1268,14 +1272,14 @@ async function loadTasks(){
 
 
         snap.forEach(
-            item => {
+            d => {
 
                 tasks.push({
 
                     id:
-                        item.id,
+                        d.id,
 
-                    ...item.data()
+                    ...d.data()
 
                 });
 
@@ -1285,7 +1289,8 @@ async function loadTasks(){
 
         tasks.sort(
             (a,b) =>
-                Number(a.order || 0) -
+                Number(a.order || 0)
+                -
                 Number(b.order || 0)
         );
 
@@ -1293,4 +1298,135 @@ async function loadTasks(){
         list.innerHTML = "";
 
 
-    
+        tasks.forEach(
+            task => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "item";
+
+
+                div.innerHTML = `
+
+                    ${
+                        task.image
+                        ?
+                        `
+                        <img
+                            src="${task.image}"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+                    <h4>
+                        ${task.name || "Task"}
+                    </h4>
+
+                    <p>
+                        Price:
+                        ${task.price || 0}
+                    </p>
+
+                    <p>
+                        Commission:
+                        ${task.commission || 0}
+                    </p>
+
+                    <div class="row">
+
+                        <button
+                            class="small red"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                div
+                .querySelector(".red")
+                .onclick =
+                async () => {
+
+                    if(
+                        !confirm(
+                            "Delete this task?"
+                        )
+                    ){
+
+                        return;
+
+                    }
+
+
+                    await deleteDoc(
+                        doc(
+                            db,
+                            "tasks",
+                            task.id
+                        )
+                    );
+
+
+                    loadTasks();
+
+                };
+
+
+                list.appendChild(
+                    div
+                );
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Tasks error:",
+            error
+        );
+
+
+        list.innerHTML =
+            "Unable to load tasks.";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD USERS
+========================= */
+
+async function loadUsers(){
+
+    const list =
+        document.getElementById(
+            "userList"
+        );
+
+
+    list.innerHTML =
+        "Loading users...";
+
+
+    try{
+
+        const snap =
+            await getDocs(
+                collection(
+                    db,
+                    "users"
+                )
