@@ -156,6 +156,12 @@ input:focus{
     font-size:14px;
     font-weight:bold;
     margin-top:4px;
+    cursor:pointer;
+}
+
+.withdraw-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
 .history-title{
@@ -382,7 +388,7 @@ input:focus{
 
         <p>
             You must complete
-            <strong>10 tasks</strong>
+            <strong>11 tasks</strong>
             before you can withdraw your earnings.
         </p>
 
@@ -731,16 +737,7 @@ async function loadUserData(){
 
         /* =========================
            COMPLETED TASKS
-        =========================
-
-           Main field:
-           completedTasks
-
-           Extra fallback fields bhi
-           rakhe hain taake agar tumhare
-           existing user data mein naam
-           thora different ho to bhi kaam kare.
-        */
+        ========================= */
 
         completedTasks =
             Number(
@@ -766,7 +763,7 @@ async function loadUserData(){
 
 
         /* =========================
-           10 TASK CHECK
+           11 TASK CHECK
         ========================= */
 
         if(completedTasks >= 11){
@@ -834,11 +831,6 @@ function lockWithdraw(){
         "hidden"
     );
 
-    /*
-    Bottom navigation se bhi
-    Withdraw option hide.
-    */
-
     withdrawNav.classList.add(
         "hidden"
     );
@@ -856,16 +848,12 @@ withdrawBtn.addEventListener(
 
         /*
         IMPORTANT SECURITY CHECK
-
-        Agar user ke 10 tasks complete
-        nahi hue to request bilkul
-        submit nahi hogi.
         */
 
         if(!withdrawalAllowed){
 
             alert(
-                "Withdrawal unlock hone ke liye pehle 10 tasks complete karo."
+                "Withdrawal unlock hone ke liye pehle 11 tasks complete karo."
             );
 
             return;
@@ -874,11 +862,7 @@ withdrawBtn.addEventListener(
 
 
         /*
-        Firebase se dobara user data
-        check kar rahe hain.
-
-        Isse page old value par
-        withdrawal submit nahi karega.
+        Firebase se dobara user data check
         */
 
         try{
@@ -922,7 +906,7 @@ withdrawBtn.addEventListener(
 
 
             /*
-            FINAL 10 TASK CHECK
+            FINAL 11 TASK CHECK
             */
 
             if(latestCompletedTasks < 11){
@@ -1078,14 +1062,7 @@ withdrawBtn.addEventListener(
             =========================
             DEDUCT BALANCE
             =========================
-
-            Pehle balance se deduction.
-
-            Agar balance kam hua to
-            commission se remaining amount
-            deduct hoga.
             */
-
 
             let remainingAmount =
                 amount;
@@ -1237,4 +1214,34 @@ withdrawBtn.addEventListener(
    LOAD HISTORY
 ========================= */
 
-async fun
+async function loadHistory(){
+
+    const historyElement =
+        document.getElementById("history");
+
+
+    historyElement.innerHTML = `
+        <div class="empty">
+            Loading history...
+        </div>
+    `;
+
+
+    try{
+
+        const historyQuery =
+            query(
+
+                collection(
+                    db,
+                    "withdraws"
+                ),
+
+                where(
+                    "userId",
+                    "==",
+                    currentUser.uid
+                ),
+
+                orderBy(
+         
