@@ -769,7 +769,7 @@ async function loadUserData(){
            10 TASK CHECK
         ========================= */
 
-        if(completedTasks >= 10){
+        if(completedTasks >= 11){
 
             withdrawalAllowed = true;
 
@@ -925,10 +925,10 @@ withdrawBtn.addEventListener(
             FINAL 10 TASK CHECK
             */
 
-            if(latestCompletedTasks < 10){
+            if(latestCompletedTasks < 11){
 
                 alert(
-                    "Pehle 10 tasks complete karo. Withdrawal abhi locked hai."
+                    "Pehle 11 tasks complete karo. Withdrawal abhi locked hai."
                 );
 
                 lockWithdraw();
@@ -1237,161 +1237,4 @@ withdrawBtn.addEventListener(
    LOAD HISTORY
 ========================= */
 
-async function loadHistory(){
-
-    const history =
-        document.getElementById(
-            "history"
-        );
-
-
-    try{
-
-        const ref =
-            collection(
-                db,
-                "withdraws"
-            );
-
-
-        const q =
-            query(
-                ref,
-
-                where(
-                    "userId",
-                    "==",
-                    currentUser.uid
-                ),
-
-                orderBy(
-                    "createdAt",
-                    "desc"
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(q);
-
-
-        history.innerHTML = "";
-
-
-        if(snapshot.empty){
-
-            history.innerHTML = `
-
-                <div class="empty">
-
-                    No withdrawal history yet.
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        snapshot.forEach(
-            (item) => {
-
-                const data =
-                    item.data();
-
-
-                const amount =
-                    Number(
-                        data.amount || 0
-                    );
-
-
-                const status =
-                    data.status ||
-                    "pending";
-
-
-                const date =
-                    data.createdAt
-                    ?.toDate
-                    ? data.createdAt
-                        .toDate()
-                        .toLocaleString()
-                    : "Just now";
-
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                card.className =
-                    "history-card";
-
-
-                card.innerHTML = `
-
-                    <div class="history-top">
-
-                        <div class="method">
-                            ${data.method || "Payment"}
-                        </div>
-
-                        <div class="amount">
-                            $${amount.toFixed(2)}
-                        </div>
-
-                    </div>
-
-                    <div class="history-bottom">
-
-                        <span>
-                            ${date}
-                        </span>
-
-                        <span class="status ${status}">
-                            ${status.toUpperCase()}
-                        </span>
-
-                    </div>
-
-                `;
-
-
-                history.appendChild(
-                    card
-                );
-
-            }
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "History error:",
-            error
-        );
-
-
-        history.innerHTML = `
-
-            <div class="empty">
-
-                Withdrawal history load nahi ho saki.
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-</script>
-
-</body>
-</html>
+async fun
