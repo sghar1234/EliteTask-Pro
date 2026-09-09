@@ -227,6 +227,7 @@ input:focus{
     font-size:13px;
 }
 
+
 /* =========================
    WITHDRAW LOCK
 ========================= */
@@ -260,6 +261,11 @@ input:focus{
 .withdraw-locked strong{
     color:#1677e8;
 }
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
 
 .bottom-nav{
     position:fixed;
@@ -320,7 +326,13 @@ input:focus{
 
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     TOP BAR
+========================= -->
 
 <div class="topbar">
 
@@ -343,7 +355,13 @@ input:focus{
 </div>
 
 
+
 <div class="container">
+
+
+    <!-- =========================
+         TITLE
+    ========================= -->
 
     <div class="page-title">
 
@@ -358,6 +376,11 @@ input:focus{
     </div>
 
 
+
+    <!-- =========================
+         BALANCE
+    ========================= -->
+
     <div class="balance-card">
 
         <span>
@@ -371,10 +394,13 @@ input:focus{
     </div>
 
 
-    <!-- LOCK MESSAGE -->
+
+    <!-- =========================
+         LOCK MESSAGE
+    ========================= -->
 
     <div
-        class="withdraw-locked hidden"
+        class="withdraw-locked"
         id="withdrawLocked"
     >
 
@@ -387,18 +413,21 @@ input:focus{
         </h3>
 
         <p>
-            You must complete
+            Complete
             <strong>11 tasks</strong>
-            before you can withdraw your earnings.
+            to unlock withdrawal.
         </p>
 
     </div>
 
 
-    <!-- WITHDRAW FORM -->
+
+    <!-- =========================
+         WITHDRAW FORM
+    ========================= -->
 
     <div
-        class="form-card"
+        class="form-card hidden"
         id="withdrawForm"
     >
 
@@ -470,6 +499,11 @@ input:focus{
     </div>
 
 
+
+    <!-- =========================
+         HISTORY
+    ========================= -->
+
     <h3 class="history-title">
         Withdrawal History
     </h3>
@@ -485,6 +519,11 @@ input:focus{
 
 </div>
 
+
+
+<!-- =========================
+     BOTTOM NAV
+========================= -->
 
 <div class="bottom-nav">
 
@@ -541,18 +580,26 @@ input:focus{
 </div>
 
 
+
 <script type="module">
+
+
+/* =========================
+   FIREBASE IMPORTS
+========================= */
 
 import {
     initializeApp
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -568,6 +615,7 @@ import {
     serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 
 /* =========================
@@ -597,14 +645,18 @@ const firebaseConfig = {
 };
 
 
+
 const app =
     initializeApp(firebaseConfig);
+
 
 const auth =
     getAuth(app);
 
+
 const db =
     getFirestore(app);
+
 
 
 /* =========================
@@ -624,6 +676,7 @@ let completedTasks = 0;
 let withdrawalAllowed = false;
 
 
+
 /* =========================
    ELEMENTS
 ========================= */
@@ -631,17 +684,22 @@ let withdrawalAllowed = false;
 const balanceElement =
     document.getElementById("balance");
 
+
 const withdrawForm =
     document.getElementById("withdrawForm");
+
 
 const withdrawLocked =
     document.getElementById("withdrawLocked");
 
+
 const withdrawNav =
     document.getElementById("withdrawNav");
 
+
 const withdrawBtn =
     document.getElementById("withdrawBtn");
+
 
 
 /* =========================
@@ -649,8 +707,11 @@ const withdrawBtn =
 ========================= */
 
 onAuthStateChanged(
+
     auth,
+
     async (user) => {
+
 
         if(!user){
 
@@ -661,9 +722,13 @@ onAuthStateChanged(
 
         }
 
-        currentUser = user;
+
+        currentUser =
+            user;
+
 
         await loadUserData();
+
 
         if(withdrawalAllowed){
 
@@ -676,10 +741,13 @@ onAuthStateChanged(
 
         }
 
+
         await loadHistory();
 
     }
+
 );
+
 
 
 /* =========================
@@ -690,6 +758,7 @@ async function loadUserData(){
 
     try{
 
+
         const userRef =
             doc(
                 db,
@@ -699,7 +768,9 @@ async function loadUserData(){
 
 
         const snap =
-            await getDoc(userRef);
+            await getDoc(
+                userRef
+            );
 
 
         if(!snap.exists()){
@@ -715,9 +786,8 @@ async function loadUserData(){
             snap.data();
 
 
-        /* =========================
-           BALANCE
-        ========================= */
+
+        /* BALANCE */
 
         currentBalance =
             Number(
@@ -725,9 +795,8 @@ async function loadUserData(){
             );
 
 
-        /* =========================
-           COMMISSION
-        ========================= */
+
+        /* COMMISSION */
 
         currentCommission =
             Number(
@@ -735,31 +804,33 @@ async function loadUserData(){
             );
 
 
-        /* =========================
-           COMPLETED TASKS
-        ========================= */
+
+        /* COMPLETED TASKS */
 
         completedTasks =
             Number(
+
                 data.completedTasks ??
                 data.completed ??
                 data.tasksCompleted ??
                 0
+
             );
 
 
-        /* =========================
-           WITHDRAW BALANCE
-        ========================= */
+
+        /* WITHDRAWABLE */
 
         withdrawableBalance =
             currentBalance +
             currentCommission;
 
 
+
         balanceElement.textContent =
             "$" +
             withdrawableBalance.toFixed(2);
+
 
 
         /* =========================
@@ -768,12 +839,14 @@ async function loadUserData(){
 
         if(completedTasks >= 11){
 
-            withdrawalAllowed = true;
+            withdrawalAllowed =
+                true;
 
         }
         else{
 
-            withdrawalAllowed = false;
+            withdrawalAllowed =
+                false;
 
         }
 
@@ -785,13 +858,15 @@ async function loadUserData(){
             error
         );
 
-        withdrawalAllowed = false;
+        withdrawalAllowed =
+            false;
 
         lockWithdraw();
 
     }
 
 }
+
 
 
 /* =========================
@@ -804,9 +879,11 @@ function showWithdraw(){
         "hidden"
     );
 
+
     withdrawLocked.classList.add(
         "hidden"
     );
+
 
     withdrawNav.classList.remove(
         "hidden"
@@ -815,27 +892,33 @@ function showWithdraw(){
 }
 
 
+
 /* =========================
    LOCK WITHDRAW
 ========================= */
 
 function lockWithdraw(){
 
-    withdrawalAllowed = false;
+    withdrawalAllowed =
+        false;
+
 
     withdrawForm.classList.add(
         "hidden"
     );
 
+
     withdrawLocked.classList.remove(
         "hidden"
     );
 
-    withdrawNav.classList.add(
+
+    withdrawNav.classList.remove(
         "hidden"
     );
 
 }
+
 
 
 /* =========================
@@ -843,17 +926,18 @@ function lockWithdraw(){
 ========================= */
 
 withdrawBtn.addEventListener(
+
     "click",
+
     async () => {
 
-        /*
-        IMPORTANT SECURITY CHECK
-        */
+
+        /* SECURITY CHECK */
 
         if(!withdrawalAllowed){
 
             alert(
-                "Withdrawal unlock hone ke liye pehle 11 tasks complete karo."
+                "Complete 11 tasks to unlock withdrawal."
             );
 
             return;
@@ -861,11 +945,11 @@ withdrawBtn.addEventListener(
         }
 
 
-        /*
-        Firebase se dobara user data check
-        */
 
         try{
+
+
+            /* GET LATEST USER */
 
             const latestUserRef =
                 doc(
@@ -896,23 +980,24 @@ withdrawBtn.addEventListener(
                 latestSnap.data();
 
 
+
+            /* FINAL 11 TASK CHECK */
+
             const latestCompletedTasks =
                 Number(
+
                     latestData.completedTasks ??
                     latestData.completed ??
                     latestData.tasksCompleted ??
                     0
+
                 );
 
-
-            /*
-            FINAL 11 TASK CHECK
-            */
 
             if(latestCompletedTasks < 11){
 
                 alert(
-                    "Pehle 11 tasks complete karo. Withdrawal abhi locked hai."
+                    "Complete 11 tasks first. Withdrawal is still locked."
                 );
 
                 lockWithdraw();
@@ -922,11 +1007,17 @@ withdrawBtn.addEventListener(
             }
 
 
+
+            /* METHOD */
+
             const method =
                 document
                 .getElementById("method")
                 .value;
 
+
+
+            /* ACCOUNT */
 
             const account =
                 document
@@ -935,13 +1026,21 @@ withdrawBtn.addEventListener(
                 .trim();
 
 
+
+            /* AMOUNT */
+
             const amount =
                 Number(
+
                     document
                     .getElementById("amount")
                     .value
+
                 );
 
+
+
+            /* VALIDATION */
 
             if(!method){
 
@@ -976,9 +1075,8 @@ withdrawBtn.addEventListener(
             }
 
 
-            /*
-            Latest balance + commission
-            */
+
+            /* LATEST BALANCE */
 
             const latestBalance =
                 Number(
@@ -997,6 +1095,7 @@ withdrawBtn.addEventListener(
                 latestCommission;
 
 
+
             if(amount > latestWithdrawable){
 
                 alert(
@@ -1008,17 +1107,19 @@ withdrawBtn.addEventListener(
             }
 
 
-            withdrawBtn.disabled = true;
+
+            withdrawBtn.disabled =
+                true;
+
 
             withdrawBtn.textContent =
                 "Submitting...";
 
 
-            /*
-            =========================
-            CREATE WITHDRAW REQUEST
-            =========================
-            */
+
+            /* =========================
+               CREATE REQUEST
+            ========================= */
 
             await addDoc(
 
@@ -1058,11 +1159,10 @@ withdrawBtn.addEventListener(
             );
 
 
-            /*
-            =========================
-            DEDUCT BALANCE
-            =========================
-            */
+
+            /* =========================
+               DEDUCT BALANCE
+            ========================= */
 
             let remainingAmount =
                 amount;
@@ -1076,10 +1176,8 @@ withdrawBtn.addEventListener(
                 latestCommission;
 
 
-            /*
-            STEP 1
-            Balance deduction
-            */
+
+            /* BALANCE FIRST */
 
             if(newBalance >= remainingAmount){
 
@@ -1087,7 +1185,8 @@ withdrawBtn.addEventListener(
                     newBalance -
                     remainingAmount;
 
-                remainingAmount = 0;
+                remainingAmount =
+                    0;
 
             }
             else{
@@ -1096,15 +1195,14 @@ withdrawBtn.addEventListener(
                     remainingAmount -
                     newBalance;
 
-                newBalance = 0;
+                newBalance =
+                    0;
 
             }
 
 
-            /*
-            STEP 2
-            Commission deduction
-            */
+
+            /* COMMISSION SECOND */
 
             if(remainingAmount > 0){
 
@@ -1112,14 +1210,14 @@ withdrawBtn.addEventListener(
                     newCommission -
                     remainingAmount;
 
-                remainingAmount = 0;
+                remainingAmount =
+                    0;
 
             }
 
 
-            /*
-            Firebase update
-            */
+
+            /* UPDATE FIRESTORE */
 
             await updateDoc(
 
@@ -1138,9 +1236,8 @@ withdrawBtn.addEventListener(
             );
 
 
-            /*
-            Local values update
-            */
+
+            /* UPDATE LOCAL */
 
             currentBalance =
                 newBalance;
@@ -1155,14 +1252,14 @@ withdrawBtn.addEventListener(
                 currentCommission;
 
 
+
             balanceElement.textContent =
                 "$" +
                 withdrawableBalance.toFixed(2);
 
 
-            /*
-            Clear form
-            */
+
+            /* CLEAR FORM */
 
             document
             .getElementById("method")
@@ -1179,9 +1276,11 @@ withdrawBtn.addEventListener(
             .value = "";
 
 
+
             alert(
                 "Withdrawal request submit ho gayi."
             );
+
 
 
             await loadHistory();
@@ -1201,13 +1300,18 @@ withdrawBtn.addEventListener(
         }
 
 
-        withdrawBtn.disabled = false;
+
+        withdrawBtn.disabled =
+            false;
+
 
         withdrawBtn.textContent =
             "Submit Withdrawal";
 
     }
+
 );
+
 
 
 /* =========================
@@ -1217,31 +1321,10 @@ withdrawBtn.addEventListener(
 async function loadHistory(){
 
     const historyElement =
-        document.getElementById("history");
+        document.getElementById(
+            "history"
+        );
 
 
     historyElement.innerHTML = `
-        <div class="empty">
-            Loading history...
-        </div>
-    `;
-
-
-    try{
-
-        const historyQuery =
-            query(
-
-                collection(
-                    db,
-                    "withdraws"
-                ),
-
-                where(
-                    "userId",
-                    "==",
-                    currentUser.uid
-                ),
-
-                orderBy(
-         
+ 
