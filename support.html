@@ -5,7 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Customer Service - EliteTask Pro</title>
 
@@ -20,7 +23,12 @@
 body{
     font-family:Arial,Helvetica,sans-serif;
     min-height:100vh;
-    background:linear-gradient(135deg,#fffdf7,#f7efd2,#fffaf0);
+    background:linear-gradient(
+        135deg,
+        #fffdf7,
+        #f7efd2,
+        #fffaf0
+    );
     color:#222;
     padding-bottom:90px;
 }
@@ -66,7 +74,11 @@ body{
     align-items:center;
     justify-content:center;
     border-radius:13px;
-    background:linear-gradient(135deg,#d4af37,#f5df8b);
+    background:linear-gradient(
+        135deg,
+        #d4af37,
+        #f5df8b
+    );
     color:#fff;
     font-weight:800;
     font-size:17px;
@@ -102,7 +114,11 @@ body{
     align-items:center;
     justify-content:center;
     border-radius:22px;
-    background:linear-gradient(135deg,#d4af37,#f3d875);
+    background:linear-gradient(
+        135deg,
+        #d4af37,
+        #f3d875
+    );
     font-size:31px;
     box-shadow:0 8px 25px rgba(180,140,30,.20);
 }
@@ -150,6 +166,7 @@ body{
     border-radius:16px;
     background:#faf8f0;
     border:1px solid rgba(212,175,55,.18);
+
     display:flex;
     flex-direction:column;
     gap:10px;
@@ -179,24 +196,36 @@ body{
 
 .user-message{
     align-self:flex-end;
-    background:linear-gradient(135deg,#d4af37,#e7ca63);
+
+    background:linear-gradient(
+        135deg,
+        #d4af37,
+        #e7ca63
+    );
+
     color:#fff;
+
     border-bottom-right-radius:4px;
 }
 
 .admin-message{
     align-self:flex-start;
+
     background:#fff;
+
     color:#333;
+
     border:1px solid rgba(212,175,55,.22);
+
     box-shadow:0 3px 10px rgba(0,0,0,.05);
+
     border-bottom-left-radius:4px;
 }
 
 .message-label{
     font-size:10px;
     font-weight:700;
-    margin-bottom:3px;
+    margin-bottom:5px;
     opacity:.75;
 }
 
@@ -204,22 +233,71 @@ body{
     white-space:pre-wrap;
 }
 
-/* INPUT */
+/* IMAGE MESSAGE */
+
+.message-image{
+    display:block;
+
+    width:100%;
+    max-width:240px;
+    max-height:260px;
+
+    object-fit:cover;
+
+    border-radius:12px;
+
+    margin-top:5px;
+
+    cursor:pointer;
+}
+
+/* INPUT AREA */
 
 .message-area{
     display:flex;
-    gap:8px;
+    gap:7px;
     margin-top:12px;
+    align-items:center;
+}
+
+.gallery-btn{
+    width:46px;
+    height:46px;
+
+    flex-shrink:0;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    border:1px solid #dbc879;
+
+    color:#9a7410;
+
+    font-size:21px;
+
+    cursor:pointer;
 }
 
 .message-input{
     flex:1;
+
+    min-width:0;
+
     height:46px;
+
     border-radius:14px;
+
     border:1px solid #ddd;
+
     outline:none;
+
     padding:0 14px;
+
     font-size:14px;
+
     background:#fff;
 }
 
@@ -230,28 +308,97 @@ body{
 .send-btn{
     width:48px;
     height:46px;
+
+    flex-shrink:0;
+
     border:none;
+
     border-radius:14px;
-    background:linear-gradient(135deg,#c9a227,#e4c75e);
+
+    background:linear-gradient(
+        135deg,
+        #c9a227,
+        #e4c75e
+    );
+
     color:#fff;
+
     font-size:20px;
+
     cursor:pointer;
 }
 
-.send-btn:disabled{
+.send-btn:disabled,
+.gallery-btn:disabled{
     opacity:.55;
 }
 
-/* =========================
-   DIRECT CONTACT
-========================= */
+/* SELECTED IMAGE */
+
+.selected-image-area{
+    display:none;
+
+    margin-top:10px;
+
+    padding:8px;
+
+    border:1px solid #ead99a;
+
+    border-radius:12px;
+
+    background:#fffdf7;
+
+    position:relative;
+}
+
+.selected-image-area.active{
+    display:block;
+}
+
+.selected-image{
+    width:90px;
+    height:90px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+}
+
+.remove-image{
+    position:absolute;
+
+    left:88px;
+    top:2px;
+
+    width:24px;
+    height:24px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#b33b2e;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* DIRECT CONTACT */
 
 .direct-contact{
     margin-top:18px;
+
     padding:18px;
+
     background:#fff;
+
     border-radius:20px;
+
     border:1px solid rgba(212,175,55,.28);
+
     box-shadow:0 8px 25px rgba(120,90,20,.10);
 }
 
@@ -277,23 +424,33 @@ body{
 .contact-btn{
     width:100%;
     min-height:58px;
+
     display:flex;
     align-items:center;
+
     gap:12px;
+
     padding:10px 14px;
+
     border-radius:15px;
+
     text-decoration:none;
+
     color:#fff;
 }
 
 .contact-icon{
     width:38px;
     height:38px;
+
     border-radius:11px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     background:rgba(255,255,255,.20);
+
     font-size:21px;
 }
 
@@ -327,18 +484,28 @@ body{
 
 .quick-grid{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
+
+    grid-template-columns:
+    repeat(2,1fr);
+
     gap:12px;
 }
 
 .quick-btn{
     border:none;
+
     background:#fff;
+
     border:1px solid rgba(212,175,55,.25);
+
     border-radius:17px;
+
     padding:15px 10px;
+
     cursor:pointer;
+
     box-shadow:0 6px 20px rgba(120,90,20,.08);
+
     color:#5e4606;
 }
 
@@ -360,29 +527,49 @@ body{
 
 .bottom-nav{
     position:fixed;
+
     left:0;
     right:0;
     bottom:0;
+
     height:72px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-around;
+
     background:rgba(255,255,255,.97);
+
     border-top:1px solid rgba(212,175,55,.25);
-    box-shadow:0 -5px 20px rgba(80,60,20,.08);
+
+    box-shadow:
+        0 -5px 20px
+        rgba(80,60,20,.08);
+
     z-index:100;
 }
 
 .nav-item{
     text-decoration:none;
+
     color:#888;
+
     font-size:11px;
+
     display:flex;
+
     flex-direction:column;
+
     align-items:center;
+
     justify-content:center;
+
     gap:4px;
+
     width:25%;
+
     height:100%;
 }
 
@@ -398,16 +585,31 @@ body{
 .nav-center{
     width:42px;
     height:42px;
+
     margin-top:-19px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     border-radius:50%;
-    background:linear-gradient(135deg,#d4af37,#efd477);
+
+    background:linear-gradient(
+        135deg,
+        #d4af37,
+        #efd477
+    );
+
     color:#fff;
+
     font-size:20px;
+
     border:4px solid #fff;
-    box-shadow:0 5px 16px rgba(180,140,30,.22);
+
+    box-shadow:
+        0 5px 16px
+        rgba(180,140,30,.22);
 }
 
 /* MOBILE */
@@ -431,19 +633,36 @@ body{
         padding-right:12px;
     }
 
+    .message-area{
+        gap:5px;
+    }
+
+    .gallery-btn{
+        width:42px;
+    }
+
+    .send-btn{
+        width:44px;
+    }
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <!-- TOP -->
 
 <div class="top-area">
 
-    <a href="dashboard.html" class="back-btn">
+    <a
+        href="dashboard.html"
+        class="back-btn"
+    >
         ←
     </a>
 
@@ -496,7 +715,11 @@ body{
         Send us a message and our support team will respond.
     </p>
 
-    <div class="chat-box" id="chatBox">
+
+    <div
+        class="chat-box"
+        id="chatBox"
+    >
 
         <div class="empty-chat">
             Loading conversation...
@@ -505,7 +728,50 @@ body{
     </div>
 
 
+    <!-- SELECTED IMAGE -->
+
+    <div
+        class="selected-image-area"
+        id="selectedImageArea"
+    >
+
+        <img
+            id="selectedImage"
+            class="selected-image"
+            alt="Selected image"
+        >
+
+        <button
+            type="button"
+            class="remove-image"
+            id="removeImage"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <!-- MESSAGE AREA -->
+
     <div class="message-area">
+
+        <input
+            type="file"
+            id="galleryInput"
+            accept="image/*"
+            hidden
+        >
+
+        <button
+            type="button"
+            class="gallery-btn"
+            id="galleryBtn"
+            title="Send Image"
+        >
+            🖼️
+        </button>
+
 
         <input
             type="text"
@@ -514,6 +780,7 @@ body{
             placeholder="Type your message..."
             autocomplete="off"
         >
+
 
         <button
             class="send-btn"
@@ -528,9 +795,7 @@ body{
 </div>
 
 
-<!-- =========================
-     DIRECT WHATSAPP / TELEGRAM
-========================= -->
+<!-- DIRECT CONTACT -->
 
 <div class="direct-contact">
 
@@ -544,7 +809,6 @@ body{
 
 
     <div class="contact-buttons">
-
 
         <!-- WHATSAPP -->
 
@@ -601,7 +865,6 @@ body{
 
         </a>
 
-
     </div>
 
 </div>
@@ -621,7 +884,9 @@ body{
         onclick="sendQuick('I need help with my tasks.')"
     >
 
-        <div>📦</div>
+        <div>
+            📦
+        </div>
 
         <span>
             Task Help
@@ -635,7 +900,9 @@ body{
         onclick="sendQuick('I need help with withdrawal.')"
     >
 
-        <div>💳</div>
+        <div>
+            💳
+        </div>
 
         <span>
             Withdrawal
@@ -649,7 +916,9 @@ body{
         onclick="sendQuick('I have a problem with my account.')"
     >
 
-        <div>👤</div>
+        <div>
+            👤
+        </div>
 
         <span>
             Account
@@ -663,7 +932,9 @@ body{
         onclick="sendQuick('I need help with my balance.')"
     >
 
-        <div>💰</div>
+        <div>
+            💰
+        </div>
 
         <span>
             Balance
@@ -672,6 +943,7 @@ body{
     </button>
 
 </div>
+
 
 </div>
 
@@ -685,7 +957,9 @@ body{
         class="nav-item"
     >
 
-        <span>⌂</span>
+        <span>
+            ⌂
+        </span>
 
         Home
 
@@ -697,7 +971,9 @@ body{
         class="nav-item"
     >
 
-        <span>▣</span>
+        <span>
+            ▣
+        </span>
 
         Tasks
 
@@ -723,7 +999,9 @@ body{
         class="nav-item"
     >
 
-        <span>👤</span>
+        <span>
+            👤
+        </span>
 
         Profile
 
@@ -733,6 +1011,11 @@ body{
 
 
 <script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
 
 import {
     initializeApp
@@ -753,6 +1036,7 @@ import {
     getFirestore,
     collection,
     addDoc,
+    getDocs,
     query,
     where,
     onSnapshot,
@@ -762,7 +1046,9 @@ from
 "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* FIREBASE CONFIG */
+/* =========================
+   CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -788,35 +1074,78 @@ const firebaseConfig = {
 
 
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
 
 
+/* =========================
+   ELEMENTS
+========================= */
+
 const chatBox =
-    document.getElementById("chatBox");
+    document.getElementById(
+        "chatBox"
+    );
 
 const messageInput =
-    document.getElementById("messageInput");
+    document.getElementById(
+        "messageInput"
+    );
 
 const sendBtn =
-    document.getElementById("sendBtn");
+    document.getElementById(
+        "sendBtn"
+    );
+
+const galleryBtn =
+    document.getElementById(
+        "galleryBtn"
+    );
+
+const galleryInput =
+    document.getElementById(
+        "galleryInput"
+    );
+
+const selectedImageArea =
+    document.getElementById(
+        "selectedImageArea"
+    );
+
+const selectedImage =
+    document.getElementById(
+        "selectedImage"
+    );
+
+const removeImage =
+    document.getElementById(
+        "removeImage"
+    );
 
 
 let currentUser = null;
 
 let unsubscribeMessages = null;
 
+let selectedImageData = null;
 
-/* AUTH */
+
+/* =========================
+   AUTH
+========================= */
 
 onAuthStateChanged(
     auth,
-    (user) => {
+    async (user) => {
 
         if(!user){
 
@@ -845,6 +1174,8 @@ onAuthStateChanged(
 
             sendBtn.disabled = true;
 
+            galleryBtn.disabled = true;
+
             return;
 
         }
@@ -856,13 +1187,20 @@ onAuthStateChanged(
 
         sendBtn.disabled = false;
 
-        loadMessages(user.uid);
+        galleryBtn.disabled = false;
+
+
+        loadMessages(
+            user.uid
+        );
 
     }
 );
 
 
-/* LOAD MESSAGES */
+/* =========================
+   LOAD MESSAGES
+========================= */
 
 function loadMessages(uid){
 
@@ -878,7 +1216,9 @@ function loadMessages(uid){
     chatBox.innerHTML = `
 
         <div class="empty-chat">
+
             Loading conversation...
+
         </div>
 
     `;
@@ -894,7 +1234,11 @@ function loadMessages(uid){
     const q =
         query(
             messagesRef,
-            where("userId","==",uid)
+            where(
+                "userId",
+                "==",
+                uid
+            )
         );
 
 
@@ -903,22 +1247,18 @@ function loadMessages(uid){
 
             q,
 
-            (snapshot) => {
+            async (snapshot) => {
+
+                /*
+                New user ke liye
+                automatic welcome message
+                */
 
                 if(snapshot.empty){
 
-                    chatBox.innerHTML = `
-
-                        <div class="empty-chat">
-
-                            No messages yet.<br>
-
-                            Send us a message and
-                            our support team will respond.
-
-                        </div>
-
-                    `;
+                    await createWelcomeMessage(
+                        uid
+                    );
 
                     return;
 
@@ -933,7 +1273,8 @@ function loadMessages(uid){
 
                         messages.push({
 
-                            id:docSnap.id,
+                            id:
+                                docSnap.id,
 
                             ...docSnap.data()
 
@@ -946,12 +1287,14 @@ function loadMessages(uid){
                 messages.sort(
                     (a,b) => {
 
-                        return getMessageTime(
-                            a.createdAt
-                        )
-                        -
-                        getMessageTime(
-                            b.createdAt
+                        return (
+                            getMessageTime(
+                                a.createdAt
+                            )
+                            -
+                            getMessageTime(
+                                b.createdAt
+                            )
                         );
 
                     }
@@ -964,64 +1307,8 @@ function loadMessages(uid){
                 messages.forEach(
                     (msg) => {
 
-                        const message =
-                            document.createElement("div");
-
-
-                        const sender =
-                            String(
-                                msg.sender ||
-                                msg.from ||
-                                "user"
-                            ).toLowerCase();
-
-
-                        const isAdmin =
-                            sender === "admin" ||
-                            sender === "support";
-
-
-                        message.className =
-                            isAdmin
-                            ?
-                            "chat-message admin-message"
-                            :
-                            "chat-message user-message";
-
-
-                        message.innerHTML = `
-
-                            <div class="message-label">
-
-                                ${
-                                    isAdmin
-                                    ?
-                                    "Customer Support"
-                                    :
-                                    "You"
-                                }
-
-                            </div>
-
-                            <div class="message-text"></div>
-
-                        `;
-
-
-                        const text =
-                            message.querySelector(
-                                ".message-text"
-                            );
-
-
-                        text.textContent =
-                            msg.message ||
-                            msg.text ||
-                            "";
-
-
-                        chatBox.appendChild(
-                            message
+                        displayMessage(
+                            msg
                         );
 
                     }
@@ -1041,11 +1328,16 @@ function loadMessages(uid){
                     error
                 );
 
+
                 chatBox.innerHTML = `
 
                     <div class="empty-chat">
 
                         Unable to load conversation.
+
+                        <br><br>
+
+                        Please refresh the page.
 
                     </div>
 
@@ -1058,53 +1350,11 @@ function loadMessages(uid){
 }
 
 
-/* MESSAGE TIME */
+/* =========================
+   WELCOME MESSAGE
+========================= */
 
-function getMessageTime(timestamp){
-
-    if(
-        timestamp &&
-        typeof timestamp.toMillis ===
-        "function"
-    ){
-
-        return timestamp.toMillis();
-
-    }
-
-    return 0;
-
-}
-
-
-/* SEND */
-
-async function sendMessage(text){
-
-    if(!currentUser){
-
-        alert("Please login first.");
-
-        return;
-
-    }
-
-
-    text =
-        String(text || "").trim();
-
-
-    if(!text){
-
-        return;
-
-    }
-
-
-    sendBtn.disabled = true;
-
-    messageInput.disabled = true;
-
+async function createWelcomeMessage(uid){
 
     try{
 
@@ -1118,16 +1368,16 @@ async function sendMessage(text){
             {
 
                 userId:
-                    currentUser.uid,
+                    uid,
 
                 userEmail:
-                    currentUser.email || "",
+                    currentUser?.email || "",
 
                 message:
-                    text,
+                    "Welcome to EliteTask Pro Customer Service. How can we help you today?",
 
                 sender:
-                    "user",
+                    "admin",
 
                 status:
                     "new",
@@ -1139,13 +1389,591 @@ async function sendMessage(text){
 
         );
 
+    }
+    catch(error){
 
-        messageInput.value = "";
+        console.error(
+            "Welcome message error:",
+            error
+        );
+
+
+        chatBox.innerHTML = `
+
+            <div class="empty-chat">
+
+                No messages yet.<br>
+                Send us a message and our support team will respond.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   DISPLAY MESSAGE
+========================= */
+
+function displayMessage(msg){
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    const sender =
+        String(
+            msg.sender ||
+            msg.from ||
+            "user"
+        ).toLowerCase();
+
+
+    const isAdmin =
+        sender === "admin" ||
+        sender === "support";
+
+
+    message.className =
+        isAdmin
+        ?
+        "chat-message admin-message"
+        :
+        "chat-message user-message";
+
+
+    const label =
+        document.createElement(
+            "div"
+        );
+
+
+    label.className =
+        "message-label";
+
+
+    label.textContent =
+        isAdmin
+        ?
+        "Customer Support"
+        :
+        "You";
+
+
+    message.appendChild(
+        label
+    );
+
+
+    /*
+    TEXT
+    */
+
+    const textValue =
+        msg.message ||
+        msg.text ||
+        "";
+
+
+    if(textValue){
+
+        const text =
+            document.createElement(
+                "div"
+            );
+
+
+        text.className =
+            "message-text";
+
+
+        text.textContent =
+            textValue;
+
+
+        message.appendChild(
+            text
+        );
+
+    }
+
+
+    /*
+    IMAGE
+    */
+
+    if(msg.imageData){
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+
+        image.className =
+            "message-image";
+
+
+        image.src =
+            msg.imageData;
+
+
+        image.alt =
+            "Support image";
+
+
+        image.onclick =
+            () => {
+
+                window.open(
+                    msg.imageData,
+                    "_blank"
+                );
+
+            };
+
+
+        message.appendChild(
+            image
+        );
+
+    }
+
+
+    chatBox.appendChild(
+        message
+    );
+
+}
+
+
+/* =========================
+   TIME
+========================= */
+
+function getMessageTime(timestamp){
+
+    if(
+        timestamp &&
+        typeof timestamp.toMillis ===
+        "function"
+    ){
+
+        return timestamp.toMillis();
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================
+   IMAGE COMPRESS
+========================= */
+
+function compressImage(file){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                (event) => {
+
+                    const img =
+                        new Image();
+
+
+                    img.onload =
+                        () => {
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+
+                            let width =
+                                img.width;
+
+                            let height =
+                                img.height;
+
+
+                            const maxSize =
+                                700;
+
+
+                            if(
+                                width >
+                                maxSize
+                            ){
+
+                                height =
+                                    height *
+                                    maxSize /
+                                    width;
+
+                                width =
+                                    maxSize;
+
+                            }
+
+
+                            if(
+                                height >
+                                maxSize
+                            ){
+
+                                width =
+                                    width *
+                                    maxSize /
+                                    height;
+
+                                height =
+                                    maxSize;
+
+                            }
+
+
+                            canvas.width =
+                                Math.round(
+                                    width
+                                );
+
+                            canvas.height =
+                                Math.round(
+                                    height
+                                );
+
+
+                            const ctx =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+
+                            ctx.drawImage(
+                                img,
+                                0,
+                                0,
+                                canvas.width,
+                                canvas.height
+                            );
+
+
+                            /*
+                            Low size JPEG
+                            so Firestore limit
+                            problem na ho.
+                            */
+
+                            const result =
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    0.45
+                                );
+
+
+                            resolve(
+                                result
+                            );
+
+                        };
+
+
+                    img.onerror =
+                        () => {
+
+                            reject(
+                                new Error(
+                                    "Image could not be processed."
+                                )
+                            );
+
+                        };
+
+
+                    img.src =
+                        event.target.result;
+
+                };
+
+
+            reader.onerror =
+                () => {
+
+                    reject(
+                        new Error(
+                            "Image could not be read."
+                        )
+                    );
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+galleryBtn.addEventListener(
+    "click",
+    () => {
+
+        galleryInput.click();
+
+    }
+);
+
+
+galleryInput.addEventListener(
+    "change",
+    async () => {
+
+        const file =
+            galleryInput.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        if(
+            !file.type.startsWith(
+                "image/"
+            )
+        ){
+
+            alert(
+                "Please select an image."
+            );
+
+            galleryInput.value = "";
+
+            return;
+
+        }
+
+
+        try{
+
+            galleryBtn.disabled =
+                true;
+
+
+            const image =
+                await compressImage(
+                    file
+                );
+
+
+            selectedImageData =
+                image;
+
+
+            selectedImage.src =
+                image;
+
+
+            selectedImageArea.classList.add(
+                "active"
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                error
+            );
+
+
+            alert(
+                "Image select nahi ho saki."
+            );
+
+        }
+
+
+        galleryBtn.disabled =
+            false;
+
+    }
+);
+
+
+/* =========================
+   REMOVE IMAGE
+========================= */
+
+removeImage.addEventListener(
+    "click",
+    () => {
+
+        selectedImageData =
+            null;
+
+        galleryInput.value =
+            "";
+
+        selectedImage.src =
+            "";
+
+        selectedImageArea.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+async function sendMessage(
+    text
+){
+
+    if(!currentUser){
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+
+    }
+
+
+    text =
+        String(
+            text || ""
+        ).trim();
+
+
+    /*
+    Agar text aur image dono
+    nahi hain to send nahi hoga.
+    */
+
+    if(
+        !text &&
+        !selectedImageData
+    ){
+
+        return;
+
+    }
+
+
+    sendBtn.disabled =
+        true;
+
+    messageInput.disabled =
+        true;
+
+    galleryBtn.disabled =
+        true;
+
+
+    try{
+
+        const messageData = {
+
+            userId:
+                currentUser.uid,
+
+            userEmail:
+                currentUser.email || "",
+
+            message:
+                text,
+
+            sender:
+                "user",
+
+            status:
+                "new",
+
+            createdAt:
+                serverTimestamp()
+
+        };
+
+
+        /*
+        Image ho to imageData save hoga.
+        Storage ki zaroorat nahi.
+        */
+
+        if(selectedImageData){
+
+            messageData.imageData =
+                selectedImageData;
+
+        }
+
+
+        await addDoc(
+
+            collection(
+                db,
+                "supportMessages"
+            ),
+
+            messageData
+
+        );
+
+
+        messageInput.value =
+            "";
+
+
+        selectedImageData =
+            null;
+
+
+        galleryInput.value =
+            "";
+
+
+        selectedImage.src =
+            "";
+
+
+        selectedImageArea.classList.remove(
+            "active"
+        );
 
     }
     catch(error){
 
         console.error(
+            "Send message error:",
             error
         );
 
@@ -1156,14 +1984,24 @@ async function sendMessage(text){
         ){
 
             alert(
-                "Permission denied. Firestore Rules check karo."
+                "Message permission denied. Firestore Rules check karo."
+            );
+
+        }
+        else if(
+            error.code ===
+            "resource-exhausted"
+        ){
+
+            alert(
+                "Image bohat bari hai. Choti image select karo."
             );
 
         }
         else{
 
             alert(
-                "Message could not be sent."
+                "Message send nahi ho saka."
             );
 
         }
@@ -1171,16 +2009,23 @@ async function sendMessage(text){
     }
 
 
-    sendBtn.disabled = false;
+    sendBtn.disabled =
+        false;
 
-    messageInput.disabled = false;
+    messageInput.disabled =
+        false;
+
+    galleryBtn.disabled =
+        false;
 
     messageInput.focus();
 
 }
 
 
-/* SEND BUTTON */
+/* =========================
+   SEND BUTTON
+========================= */
 
 sendBtn.addEventListener(
     "click",
@@ -1194,13 +2039,18 @@ sendBtn.addEventListener(
 );
 
 
-/* ENTER */
+/* =========================
+   ENTER
+========================= */
 
 messageInput.addEventListener(
     "keydown",
     (event) => {
 
-        if(event.key === "Enter"){
+        if(
+            event.key ===
+            "Enter"
+        ){
 
             event.preventDefault();
 
@@ -1214,16 +2064,22 @@ messageInput.addEventListener(
 );
 
 
-/* QUICK HELP */
+/* =========================
+   QUICK HELP
+========================= */
 
 window.sendQuick =
 function(text){
 
-    sendMessage(text);
+    sendMessage(
+        text
+    );
 
 };
+
 
 </script>
 
 </body>
+
 </html>
