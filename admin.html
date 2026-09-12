@@ -1304,4 +1304,1157 @@ async function loadTasks(){
                         catch(error){
 
                             alert(
-                            
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Tasks error:",
+            error
+        );
+
+
+        showError(
+            list,
+            "Unable to load tasks: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* LOAD USERS */
+
+async function loadUsers(){
+
+    const list =
+    document.getElementById(
+        "userList"
+    );
+
+
+    list.innerHTML =
+    '<div class="loading">Loading users...</div>';
+
+
+    try{
+
+        const snap =
+        await getDocs(
+            collection(
+                db,
+                "users"
+            )
+        );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+            '<div class="no-data">No users found.</div>';
+
+            return;
+
+        }
+
+
+        list.innerHTML = "";
+
+
+        let foundUser = false;
+
+
+        snap.forEach(
+            item => {
+
+                const user =
+                item.data();
+
+
+                if(item.id === ADMIN_UID){
+
+                    return;
+
+                }
+
+
+                foundUser = true;
+
+
+                const div =
+                document.createElement(
+                    "div"
+                );
+
+
+                div.className =
+                "item";
+
+
+                div.innerHTML =
+                `
+
+                <h4>
+                    ${safe(user.name || "User")}
+                </h4>
+
+                <p>
+                    Email:
+                    ${safe(user.email || "")}
+                </p>
+
+                <p>
+                    Balance:
+                    PKR ${Number(user.balance || 0).toFixed(2)}
+                </p>
+
+                <p>
+                    Commission:
+                    PKR ${Number(user.commission || 0).toFixed(2)}
+                </p>
+
+                <input
+                    class="input newBalance"
+                    type="number"
+                    min="0"
+                    placeholder="New balance"
+                >
+
+                <div class="user-actions">
+
+                    <button
+                        class="small green update-balance"
+                    >
+                        Update Balance
+                    </button>
+
+                    <button
+                        class="small blue open-support"
+                    >
+                        Support
+                    </button>
+
+                    <button
+                        class="small red delete-user"
+                    >
+                        Delete User
+                    </button>
+
+                </div>
+
+                `;
+
+
+                /* UPDATE BALANCE */
+
+                div
+                .querySelector(
+                    ".update-balance"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        const input =
+                        div.querySelector(
+                            ".newBalance"
+                        );
+
+
+                        const value =
+                        Number(
+                            input.value
+                        );
+
+
+                        if(
+                            !Number.isFinite(value) ||
+                            value < 0
+                        ){
+
+                            alert(
+                                "Valid balance enter karo."
+                            );
+
+                            return;
+
+                        }
+
+
+                        try{
+
+                            await updateDoc(
+                                doc(
+                                    db,
+                                    "users",
+                                    item.id
+                                ),
+                                {
+                                    balance:
+                                    value
+                                }
+                            );
+
+
+                            alert(
+                                "Balance updated successfully."
+                            );
+
+
+                            await loadUsers();
+
+                        }
+                        catch(error){
+
+                            console.error(error);
+
+                            alert(
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                /* OPEN SUPPORT */
+
+                div
+                .querySelector(
+                    ".open-support"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        selectedUserId =
+                        item.id;
+
+
+                        const supportTab =
+                        document.querySelector(
+                            '[data-tab="support"]'
+                        );
+
+
+                        if(supportTab){
+
+                            supportTab.click();
+
+                        }
+
+
+                        await loadSupport(
+                            selectedUserId
+                        );
+
+                    }
+                );
+
+
+                /* DELETE USER */
+
+                div
+                .querySelector(
+                    ".delete-user"
+                )
+                .addEventListener(
+                    "click",
+                    async () => {
+
+                        if(
+                            !confirm(
+                                "Delete this user from Firestore?"
+                            )
+                        ){
+
+                            return;
+
+                        }
+
+
+                        try{
+
+                            await deleteDoc(
+                                doc(
+                                    db,
+                                    "users",
+                                    item.id
+                                )
+                            );
+
+
+                            alert(
+                                "User deleted from users list."
+                            );
+
+
+                            await loadUsers();
+
+                        }
+                        catch(error){
+
+                            console.error(error);
+
+                            alert(
+                                error.message
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+
+        if(!foundUser){
+
+            list.innerHTML =
+            '<div class="no-data">No users found.</div>';
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Users error:",
+            error
+        );
+
+
+        showError(
+            list,
+            "Unable to load users: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* LOAD WITHDRAWS */
+
+async function loadWithdraws(){
+
+    const list =
+    document.getElementById(
+        "withdrawList"
+    );
+
+
+    list.innerHTML =
+    '<div class="loading">Loading withdrawals...</div>';
+
+
+    try{
+
+        const snap =
+        await getDocs(
+            collection(
+                db,
+                "withdraws"
+            )
+        );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+            '<div class="no-data">No withdrawal requests.</div>';
+
+            return;
+
+        }
+
+
+        const withdrawals = [];
+
+
+        snap.forEach(
+            item => {
+
+                withdrawals.push({
+
+                    id:
+                    item.id,
+
+                    ...item.data()
+
+                });
+
+            }
+        );
+
+
+        withdrawals.sort(
+            (a,b) => {
+
+                const aTime =
+                a.createdAt?.seconds || 0;
+
+                const bTime =
+                b.createdAt?.seconds || 0;
+
+                return bTime - aTime;
+
+            }
+        );
+
+
+        list.innerHTML = "";
+
+
+        withdrawals.forEach(
+            withdrawal => {
+
+                const div =
+                document.createElement(
+                    "div"
+                );
+
+
+                div.className =
+                "item";
+
+
+                const status =
+                String(
+                    withdrawal.status ||
+                    "pending"
+                ).toLowerCase();
+
+
+                div.innerHTML =
+                `
+
+                <h4>
+                    Withdrawal Request
+                </h4>
+
+                <p>
+                    User ID:
+                    ${safe(
+                        withdrawal.userId ||
+                        withdrawal.uid ||
+                        ""
+                    )}
+                </p>
+
+                <p>
+                    Amount:
+                    PKR ${Number(
+                        withdrawal.amount || 0
+                    ).toFixed(2)}
+                </p>
+
+                <p>
+                    Method:
+                    ${safe(
+                        withdrawal.method ||
+                        withdrawal.paymentMethod ||
+                        ""
+                    )}
+                </p>
+
+                <p>
+                    Account:
+                    ${safe(
+                        withdrawal.account ||
+                        withdrawal.accountNumber ||
+                        ""
+                    )}
+                </p>
+
+                <p>
+                    Status:
+                    <b>
+                        ${safe(status.toUpperCase())}
+                    </b>
+                </p>
+
+                <div class="row">
+
+                    <button
+                        class="small green approve"
+                        ${status !== "pending" ? "disabled" : ""}
+                    >
+                        Approve
+                    </button>
+
+                    <button
+                        class="small red reject"
+                        ${status !== "pending" ? "disabled" : ""}
+                    >
+                        Reject
+                    </button>
+
+                </div>
+
+                `;
+
+
+                const approve =
+                div.querySelector(
+                    ".approve"
+                );
+
+
+                const reject =
+                div.querySelector(
+                    ".reject"
+                );
+
+
+                approve.addEventListener(
+                    "click",
+                    async () => {
+
+                        await changeWithdrawStatus(
+                            withdrawal.id,
+                            "approved"
+                        );
+
+                    }
+                );
+
+
+                reject.addEventListener(
+                    "click",
+                    async () => {
+
+                        await changeWithdrawStatus(
+                            withdrawal.id,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+    }
+    catch(error){
+
+        console.error(
+            "Withdraw error:",
+            error
+        );
+
+
+        showError(
+            list,
+            "Unable to load withdrawals: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* WITHDRAW STATUS */
+
+async function changeWithdrawStatus(
+    withdrawId,
+    status
+){
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "withdraws",
+                withdrawId
+            ),
+            {
+
+                status:
+                status,
+
+                updatedAt:
+                serverTimestamp()
+
+            }
+        );
+
+
+        await loadWithdraws();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            error.message
+        );
+
+    }
+
+}
+
+
+/* LOAD SUPPORT */
+
+async function loadSupport(
+    focusUserId = null
+){
+
+    const list =
+    document.getElementById(
+        "supportList"
+    );
+
+
+    list.innerHTML =
+    '<div class="loading">Loading messages...</div>';
+
+
+    try{
+
+        const snap =
+        await getDocs(
+            collection(
+                db,
+                "supportMessages"
+            )
+        );
+
+
+        if(snap.empty){
+
+            list.innerHTML =
+            '<div class="no-data">No support messages.</div>';
+
+            document
+            .getElementById(
+                "selectedSupport"
+            )
+            .style.display =
+            "none";
+
+            return;
+
+        }
+
+
+        const users = {};
+
+
+        snap.forEach(
+            item => {
+
+                const message =
+                item.data();
+
+
+                const uid =
+                message.userId ||
+                message.uid;
+
+
+                if(!uid){
+
+                    return;
+
+                }
+
+
+                if(!users[uid]){
+
+                    users[uid] = [];
+
+                }
+
+
+                users[uid].push({
+
+                    id:
+                    item.id,
+
+                    ...message
+
+                });
+
+            }
+        );
+
+
+        list.innerHTML = "";
+
+
+        const userIds =
+        Object.keys(users);
+
+
+        if(userIds.length === 0){
+
+            list.innerHTML =
+            '<div class="no-data">No support messages.</div>';
+
+            return;
+
+        }
+
+
+        userIds.forEach(
+            uid => {
+
+                const messages =
+                users[uid];
+
+
+                messages.sort(
+                    (a,b) =>
+                    getTime(a.createdAt) -
+                    getTime(b.createdAt)
+                );
+
+
+                const last =
+                messages[
+                    messages.length - 1
+                ];
+
+
+                const div =
+                document.createElement(
+                    "div"
+                );
+
+
+                div.className =
+                "message";
+
+
+                div.innerHTML =
+                `
+
+                <b>
+                    User ID:
+                </b>
+
+                ${safe(uid)}
+
+                <br>
+
+                <span style="color:#777">
+                    ${safe(
+                        last.message ||
+                        last.text ||
+                        ""
+                    )}
+                </span>
+
+                `;
+
+
+                if(
+                    focusUserId &&
+                    uid === focusUserId
+                ){
+
+                    div.classList.add(
+                        "selected"
+                    );
+
+                }
+
+
+                div.addEventListener(
+                    "click",
+                    () => {
+
+                        selectedUserId =
+                        uid;
+
+
+                        document
+                        .querySelectorAll(
+                            ".message"
+                        )
+                        .forEach(
+                            x =>
+                            x.classList.remove(
+                                "selected"
+                            )
+                        );
+
+
+                        div.classList.add(
+                            "selected"
+                        );
+
+
+                        showUserChat(
+                            uid,
+                            users[uid]
+                        );
+
+                    }
+                );
+
+
+                list.appendChild(div);
+
+            }
+        );
+
+
+        if(focusUserId){
+
+            if(users[focusUserId]){
+
+                selectedUserId =
+                focusUserId;
+
+
+                showUserChat(
+                    focusUserId,
+                    users[focusUserId]
+                );
+
+            }
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Support error:",
+            error
+        );
+
+
+        showError(
+            list,
+            "Unable to load support: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* TIME */
+
+function getTime(timestamp){
+
+    if(
+        timestamp &&
+        typeof timestamp.toMillis ===
+        "function"
+    ){
+
+        return timestamp.toMillis();
+
+    }
+
+    if(
+        timestamp &&
+        timestamp.seconds
+    ){
+
+        return Number(
+            timestamp.seconds
+        ) * 1000;
+
+    }
+
+    return 0;
+
+}
+
+
+/* SHOW USER CHAT */
+
+function showUserChat(
+    uid,
+    messages
+){
+
+    selectedUserId =
+    uid;
+
+
+    const box =
+    document.getElementById(
+        "selectedSupport"
+    );
+
+
+    const title =
+    document.getElementById(
+        "selectedUserTitle"
+    );
+
+
+    const chat =
+    document.getElementById(
+        "chatArea"
+    );
+
+
+    box.style.display =
+    "block";
+
+
+    title.textContent =
+    "Customer: " + uid;
+
+
+    chat.innerHTML = "";
+
+
+    messages
+    .slice()
+    .sort(
+        (a,b) =>
+        getTime(a.createdAt) -
+        getTime(b.createdAt)
+    )
+    .forEach(
+        message => {
+
+            const div =
+            document.createElement(
+                "div"
+            );
+
+
+            const sender =
+            String(
+                message.sender ||
+                message.from ||
+                "user"
+            ).toLowerCase();
+
+
+            div.className =
+            "chat-message " +
+            (
+                sender === "admin" ||
+                sender === "support"
+                ?
+                "chat-admin"
+                :
+                "chat-user"
+            );
+
+
+            let html =
+            safe(
+                message.message ||
+                message.text ||
+                ""
+            );
+
+
+            if(message.image){
+
+                html +=
+                `<br>
+                <img
+                    src="${safe(message.image)}"
+                    style="max-width:180px;border-radius:10px;margin-top:8px"
+                >`;
+
+            }
+
+
+            div.innerHTML =
+            html;
+
+
+            chat.appendChild(div);
+
+        }
+    );
+
+
+    chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+
+/* ADMIN REPLY */
+
+document
+.getElementById("replyBtn")
+.addEventListener(
+    "click",
+    async () => {
+
+        const input =
+        document.getElementById(
+            "replyInput"
+        );
+
+
+        const status =
+        document.getElementById(
+            "supportStatus"
+        );
+
+
+        const button =
+        document.getElementById(
+            "replyBtn"
+        );
+
+
+        const text =
+        input.value.trim();
+
+
+        if(!selectedUserId){
+
+            alert(
+                "Pehle customer select karo."
+            );
+
+            return;
+
+        }
+
+
+        if(!text){
+
+            alert(
+                "Reply likho."
+            );
+
+            return;
+
+        }
+
+
+        button.disabled =
+        true;
+
+
+        try{
+
+            await addDoc(
+                collection(
+                    db,
+                    "supportMessages"
+                ),
+                {
+
+                    userId:
+                    selectedUserId,
+
+                    message:
+                    text,
+
+                    sender:
+                    "admin",
+
+                    status:
+                    "answered",
+
+                    createdAt:
+                    serverTimestamp()
+
+                }
+            );
+
+
+            input.value = "";
+
+
+            status.textContent =
+            "Reply sent ✓";
+
+
+            await loadSupport(
+                selectedUserId
+            );
+
+        }
+        catch(error){
+
+            console.error(
+                "Reply error:",
+                error
+            );
+
+
+            status.textContent =
+            error.message;
+
+
+            alert(
+                error.message
+            );
+
+        }
+        finally{
+
+            button.disabled =
+            false;
+
+        }
+
+    }
+);
+
+
+/* ENTER REPLY */
+
+document
+.getElementById("replyInput")
+.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+
+            document
+            .getElementById("replyBtn")
+            .click();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
