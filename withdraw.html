@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +50,11 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 .nav-item span{font-size:21px}
 .nav-item.active{color:#1677e8;font-weight:bold}
 .nav-center{width:55px;height:55px;margin-top:-25px;border-radius:50%;background:linear-gradient(135deg,#1478ed,#36b4ff);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;border:5px solid #f4f7fb}
+.deposit-notice{background:linear-gradient(135deg,#07152f,#1454a3);color:#fff;border:2px solid #f4c95d;border-radius:22px;padding:30px 18px;margin:0 0 18px;text-align:center;box-shadow:0 8px 25px #14285030}
+.deposit-notice .lock-icon{font-size:42px;margin-bottom:12px}
+.deposit-notice h2{font-size:24px;line-height:1.3;color:#ffdc78;margin-bottom:12px}
+.deposit-notice .deposit-amount{font-size:34px;font-weight:800;color:#fff;margin:10px 0}
+.deposit-notice p{font-size:18px;font-weight:bold;color:#ffdc78;line-height:1.4}
 .hidden{display:none!important}
 </style>
 </head>
@@ -67,7 +73,15 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Request your available earnings.</p>
+<p>Withdrawal status and history.</p>
+</div>
+
+<!-- Deposit notice shown only on the Withdraw page -->
+<div class="deposit-notice">
+<div class="lock-icon">🔒</div>
+<h2>WITHDRAWAL LOCKED</h2>
+<div class="deposit-amount">Deposit 20K</div>
+<p>Withdraw Will Open</p>
 </div>
 
 <div class="balance-card">
@@ -75,13 +89,15 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 <h2 id="balance">$0.00</h2>
 </div>
 
-<div class="withdraw-locked hidden" id="withdrawLocked">
+<!-- Withdrawal remains locked -->
+<div class="withdraw-locked" id="withdrawLocked">
 <div class="withdraw-locked-icon">🔒</div>
 <h3>Withdrawal Locked</h3>
-<p>You must complete <strong>10 tasks</strong> before you can withdraw your earnings.</p>
+<p>Withdrawal is currently locked. Please check the deposit requirement before proceeding.</p>
 </div>
 
-<div class="form-card" id="withdrawForm">
+<!-- Keep the form in the file but do not display it while locked -->
+<div class="form-card hidden" id="withdrawForm">
 <div class="form-title">Withdrawal Details</div>
 
 <label>Payment Method</label>
@@ -99,7 +115,7 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 <label>Withdrawal Amount</label>
 <input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
 
-<button class="withdraw-btn" id="withdrawBtn" type="button">Submit Withdrawal</button>
+<button class="withdraw-btn" id="withdrawBtn" type="button" disabled>Withdrawal Locked</button>
 </div>
 
 <h3 class="history-title">Withdrawal History</h3>
@@ -128,13 +144,10 @@ import {
  getFirestore,
  doc,
  getDoc,
- updateDoc,
  collection,
- addDoc,
  query,
  where,
- getDocs,
- serverTimestamp
+ getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -151,16 +164,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = null;
-let withdrawalAllowed = false;
 
 const balanceElement = document.getElementById("balance");
-const withdrawForm = document.getElementById("withdrawForm");
-const withdrawLocked = document.getElementById("withdrawLocked");
-const withdrawNav = document.getElementById("withdrawNav");
-const withdrawBtn = document.getElementById("withdrawBtn");
-const methodInput = document.getElementById("method");
-const accountInput = document.getElementById("account");
-const amountInput = document.getElementById("amount");
 const historyElement = document.getElementById("history");
 
 onAuthStateChanged(auth, async user => {
@@ -180,171 +185,22 @@ async function loadUserData() {
   const snap = await getDoc(doc(db, "users", currentUser.uid));
 
   if (!snap.exists()) {
-   lockWithdraw();
    balanceElement.textContent = "$0.00";
    return;
   }
 
   const data = snap.data();
-
-  // Load the last-used payment details.
-  // Keep both fields editable so the user can change them anytime.
-  methodInput.value = data.savedWithdrawMethod || "";
-  accountInput.value = data.savedWithdrawAccount || "";
-
-  methodInput.disabled = false;
-  accountInput.readOnly = false;
-
   const balance = Number(data.balance || 0);
   const commission = Number(data.commission || 0);
   const available = balance + commission;
 
   balanceElement.textContent = "$" + available.toFixed(2);
 
-  const completedTasks = Number(
-   data.completedTasks ?? data.completed ?? data.tasksCompleted ?? 0
-  );
-
-  if (completedTasks >= 10) {
-   showWithdraw();
-  } else {
-   lockWithdraw();
-  }
-
  } catch (error) {
   console.error("User data error:", error);
-  lockWithdraw();
+  balanceElement.textContent = "$0.00";
  }
 }
-
-function showWithdraw() {
- withdrawalAllowed = true;
- withdrawForm.classList.remove("hidden");
- withdrawLocked.classList.add("hidden");
- withdrawNav.classList.remove("hidden");
-}
-
-function lockWithdraw() {
- withdrawalAllowed = false;
- withdrawForm.classList.add("hidden");
- withdrawLocked.classList.remove("hidden");
- withdrawNav.classList.add("hidden");
-}
-
-withdrawBtn.addEventListener("click", async () => {
- if (!currentUser || !withdrawalAllowed) {
-  alert("Withdrawal unlock karne ke liye 10 tasks complete karein.");
-  return;
- }
-
- withdrawBtn.disabled = true;
- withdrawBtn.textContent = "Submitting...";
-
- try {
-  const userRef = doc(db, "users", currentUser.uid);
-  const snap = await getDoc(userRef);
-
-  if (!snap.exists()) {
-   throw new Error("User account data nahi mila.");
-  }
-
-  const data = snap.data();
-
-  const completedTasks = Number(
-   data.completedTasks ?? data.completed ?? data.tasksCompleted ?? 0
-  );
-
-  if (completedTasks < 10) {
-   lockWithdraw();
-   alert("Pehle 10 tasks complete karein.");
-   return;
-  }
-
-  // Always use the details currently entered by the user.
-  const method = methodInput.value;
-  const account = accountInput.value.trim();
-  const amount = Number(amountInput.value);
-
-  if (!method) {
-   alert("Payment method select karein.");
-   return;
-  }
-
-  if (!account) {
-   alert("Account number enter karein.");
-   return;
-  }
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-   alert("Valid withdrawal amount enter karein.");
-   return;
-  }
-
-  const oldBalance = Number(data.balance || 0);
-  const oldCommission = Number(data.commission || 0);
-  const available = oldBalance + oldCommission;
-
-  if (amount > available) {
-   alert("Available balance kam hai.");
-   return;
-  }
-
-  // Save the latest payment method and account number.
-  // These values remain editable for the next withdrawal.
-  await updateDoc(userRef, {
-   savedWithdrawMethod: method,
-   savedWithdrawAccount: account
-  });
-
-  // Deduct the requested amount from balance first.
-  let newBalance = oldBalance;
-  let remaining = amount;
-
-  if (newBalance >= remaining) {
-   newBalance -= remaining;
-   remaining = 0;
-  } else {
-   remaining -= newBalance;
-   newBalance = 0;
-  }
-
-  // Use commission if the balance alone is insufficient.
-  // Reset commission after withdrawal, as in the original code.
-  await addDoc(collection(db, "withdraws"), {
-   userId: currentUser.uid,
-   email: currentUser.email || "",
-   method: method,
-   account: account,
-   amount: amount,
-   status: "pending",
-   completedTasks: completedTasks,
-   createdAt: serverTimestamp()
-  });
-
-  await updateDoc(userRef, {
-   balance: newBalance,
-   commission: 0
-  });
-
-  balanceElement.textContent = "$" + newBalance.toFixed(2);
-
-  // Keep the latest details in the editable fields.
-  methodInput.value = method;
-  accountInput.value = account;
-  amountInput.value = "";
-
-  alert("Withdrawal request submit ho gayi. Commission 0 kar diya gaya hai.");
-
-  await loadHistory();
-
- } catch (error) {
-  console.error("Withdrawal error:", error);
-  alert("Withdrawal submit nahi ho saki. Dobara try karein.");
- } finally {
-  withdrawBtn.disabled = false;
-  withdrawBtn.textContent = "Submit Withdrawal";
- }
-});
 
 async function loadHistory() {
  try {
