@@ -1,79 +1,199 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EliteTask Pro Dashboard</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f7f4ff,#eee8ff,#f8f5ff);color:#20203a;padding-bottom:90px}
-.profile-btn{position:absolute;right:15px;top:15px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:white;text-decoration:none;box-shadow:0 4px 12px rgba(50,35,100,.15)}
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:linear-gradient(135deg,#f7f4ff,#eee8ff,#f8f5ff);
+color:#20203a;padding-bottom:90px
+}
+.profile-btn{
+position:absolute;right:15px;top:15px;width:42px;height:42px;
+display:flex;align-items:center;justify-content:center;
+border-radius:50%;background:white;text-decoration:none;
+box-shadow:0 4px 12px rgba(50,35,100,.15)
+}
 .logo-area{text-align:center;padding:20px 15px 10px}
-.logo{width:48px;height:48px;margin:auto;display:flex;align-items:center;justify-content:center;border-radius:14px;background:linear-gradient(135deg,#673ab7,#8e63d8);color:white;font-size:20px;font-weight:bold;box-shadow:0 6px 18px rgba(103,58,183,.25)}
+.logo{
+width:48px;height:48px;margin:auto;display:flex;
+align-items:center;justify-content:center;border-radius:14px;
+background:linear-gradient(135deg,#673ab7,#8e63d8);
+color:white;font-size:20px;font-weight:bold;
+box-shadow:0 6px 18px rgba(103,58,183,.25)
+}
 .logo-text{margin-top:7px;font-size:20px;font-weight:bold;color:#56339b}
-.welcome{margin:15px;padding:18px;border-radius:18px;background:white;box-shadow:0 5px 18px rgba(60,40,100,.08)}
-.welcome h2{font-size:20px}.welcome h2 span{color:#673ab7}.welcome p{margin-top:7px;font-size:13px;color:#888}
-.balance-card{margin:15px;padding:22px;border-radius:20px;background:linear-gradient(135deg,#39206d,#673ab7,#8156ca,#512c91);color:white;box-shadow:0 10px 25px rgba(82,45,140,.22)}
-.balance-title{font-size:13px;opacity:.85}.balance{margin-top:7px;font-size:34px;font-weight:bold}
+.welcome{
+margin:15px;padding:18px;border-radius:18px;background:white;
+box-shadow:0 5px 18px rgba(60,40,100,.08)
+}
+.welcome h2{font-size:20px}
+.welcome h2 span{color:#673ab7}
+.welcome p{margin-top:7px;font-size:13px;color:#888}
+.balance-card{
+margin:15px;padding:22px;border-radius:20px;
+background:linear-gradient(135deg,#39206d,#673ab7,#8156ca,#512c91);
+color:white;box-shadow:0 10px 25px rgba(82,45,140,.22)
+}
+.balance-title{font-size:13px;opacity:.85}
+.balance{margin-top:7px;font-size:34px;font-weight:bold}
 .balance-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.balance-item{padding:11px;border-radius:12px;background:rgba(255,255,255,.14)}.balance-item span{display:block;font-size:11px}.balance-item strong{display:block;margin-top:4px;font-size:16px}
+.balance-item{padding:11px;border-radius:12px;background:rgba(255,255,255,.14)}
+.balance-item span{display:block;font-size:11px}
+.balance-item strong{display:block;margin-top:4px;font-size:16px}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px}
-.stat-card{padding:16px;border-radius:17px;background:white;border:1px solid #e3d9f7;box-shadow:0 5px 17px rgba(60,40,100,.07)}
-.stat-icon{font-size:22px}.stat-card p{margin-top:9px;font-size:12px;color:#777}.stat-card h3{margin-top:5px;font-size:21px;color:#5b369c}
-.section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 15px 10px}.section-title h3{font-size:18px}
-.section-title a{padding:7px 10px;border-radius:8px;background:#673ab7;color:white;text-decoration:none;font-size:10px;font-weight:bold}
-#currentOrder{margin:0 15px}.loading{padding:25px;text-align:center;border-radius:17px;background:white;color:#888}
+.stat-card{
+padding:16px;border-radius:17px;background:white;
+border:1px solid #e3d9f7;box-shadow:0 5px 17px rgba(60,40,100,.07)
+}
+.stat-icon{font-size:22px}
+.stat-card p{margin-top:9px;font-size:12px;color:#777}
+.stat-card h3{margin-top:5px;font-size:21px;color:#5b369c}
+.section-title{
+display:flex;align-items:center;justify-content:space-between;
+margin:20px 15px 10px
+}
+.section-title h3{font-size:18px}
+.section-title a{
+padding:7px 10px;border-radius:8px;background:#673ab7;
+color:white;text-decoration:none;font-size:10px;font-weight:bold
+}
+#currentOrder{margin:0 15px}
+.loading{padding:25px;text-align:center;border-radius:17px;background:white;color:#888}
 .task-card{background:white;border-radius:17px;padding:14px;box-shadow:0 5px 17px rgba(60,40,100,.08)}
 .task-card img{width:100%;height:190px;object-fit:cover;border-radius:13px;display:block;margin-bottom:12px}
-.task-card h3{color:#50318c;margin-bottom:7px}.task-card p{font-size:13px;color:#777;margin-top:5px}.task-commission{color:#16894f!important;font-weight:bold}
-.open-task{width:100%;padding:13px;margin-top:12px;border:0;border-radius:11px;background:linear-gradient(135deg,#673ab7,#8b61d1);color:white;font-weight:bold}
-.grab-section{margin:18px 15px}.grab-btn{width:100%;padding:15px;border:0;border-radius:14px;background:linear-gradient(135deg,#673ab7,#8b61d1);color:white;font-size:15px;font-weight:bold;box-shadow:0 7px 18px rgba(103,58,183,.20)}
-
-/* Small red Shop button */
-.deposit-launch{
-  position:absolute;
-  right:68px;
-  top:17px;
-  display:block;
-  width:auto;
-  margin:0;
-  padding:9px 13px;
-  border:1px solid #ff7777;
-  border-radius:9px;
-  background:linear-gradient(135deg,#ff3333,#b80000);
-  color:white;
-  font-size:13px;
-  font-weight:bold;
-  box-shadow:0 4px 12px rgba(180,0,0,.25);
-  cursor:pointer;
+.task-card h3{color:#50318c;margin-bottom:7px}
+.task-card p{font-size:13px;color:#777;margin-top:5px}
+.task-commission{color:#16894f!important;font-weight:bold}
+.open-task{
+width:100%;padding:13px;margin-top:12px;border:0;border-radius:11px;
+background:linear-gradient(135deg,#673ab7,#8b61d1);
+color:white;font-weight:bold
 }
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:72px;display:flex;align-items:center;justify-content:space-around;background:white;border-top:1px solid #e3d9f7;box-shadow:0 -4px 18px rgba(50,35,80,.10);z-index:1000}
-.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#777;text-decoration:none;font-size:11px;width:25%}.nav-item span{font-size:20px}.nav-item.active{color:#673ab7;font-weight:bold}
-.nav-center{width:43px;height:43px;margin-top:-18px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:linear-gradient(135deg,#673ab7,#8b61d1);color:white;border:4px solid white;box-shadow:0 6px 18px rgba(103,58,183,.25)}
+.grab-section{margin:18px 15px}
+.grab-btn{
+width:100%;padding:15px;border:0;border-radius:14px;
+background:linear-gradient(135deg,#673ab7,#8b61d1);
+color:white;font-size:15px;font-weight:bold;
+box-shadow:0 7px 18px rgba(103,58,183,.20)
+}
 
-/* Deposit shop modal */
-.deposit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);z-index:2000;align-items:center;justify-content:center;padding:10px}
+/* Shop button */
+.deposit-launch{
+position:absolute;right:68px;top:17px;display:block;
+width:auto;margin:0;padding:9px 13px;border:1px solid #ff7777;
+border-radius:9px;background:linear-gradient(135deg,#ff3333,#b80000);
+color:white;font-size:13px;font-weight:bold;
+box-shadow:0 4px 12px rgba(180,0,0,.25);cursor:pointer
+}
+.bottom-nav{
+position:fixed;left:0;right:0;bottom:0;height:72px;
+display:flex;align-items:center;justify-content:space-around;
+background:white;border-top:1px solid #e3d9f7;
+box-shadow:0 -4px 18px rgba(50,35,80,.10);z-index:1000
+}
+.nav-item{
+display:flex;flex-direction:column;align-items:center;gap:4px;
+color:#777;text-decoration:none;font-size:11px;width:25%
+}
+.nav-item span{font-size:20px}
+.nav-item.active{color:#673ab7;font-weight:bold}
+.nav-center{
+width:43px;height:43px;margin-top:-18px;display:flex;
+align-items:center;justify-content:center;border-radius:50%;
+background:linear-gradient(135deg,#673ab7,#8b61d1);
+color:white;border:4px solid white;
+box-shadow:0 6px 18px rgba(103,58,183,.25)
+}
+
+/* Deposit shop */
+.deposit-overlay{
+display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);
+z-index:2000;align-items:center;justify-content:center;padding:10px
+}
 .deposit-overlay.show{display:flex}
-.deposit-shop{position:relative;width:100%;max-width:570px;max-height:94vh;overflow-y:auto;border:3px solid #e5b35d;border-radius:13px;background:radial-gradient(circle at 50% 10%,#9d1c18 0,#68100e 44%,#390a09 100%);color:#fff1d5;box-shadow:0 0 0 2px #4a1710,0 15px 45px #000;padding:18px 14px 16px}
-.shop-heading{position:sticky;top:-18px;z-index:3;text-align:center;margin:-18px -14px 16px;padding:10px;background:linear-gradient(#8b0e0d,#4d0505);border-bottom:2px solid #e7b45d;border-radius:8px 8px 0 0;color:#ffe6a3;font-size:27px;font-weight:900;letter-spacing:2px;text-shadow:0 2px 3px #330000}
-.shop-close{position:absolute;right:8px;top:7px;z-index:5;width:38px;height:38px;border-radius:50%;border:2px solid #ffd978;background:linear-gradient(#ff6c47,#a70e0e);color:white;font-size:25px;font-weight:bold;cursor:pointer;box-shadow:0 2px 7px #280000}
-.payment-label{padding:10px;border:1px solid #d8a65e;border-radius:7px;background:linear-gradient(90deg,#57110f,#7e2924,#40100e);font-weight:bold;margin-bottom:13px;text-align:center}
+.deposit-shop{
+position:relative;width:100%;max-width:570px;max-height:94vh;
+overflow-y:auto;border:3px solid #e5b35d;border-radius:13px;
+background:radial-gradient(circle at 50% 10%,#9d1c18 0,#68100e 44%,#390a09 100%);
+color:#fff1d5;box-shadow:0 0 0 2px #4a1710,0 15px 45px #000;
+padding:18px 14px 16px
+}
+.shop-heading{
+position:sticky;top:-18px;z-index:3;text-align:center;
+margin:-18px -14px 16px;padding:10px;
+background:linear-gradient(#8b0e0d,#4d0505);
+border-bottom:2px solid #e7b45d;border-radius:8px 8px 0 0;
+color:#ffe6a3;font-size:27px;font-weight:900;
+letter-spacing:2px;text-shadow:0 2px 3px #330000
+}
+.shop-close{
+position:absolute;right:8px;top:7px;z-index:5;
+width:38px;height:38px;border-radius:50%;
+border:2px solid #ffd978;background:linear-gradient(#ff6c47,#a70e0e);
+color:white;font-size:25px;font-weight:bold;cursor:pointer;
+box-shadow:0 2px 7px #280000
+}
+.payment-label{
+padding:10px;border:1px solid #d8a65e;border-radius:7px;
+background:linear-gradient(90deg,#57110f,#7e2924,#40100e);
+font-weight:bold;margin-bottom:13px;text-align:center
+}
 .method-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:15px}
-.method-btn{padding:12px 6px;border:2px solid #c78e54;border-radius:8px;background:linear-gradient(#76211d,#410c0b);color:#fff0ce;font-size:15px;font-weight:bold;cursor:pointer}
+.method-btn{
+padding:12px 6px;border:2px solid #c78e54;border-radius:8px;
+background:linear-gradient(#76211d,#410c0b);
+color:#fff0ce;font-size:15px;font-weight:bold;cursor:pointer
+}
 .method-btn.selected{border:3px solid #a8ff2f;box-shadow:0 0 8px #9cff24;color:#fff}
-.amount-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:16px}
-.amount-btn{min-height:78px;padding:10px 3px 8px;border:2px solid #d6a05c;border-radius:7px;background:linear-gradient(145deg,#7e1714,#380605);color:#ffeac0;font-weight:bold;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
-.amount-btn .coin{font-size:22px;line-height:1}.amount-btn .amount{font-size:15px;white-space:nowrap}
+.amount-grid{
+display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+gap:9px;margin-bottom:16px
+}
+.amount-btn{
+min-height:78px;padding:10px 3px 8px;border:2px solid #d6a05c;
+border-radius:7px;background:linear-gradient(145deg,#7e1714,#380605);
+color:#ffeac0;font-weight:bold;cursor:pointer;display:flex;
+flex-direction:column;align-items:center;justify-content:center;gap:7px
+}
+.amount-btn .coin{font-size:22px;line-height:1}
+.amount-btn .amount{font-size:15px;white-space:nowrap}
 .amount-btn.selected{border:3px solid #9cff28;box-shadow:0 0 10px #91ff26;transform:scale(1.02)}
-.shop-panel{padding:12px;border:1px solid #c88b51;border-radius:8px;background:rgba(35,4,4,.58);margin-top:12px}
+.shop-panel{
+padding:12px;border:1px solid #c88b51;border-radius:8px;
+background:rgba(35,4,4,.58);margin-top:12px
+}
 .shop-panel h3{font-size:16px;margin-bottom:10px;color:#ffe4a6}
 .account-line{font-size:13px;line-height:1.6;margin:4px 0;overflow-wrap:anywhere}
 .account-line strong{color:#fff}
 .copy-note{font-size:11px;color:#f3c8a0;margin-top:7px}
-.deposit-input{width:100%;padding:11px;border:1px solid #d39a57;border-radius:6px;background:#fff8ed;color:#32100e;font-size:15px;margin-top:7px}
-.upload-label{display:flex;align-items:center;justify-content:center;text-align:center;min-height:70px;margin-top:8px;padding:12px;border:2px dashed #e4b56d;border-radius:7px;background:rgba(255,255,255,.06);cursor:pointer;font-size:13px}
-.upload-label input{display:none}.upload-preview{display:none;max-width:100%;max-height:160px;object-fit:contain;margin:10px auto 0;border-radius:7px}
-.deposit-submit{width:100%;margin-top:14px;padding:13px;border:2px solid #ffd783;border-radius:7px;background:linear-gradient(#ffb23e,#d86b0c);color:white;font-size:17px;font-weight:bold;text-shadow:0 1px 2px #8a3500;cursor:pointer}
+.deposit-input{
+width:100%;padding:11px;border:1px solid #d39a57;
+border-radius:6px;background:#fff8ed;color:#32100e;
+font-size:15px;margin-top:7px
+}
+.upload-label{
+display:flex;align-items:center;justify-content:center;text-align:center;
+min-height:70px;margin-top:8px;padding:12px;border:2px dashed #e4b56d;
+border-radius:7px;background:rgba(255,255,255,.06);
+cursor:pointer;font-size:13px
+}
+.upload-label input{display:none}
+.upload-preview{
+display:none;max-width:100%;max-height:160px;object-fit:contain;
+margin:10px auto 0;border-radius:7px
+}
+.deposit-submit{
+width:100%;margin-top:14px;padding:13px;border:2px solid #ffd783;
+border-radius:7px;background:linear-gradient(#ffb23e,#d86b0c);
+color:white;font-size:17px;font-weight:bold;
+text-shadow:0 1px 2px #8a3500;cursor:pointer
+}
 .deposit-note{font-size:11px;color:#f1c6a7;line-height:1.5;margin-top:10px}
 
 @media(max-width:380px){
@@ -91,9 +211,12 @@ body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f
 .deposit-shop{padding-left:10px;padding-right:10px}
 .shop-heading{margin-left:-10px;margin-right:-10px}
 }
-@media(min-width:381px) and (max-width:600px){.task-card img{height:180px}}
+@media(min-width:381px) and (max-width:600px){
+.task-card img{height:180px}
+}
 </style>
 </head>
+
 <body>
 
 <a href="profile.html" class="profile-btn" aria-label="Profile">👤</a>
@@ -126,10 +249,26 @@ body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f
 <button class="deposit-launch" type="button" onclick="openDeposit()">Shop</button>
 
 <div class="stats">
-  <div class="stat-card"><div class="stat-icon">📦</div><p>Completed Tasks</p><h3 id="completedTasks">0</h3></div>
-  <div class="stat-card"><div class="stat-icon">💰</div><p>Today's Commission</p><h3 id="todayCommission">PKR 0.00</h3></div>
-  <div class="stat-card"><div class="stat-icon">📋</div><p>Total Tasks</p><h3 id="totalTasks">0</h3></div>
-  <div class="stat-card"><div class="stat-icon">⭐</div><p>Task Level</p><h3>1</h3></div>
+  <div class="stat-card">
+    <div class="stat-icon">📦</div>
+    <p>Completed Tasks</p>
+    <h3 id="completedTasks">0</h3>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">💰</div>
+    <p>Today's Commission</p>
+    <h3 id="todayCommission">PKR 0.00</h3>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📋</div>
+    <p>Total Tasks</p>
+    <h3 id="totalTasks">0</h3>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⭐</div>
+    <p>Task Level</p>
+    <h3>1</h3>
+  </div>
 </div>
 
 <div class="section-title">
@@ -142,7 +281,9 @@ body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f
 </div>
 
 <div class="grab-section">
-  <button class="grab-btn" onclick="location.href='orders.html'">🚀 Start Grabbing Orders</button>
+  <button class="grab-btn" onclick="location.href='orders.html'">
+    🚀 Start Grabbing Orders
+  </button>
 </div>
 
 <div class="bottom-nav">
@@ -152,19 +293,28 @@ body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f
   <a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
 </div>
 
-<!-- Deposit screen -->
-<div class="deposit-overlay" id="depositOverlay" role="dialog" aria-modal="true" aria-labelledby="shopTitle" onclick="overlayClick(event)">
+<!-- Deposit Shop Popup -->
+<div class="deposit-overlay" id="depositOverlay"
+     role="dialog" aria-modal="true" aria-labelledby="shopTitle"
+     onclick="overlayClick(event)">
+
   <div class="deposit-shop">
-    <button class="shop-close" type="button" onclick="closeDeposit()" aria-label="Close">×</button>
+    <button class="shop-close" type="button"
+            onclick="closeDeposit()" aria-label="Close">×</button>
+
     <div class="shop-heading" id="shopTitle">DEPOSIT SHOP</div>
 
     <div id="depositSelectionScreen">
       <div class="payment-label">SELECT PAYMENT METHOD</div>
+
       <div class="method-row">
-        <div class="method-btn selected" style="text-align:center;cursor:default">EasyPaisa</div>
+        <div class="method-btn selected" style="text-align:center;cursor:default">
+          EasyPaisa
+        </div>
       </div>
 
       <div class="payment-label">SELECT DEPOSIT AMOUNT (PKR)</div>
+
       <div class="amount-grid" id="amountGrid">
         <button class="amount-btn" type="button" data-amount="800" onclick="selectAmount(800)"><span class="coin">🪙</span><span class="amount">Rs. 800</span></button>
         <button class="amount-btn" type="button" data-amount="2000" onclick="selectAmount(2000)"><span class="coin">🪙</span><span class="amount">Rs. 2,000</span></button>
@@ -179,41 +329,65 @@ body{font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#f
     </div>
 
     <div id="depositPaymentScreen" style="display:none">
-      <button class="method-btn" type="button" onclick="backToDepositSelection()" style="width:100%;margin-bottom:12px">← Back to Deposit Shop</button>
-      <div class="shop-heading" style="position:static;margin:0 0 12px;border-radius:8px">PAYMENT DETAILS</div>
+      <button class="method-btn" type="button"
+              onclick="backToDepositSelection()"
+              style="width:100%;margin-bottom:12px">
+        ← Back to Deposit Shop
+      </button>
+
+      <div class="shop-heading"
+           style="position:static;margin:0 0 12px;border-radius:8px">
+        PAYMENT DETAILS
+      </div>
 
       <div class="shop-panel" id="paymentAccountDetails">
         <h3>Payment Account Details</h3>
         <div class="account-line">Payment method: <strong>EasyPaisa</strong></div>
-        <div class="account-line">Account name: <strong>Sheeraz Ali</strong></div>
-        <div class="account-line">Account number: <strong>03495173106</strong></div>
-        <div class="copy-note">Payment karne se pehle account name aur number ko dobara check kar lein.</div>
+        <div class="account-line">Account name: <strong>***</strong></div>
+        <div class="account-line">Account number: <strong>***</strong></div>
+        <div class="copy-note">
+          Payment karne se pehle account details ko confirm kar lein.
+        </div>
       </div>
 
       <div class="shop-panel">
         <h3>Deposit Summary</h3>
-        <div class="account-line">Selected amount: <strong id="selectedAmount">Please select an amount</strong></div>
-        <label for="depositAmount" class="account-line">Amount in PKR (optional custom amount)</label>
-        <input class="deposit-input" id="depositAmount" type="number" min="1" step="1" placeholder="Enter amount in Rs." oninput="customAmountChanged()">
+        <div class="account-line">
+          Selected amount: <strong id="selectedAmount">Please select an amount</strong>
+        </div>
+        <label for="depositAmount" class="account-line">
+          Amount in PKR (optional custom amount)
+        </label>
+        <input class="deposit-input" id="depositAmount" type="number"
+               min="1" step="1" placeholder="Enter amount in Rs."
+               oninput="customAmountChanged()">
       </div>
 
       <div class="shop-panel">
         <h3>Payment Screenshot</h3>
-        <label class="upload-label" for="paymentScreenshot">📷 Tap here to select payment screenshot from your phone
-          <input id="paymentScreenshot" type="file" accept="image/*" onchange="previewScreenshot(event)">
+        <label class="upload-label" for="paymentScreenshot">
+          📷 Tap here to select payment screenshot from your phone
+          <input id="paymentScreenshot" type="file" accept="image/*"
+                 onchange="previewScreenshot(event)">
         </label>
-        <img id="screenshotPreview" class="upload-preview" alt="Selected payment screenshot preview">
+        <img id="screenshotPreview" class="upload-preview"
+             alt="Selected payment screenshot preview">
       </div>
 
-      <button class="deposit-submit" type="button" onclick="submitDemoDeposit()">ADD DEPOSIT</button>
-      <p class="deposit-note">Demo interface only: this form does not send a payment, verify a transaction, or add money to your balance. Screenshot selection is preview-only and is not uploaded or saved.</p>
+      <button class="deposit-submit" type="button" onclick="submitDemoDeposit()">
+        ADD DEPOSIT
+      </button>
+
+      <p class="deposit-note">
+        Demo interface only: this form does not verify a payment or add
+        money to your balance. Screenshot selection is preview-only.
+      </p>
     </div>
   </div>
 </div>
 
 <script>
 let selectedDepositAmount = null;
-let selectedPaymentMethod = "EasyPaisa";
 
 function openDeposit(){
   document.getElementById("depositOverlay").classList.add("show");
@@ -237,10 +411,15 @@ function selectAmount(amount){
   document.getElementById("depositPaymentScreen").style.display = "block";
 
   document.querySelectorAll(".amount-btn").forEach(button => {
-    button.classList.toggle("selected", Number(button.dataset.amount) === amount);
+    button.classList.toggle(
+      "selected",
+      Number(button.dataset.amount) === amount
+    );
   });
 
-  document.getElementById("selectedAmount").textContent = "Rs. " + amount.toLocaleString("en-PK");
+  document.getElementById("selectedAmount").textContent =
+    "Rs. " + amount.toLocaleString("en-PK");
+
   document.getElementById("depositAmount").value = "";
 }
 
@@ -255,8 +434,13 @@ function customAmountChanged(){
 
   if(input.value !== "" && Number.isFinite(amount) && amount > 0){
     selectedDepositAmount = amount;
-    document.querySelectorAll(".amount-btn").forEach(button => button.classList.remove("selected"));
-    document.getElementById("selectedAmount").textContent = "Rs. " + amount.toLocaleString("en-PK");
+
+    document.querySelectorAll(".amount-btn").forEach(button => {
+      button.classList.remove("selected");
+    });
+
+    document.getElementById("selectedAmount").textContent =
+      "Rs. " + amount.toLocaleString("en-PK");
   }
 }
 
@@ -278,15 +462,19 @@ function previewScreenshot(event){
   }
 
   const reader = new FileReader();
+
   reader.onload = () => {
     preview.src = reader.result;
     preview.style.display = "block";
   };
+
   reader.readAsDataURL(file);
 }
 
 async function submitDemoDeposit(){
-  const amount = Number(document.getElementById("depositAmount").value || selectedDepositAmount);
+  const amount = Number(
+    document.getElementById("depositAmount").value || selectedDepositAmount
+  );
 
   if(!Number.isFinite(amount) || amount <= 0){
     alert("Pehle valid amount select karein.");
@@ -297,7 +485,7 @@ async function submitDemoDeposit(){
   const file = fileInput.files && fileInput.files[0];
 
   if(!file){
-    alert("Pehle payment screenshot upload karein.");
+    alert("Pehle payment screenshot select karein.");
     return;
   }
 
@@ -306,25 +494,28 @@ async function submitDemoDeposit(){
     return;
   }
 
-  // Browser share sheet lets the customer choose WhatsApp and the recipient.
-  // Websites cannot silently send a file directly to a WhatsApp number.
   try{
-    if(navigator.canShare && navigator.share && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title:"Payment Screenshot"});
+    if(navigator.canShare && navigator.share &&
+       navigator.canShare({files:[file]})){
+      await navigator.share({
+        files:[file],
+        title:"Payment Screenshot"
+      });
       return;
     }
 
     if(navigator.share){
-      alert("Is browser mein screenshot file sharing supported nahi. WhatsApp khol kar screenshot manually attach karein.");
+      alert("Is browser mein screenshot sharing supported nahi. WhatsApp khol kar screenshot manually attach karein.");
       return;
     }
 
     const waUrl = "https://wa.me/923125917677";
     window.open(waUrl, "_blank", "noopener,noreferrer");
-    alert("WhatsApp chat khul gayi. Ab payment screenshot chat mein manually attach karke send karein.");
+    alert("WhatsApp chat khul gayi. Screenshot manually attach karke send karein.");
+
   }catch(error){
     if(error && error.name === "AbortError") return;
-    alert("Screenshot share nahi ho saka. WhatsApp par manually attach karke bhejein.");
+    alert("Screenshot share nahi ho saka. WhatsApp par manually attach karein.");
   }
 }
 
@@ -337,7 +528,9 @@ document.addEventListener("keydown", event => {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import {
+  getFirestore, doc, getDoc, collection, getDocs
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
@@ -365,76 +558,64 @@ onAuthStateChanged(auth, async user => {
       const u = userSnap.data();
 
       document.getElementById("userName").textContent = u.name || "User";
-      document.getElementById("balance").textContent = "PKR " + Number(u.balance || 0).toFixed(2);
-      document.getElementById("commission").textContent = "PKR " + Number(u.commission || 0).toFixed(2);
-      document.getElementById("pending").textContent = "PKR " + Number(u.pending || 0).toFixed(2);
-      document.getElementById("completedTasks").textContent = u.completedTasks || 0;
-      document.getElementById("todayCommission").textContent = "PKR " + Number(u.todayCommission || 0).toFixed(2);
+      document.getElementById("balance").textContent =
+        "PKR " + Number(u.balance || 0).toFixed(2);
+      document.getElementById("commission").textContent =
+        "PKR " + Number(u.commission || 0).toFixed(2);
+      document.getElementById("pending").textContent =
+        "PKR " + Number(u.pending || 0).toFixed(2);
+      document.getElementById("completedTasks").textContent =
+        u.completedTasks || 0;
+      document.getElementById("todayCommission").textContent =
+        "PKR " + Number(u.todayCommission || 0).toFixed(2);
     }
 
     const taskSnap = await getDocs(collection(db, "tasks"));
-    const tasks = [];
-
-    taskSnap.forEach(d => tasks.push({id:d.id, ...d.data()}));
-    tasks.sort((a,b) => Number(a.order || 0) - Number(b.order || 0));
+    const tasks = taskSnap.docs.map(d => ({id:d.id, ...d.data()}));
 
     document.getElementById("totalTasks").textContent = tasks.length;
 
-    const box = document.getElementById("currentOrder");
+    const currentOrder = document.getElementById("currentOrder");
 
-    if(tasks.length === 0){
-      box.innerHTML = '<div class="loading">No task available yet.</div>';
-      return;
+    if(tasks.length > 0){
+      const task = tasks[0];
+      const taskName = task.name || task.taskName || "Task";
+      const price = Number(task.price || task.amount || 0);
+      const commission = Number(task.commission || 0);
+      const image = task.imageURL || task.imageUrl || task.image || "";
+
+      currentOrder.innerHTML = `
+        <div class="task-card">
+          ${image ? `<img src="${escapeHTML(image)}" alt="Task image">` : ""}
+          <h3>${escapeHTML(taskName)}</h3>
+          <p>Task Price: PKR ${price.toFixed(2)}</p>
+          <p class="task-commission">Commission: PKR ${commission.toFixed(2)}</p>
+          <button class="open-task" onclick="location.href='orders.html'">
+            View Task
+          </button>
+        </div>
+      `;
+    }else{
+      currentOrder.innerHTML =
+        '<div class="loading">No tasks available right now.</div>';
     }
-
-    const userData = userSnap.exists() ? userSnap.data() : {};
-    const taskIndex = Number(userData.currentTaskIndex || 0);
-
-    if(taskIndex >= tasks.length){
-      box.innerHTML = '<div class="loading">🎉 All tasks completed.</div>';
-      return;
-    }
-
-    const task = tasks[taskIndex];
-    const price = Number(task.price || 0);
-    const earned = Number(task.commission || 0);
-
-    const card = document.createElement("div");
-    card.className = "task-card";
-
-    if(task.image){
-      const img = document.createElement("img");
-      img.src = task.image;
-      img.alt = "Task image";
-      card.appendChild(img);
-    }
-
-    const heading = document.createElement("h3");
-    heading.textContent = task.name || "Current Task";
-    card.appendChild(heading);
-
-    const priceP = document.createElement("p");
-    priceP.textContent = "Order Amount: PKR " + price.toFixed(2);
-    card.appendChild(priceP);
-
-    const commissionP = document.createElement("p");
-    commissionP.className = "task-commission";
-    commissionP.textContent = "Commission: +PKR " + earned.toFixed(2);
-    card.appendChild(commissionP);
-
-    const openButton = document.createElement("button");
-    openButton.className = "open-task";
-    openButton.textContent = "Open Task";
-    openButton.onclick = () => { location.href = "orders.html"; };
-    card.appendChild(openButton);
-
-    box.replaceChildren(card);
 
   }catch(error){
-    console.error(error);
-    document.getElementById("currentOrder").innerHTML = '<div class="loading">Unable to load task.</div>';
+    console.error("Dashboard loading error:", error);
+    document.getElementById("currentOrder").innerHTML =
+      '<div class="loading">Dashboard data load nahi ho saka. Please refresh karein.</div>';
   }
 });
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
 </script>
 
 </body>
