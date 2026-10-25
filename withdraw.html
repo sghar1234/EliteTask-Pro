@@ -8,123 +8,247 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f4f7fb;color:#172033;padding-bottom:90px}
+
+body{
+background:#f4f7fb;
+color:#172033;
+padding-bottom:90px
+}
 
 .topbar{
 height:70px;
 background:linear-gradient(135deg,#07152f,#1454a3);
-display:flex;align-items:center;justify-content:space-between;
-padding:0 17px;color:white
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 17px;
+color:white
 }
 
 .back-btn{
 width:43px;height:43px;border-radius:50%;
-background:#ffffff24;display:flex;
-align-items:center;justify-content:center;
+background:#ffffff24;
+display:flex;align-items:center;justify-content:center;
 color:white;text-decoration:none;font-size:22px
 }
 
 .logo-area{display:flex;align-items:center;gap:9px}
+
 .logo{
 width:38px;height:38px;border-radius:12px;
 background:linear-gradient(135deg,#2d8cff,#55c8ff);
 display:flex;align-items:center;justify-content:center;
 font-weight:bold
 }
+
 .logo-text{font-size:16px;font-weight:bold}
 
-.container{max-width:600px;margin:auto;padding:18px 15px}
+.container{
+max-width:600px;
+margin:auto;
+padding:18px 15px
+}
+
 .page-title{margin:5px 2px 18px}
 .page-title h2{font-size:22px}
 .page-title p{color:#8992a2;font-size:13px;margin-top:5px}
 
 .balance-card{
 background:linear-gradient(135deg,#081a3c,#1454a3);
-color:white;border-radius:22px;padding:22px;margin-bottom:16px
+color:white;
+border-radius:22px;
+padding:22px;
+margin-bottom:16px
 }
+
 .balance-card span{font-size:12px;opacity:.8}
 .balance-card h2{font-size:30px;margin-top:7px}
 
+.task-card{
+background:white;
+border-radius:18px;
+padding:20px;
+margin-bottom:15px;
+box-shadow:0 5px 20px #14285012
+}
+
+.task-card h3{font-size:18px;margin-bottom:10px}
+.task-card p{font-size:13px;color:#8992a2;line-height:1.6}
+
+.task-count{
+font-size:27px;
+font-weight:bold;
+color:#1677e8;
+margin:12px 0
+}
+
+.progress{
+height:10px;
+background:#e7edf5;
+border-radius:20px;
+overflow:hidden;
+margin:12px 0
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,#1478ed,#36b4ff);
+border-radius:20px;
+transition:.3s
+}
+
+.locked-card{
+background:#fff;
+border-radius:18px;
+padding:30px 20px;
+text-align:center;
+box-shadow:0 5px 20px #14285012;
+margin-bottom:15px
+}
+
+.lock-icon{font-size:42px;margin-bottom:12px}
+.locked-card h3{font-size:20px;margin-bottom:9px}
+.locked-card p{font-size:13px;color:#8992a2;line-height:1.6}
+
 .form-card,.history-card,.empty{
-background:white;border-radius:18px;padding:18px;
-box-shadow:0 5px 20px #14285012;margin-bottom:12px
+background:white;
+border-radius:18px;
+padding:18px;
+box-shadow:0 5px 20px #14285012;
+margin-bottom:12px
 }
 
 .form-title{font-size:16px;margin-bottom:15px;font-weight:bold}
-label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
+
+label{
+display:block;
+font-size:12px;
+color:#737e8f;
+margin-bottom:7px
+}
 
 select,input{
-width:100%;height:48px;border:1px solid #e1e6ee;
-border-radius:12px;padding:0 13px;outline:none;
-font-size:13px;background:white;margin-bottom:14px
+width:100%;
+height:48px;
+border:1px solid #e1e6ee;
+border-radius:12px;
+padding:0 13px;
+outline:none;
+font-size:13px;
+background:white;
+margin-bottom:14px
 }
 
 select:focus,input:focus{border-color:#2588ed}
 
 .withdraw-btn{
-width:100%;height:49px;border:0;border-radius:13px;
+width:100%;
+height:49px;
+border:0;
+border-radius:13px;
 background:linear-gradient(135deg,#1478ed,#25a5ff);
-color:white;font-size:14px;font-weight:bold
+color:white;
+font-size:14px;
+font-weight:bold
 }
+
 .withdraw-btn:disabled{opacity:.6}
 
 .history-title{margin:22px 2px 12px;font-size:17px}
+
 .history-card{padding:15px}
+
 .history-top,.history-bottom{
-display:flex;align-items:center;justify-content:space-between;gap:10px
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px
 }
+
 .method{font-size:13px;font-weight:bold;overflow-wrap:anywhere}
 .amount{font-size:15px;font-weight:bold;color:#e58b00;white-space:nowrap}
-.history-bottom{margin-top:8px;font-size:10px;color:#8992a2}
+
+.history-bottom{
+margin-top:8px;
+font-size:10px;
+color:#8992a2
+}
 
 .status{font-weight:bold}
 .pending{color:#e58b00}
 .approved{color:#16a05d}
 .rejected{color:#e23b3b}
 
-.empty{text-align:center;color:#8992a2;font-size:13px;padding:25px}
+.empty{
+text-align:center;
+color:#8992a2;
+font-size:13px;
+padding:25px
+}
+
+.hidden{display:none!important}
 
 .bottom-nav{
-position:fixed;bottom:0;left:0;right:0;height:73px;
-background:white;display:flex;justify-content:space-around;
-align-items:center;box-shadow:0 -5px 25px #00000019;z-index:1000
+position:fixed;
+bottom:0;left:0;right:0;
+height:73px;
+background:white;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -5px 25px #00000019;
+z-index:1000
 }
 
 .nav-item{
-text-decoration:none;color:#8992a2;
-display:flex;flex-direction:column;align-items:center;
-justify-content:center;gap:4px;width:25%;font-size:10px
+text-decoration:none;
+color:#8992a2;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:4px;
+width:25%;
+font-size:10px
 }
+
 .nav-item span{font-size:21px}
 .nav-item.active{color:#1677e8;font-weight:bold}
 
 .nav-center{
-width:55px;height:55px;margin-top:-25px;border-radius:50%;
+width:55px;height:55px;
+margin-top:-25px;
+border-radius:50%;
 background:linear-gradient(135deg,#1478ed,#36b4ff);
-color:white;display:flex;align-items:center;
-justify-content:center;font-size:24px;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
 border:5px solid #f4f7fb
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="topbar">
+
 <a href="dashboard.html" class="back-btn">←</a>
 
 <div class="logo-area">
 <div class="logo">ET</div>
 <div class="logo-text">EliteTask Pro</div>
 </div>
+
 </div>
 
 <div class="container">
 
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Withdraw your available earnings.</p>
+<p>Complete 10 tasks to unlock withdrawal.</p>
 </div>
 
 <div class="balance-card">
@@ -132,11 +256,48 @@ border:5px solid #f4f7fb
 <h2 id="balance">$0.00</h2>
 </div>
 
-<div class="form-card">
+<!-- TASK REQUIREMENT -->
+
+<div class="task-card" id="taskCard">
+
+<h3>Withdrawal Eligibility</h3>
+
+<p>Complete 10 tasks to unlock your withdrawal option.</p>
+
+<div class="task-count">
+<span id="completedTasks">0</span> / 10 Tasks
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<p id="taskMessage">Complete your tasks to unlock withdrawal.</p>
+
+</div>
+
+<!-- LOCKED MESSAGE -->
+
+<div class="locked-card" id="lockedCard">
+
+<div class="lock-icon">🔒</div>
+
+<h3>Withdrawal Locked</h3>
+
+<p>
+You must complete at least 10 tasks before you can withdraw your earnings.
+</p>
+
+</div>
+
+<!-- WITHDRAWAL FORM -->
+
+<div class="form-card hidden" id="withdrawForm">
 
 <div class="form-title">Withdrawal Details</div>
 
 <label>Payment Method</label>
+
 <select id="method">
 <option value="">Select payment method</option>
 <option value="EasyPaisa">EasyPaisa</option>
@@ -146,6 +307,7 @@ border:5px solid #f4f7fb
 </select>
 
 <label>Account / Wallet Number</label>
+
 <input
 type="text"
 id="account"
@@ -154,6 +316,7 @@ autocomplete="off"
 >
 
 <label>Withdrawal Amount</label>
+
 <input
 type="number"
 id="amount"
@@ -162,7 +325,7 @@ min="0.01"
 step="any"
 >
 
-<button class="withdraw-btn" id="withdrawBtn" type="button">
+<button class="withdraw-btn" id="withdrawBtn">
 Submit Withdrawal
 </button>
 
@@ -175,6 +338,8 @@ Submit Withdrawal
 </div>
 
 </div>
+
+<!-- BOTTOM NAVIGATION -->
 
 <div class="bottom-nav">
 
@@ -198,7 +363,8 @@ Submit Withdrawal
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 getAuth,
@@ -233,14 +399,37 @@ const db = getFirestore(app);
 
 let currentUser = null;
 let availableBalance = 0;
+let completedTaskCount = 0;
 
 const balanceElement = document.getElementById("balance");
 const historyElement = document.getElementById("history");
 
-const methodInput = document.getElementById("method");
-const accountInput = document.getElementById("account");
-const amountInput = document.getElementById("amount");
-const withdrawBtn = document.getElementById("withdrawBtn");
+const completedTasksElement =
+document.getElementById("completedTasks");
+
+const progressBar =
+document.getElementById("progressBar");
+
+const taskMessage =
+document.getElementById("taskMessage");
+
+const lockedCard =
+document.getElementById("lockedCard");
+
+const withdrawForm =
+document.getElementById("withdrawForm");
+
+const methodInput =
+document.getElementById("method");
+
+const accountInput =
+document.getElementById("account");
+
+const amountInput =
+document.getElementById("amount");
+
+const withdrawBtn =
+document.getElementById("withdrawBtn");
 
 
 onAuthStateChanged(auth, async user => {
@@ -253,16 +442,21 @@ return;
 currentUser = user;
 
 await loadUserData();
+await checkCompletedTasks();
 await loadHistory();
 
 });
 
 
+/* LOAD BALANCE */
+
 async function loadUserData() {
 
 try {
 
-const snap = await getDoc(doc(db, "users", currentUser.uid));
+const snap = await getDoc(
+doc(db, "users", currentUser.uid)
+);
 
 if (!snap.exists()) {
 availableBalance = 0;
@@ -277,17 +471,82 @@ const commission = Number(data.commission || 0);
 
 availableBalance = balance + commission;
 
-balanceElement.textContent = "$" + availableBalance.toFixed(2);
+balanceElement.textContent =
+"$" + availableBalance.toFixed(2);
 
 } catch (error) {
 
-console.error("User data error:", error);
+console.error("Balance error:", error);
+
 balanceElement.textContent = "$0.00";
 
 }
 
 }
 
+
+/* CHECK COMPLETED TASKS */
+
+async function checkCompletedTasks() {
+
+try {
+
+const q = query(
+collection(db, "tasks"),
+where("userId", "==", currentUser.uid),
+where("status", "==", "completed")
+);
+
+const snap = await getDocs(q);
+
+completedTaskCount = snap.size;
+
+completedTasksElement.textContent =
+completedTaskCount;
+
+const percentage = Math.min(
+(completedTaskCount / 10) * 100,
+100
+);
+
+progressBar.style.width = percentage + "%";
+
+
+if (completedTaskCount >= 10) {
+
+lockedCard.classList.add("hidden");
+withdrawForm.classList.remove("hidden");
+
+taskMessage.textContent =
+"Congratulations! Withdrawal is unlocked.";
+
+} else {
+
+lockedCard.classList.remove("hidden");
+withdrawForm.classList.add("hidden");
+
+taskMessage.textContent =
+"Complete " + (10 - completedTaskCount) +
+" more tasks to unlock withdrawal.";
+
+}
+
+} catch (error) {
+
+console.error("Task checking error:", error);
+
+lockedCard.classList.remove("hidden");
+withdrawForm.classList.add("hidden");
+
+taskMessage.textContent =
+"Unable to verify completed tasks. Please try again.";
+
+}
+
+}
+
+
+/* SUBMIT WITHDRAWAL */
 
 withdrawBtn.addEventListener("click", async () => {
 
@@ -301,17 +560,12 @@ return;
 }
 
 if (!account) {
-alert("Please enter your account or wallet number.");
+alert("Please enter account or wallet number.");
 return;
 }
 
 if (!Number.isFinite(amount) || amount <= 0) {
 alert("Please enter a valid withdrawal amount.");
-return;
-}
-
-if (amount > availableBalance) {
-alert("Insufficient balance.");
 return;
 }
 
@@ -323,7 +577,58 @@ return;
 try {
 
 withdrawBtn.disabled = true;
+withdrawBtn.textContent = "Checking Tasks...";
+
+/* CHECK TASKS AGAIN */
+
+const q = query(
+collection(db, "tasks"),
+where("userId", "==", currentUser.uid),
+where("status", "==", "completed")
+);
+
+const taskSnap = await getDocs(q);
+
+completedTaskCount = taskSnap.size;
+
+if (completedTaskCount < 10) {
+
+alert("You must complete 10 tasks before withdrawal.");
+
+await checkCompletedTasks();
+
+return;
+
+}
+
+/* CHECK BALANCE AGAIN */
+
+const userSnap = await getDoc(
+doc(db, "users", currentUser.uid)
+);
+
+if (!userSnap.exists()) {
+alert("User account not found.");
+return;
+}
+
+const userData = userSnap.data();
+
+availableBalance =
+Number(userData.balance || 0) +
+Number(userData.commission || 0);
+
+balanceElement.textContent =
+"$" + availableBalance.toFixed(2);
+
+if (amount > availableBalance) {
+alert("Insufficient balance.");
+return;
+}
+
 withdrawBtn.textContent = "Processing...";
+
+/* SAVE WITHDRAWAL REQUEST */
 
 await addDoc(collection(db, "withdraws"), {
 
@@ -347,7 +652,8 @@ await loadHistory();
 } catch (error) {
 
 console.error("Withdrawal error:", error);
-alert("Withdrawal request failed. Please try again.");
+
+alert("Withdrawal failed. Please try again.");
 
 } finally {
 
@@ -358,6 +664,8 @@ withdrawBtn.textContent = "Submit Withdrawal";
 
 });
 
+
+/* WITHDRAWAL HISTORY */
 
 async function loadHistory() {
 
@@ -388,8 +696,11 @@ id: d.id,
 
 records.sort((a, b) => {
 
-const ta = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
-const tb = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+const ta = a.createdAt?.toMillis
+? a.createdAt.toMillis() : 0;
+
+const tb = b.createdAt?.toMillis
+? b.createdAt.toMillis() : 0;
 
 return tb - ta;
 
@@ -409,7 +720,8 @@ const method = document.createElement("div");
 method.className = "method";
 
 method.textContent =
-(record.method || "Payment") + " • " + (record.account || "");
+(record.method || "Payment") +
+" • " + (record.account || "");
 
 const amount = document.createElement("div");
 amount.className = "amount";
