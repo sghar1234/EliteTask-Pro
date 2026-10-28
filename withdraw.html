@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,247 +7,80 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-
-body{
-background:#f4f7fb;
-color:#172033;
-padding-bottom:90px
-}
-
-.topbar{
-height:70px;
-background:linear-gradient(135deg,#07152f,#1454a3);
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 17px;
-color:white
-}
-
-.back-btn{
-width:43px;height:43px;border-radius:50%;
-background:#ffffff24;
-display:flex;align-items:center;justify-content:center;
-color:white;text-decoration:none;font-size:22px
-}
-
+body{background:#f4f7fb;color:#172033;padding-bottom:90px}
+.topbar{height:70px;background:linear-gradient(135deg,#07152f,#1454a3);display:flex;align-items:center;justify-content:space-between;padding:0 17px;color:white}
+.back-btn{width:43px;height:43px;border-radius:50%;background:#ffffff24;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:22px}
 .logo-area{display:flex;align-items:center;gap:9px}
-
-.logo{
-width:38px;height:38px;border-radius:12px;
-background:linear-gradient(135deg,#2d8cff,#55c8ff);
-display:flex;align-items:center;justify-content:center;
-font-weight:bold
-}
-
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#2d8cff,#55c8ff);display:flex;align-items:center;justify-content:center;font-weight:bold}
 .logo-text{font-size:16px;font-weight:bold}
-
-.container{
-max-width:600px;
-margin:auto;
-padding:18px 15px
-}
-
+.container{max-width:600px;margin:auto;padding:18px 15px}
 .page-title{margin:5px 2px 18px}
 .page-title h2{font-size:22px}
 .page-title p{color:#8992a2;font-size:13px;margin-top:5px}
-
-.balance-card{
-background:linear-gradient(135deg,#081a3c,#1454a3);
-color:white;
-border-radius:22px;
-padding:22px;
-margin-bottom:16px
-}
-
+.balance-card{background:linear-gradient(135deg,#081a3c,#1454a3);color:white;border-radius:22px;padding:22px;margin-bottom:16px}
 .balance-card span{font-size:12px;opacity:.8}
 .balance-card h2{font-size:30px;margin-top:7px}
-
-.task-card{
-background:white;
-border-radius:18px;
-padding:20px;
-margin-bottom:15px;
-box-shadow:0 5px 20px #14285012
-}
-
-.task-card h3{font-size:18px;margin-bottom:10px}
-.task-card p{font-size:13px;color:#8992a2;line-height:1.6}
-
-.task-count{
-font-size:27px;
-font-weight:bold;
-color:#1677e8;
-margin:12px 0
-}
-
-.progress{
-height:10px;
-background:#e7edf5;
-border-radius:20px;
-overflow:hidden;
-margin:12px 0
-}
-
-.progress-bar{
-height:100%;
-width:0%;
-background:linear-gradient(135deg,#1478ed,#36b4ff);
-border-radius:20px;
-transition:.3s
-}
-
-.locked-card{
-background:#fff;
-border-radius:18px;
-padding:30px 20px;
-text-align:center;
-box-shadow:0 5px 20px #14285012;
-margin-bottom:15px
-}
-
-.lock-icon{font-size:42px;margin-bottom:12px}
-.locked-card h3{font-size:20px;margin-bottom:9px}
-.locked-card p{font-size:13px;color:#8992a2;line-height:1.6}
-
-.form-card,.history-card,.empty{
-background:white;
-border-radius:18px;
-padding:18px;
-box-shadow:0 5px 20px #14285012;
-margin-bottom:12px
-}
-
+.form-card,.withdraw-locked,.history-card,.empty{background:white;border-radius:18px;padding:18px;box-shadow:0 5px 20px #14285012;margin-bottom:12px}
 .form-title{font-size:16px;margin-bottom:15px;font-weight:bold}
-
-label{
-display:block;
-font-size:12px;
-color:#737e8f;
-margin-bottom:7px
-}
-
-select,input{
-width:100%;
-height:48px;
-border:1px solid #e1e6ee;
-border-radius:12px;
-padding:0 13px;
-outline:none;
-font-size:13px;
-background:white;
-margin-bottom:14px
-}
-
+label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
+select,input{width:100%;height:48px;border:1px solid #e1e6ee;border-radius:12px;padding:0 13px;outline:none;font-size:13px;background:white;margin-bottom:14px}
 select:focus,input:focus{border-color:#2588ed}
-
-.withdraw-btn{
-width:100%;
-height:49px;
-border:0;
-border-radius:13px;
-background:linear-gradient(135deg,#1478ed,#25a5ff);
-color:white;
-font-size:14px;
-font-weight:bold
-}
-
+input[readonly],select:disabled{background:#eef2f7;color:#555}
+.withdraw-btn{width:100%;height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold}
 .withdraw-btn:disabled{opacity:.6}
-
 .history-title{margin:22px 2px 12px;font-size:17px}
-
 .history-card{padding:15px}
-
-.history-top,.history-bottom{
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:10px
-}
-
+.history-top,.history-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .method{font-size:13px;font-weight:bold;overflow-wrap:anywhere}
 .amount{font-size:15px;font-weight:bold;color:#e58b00;white-space:nowrap}
-
-.history-bottom{
-margin-top:8px;
-font-size:10px;
-color:#8992a2
-}
-
+.history-bottom{margin-top:8px;font-size:10px;color:#8992a2}
 .status{font-weight:bold}
 .pending{color:#e58b00}
 .approved{color:#16a05d}
 .rejected{color:#e23b3b}
-
-.empty{
-text-align:center;
-color:#8992a2;
-font-size:13px;
-padding:25px
-}
-
-.hidden{display:none!important}
-
-.bottom-nav{
-position:fixed;
-bottom:0;left:0;right:0;
-height:73px;
-background:white;
-display:flex;
-justify-content:space-around;
-align-items:center;
-box-shadow:0 -5px 25px #00000019;
-z-index:1000
-}
-
-.nav-item{
-text-decoration:none;
-color:#8992a2;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:4px;
-width:25%;
-font-size:10px
-}
-
+.empty{text-align:center;color:#8992a2;font-size:13px;padding:25px}
+.withdraw-locked{text-align:center;padding:30px 20px}
+.withdraw-locked-icon{font-size:42px;margin-bottom:12px}
+.withdraw-locked h3{font-size:20px;margin-bottom:8px}
+.withdraw-locked p{font-size:13px;color:#8992a2;line-height:1.6;margin-top:8px}
+.withdraw-locked strong{color:#1677e8}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:73px;background:white;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -5px 25px #00000019;z-index:1000}
+.nav-item{text-decoration:none;color:#8992a2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:25%;font-size:10px}
 .nav-item span{font-size:21px}
 .nav-item.active{color:#1677e8;font-weight:bold}
-
-.nav-center{
-width:55px;height:55px;
-margin-top:-25px;
-border-radius:50%;
-background:linear-gradient(135deg,#1478ed,#36b4ff);
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:24px;
-border:5px solid #f4f7fb
-}
+.nav-center{width:55px;height:55px;margin-top:-25px;border-radius:50%;background:linear-gradient(135deg,#1478ed,#36b4ff);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;border:5px solid #f4f7fb}
+.deposit-notice{background:linear-gradient(135deg,#07152f,#1454a3);color:#fff;border:2px solid #f4c95d;border-radius:22px;padding:30px 18px;margin:0 0 18px;text-align:center;box-shadow:0 8px 25px #14285030}
+.deposit-notice .lock-icon{font-size:42px;margin-bottom:12px}
+.deposit-notice h2{font-size:24px;line-height:1.3;color:#ffdc78;margin-bottom:12px}
+.deposit-notice .deposit-amount{font-size:25px;font-weight:800;color:#fff;margin:10px 0}
+.deposit-notice p{font-size:16px;font-weight:bold;color:#ffdc78;line-height:1.5}
+.hidden{display:none!important}
 </style>
 </head>
 
 <body>
 
 <div class="topbar">
-
 <a href="dashboard.html" class="back-btn">←</a>
-
 <div class="logo-area">
 <div class="logo">ET</div>
 <div class="logo-text">EliteTask Pro</div>
 </div>
-
 </div>
 
 <div class="container">
 
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Complete 10 tasks to unlock withdrawal.</p>
+<p>Withdrawal status and history.</p>
+</div>
+
+<!-- Withdrawal Charges Warning -->
+<div class="deposit-notice">
+<div class="lock-icon">🔒</div>
+<h2>WITHDRAWAL LOCKED</h2>
+<div class="deposit-amount">30% Withdrawal Charge</div>
+<p>A 30% charge applies to the total withdrawal amount.</p>
 </div>
 
 <div class="balance-card">
@@ -256,48 +88,20 @@ border:5px solid #f4f7fb
 <h2 id="balance">$0.00</h2>
 </div>
 
-<!-- TASK REQUIREMENT -->
-
-<div class="task-card" id="taskCard">
-
-<h3>Withdrawal Eligibility</h3>
-
-<p>Complete 10 tasks to unlock your withdrawal option.</p>
-
-<div class="task-count">
-<span id="completedTasks">0</span> / 10 Tasks
-</div>
-
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
-
-<p id="taskMessage">Complete your tasks to unlock withdrawal.</p>
-
-</div>
-
-<!-- LOCKED MESSAGE -->
-
-<div class="locked-card" id="lockedCard">
-
-<div class="lock-icon">🔒</div>
-
+<!-- Withdrawal remains locked -->
+<div class="withdraw-locked" id="withdrawLocked">
+<div class="withdraw-locked-icon">🔒</div>
 <h3>Withdrawal Locked</h3>
-
-<p>
-You must complete at least 10 tasks before you can withdraw your earnings.
-</p>
-
+<p>Withdrawal is currently locked.</p>
+<p><strong>Withdrawal Charge Warning</strong></p>
+<p>A 30% charge applies to the total amount requested for withdrawal. Please review this charge before proceeding.</p>
 </div>
 
-<!-- WITHDRAWAL FORM -->
-
+<!-- Withdrawal form stays hidden -->
 <div class="form-card hidden" id="withdrawForm">
-
 <div class="form-title">Withdrawal Details</div>
 
 <label>Payment Method</label>
-
 <select id="method">
 <option value="">Select payment method</option>
 <option value="EasyPaisa">EasyPaisa</option>
@@ -307,478 +111,49 @@ You must complete at least 10 tasks before you can withdraw your earnings.
 </select>
 
 <label>Account / Wallet Number</label>
-
-<input
-type="text"
-id="account"
-placeholder="Enter account or wallet number"
-autocomplete="off"
->
+<input type="text" id="account" placeholder="Enter account or wallet number" autocomplete="off">
 
 <label>Withdrawal Amount</label>
+<input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
 
-<input
-type="number"
-id="amount"
-placeholder="Enter amount"
-min="0.01"
-step="any"
->
-
-<button class="withdraw-btn" id="withdrawBtn">
-Submit Withdrawal
-</button>
-
+<button class="withdraw-btn" id="withdrawBtn" type="button" disabled>Withdrawal Locked</button>
 </div>
 
 <h3 class="history-title">Withdrawal History</h3>
-
 <div id="history">
 <div class="empty">Loading history...</div>
 </div>
 
 </div>
 
-<!-- BOTTOM NAVIGATION -->
-
 <div class="bottom-nav">
-
-<a href="dashboard.html" class="nav-item">
-<span>⌂</span>Home
-</a>
-
-<a href="orders.html" class="nav-item">
-<span>▣</span>Tasks
-</a>
-
-<a href="support.html" class="nav-item">
-<div class="nav-center">💬</div>Support
-</a>
-
-<a href="withdraw.html" class="nav-item active">
-<span>💳</span>Withdraw
-</a>
-
+<a href="dashboard.html" class="nav-item"><span>⌂</span>Home</a>
+<a href="orders.html" class="nav-item"><span>▣</span>Tasks</a>
+<a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
+<a href="withdraw.html" class="nav-item active" id="withdrawNav"><span>💳</span>Withdraw</a>
 </div>
 
 <script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
-getAuth,
-onAuthStateChanged
+ getAuth,
+ onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 import {
-getFirestore,
-doc,
-getDoc,
-collection,
-query,
-where,
-getDocs,
-addDoc,
-serverTimestamp
+ getFirestore,
+ doc,
+ getDoc,
+ collection,
+ query,
+ where,
+ getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
 const firebaseConfig = {
-apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-authDomain: "elitetask-pro.firebaseapp.com",
-projectId: "elitetask-pro",
-storageBucket: "elitetask-pro.firebasestorage.app",
-messagingSenderId: "504295275402",
-appId: "1:504295275402:web:8c480445c5510fa645a673"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let currentUser = null;
-let availableBalance = 0;
-let completedTaskCount = 0;
-
-const balanceElement = document.getElementById("balance");
-const historyElement = document.getElementById("history");
-
-const completedTasksElement =
-document.getElementById("completedTasks");
-
-const progressBar =
-document.getElementById("progressBar");
-
-const taskMessage =
-document.getElementById("taskMessage");
-
-const lockedCard =
-document.getElementById("lockedCard");
-
-const withdrawForm =
-document.getElementById("withdrawForm");
-
-const methodInput =
-document.getElementById("method");
-
-const accountInput =
-document.getElementById("account");
-
-const amountInput =
-document.getElementById("amount");
-
-const withdrawBtn =
-document.getElementById("withdrawBtn");
-
-
-onAuthStateChanged(auth, async user => {
-
-if (!user) {
-window.location.href = "index.html";
-return;
-}
-
-currentUser = user;
-
-await loadUserData();
-await checkCompletedTasks();
-await loadHistory();
-
-});
-
-
-/* LOAD BALANCE */
-
-async function loadUserData() {
-
-try {
-
-const snap = await getDoc(
-doc(db, "users", currentUser.uid)
-);
-
-if (!snap.exists()) {
-availableBalance = 0;
-balanceElement.textContent = "$0.00";
-return;
-}
-
-const data = snap.data();
-
-const balance = Number(data.balance || 0);
-const commission = Number(data.commission || 0);
-
-availableBalance = balance + commission;
-
-balanceElement.textContent =
-"$" + availableBalance.toFixed(2);
-
-} catch (error) {
-
-console.error("Balance error:", error);
-
-balanceElement.textContent = "$0.00";
-
-}
-
-}
-
-
-/* CHECK COMPLETED TASKS */
-
-async function checkCompletedTasks() {
-
-try {
-
-const q = query(
-collection(db, "tasks"),
-where("userId", "==", currentUser.uid),
-where("status", "==", "completed")
-);
-
-const snap = await getDocs(q);
-
-completedTaskCount = snap.size;
-
-completedTasksElement.textContent =
-completedTaskCount;
-
-const percentage = Math.min(
-(completedTaskCount / 10) * 100,
-100
-);
-
-progressBar.style.width = percentage + "%";
-
-
-if (completedTaskCount >= 10) {
-
-lockedCard.classList.add("hidden");
-withdrawForm.classList.remove("hidden");
-
-taskMessage.textContent =
-"Congratulations! Withdrawal is unlocked.";
-
-} else {
-
-lockedCard.classList.remove("hidden");
-withdrawForm.classList.add("hidden");
-
-taskMessage.textContent =
-"Complete " + (10 - completedTaskCount) +
-" more tasks to unlock withdrawal.";
-
-}
-
-} catch (error) {
-
-console.error("Task checking error:", error);
-
-lockedCard.classList.remove("hidden");
-withdrawForm.classList.add("hidden");
-
-taskMessage.textContent =
-"Unable to verify completed tasks. Please try again.";
-
-}
-
-}
-
-
-/* SUBMIT WITHDRAWAL */
-
-withdrawBtn.addEventListener("click", async () => {
-
-const method = methodInput.value;
-const account = accountInput.value.trim();
-const amount = Number(amountInput.value);
-
-if (!method) {
-alert("Please select payment method.");
-return;
-}
-
-if (!account) {
-alert("Please enter account or wallet number.");
-return;
-}
-
-if (!Number.isFinite(amount) || amount <= 0) {
-alert("Please enter a valid withdrawal amount.");
-return;
-}
-
-if (!currentUser) {
-alert("Please login first.");
-return;
-}
-
-try {
-
-withdrawBtn.disabled = true;
-withdrawBtn.textContent = "Checking Tasks...";
-
-/* CHECK TASKS AGAIN */
-
-const q = query(
-collection(db, "tasks"),
-where("userId", "==", currentUser.uid),
-where("status", "==", "completed")
-);
-
-const taskSnap = await getDocs(q);
-
-completedTaskCount = taskSnap.size;
-
-if (completedTaskCount < 10) {
-
-alert("You must complete 10 tasks before withdrawal.");
-
-await checkCompletedTasks();
-
-return;
-
-}
-
-/* CHECK BALANCE AGAIN */
-
-const userSnap = await getDoc(
-doc(db, "users", currentUser.uid)
-);
-
-if (!userSnap.exists()) {
-alert("User account not found.");
-return;
-}
-
-const userData = userSnap.data();
-
-availableBalance =
-Number(userData.balance || 0) +
-Number(userData.commission || 0);
-
-balanceElement.textContent =
-"$" + availableBalance.toFixed(2);
-
-if (amount > availableBalance) {
-alert("Insufficient balance.");
-return;
-}
-
-withdrawBtn.textContent = "Processing...";
-
-/* SAVE WITHDRAWAL REQUEST */
-
-await addDoc(collection(db, "withdraws"), {
-
-userId: currentUser.uid,
-method: method,
-account: account,
-amount: amount,
-status: "pending",
-createdAt: serverTimestamp()
-
-});
-
-alert("Withdrawal request submitted successfully!");
-
-methodInput.value = "";
-accountInput.value = "";
-amountInput.value = "";
-
-await loadHistory();
-
-} catch (error) {
-
-console.error("Withdrawal error:", error);
-
-alert("Withdrawal failed. Please try again.");
-
-} finally {
-
-withdrawBtn.disabled = false;
-withdrawBtn.textContent = "Submit Withdrawal";
-
-}
-
-});
-
-
-/* WITHDRAWAL HISTORY */
-
-async function loadHistory() {
-
-try {
-
-if (!currentUser) return;
-
-const q = query(
-collection(db, "withdraws"),
-where("userId", "==", currentUser.uid)
-);
-
-const snap = await getDocs(q);
-
-if (snap.empty) {
-
-historyElement.innerHTML =
-'<div class="empty">No withdrawal history yet.</div>';
-
-return;
-
-}
-
-const records = snap.docs.map(d => ({
-id: d.id,
-...d.data()
-}));
-
-records.sort((a, b) => {
-
-const ta = a.createdAt?.toMillis
-? a.createdAt.toMillis() : 0;
-
-const tb = b.createdAt?.toMillis
-? b.createdAt.toMillis() : 0;
-
-return tb - ta;
-
-});
-
-historyElement.innerHTML = "";
-
-records.forEach(record => {
-
-const card = document.createElement("div");
-card.className = "history-card";
-
-const top = document.createElement("div");
-top.className = "history-top";
-
-const method = document.createElement("div");
-method.className = "method";
-
-method.textContent =
-(record.method || "Payment") +
-" • " + (record.account || "");
-
-const amount = document.createElement("div");
-amount.className = "amount";
-
-amount.textContent =
-"$" + Number(record.amount || 0).toFixed(2);
-
-top.append(method, amount);
-
-const bottom = document.createElement("div");
-bottom.className = "history-bottom";
-
-const dateText = document.createElement("span");
-
-const date = record.createdAt?.toDate
-? record.createdAt.toDate()
-: null;
-
-dateText.textContent = date
-? date.toLocaleString()
-: "Date pending";
-
-const status = document.createElement("span");
-
-const statusValue =
-String(record.status || "pending").toLowerCase();
-
-status.className = "status " + (
-statusValue === "approved" ? "approved" :
-statusValue === "rejected" ? "rejected" :
-"pending"
-);
-
-status.textContent =
-statusValue.charAt(0).toUpperCase() +
-statusValue.slice(1);
-
-bottom.append(dateText, status);
-
-card.append(top, bottom);
-
-historyElement.appendChild(card);
-
-});
-
-} catch (error) {
-
-console.error("History error:", error);
-
-historyElement.innerHTML =
-'<div class="empty">Could not load withdrawal history.</div>';
-
-}
-
-}
-
-</script>
-
-</body>
-</html>
+ apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+ authDomain: "elitetask-pro.firebaseapp.com",
+ projectId: "elitetask-pro",
+ storageBucket: "elitetask-pro.firebasestorage.app",
+ messagingSenderId: "504295
