@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,279 +8,370 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#f4f7fb;color:#172033;padding-bottom:90px}
-.topbar{height:70px;background:linear-gradient(135deg,#07152f,#1454a3);display:flex;align-items:center;justify-content:space-between;padding:0 17px;color:white}
-.back-btn{width:43px;height:43px;border-radius:50%;background:#ffffff24;display:flex;align-items:center;justify-content:center;color:white;text-decoration:none;font-size:22px}
-.logo-area{display:flex;align-items:center;gap:9px}
-.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#2d8cff,#55c8ff);display:flex;align-items:center;justify-content:center;font-weight:bold}
-.logo-text{font-size:16px;font-weight:bold}
-.container{max-width:600px;margin:auto;padding:18px 15px}
-.page-title{margin:5px 2px 18px}
-.page-title h2{font-size:22px}
-.page-title p{color:#8992a2;font-size:13px;margin-top:5px}
-.balance-card{background:linear-gradient(135deg,#081a3c,#1454a3);color:white;border-radius:22px;padding:22px;margin-bottom:16px}
-.balance-card span{font-size:12px;opacity:.8}
-.balance-card h2{font-size:30px;margin-top:7px}
-.form-card,.history-card,.empty{background:white;border-radius:18px;padding:18px;box-shadow:0 5px 20px #14285012;margin-bottom:12px}
-.form-title{font-size:16px;margin-bottom:15px;font-weight:bold}
-label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
-select,input{width:100%;height:48px;border:1px solid #e1e6ee;border-radius:12px;padding:0 13px;outline:none;font-size:14px;background:white;margin-bottom:14px}
-select:focus,input:focus{border-color:#2588ed}
-.withdraw-btn{width:100%;height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold;cursor:pointer}
-.withdraw-btn:disabled{opacity:.6;cursor:not-allowed}
-.history-title{margin:22px 2px 12px;font-size:17px}
-.history-card{padding:15px}
-.history-top,.history-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.method{font-size:13px;font-weight:bold;overflow-wrap:anywhere}
-.amount{font-size:15px;font-weight:bold;color:#e58b00;white-space:nowrap}
-.history-account{font-size:12px;color:#566174;margin-top:10px;overflow-wrap:anywhere}
-.history-bottom{margin-top:8px;font-size:10px;color:#8992a2}
-.status{font-weight:bold}
-.pending{color:#e58b00}
-.approved{color:#16a05d}
-.rejected{color:#e23b3b}
-.empty{text-align:center;color:#8992a2;font-size:13px;padding:25px}
-.message{display:none;font-size:13px;margin-bottom:13px;padding:12px;border-radius:10px;line-height:1.5;overflow-wrap:anywhere}
-.message.error{display:block;background:#fff0f0;color:#c62828}
-.message.success{display:block;background:#e9fff1;color:#168347}
-.small-note{font-size:11px;color:#8992a2;line-height:1.5;margin-top:10px}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:73px;background:white;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -5px 25px #00000019;z-index:1000}
-.nav-item{text-decoration:none;color:#8992a2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:25%;font-size:10px}
-.nav-item span{font-size:21px}
-.nav-item.active{color:#1677e8;font-weight:bold}
-.nav-center{width:55px;height:55px;margin-top:-25px;border-radius:50%;background:linear-gradient(135deg,#1478ed,#36b4ff);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;border:5px solid #f4f7fb}
+body{background:#f4f7fb;color:#172033;padding-bottom:25px}
+.header{padding:20px 16px;background:linear-gradient(135deg,#39206d,#673ab7,#8156ca);color:white}
+.header a{color:white;text-decoration:none;font-size:14px}
+.header h2{margin-top:14px;font-size:23px}
+.header p{font-size:13px;margin-top:6px;opacity:.9}
+.container{max-width:600px;margin:auto;padding:15px}
+.balance-card{background:linear-gradient(135deg,#39206d,#673ab7,#8156ca);color:white;padding:22px;border-radius:18px;box-shadow:0 8px 20px #673ab733}
+.balance-card p{font-size:14px;opacity:.9}
+.balance-card h1{font-size:30px;margin-top:9px;overflow-wrap:anywhere}
+.card{background:white;border-radius:16px;padding:17px;margin-top:15px;box-shadow:0 4px 15px #26345b12}
+.card h3{font-size:17px;margin-bottom:15px;color:#39206d}
+label{display:block;font-size:13px;font-weight:bold;margin:13px 0 7px}
+input,select{width:100%;padding:13px;border:1px solid #d7dce7;border-radius:10px;font-size:15px;background:#fff;color:#172033}
+input:focus,select:focus{outline:2px solid #b9a2e8;border-color:#673ab7}
+.help{font-size:12px;color:#777;margin-top:6px;line-height:1.5}
+button{cursor:pointer}
+.primary-btn{width:100%;padding:14px;margin-top:16px;border:0;border-radius:11px;background:linear-gradient(135deg,#673ab7,#8b61d1);color:white;font-weight:bold;font-size:15px}
+.primary-btn:disabled{opacity:.6;cursor:not-allowed}
+.message{display:none;padding:11px;border-radius:9px;margin-top:12px;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.message.show{display:block}
+.message.error{background:#fff0f0;color:#b42318}
+.message.success{background:#eaf8ef;color:#18733a}
+.history-item{border:1px solid #ece8f5;border-radius:12px;padding:13px;margin-top:10px}
+.history-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.history-amount{font-weight:bold;font-size:17px;color:#39206d}
+.status{font-size:11px;font-weight:bold;padding:5px 8px;border-radius:20px;background:#fff1cc;color:#8a5a00}
+.status.success{background:#e5f8eb;color:#18733a}
+.status.rejected{background:#ffebeb;color:#b42318}
+.history-detail{font-size:12px;color:#70788a;margin-top:8px;line-height:1.7;overflow-wrap:anywhere}
+.empty{text-align:center;color:#858b99;font-size:13px;padding:18px 5px}
+.small-note{font-size:12px;color:#73798a;line-height:1.6;margin-top:10px}
 </style>
 </head>
 
 <body>
-
-<div class="topbar">
-<a href="dashboard.html" class="back-btn">←</a>
-<div class="logo-area">
-<div class="logo">ET</div>
-<div class="logo-text">EliteTask Pro</div>
-</div>
+<div class="header">
+  <a href="dashboard.html">← Back to Dashboard</a>
+  <h2>Withdraw Funds</h2>
+  <p>Submit and track your withdrawal requests.</p>
 </div>
 
 <div class="container">
+  <div class="balance-card">
+    <p>Available Balance</p>
+    <h1 id="availableBalance">PKR 0.00</h1>
+  </div>
 
-<div class="page-title">
-<h2>Withdraw</h2>
-<p>Withdrawal status and history.</p>
-</div>
+  <div class="card">
+    <h3>Withdrawal Details</h3>
 
-<div class="balance-card">
-<span>Available Balance</span>
-<h2 id="balance">$0.00</h2>
-</div>
+    <label for="withdrawMethod">Payment Method</label>
+    <select id="withdrawMethod">
+      <option value="EasyPaisa">EasyPaisa</option>
+      <option value="JazzCash">JazzCash</option>
+      <option value="Bank Account">Bank Account</option>
+      <option value="USDT">USDT</option>
+    </select>
 
-<div class="form-card">
-<div class="form-title">Withdrawal Details</div>
+    <label for="accountNumber">Account Number / Wallet Address</label>
+    <input id="accountNumber" type="text" placeholder="Enter your account number" autocomplete="off">
+    <p class="help">Your account details are saved to your own account and can be edited anytime.</p>
 
-<div id="message" class="message"></div>
+    <button class="primary-btn" id="saveAccountBtn" type="button">Save Account Details</button>
 
-<label>Payment Method</label>
-<select id="method">
-<option value="">Select payment method</option>
-<option value="EasyPaisa">EasyPaisa</option>
-<option value="JazzCash">JazzCash</option>
-<option value="Bank Account">Bank Account</option>
-<option value="USDT">USDT</option>
-</select>
+    <label for="withdrawAmount">Withdrawal Amount (PKR)</label>
+    <input id="withdrawAmount" type="number" min="1" step="0.01" placeholder="Enter withdrawal amount">
 
-<label>Account / Wallet Number</label>
-<input type="text" id="account" placeholder="Enter account or wallet number" autocomplete="off">
+    <button class="primary-btn" id="withdrawBtn" type="button">Submit Withdrawal</button>
 
-<button type="button" id="saveAccount" class="withdraw-btn" style="margin-bottom:18px">
-Save Account Number
-</button>
+    <div id="message" class="message"></div>
+    <p class="small-note">Your withdrawal request will show as Pending until it is reviewed. Submitting a request does not guarantee payment approval.</p>
+  </div>
 
-<label>Withdrawal Amount</label>
-<input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
-
-<button class="withdraw-btn" id="withdrawBtn" type="button">
-Submit Withdrawal
-</button>
-
-<p class="small-note">Your saved account number will appear here when you log in, and you can edit it anytime.</p>
-</div>
-
-<h3 class="history-title">Withdrawal History</h3>
-<div id="history">
-<div class="empty">Loading history...</div>
-</div>
-
-</div>
-
-<div class="bottom-nav">
-<a href="dashboard.html" class="nav-item"><span>⌂</span>Home</a>
-<a href="orders.html" class="nav-item"><span>▣</span>Tasks</a>
-<a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
-<a href="withdraw.html" class="nav-item active"><span>💳</span>Withdraw</a>
+  <div class="card">
+    <h3>Withdrawal History</h3>
+    <div id="history"><div class="empty">Loading withdrawal history...</div></div>
+  </div>
 </div>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 import {
- getAuth,
- onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  getFirestore, doc, getDoc, setDoc, addDoc,
+  collection, getDocs, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-import {
- getFirestore,
- doc,
- getDoc,
- collection,
- query,
- where,
- getDocs,
- addDoc,
- setDoc,
- serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-/* Apni asli Firebase configuration yahan paste karein */
 const firebaseConfig = {
- apiKey: "YOUR_API_KEY",
- authDomain: "elitetask-pro.firebaseapp.com",
- projectId: "elitetask-pro",
- storageBucket: "elitetask-pro.firebasestorage.app",
- messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
- appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+  authDomain: "elitetask-pro.firebaseapp.com",
+  projectId: "elitetask-pro",
+  storageBucket: "elitetask-pro.firebasestorage.app",
+  messagingSenderId: "504295275402",
+  appId: "1:504295275402:web:cf744a5d4e82c72145a673"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const balanceEl = document.getElementById("balance");
-const accountEl = document.getElementById("account");
-const methodEl = document.getElementById("method");
-const amountEl = document.getElementById("amount");
+const balanceEl = document.getElementById("availableBalance");
+const methodEl = document.getElementById("withdrawMethod");
+const accountEl = document.getElementById("accountNumber");
+const amountEl = document.getElementById("withdrawAmount");
+const saveBtn = document.getElementById("saveAccountBtn");
 const withdrawBtn = document.getElementById("withdrawBtn");
-const saveAccountBtn = document.getElementById("saveAccount");
-const historyEl = document.getElementById("history");
 const messageEl = document.getElementById("message");
+const historyEl = document.getElementById("history");
 
 let currentUser = null;
+let availableBalance = 0;
+let accountSaving = false;
+let withdrawalSubmitting = false;
 
-function money(value){
- return "$" + (Number(value)||0).toFixed(2);
+function money(value) {
+  const n = Number(value);
+  return "PKR " + (Number.isFinite(n) ? n : 0).toLocaleString("en-PK", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
-function showMessage(text,type="error"){
- messageEl.textContent = text;
- messageEl.className = "message " + type;
+function showMessage(text, type) {
+  messageEl.textContent = text;
+  messageEl.className = "message show " + type;
 }
 
-function clearMessage(){
- messageEl.textContent = "";
- messageEl.className = "message";
+function hideMessage() {
+  messageEl.textContent = "";
+  messageEl.className = "message";
 }
 
-/* Load the user's saved withdrawal account from Firebase */
-async function loadSavedDetails(user){
- try{
-  const userSnap = await getDoc(doc(db,"users",user.uid));
+function safeText(value) {
+  return String(value ?? "");
+}
 
-  if(userSnap.exists()){
-   const data = userSnap.data();
-   accountEl.value = data.withdrawalAccount || "";
-   methodEl.value = data.withdrawalMethod || "";
-  }else{
-   accountEl.value = "";
-   methodEl.value = "";
+function formatDate(value) {
+  if (!value) return "Date not available";
+  try {
+    const date = typeof value.toDate === "function"
+      ? value.toDate()
+      : new Date(value);
+    if (Number.isNaN(date.getTime())) return "Date not available";
+    return date.toLocaleString();
+  } catch {
+    return "Date not available";
   }
- }catch(error){
-  console.error("Saved account load error:",error);
-  showMessage("Could not load saved account number. Check Firebase permissions.");
- }
 }
 
-/* Save or update account number in the user's Firebase document */
-saveAccountBtn.addEventListener("click",async()=>{
- clearMessage();
+/* Dashboard ki tarah users/{uid} ka balance field use hota hai. */
+async function loadUserData(user) {
+  const userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
 
- if(!currentUser){
-  showMessage("Please log in first.");
-  return;
- }
-
- const account = accountEl.value.trim();
- const method = methodEl.value;
-
- if(!method){
-  showMessage("Please select a payment method.");
-  return;
- }
-
- if(!account){
-  showMessage("Please enter your account or wallet number.");
-  return;
- }
-
- saveAccountBtn.disabled = true;
- saveAccountBtn.textContent = "Saving...";
-
- try{
-  await setDoc(doc(db,"users",currentUser.uid),{
-   withdrawalAccount:account,
-   withdrawalMethod:method
-  },{merge:true});
-
-  showMessage("Account number saved successfully.","success");
- }catch(error){
-  console.error("Account save error:",error);
-  showMessage("Account number could not be saved. Check Firebase rules.");
- }finally{
-  saveAccountBtn.disabled = false;
-  saveAccountBtn.textContent = "Save Account Number";
- }
-});
-
-/* Save updated payment method when changed */
-methodEl.addEventListener("change",clearMessage);
-accountEl.addEventListener("input",clearMessage);
-
-/* Load balance for display */
-async function loadBalance(user){
- try{
-  const snap = await getDoc(doc(db,"users",user.uid));
-
-  if(!snap.exists()){
-   balanceEl.textContent = money(0);
-   return;
+  if (!snap.exists()) {
+    availableBalance = 0;
+    balanceEl.textContent = money(0);
+    return;
   }
 
   const data = snap.data();
-  const balance = Number(data.balance ?? data.Balance ?? 0);
+  const value = Number(data.balance ?? 0);
 
-  balanceEl.textContent = money(balance);
- }catch(error){
-  console.error("Balance load error:",error);
-  showMessage("Could not load balance. Check Firebase permissions.");
- }
+  availableBalance = Number.isFinite(value) ? value : 0;
+  balanceEl.textContent = money(availableBalance);
+
+  accountEl.value = data.withdrawalAccount || "";
+  methodEl.value = data.withdrawalMethod || "EasyPaisa";
 }
 
-/* Load withdrawal history and show the current saved account number */
-async function loadHistory(user){
- historyEl.innerHTML = '<div class="empty">Loading history...</div>';
+/* Payment details har user ke apne Firebase user document mein save hoti hain. */
+async function saveAccountDetails() {
+  if (!currentUser || accountSaving) return;
 
- try{
-  const q = query(
-   collection(db,"withdraws"),
-   where("userId","==",user.uid)
-  );
+  const account = accountEl.value.trim();
+  const method = methodEl.value;
 
-  const snap = await getDocs(q);
-
-  if(snap.empty){
-   historyEl.innerHTML = '<div class="empty">No withdrawal history yet.</div>';
-   return;
+  if (!account) {
+    showMessage("Pehle apna account number ya wallet address enter karein.", "error");
+    return;
   }
 
-  const records = [];
+  accountSaving = true;
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Saving...";
 
-  snap.forEach(item=>{
-   records.push({id:item.id,...item.data()});
+  try {
+    await setDoc(doc(db, "users", currentUser.uid), {
+      withdrawalAccount: account,
+      withdrawalMethod: method
+    }, { merge: true });
+
+    showMessage("Account details successfully save ho gayi hain.", "success");
+    await loadHistory();
+  } catch (error) {
+    console.error("Save account error:", error);
+    showMessage("Account save nahi ho saka. Firebase permissions check karein.", "error");
+  } finally {
+    accountSaving = false;
+    saveBtn.disabled = false;
+    saveBtn.textContent = "Save Account Details";
+  }
+}
+
+/* History ko userId se filter kiya jata hai. */
+async function loadHistory() {
+  if (!currentUser) return;
+
+  historyEl.innerHTML = '<div class="empty">Loading withdrawal history...</div>';
+
+  try {
+    const snap = await getDocs(collection(db, "withdraws"));
+    const requests = snap.docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(item => item.userId === currentUser.uid)
+      .sort((a, b) => {
+        const aDate = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+        const bDate = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+        return bDate - aDate;
+      });
+
+    if (requests.length === 0) {
+      historyEl.innerHTML = '<div class="empty">Abhi koi withdrawal request nahi hai.</div>';
+      return;
+    }
+
+    const userSnap = await getDoc(doc(db, "users", currentUser.uid));
+    const latestAccount = userSnap.exists()
+      ? userSnap.data().withdrawalAccount || ""
+      : "";
+
+    historyEl.innerHTML = "";
+
+    requests.forEach(item => {
+      const statusRaw = safeText(item.status || "pending");
+      const status = statusRaw.toLowerCase();
+      const statusClass =
+        status === "approved" || status === "success" || status === "completed"
+          ? "success"
+          : status === "rejected" || status === "declined"
+            ? "rejected"
+            : "";
+
+      const box = document.createElement("div");
+      box.className = "history-item";
+
+      const top = document.createElement("div");
+      top.className = "history-top";
+
+      const amount = document.createElement("div");
+      amount.className = "history-amount";
+      amount.textContent = money(item.amount);
+
+      const badge = document.createElement("span");
+      badge.className = "status " + statusClass;
+      badge.textContent = statusRaw.toUpperCase();
+
+      top.append(amount, badge);
+
+      const details = document.createElement("div");
+      details.className = "history-detail";
+
+      const method = document.createElement("div");
+      method.textContent = "Method: " + safeText(item.method || "Not specified");
+
+      const account = document.createElement("div");
+      account.textContent = "Current saved account: " +
+        safeText(latestAccount || item.account || "Not available");
+
+      const date = document.createElement("div");
+      date.textContent = "Date: " + formatDate(item.createdAt);
+
+      details.append(method, account, date);
+      box.append(top, details);
+      historyEl.appendChild(box);
+    });
+  } catch (error) {
+    console.error("History load error:", error);
+    historyEl.innerHTML = '<div class="empty">History load nahi ho saki. Firebase permissions check karein.</div>';
+  }
+}
+
+/* Withdrawal request submit hoti hai; approval admin process karta hai. */
+async function submitWithdrawal() {
+  if (!currentUser || withdrawalSubmitting) return;
+
+  hideMessage();
+
+  const method = methodEl.value;
+  const account = accountEl.value.trim();
+  const amount = Number(amountEl.value);
+
+  if (!account) {
+    showMessage("Pehle account number enter karein aur save karein.", "error");
+    return;
+  }
+
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showMessage("Valid withdrawal amount enter karein.", "error");
+    return;
+  }
+
+  if (amount > availableBalance) {
+    showMessage("Insufficient balance. Available balance: " + money(availableBalance), "error");
+    return;
+  }
+
+  withdrawalSubmitting = true;
+  withdrawBtn.disabled = true;
+  withdrawBtn.textContent = "Submitting...";
+
+  try {
+    const userRef = doc(db, "users", currentUser.uid);
+
+    /* Latest payment details save kar dein. */
+    await setDoc(userRef, {
+      withdrawalAccount: account,
+      withdrawalMethod: method
+    }, { merge: true });
+
+    await addDoc(collection(db, "withdraws"), {
+      userId: currentUser.uid,
+      method: method,
+      account: account,
+      amount: amount,
+      status: "pending",
+      createdAt: serverTimestamp()
+    });
+
+    amountEl.value = "";
+    showMessage("Withdrawal request submit ho gayi hai. Status Pending hai.", "success");
+    await loadHistory();
+  } catch (error) {
+    console.error("Withdrawal submit error:", error);
+    showMessage("Request submit nahi ho saki. Firebase permissions check karein.", "error");
+  } finally {
+    withdrawalSubmitting = false;
+    withdrawBtn.disabled = false;
+    withdrawBtn.textContent = "Submit Withdrawal";
+  }
+}
+
+saveBtn.addEventListener("click", saveAccountDetails);
+withdrawBtn.addEventListener("click", submitWithdrawal);
+
+onAuthStateChanged(auth, async user => {
+  if (!user) {
+    location.href = "index.html";
+    return;
+  }
+
+  currentUser = user;
+  balanceEl.textContent = "Loading...";
+
+  try {
+    await loadUserData(user);
+    await loadHistory();
+  } catch (error) {
+    console.error("Withdraw page loading error:", error);
+    balanceEl.textContent = "Could not load";
+    showMessage("Data load nahi ho saka. Firebase permissions aur connection check karein.", "error");
+    historyEl.innerHTML = '<div class="empty">Withdrawal history load nahi ho saki.</div>';
+  }
+});
+</script>
+</body>
+</html>
