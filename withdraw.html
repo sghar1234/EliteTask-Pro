@@ -25,13 +25,14 @@ body{background:#f4f7fb;color:#172033;padding-bottom:90px}
 label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
 select,input{width:100%;height:48px;border:1px solid #e1e6ee;border-radius:12px;padding:0 13px;outline:none;font-size:14px;background:white;margin-bottom:14px}
 select:focus,input:focus{border-color:#2588ed}
-.withdraw-btn{width:100%;min-height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold;cursor:pointer}
+.withdraw-btn{width:100%;height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold;cursor:pointer}
 .withdraw-btn:disabled{opacity:.6;cursor:not-allowed}
 .history-title{margin:22px 2px 12px;font-size:17px}
 .history-card{padding:15px}
 .history-top,.history-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .method{font-size:13px;font-weight:bold;overflow-wrap:anywhere}
 .amount{font-size:15px;font-weight:bold;color:#e58b00;white-space:nowrap}
+.history-account{font-size:12px;color:#566174;margin-top:10px;overflow-wrap:anywhere}
 .history-bottom{margin-top:8px;font-size:10px;color:#8992a2}
 .status{font-weight:bold}
 .pending{color:#e58b00}
@@ -64,7 +65,7 @@ select:focus,input:focus{border-color:#2588ed}
 
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Submit your withdrawal request and check its status.</p>
+<p>Withdrawal status and history.</p>
 </div>
 
 <div class="balance-card">
@@ -94,13 +95,13 @@ Save Account Number
 </button>
 
 <label>Withdrawal Amount</label>
-<input type="number" id="amount" placeholder="Enter any amount" min="0.01" step="any">
+<input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
 
 <button class="withdraw-btn" id="withdrawBtn" type="button">
 Submit Withdrawal
 </button>
 
-<p class="small-note">Your account number is saved on this browser and can be edited whenever needed.</p>
+<p class="small-note">Your saved account number will appear here when you log in, and you can edit it anytime.</p>
 </div>
 
 <h3 class="history-title">Withdrawal History</h3>
@@ -134,10 +135,11 @@ import {
  where,
  getDocs,
  addDoc,
+ setDoc,
  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* Apni existing Firebase configuration yahan paste karein */
+/* Apni asli Firebase configuration yahan paste karein */
 const firebaseConfig = {
  apiKey: "YOUR_API_KEY",
  authDomain: "elitetask-pro.firebaseapp.com",
@@ -161,7 +163,6 @@ const historyEl = document.getElementById("history");
 const messageEl = document.getElementById("message");
 
 let currentUser = null;
-let availableBalance = 0;
 
 function money(value){
  return "$" + (Number(value)||0).toFixed(2);
@@ -177,24 +178,27 @@ function clearMessage(){
  messageEl.className = "message";
 }
 
-function accountKey(user){
- return "eliteTaskWithdrawAccount_" + user.uid;
+/* Load the user's saved withdrawal account from Firebase */
+async function loadSavedDetails(user){
+ try{
+  const userSnap = await getDoc(doc(db,"users",user.uid));
+
+  if(userSnap.exists()){
+   const data = userSnap.data();
+   accountEl.value = data.withdrawalAccount || "";
+   methodEl.value = data.withdrawalMethod || "";
+  }else{
+   accountEl.value = "";
+   methodEl.value = "";
+  }
+ }catch(error){
+  console.error("Saved account load error:",error);
+  showMessage("Could not load saved account number. Check Firebase permissions.");
+ }
 }
 
-function methodKey(user){
- return "eliteTaskWithdrawMethod_" + user.uid;
-}
-
-/* Account number and payment method stay saved on this browser */
-function loadSavedDetails(user){
- const savedAccount = localStorage.getItem(accountKey(user));
- const savedMethod = localStorage.getItem(methodKey(user));
-
- if(savedAccount !== null) accountEl.value = savedAccount;
- if(savedMethod !== null) methodEl.value = savedMethod;
-}
-
-saveAccountBtn.addEventListener("click",()=>{
+/* Save or update account number in the user's Firebase document */
+saveAccountBtn.addEventListener("click",async()=>{
  clearMessage();
 
  if(!currentUser){
@@ -215,44 +219,50 @@ saveAccountBtn.addEventListener("click",()=>{
   return;
  }
 
- localStorage.setItem(accountKey(currentUser),account);
- localStorage.setItem(methodKey(currentUser),method);
+ saveAccountBtn.disabled = true;
+ saveAccountBtn.textContent = "Saving...";
 
- showMessage("Account number saved successfully. You can edit it anytime.","success");
-});
+ try{
+  await setDoc(doc(db,"users",currentUser.uid),{
+   withdrawalAccount:account,
+   withdrawalMethod:method
+  },{merge:true});
 
-accountEl.addEventListener("input",clearMessage);
-methodEl.addEventListener("change",()=>{
- clearMessage();
-
- if(currentUser){
-  localStorage.setItem(methodKey(currentUser),methodEl.value);
+  showMessage("Account number saved successfully.","success");
+ }catch(error){
+  console.error("Account save error:",error);
+  showMessage("Account number could not be saved. Check Firebase rules.");
+ }finally{
+  saveAccountBtn.disabled = false;
+  saveAccountBtn.textContent = "Save Account Number";
  }
 });
 
-/* Load balance for display only */
+/* Save updated payment method when changed */
+methodEl.addEventListener("change",clearMessage);
+accountEl.addEventListener("input",clearMessage);
+
+/* Load balance for display */
 async function loadBalance(user){
  try{
   const snap = await getDoc(doc(db,"users",user.uid));
 
   if(!snap.exists()){
-   availableBalance = 0;
    balanceEl.textContent = money(0);
    return;
   }
 
   const data = snap.data();
+  const balance = Number(data.balance ?? data.Balance ?? 0);
 
-  availableBalance = Number(data.balance ?? data.Balance ?? 0);
-  balanceEl.textContent = money(availableBalance);
-
+  balanceEl.textContent = money(balance);
  }catch(error){
-  console.error("Balance error:",error);
-  showMessage("Could not load balance. Please check Firebase permissions.");
+  console.error("Balance load error:",error);
+  showMessage("Could not load balance. Check Firebase permissions.");
  }
 }
 
-/* Load withdrawal history */
+/* Load withdrawal history and show the current saved account number */
 async function loadHistory(user){
  historyEl.innerHTML = '<div class="empty">Loading history...</div>';
 
@@ -273,151 +283,3 @@ async function loadHistory(user){
 
   snap.forEach(item=>{
    records.push({id:item.id,...item.data()});
-  });
-
-  records.sort((a,b)=>{
-   const aTime = a.createdAt?.toMillis?.() || 0;
-   const bTime = b.createdAt?.toMillis?.() || 0;
-   return bTime-aTime;
-  });
-
-  historyEl.innerHTML = "";
-
-  records.forEach(data=>{
-   const status = String(data.status || "pending").toLowerCase();
-
-   let statusClass = "pending";
-
-   if(["approved","success","completed"].includes(status)){
-    statusClass = "approved";
-   }
-
-   if(["rejected","declined"].includes(status)){
-    statusClass = "rejected";
-   }
-
-   let dateText = "Date unavailable";
-
-   if(data.createdAt?.toDate){
-    dateText = data.createdAt.toDate().toLocaleString();
-   }
-
-   const card = document.createElement("div");
-   card.className = "history-card";
-
-   const top = document.createElement("div");
-   top.className = "history-top";
-
-   const method = document.createElement("div");
-   method.className = "method";
-   method.textContent = data.method || "Withdrawal";
-
-   const amount = document.createElement("div");
-   amount.className = "amount";
-   amount.textContent = money(data.amount);
-
-   top.append(method,amount);
-
-   const bottom = document.createElement("div");
-   bottom.className = "history-bottom";
-
-   const date = document.createElement("span");
-   date.textContent = dateText;
-
-   const statusEl = document.createElement("span");
-   statusEl.className = "status " + statusClass;
-   statusEl.textContent = status.charAt(0).toUpperCase()+status.slice(1);
-
-   bottom.append(date,statusEl);
-   card.append(top,bottom);
-   historyEl.appendChild(card);
-  });
-
- }catch(error){
-  console.error("History error:",error);
-  historyEl.innerHTML = '<div class="empty">History could not load. Please check Firebase permissions.</div>';
- }
-}
-
-/* Submit request: no 10,000 limit and no available-balance comparison */
-withdrawBtn.addEventListener("click",async()=>{
- clearMessage();
-
- if(!currentUser){
-  showMessage("Please log in first.");
-  return;
- }
-
- const method = methodEl.value;
- const account = accountEl.value.trim();
- const amount = Number(amountEl.value);
-
- if(!method){
-  showMessage("Please select a payment method.");
-  return;
- }
-
- if(!account){
-  showMessage("Please enter your account or wallet number.");
-  return;
- }
-
- if(!Number.isFinite(amount) || amount<=0){
-  showMessage("Please enter a valid amount greater than zero.");
-  return;
- }
-
- withdrawBtn.disabled = true;
- withdrawBtn.textContent = "Submitting...";
-
- try{
-  localStorage.setItem(accountKey(currentUser),account);
-  localStorage.setItem(methodKey(currentUser),method);
-
-  await addDoc(collection(db,"withdraws"),{
-   userId:currentUser.uid,
-   method:method,
-   account:account,
-   amount:amount,
-   status:"pending",
-   createdAt:serverTimestamp()
-  });
-
-  amountEl.value = "";
-
-  showMessage("Withdrawal request submitted successfully.","success");
-
-  await loadHistory(currentUser);
-
- }catch(error){
-  console.error("Withdrawal submission error:",error);
-  showMessage("Request could not be submitted. Please check Firebase permissions.");
- }finally{
-  withdrawBtn.disabled = false;
-  withdrawBtn.textContent = "Submit Withdrawal";
- }
-});
-
-onAuthStateChanged(auth,async(user)=>{
- if(!user){
-  currentUser = null;
-  availableBalance = 0;
-  balanceEl.textContent = money(0);
-  historyEl.innerHTML = '<div class="empty">Please log in to view your withdrawal history.</div>';
-  withdrawBtn.disabled = true;
-  showMessage("Please log in to continue.");
-  return;
- }
-
- currentUser = user;
- withdrawBtn.disabled = false;
-
- loadSavedDetails(user);
-
- await loadBalance(user);
- await loadHistory(user);
-});
-</script>
-
-</body>
-</html>
