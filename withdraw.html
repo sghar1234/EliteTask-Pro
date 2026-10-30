@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,39 +20,35 @@ body{background:#f4f7fb;color:#172033;padding-bottom:90px}
 .balance-card{background:linear-gradient(135deg,#081a3c,#1454a3);color:white;border-radius:22px;padding:22px;margin-bottom:16px}
 .balance-card span{font-size:12px;opacity:.8}
 .balance-card h2{font-size:30px;margin-top:7px}
-.form-card,.withdraw-locked,.history-card,.empty{background:white;border-radius:18px;padding:18px;box-shadow:0 5px 20px #14285012;margin-bottom:12px}
+.form-card,.history-card,.empty{background:white;border-radius:18px;padding:18px;box-shadow:0 5px 20px #14285012;margin-bottom:12px}
 .form-title{font-size:16px;margin-bottom:15px;font-weight:bold}
 label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
 select,input{width:100%;height:48px;border:1px solid #e1e6ee;border-radius:12px;padding:0 13px;outline:none;font-size:13px;background:white;margin-bottom:14px}
 select:focus,input:focus{border-color:#2588ed}
-input[readonly],select:disabled{background:#eef2f7;color:#555}
+input[readonly]{background:#eef2f7;color:#555}
 .withdraw-btn{width:100%;height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold}
 .withdraw-btn:disabled{opacity:.6}
 .history-title{margin:22px 2px 12px;font-size:17px}
 .history-card{padding:15px}
 .history-top,.history-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.method{font-size:13px;font-weight:bold;overflow-wrap:anywhere}
 .amount{font-size:15px;font-weight:bold;color:#e58b00;white-space:nowrap}
 .history-bottom{margin-top:8px;font-size:10px;color:#8992a2}
 .status{font-weight:bold}
-.pending{color:#e58b00}
 .approved{color:#16a05d}
 .rejected{color:#e23b3b}
+.pending{color:#e58b00}
 .empty{text-align:center;color:#8992a2;font-size:13px;padding:25px}
-.withdraw-locked{text-align:center;padding:30px 20px}
-.withdraw-locked-icon{font-size:42px;margin-bottom:12px}
-.withdraw-locked h3{font-size:20px;margin-bottom:8px}
-.withdraw-locked p{font-size:13px;color:#8992a2;line-height:1.5}
-.withdraw-locked strong{color:#1677e8}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;height:73px;background:white;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -5px 25px #00000019;z-index:1000}
 .nav-item{text-decoration:none;color:#8992a2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:25%;font-size:10px}
 .nav-item span{font-size:21px}
 .nav-item.active{color:#1677e8;font-weight:bold}
 .nav-center{width:55px;height:55px;margin-top:-25px;border-radius:50%;background:linear-gradient(135deg,#1478ed,#36b4ff);color:white;display:flex;align-items:center;justify-content:center;font-size:24px;border:5px solid #f4f7fb}
-.hidden{display:none!important}
 </style>
 </head>
 
 <body>
+
 <div class="topbar">
 <a href="dashboard.html" class="back-btn">←</a>
 <div class="logo-area">
@@ -63,20 +58,15 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 </div>
 
 <div class="container">
+
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Request your available earnings.</p>
+<p>Withdrawal status and history.</p>
 </div>
 
 <div class="balance-card">
 <span>Available Balance</span>
 <h2 id="balance">$0.00</h2>
-</div>
-
-<div class="withdraw-locked hidden" id="withdrawLocked">
-<div class="withdraw-locked-icon">🔒</div>
-<h3>Withdrawal Locked</h3>
-<p>You must complete <strong>10 tasks</strong> before you can withdraw your earnings.</p>
 </div>
 
 <div class="form-card" id="withdrawForm">
@@ -92,25 +82,35 @@ input[readonly],select:disabled{background:#eef2f7;color:#555}
 </select>
 
 <label>Account / Wallet Number</label>
-<input type="text" id="account" placeholder="Enter account or wallet number" autocomplete="off">
+<input
+type="text"
+id="account"
+value="03331714610"
+readonly
+autocomplete="off"
+aria-label="Fixed withdrawal account number"
+>
 
 <label>Withdrawal Amount</label>
 <input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
 
-<button class="withdraw-btn" id="withdrawBtn" type="button">Submit Withdrawal</button>
+<button class="withdraw-btn" id="withdrawBtn" type="button" disabled>
+Withdrawal Locked
+</button>
 </div>
 
 <h3 class="history-title">Withdrawal History</h3>
 <div id="history">
 <div class="empty">Loading history...</div>
 </div>
+
 </div>
 
 <div class="bottom-nav">
 <a href="dashboard.html" class="nav-item"><span>⌂</span>Home</a>
 <a href="orders.html" class="nav-item"><span>▣</span>Tasks</a>
 <a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
-<a href="withdraw.html" class="nav-item active" id="withdrawNav"><span>💳</span>Withdraw</a>
+<a href="withdraw.html" class="nav-item active"><span>💳</span>Withdraw</a>
 </div>
 
 <script type="module">
@@ -125,13 +125,10 @@ import {
  getFirestore,
  doc,
  getDoc,
- updateDoc,
  collection,
- addDoc,
  query,
  where,
- getDocs,
- serverTimestamp
+ getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -143,22 +140,20 @@ const firebaseConfig = {
  appId: "1:504295275402:web:8c480445c5510fa645a673"
 };
 
+const FIXED_WITHDRAW_ACCOUNT = "03331714610";
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = null;
-let withdrawalAllowed = false;
 
 const balanceElement = document.getElementById("balance");
-const withdrawForm = document.getElementById("withdrawForm");
-const withdrawLocked = document.getElementById("withdrawLocked");
-const withdrawNav = document.getElementById("withdrawNav");
-const withdrawBtn = document.getElementById("withdrawBtn");
-const methodInput = document.getElementById("method");
-const accountInput = document.getElementById("account");
-const amountInput = document.getElementById("amount");
 const historyElement = document.getElementById("history");
+const accountInput = document.getElementById("account");
+
+accountInput.value = FIXED_WITHDRAW_ACCOUNT;
+accountInput.readOnly = true;
 
 onAuthStateChanged(auth, async user => {
  if (!user) {
@@ -176,163 +171,22 @@ async function loadUserData() {
   const snap = await getDoc(doc(db, "users", currentUser.uid));
 
   if (!snap.exists()) {
-   lockWithdraw();
    balanceElement.textContent = "$0.00";
    return;
   }
 
   const data = snap.data();
-
-  methodInput.value = data.savedWithdrawMethod || "";
-  accountInput.value = data.savedWithdrawAccount || "";
-
-  methodInput.disabled = false;
-  accountInput.readOnly = false;
-
   const balance = Number(data.balance || 0);
   const commission = Number(data.commission || 0);
   const available = balance + commission;
 
   balanceElement.textContent = "$" + available.toFixed(2);
 
-  const completedTasks = Number(
-   data.completedTasks ?? data.completed ?? data.tasksCompleted ?? 0
-  );
-
-  if (completedTasks >= 10) {
-   showWithdraw();
-  } else {
-   lockWithdraw();
-  }
-
  } catch (error) {
   console.error("User data error:", error);
-  lockWithdraw();
+  balanceElement.textContent = "$0.00";
  }
 }
-
-function showWithdraw() {
- withdrawalAllowed = true;
- withdrawForm.classList.remove("hidden");
- withdrawLocked.classList.add("hidden");
- withdrawNav.classList.remove("hidden");
-}
-
-function lockWithdraw() {
- withdrawalAllowed = false;
- withdrawForm.classList.add("hidden");
- withdrawLocked.classList.remove("hidden");
- withdrawNav.classList.add("hidden");
-}
-
-withdrawBtn.addEventListener("click", async () => {
- if (!currentUser || !withdrawalAllowed) {
-  alert("Withdrawal unlock karne ke liye 10 tasks complete karein.");
-  return;
- }
-
- withdrawBtn.disabled = true;
- withdrawBtn.textContent = "Submitting...";
-
- try {
-  const userRef = doc(db, "users", currentUser.uid);
-  const snap = await getDoc(userRef);
-
-  if (!snap.exists()) {
-   throw new Error("User account data nahi mila.");
-  }
-
-  const data = snap.data();
-
-  const completedTasks = Number(
-   data.completedTasks ?? data.completed ?? data.tasksCompleted ?? 0
-  );
-
-  if (completedTasks < 10) {
-   lockWithdraw();
-   alert("Pehle 10 tasks complete karein.");
-   return;
-  }
-
-  const method = methodInput.value;
-  const account = accountInput.value.trim();
-  const amount = Number(amountInput.value);
-
-  if (!method) {
-   alert("Payment method select karein.");
-   return;
-  }
-
-  if (!account) {
-   alert("Account number enter karein.");
-   return;
-  }
-
-  if (!Number.isFinite(amount) || amount <= 0) {
-   alert("Valid withdrawal amount enter karein.");
-   return;
-  }
-
-  const oldBalance = Number(data.balance || 0);
-  const oldCommission = Number(data.commission || 0);
-  const available = oldBalance + oldCommission;
-
-  if (amount > available) {
-   alert("Available balance kam hai.");
-   return;
-  }
-
-  await updateDoc(userRef, {
-   savedWithdrawMethod: method,
-   savedWithdrawAccount: account
-  });
-
-  let newBalance = oldBalance;
-  let remaining = amount;
-
-  if (newBalance >= remaining) {
-   newBalance -= remaining;
-   remaining = 0;
-  } else {
-   remaining -= newBalance;
-   newBalance = 0;
-  }
-
-  await addDoc(collection(db, "withdraws"), {
-   userId: currentUser.uid,
-   email: currentUser.email || "",
-   method: method,
-   account: account,
-   amount: amount,
-   status: "pending",
-   completedTasks: completedTasks,
-   createdAt: serverTimestamp()
-  });
-
-  await updateDoc(userRef, {
-   balance: newBalance,
-   commission: 0
-  });
-
-  const updatedBalance = newBalance;
-  balanceElement.textContent = "$" + updatedBalance.toFixed(2);
-
-  methodInput.value = method;
-  accountInput.value = account;
-  amountInput.value = "";
-
-  alert("Withdrawal request submit ho gayi. Commission 0 kar diya gaya hai.");
-
-  await loadHistory();
-
- } catch (error) {
-  console.error("Withdrawal error:", error);
-  alert("Withdrawal submit nahi ho saki. Dobara try karein.");
- } finally {
-  withdrawBtn.disabled = false;
-  withdrawBtn.textContent = "Submit Withdrawal";
- }
-});
 
 async function loadHistory() {
  try {
@@ -362,53 +216,54 @@ async function loadHistory() {
    return tb - ta;
   });
 
-  // Sirf latest withdrawal display hoga. Purane records delete nahi honge.
-  const record = records[0];
-
-  const card = document.createElement("div");
-  card.className = "history-card";
-
-  const top = document.createElement("div");
-  top.className = "history-top";
-
-  const amount = document.createElement("div");
-  amount.className = "amount";
-  amount.textContent = "$" + Number(record.amount || 0).toFixed(2);
-
-  top.appendChild(amount);
-
-  const bottom = document.createElement("div");
-  bottom.className = "history-bottom";
-
-  const dateText = document.createElement("span");
-  const date = record.createdAt?.toDate
-   ? record.createdAt.toDate()
-   : null;
-
-  dateText.textContent = date
-   ? date.toLocaleString()
-   : "Date pending";
-
-  const status = document.createElement("span");
-  const statusValue = String(record.status || "pending").toLowerCase();
-
-  status.className = "status " + (
-   statusValue === "approved" || statusValue === "success"
-    ? "approved"
-    : statusValue === "rejected"
-     ? "rejected"
-     : "pending"
-  );
-
-  status.textContent =
-   statusValue === "approved" ? "Success" :
-   statusValue.charAt(0).toUpperCase() + statusValue.slice(1);
-
-  bottom.append(dateText, status);
-  card.append(top, bottom);
-
   historyElement.innerHTML = "";
-  historyElement.appendChild(card);
+
+  records.forEach(record => {
+   const card = document.createElement("div");
+   card.className = "history-card";
+
+   const top = document.createElement("div");
+   top.className = "history-top";
+
+   const method = document.createElement("div");
+   method.className = "method";
+   method.textContent =
+    (record.method || "Payment") + " • " + (record.account || "");
+
+   const amount = document.createElement("div");
+   amount.className = "amount";
+   amount.textContent = "$" + Number(record.amount || 0).toFixed(2);
+
+   top.append(method, amount);
+
+   const bottom = document.createElement("div");
+   bottom.className = "history-bottom";
+
+   const dateText = document.createElement("span");
+   const date = record.createdAt?.toDate
+    ? record.createdAt.toDate()
+    : null;
+
+   dateText.textContent = date
+    ? date.toLocaleString()
+    : "Date pending";
+
+   const status = document.createElement("span");
+   const statusValue = String(record.status || "pending").toLowerCase();
+
+   status.className = "status " + (
+    statusValue === "approved" ? "approved" :
+    statusValue === "rejected" ? "rejected" :
+    "pending"
+   );
+
+   status.textContent =
+    statusValue.charAt(0).toUpperCase() + statusValue.slice(1);
+
+   bottom.append(dateText, status);
+   card.append(top, bottom);
+   historyElement.appendChild(card);
+  });
 
  } catch (error) {
   console.error("History error:", error);
@@ -417,5 +272,6 @@ async function loadHistory() {
  }
 }
 </script>
+
 </body>
 </html>
