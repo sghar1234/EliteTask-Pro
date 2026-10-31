@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,11 +26,10 @@ body{background:#f4f7fb;color:#172033;padding-bottom:90px}
 label{display:block;font-size:12px;color:#737e8f;margin-bottom:7px}
 select,input{width:100%;height:48px;border:1px solid #e1e6ee;border-radius:12px;padding:0 13px;outline:none;font-size:13px;background:white;margin-bottom:14px}
 select:focus,input:focus{border-color:#2588ed}
-input[readonly]{background:#eef2f7;color:#555}
 .withdraw-btn{width:100%;height:49px;border:0;border-radius:13px;background:linear-gradient(135deg,#1478ed,#25a5ff);color:white;font-size:14px;font-weight:bold}
-.withdraw-btn:disabled{opacity:.6}
-.charges-box{background:#fff4e5;border:1px solid #f2c078;border-radius:12px;padding:15px;margin-bottom:16px;color:#8a4b08;font-size:13px;line-height:1.7}
-.charges-box strong{font-size:14px}
+.withdraw-btn:disabled{opacity:.6;cursor:not-allowed}
+.task-lock{background:#fff0f0;border:1px solid #ffcaca;border-radius:12px;padding:14px;margin-bottom:15px;color:#bd3030;font-size:13px;line-height:1.7}
+.task-lock.unlocked{background:#eafff2;border-color:#a7e8bd;color:#147a43}
 .history-title{margin:22px 2px 12px;font-size:17px}
 .history-card{padding:15px}
 .history-top,.history-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -63,7 +63,7 @@ input[readonly]{background:#eef2f7;color:#555}
 
 <div class="page-title">
 <h2>Withdraw</h2>
-<p>Withdrawal service charges and history.</p>
+<p>Complete 12 tasks to unlock withdrawal.</p>
 </div>
 
 <div class="balance-card">
@@ -75,16 +75,13 @@ input[readonly]{background:#eef2f7;color:#555}
 
 <div class="form-title">Withdrawal Details</div>
 
-<div class="charges-box">
-<strong>⚠️ Deposit & Withdrawal Service Charges</strong>
-<p style="margin-top:7px;">
-15% service charges apply to the withdrawal amount.
-Please check the applicable charges before proceeding.
-</p>
+<div class="task-lock" id="taskLock">
+<strong>🔒 Withdrawal Locked</strong>
+<p id="taskMessage">Complete 12 tasks to unlock withdrawal.</p>
 </div>
 
 <label>Payment Method</label>
-<select id="method">
+<select id="method" disabled>
 <option value="">Select payment method</option>
 <option value="EasyPaisa">EasyPaisa</option>
 <option value="JazzCash">JazzCash</option>
@@ -93,7 +90,7 @@ Please check the applicable charges before proceeding.
 </select>
 
 <label>Withdrawal Amount</label>
-<input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any">
+<input type="number" id="amount" placeholder="Enter amount" min="0.01" step="any" disabled>
 
 <button class="withdraw-btn" id="withdrawBtn" type="button" disabled>
 Withdrawal Locked
@@ -147,9 +144,15 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = null;
+let completedTasks = 0;
+let userBalance = 0;
 
 const balanceElement = document.getElementById("balance");
 const historyElement = document.getElementById("history");
+const taskLock = document.getElementById("taskLock");
+const methodInput = document.getElementById("method");
+const amountInput = document.getElementById("amount");
+const withdrawBtn = document.getElementById("withdrawBtn");
 
 onAuthStateChanged(auth, async user => {
 if (!user) {
@@ -168,20 +171,60 @@ const snap = await getDoc(doc(db, "users", currentUser.uid));
 
 if (!snap.exists()) {
 balanceElement.textContent = "$0.00";
+lockWithdrawal(0);
 return;
 }
 
 const data = snap.data();
+
 const balance = Number(data.balance || 0);
 const commission = Number(data.commission || 0);
-const available = balance + commission;
 
-balanceElement.textContent = "$" + available.toFixed(2);
+userBalance = balance + commission;
+completedTasks = Number(data.completed || 0);
+
+balanceElement.textContent = "$" + userBalance.toFixed(2);
+
+if (completedTasks >= 12) {
+unlockWithdrawal();
+} else {
+lockWithdrawal(completedTasks);
+}
 
 } catch (error) {
 console.error("User data error:", error);
 balanceElement.textContent = "$0.00";
+lockWithdrawal(0);
 }
+}
+
+function lockWithdrawal(count) {
+taskLock.classList.remove("unlocked");
+
+taskLock.innerHTML = `
+<strong>🔒 Withdrawal Locked</strong>
+<p>Completed Tasks: ${count}/12</p>
+<p>Complete ${Math.max(0,12-count)} more task(s) to unlock withdrawal.</p>
+`;
+
+methodInput.disabled = true;
+amountInput.disabled = true;
+withdrawBtn.disabled = true;
+withdrawBtn.textContent = "Withdrawal Locked";
+}
+
+function unlockWithdrawal() {
+taskLock.classList.add("unlocked");
+
+taskLock.innerHTML = `
+<strong>✅ Withdrawal Unlocked</strong>
+<p>You have completed 12 tasks. You can now request withdrawal.</p>
+`;
+
+methodInput.disabled = false;
+amountInput.disabled = false;
+withdrawBtn.disabled = false;
+withdrawBtn.textContent = "Withdraw Now";
 }
 
 async function loadHistory() {
