@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,8 +81,6 @@ background:linear-gradient(135deg,#673ab7,#8b61d1);
 color:white;font-size:15px;font-weight:bold;
 box-shadow:0 7px 18px rgba(103,58,183,.20)
 }
-
-/* Shop button */
 .deposit-launch{
 position:absolute;right:68px;top:17px;display:block;
 width:auto;margin:0;padding:9px 13px;border:1px solid #ff7777;
@@ -112,7 +108,7 @@ color:white;border:4px solid white;
 box-shadow:0 6px 18px rgba(103,58,183,.25)
 }
 
-/* Deposit shop */
+/* Deposit Shop */
 .deposit-overlay{
 display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);
 z-index:2000;align-items:center;justify-content:center;padding:10px
@@ -220,348 +216,341 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
 
 <body>
 
-<a href="profile.html" class="profile-btn" aria-label="Profile">👤</a>
+<a href="profile.html" class="profile-btn">👤</a>
 
 <div class="logo-area">
-  <div class="logo">ET</div>
-  <div class="logo-text">EliteTask Pro</div>
+<div class="logo">ET</div>
+<div class="logo-text">EliteTask Pro</div>
 </div>
 
 <div class="welcome">
-  <h2>Welcome, <span id="userName">User</span> 👋</h2>
-  <p>Manage your current order and earnings.</p>
+<h2>Welcome, <span id="userName">User</span> 👋</h2>
+<p>Manage your current order and earnings.</p>
 </div>
 
 <div class="balance-card">
-  <div class="balance-title">Available Balance</div>
-  <div class="balance" id="balance">PKR 0.00</div>
-  <div class="balance-bottom">
-    <div class="balance-item">
-      <span>Commission</span>
-      <strong id="commission">PKR 0.00</strong>
-    </div>
-    <div class="balance-item">
-      <span>Pending</span>
-      <strong id="pending">PKR 0.00</strong>
-    </div>
-  </div>
+<div class="balance-title">Available Balance</div>
+<div class="balance" id="balance">PKR 0.00</div>
+<div class="balance-bottom">
+<div class="balance-item">
+<span>Commission</span>
+<strong id="commission">PKR 0.00</strong>
+</div>
+<div class="balance-item">
+<span>Pending</span>
+<strong id="pending">PKR 0.00</strong>
+</div>
+</div>
 </div>
 
-<button class="deposit-launch" type="button" onclick="openDeposit()">Shop</button>
+<button class="deposit-launch" onclick="openDeposit()">Shop</button>
 
 <div class="stats">
-  <div class="stat-card">
-    <div class="stat-icon">📦</div>
-    <p>Completed Tasks</p>
-    <h3 id="completedTasks">0</h3>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">💰</div>
-    <p>Today's Commission</p>
-    <h3 id="todayCommission">PKR 0.00</h3>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">📋</div>
-    <p>Total Tasks</p>
-    <h3 id="totalTasks">0</h3>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">⭐</div>
-    <p>Task Level</p>
-    <h3>1</h3>
-  </div>
+<div class="stat-card">
+<div class="stat-icon">📦</div>
+<p>Completed Tasks</p>
+<h3 id="completedTasks">0</h3>
+</div>
+<div class="stat-card">
+<div class="stat-icon">💰</div>
+<p>Today's Commission</p>
+<h3 id="todayCommission">PKR 0.00</h3>
+</div>
+<div class="stat-card">
+<div class="stat-icon">📋</div>
+<p>Total Tasks</p>
+<h3 id="totalTasks">0</h3>
+</div>
+<div class="stat-card">
+<div class="stat-icon">⭐</div>
+<p>Task Level</p>
+<h3>1</h3>
+</div>
 </div>
 
 <div class="section-title">
-  <h3>Current Order</h3>
-  <a href="orders.html">VIEW ORDER</a>
+<h3>Current Order</h3>
+<a href="orders.html">VIEW ORDER</a>
 </div>
 
 <div id="currentOrder">
-  <div class="loading">Loading current order...</div>
+<div class="loading">Loading current order...</div>
 </div>
 
 <div class="grab-section">
-  <button class="grab-btn" onclick="location.href='orders.html'">
-    🚀 Start Grabbing Orders
-  </button>
+<button class="grab-btn" onclick="location.href='orders.html'">
+🚀 Start Grabbing Orders
+</button>
 </div>
 
 <div class="bottom-nav">
-  <a href="dashboard.html" class="nav-item active"><span>⌂</span>Home</a>
-  <a href="orders.html" class="nav-item"><span>▣</span>Orders</a>
-  <a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
-  <a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
+<a href="dashboard.html" class="nav-item active"><span>⌂</span>Home</a>
+<a href="orders.html" class="nav-item"><span>▣</span>Orders</a>
+<a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
+<a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
 </div>
 
 <!-- Deposit Shop Popup -->
-<div class="deposit-overlay" id="depositOverlay"
-     role="dialog" aria-modal="true" aria-labelledby="shopTitle"
-     onclick="overlayClick(event)">
+<div class="deposit-overlay" id="depositOverlay" onclick="overlayClick(event)">
+<div class="deposit-shop">
+<button class="shop-close" onclick="closeDeposit()">×</button>
+<div class="shop-heading" id="shopTitle">DEPOSIT SHOP</div>
 
-  <div class="deposit-shop">
-    <button class="shop-close" type="button"
-            onclick="closeDeposit()" aria-label="Close">×</button>
+<div id="depositSelectionScreen">
+<div class="payment-label">SELECT PAYMENT METHOD</div>
+<div class="method-row">
+<div class="method-btn selected" style="text-align:center">EasyPaisa</div>
+</div>
 
-    <div class="shop-heading" id="shopTitle">DEPOSIT SHOP</div>
+<div class="payment-label">SELECT DEPOSIT AMOUNT (PKR)</div>
+<div class="amount-grid">
+<button class="amount-btn" data-amount="800" onclick="selectAmount(800)">🪙 Rs. 800</button>
+<button class="amount-btn" data-amount="2000" onclick="selectAmount(2000)">🪙 Rs. 2,000</button>
+<button class="amount-btn" data-amount="5000" onclick="selectAmount(5000)">🪙 Rs. 5,000</button>
+<button class="amount-btn" data-amount="8000" onclick="selectAmount(8000)">🪙 Rs. 8,000</button>
+<button class="amount-btn" data-amount="10000" onclick="selectAmount(10000)">🪙 Rs. 10,000</button>
+<button class="amount-btn" data-amount="20000" onclick="selectAmount(20000)">🪙 Rs. 20,000</button>
+<button class="amount-btn" data-amount="30000" onclick="selectAmount(30000)">🪙 Rs. 30,000</button>
+<button class="amount-btn" data-amount="50000" onclick="selectAmount(50000)">🪙 Rs. 50,000</button>
+<button class="amount-btn" data-amount="100000" onclick="selectAmount(100000)">🪙 Rs. 100,000</button>
+</div>
+</div>
 
-    <div id="depositSelectionScreen">
-      <div class="payment-label">SELECT PAYMENT METHOD</div>
+<div id="depositPaymentScreen" style="display:none">
+<button class="method-btn" onclick="backToDepositSelection()">← Back</button>
+<div class="shop-panel">
+<h3>Payment Account Details</h3>
+<div class="account-line">Payment method: <strong>EasyPaisa</strong></div>
+<div class="account-line">Account name: <strong>***</strong></div>
+<div class="account-line">Account number: <strong>***</strong></div>
+</div>
 
-      <div class="method-row">
-        <div class="method-btn selected" style="text-align:center;cursor:default">
-          EasyPaisa
-        </div>
-      </div>
+<div class="shop-panel">
+<h3>Deposit Summary</h3>
+<div class="account-line">Selected amount: <strong id="selectedAmount">Please select an amount</strong></div>
+<input class="deposit-input" id="depositAmount" type="number" min="1" placeholder="Enter amount">
+</div>
 
-      <div class="payment-label">SELECT DEPOSIT AMOUNT (PKR)</div>
+<div class="shop-panel">
+<h3>Payment Screenshot</h3>
+<label class="upload-label">
+Select payment screenshot
+<input id="paymentScreenshot" type="file" accept="image/*" onchange="previewScreenshot(event)">
+</label>
+<img id="screenshotPreview" class="upload-preview" alt="Screenshot preview">
+</div>
 
-      <div class="amount-grid" id="amountGrid">
-        <button class="amount-btn" type="button" data-amount="800" onclick="selectAmount(800)"><span class="coin">🪙</span><span class="amount">Rs. 800</span></button>
-        <button class="amount-btn" type="button" data-amount="2000" onclick="selectAmount(2000)"><span class="coin">🪙</span><span class="amount">Rs. 2,000</span></button>
-        <button class="amount-btn" type="button" data-amount="5000" onclick="selectAmount(5000)"><span class="coin">🪙</span><span class="amount">Rs. 5,000</span></button>
-        <button class="amount-btn" type="button" data-amount="8000" onclick="selectAmount(8000)"><span class="coin">🪙</span><span class="amount">Rs. 8,000</span></button>
-        <button class="amount-btn" type="button" data-amount="10000" onclick="selectAmount(10000)"><span class="coin">🪙</span><span class="amount">Rs. 10,000</span></button>
-        <button class="amount-btn" type="button" data-amount="20000" onclick="selectAmount(20000)"><span class="coin">🪙</span><span class="amount">Rs. 20,000</span></button>
-        <button class="amount-btn" type="button" data-amount="30000" onclick="selectAmount(30000)"><span class="coin">🪙</span><span class="amount">Rs. 30,000</span></button>
-        <button class="amount-btn" type="button" data-amount="50000" onclick="selectAmount(50000)"><span class="coin">🪙</span><span class="amount">Rs. 50,000</span></button>
-        <button class="amount-btn" type="button" data-amount="100000" onclick="selectAmount(100000)"><span class="coin">🪙</span><span class="amount">Rs. 100,000</span></button>
-      </div>
-    </div>
-
-    <div id="depositPaymentScreen" style="display:none">
-      <button class="method-btn" type="button"
-              onclick="backToDepositSelection()"
-              style="width:100%;margin-bottom:12px">
-        ← Back to Deposit Shop
-      </button>
-
-      <div class="shop-heading"
-           style="position:static;margin:0 0 12px;border-radius:8px">
-        PAYMENT DETAILS
-      </div>
-
-      <div class="shop-panel" id="paymentAccountDetails">
-        <h3>Payment Account Details</h3>
-        <div class="account-line">Payment method: <strong>EasyPaisa</strong></div>
-        <div class="account-line">Account name: <strong>***</strong></div>
-        <div class="account-line">Account number: <strong>***</strong></div>
-        <div class="copy-note">
-          Payment karne se pehle account details ko confirm kar lein.
-        </div>
-      </div>
-
-      <div class="shop-panel">
-        <h3>Deposit Summary</h3>
-        <div class="account-line">
-          Selected amount: <strong id="selectedAmount">Please select an amount</strong>
-        </div>
-        <label for="depositAmount" class="account-line">
-          Amount in PKR (optional custom amount)
-        </label>
-        <input class="deposit-input" id="depositAmount" type="number"
-               min="1" step="1" placeholder="Enter amount in Rs."
-               oninput="customAmountChanged()">
-      </div>
-
-      <div class="shop-panel">
-        <h3>Payment Screenshot</h3>
-        <label class="upload-label" for="paymentScreenshot">
-          📷 Tap here to select payment screenshot from your phone
-          <input id="paymentScreenshot" type="file" accept="image/*"
-                 onchange="previewScreenshot(event)">
-        </label>
-        <img id="screenshotPreview" class="upload-preview"
-             alt="Selected payment screenshot preview">
-      </div>
-
-      <button class="deposit-submit" type="button" onclick="submitDemoDeposit()">
-        ADD DEPOSIT
-      </button>
-
-      <p class="deposit-note">
-        Demo interface only: this form does not verify a payment or add
-        money to your balance. Screenshot selection is preview-only.
-      </p>
-    </div>
-  </div>
+<button class="deposit-submit" onclick="submitDemoDeposit()">ADD DEPOSIT</button>
+<p class="deposit-note">This is a demo form. It does not automatically approve or add money to your account.</p>
+</div>
+</div>
 </div>
 
 <script>
-let selectedDepositAmount = null;
+let selectedDepositAmount=null;
 
 function openDeposit(){
-  document.getElementById("depositOverlay").classList.add("show");
-  document.getElementById("depositSelectionScreen").style.display = "block";
-  document.getElementById("depositPaymentScreen").style.display = "none";
-  document.body.style.overflow = "hidden";
+document.getElementById("depositOverlay").classList.add("show");
+document.getElementById("depositSelectionScreen").style.display="block";
+document.getElementById("depositPaymentScreen").style.display="none";
+document.body.style.overflow="hidden";
 }
 
 function closeDeposit(){
-  document.getElementById("depositOverlay").classList.remove("show");
-  document.body.style.overflow = "";
+document.getElementById("depositOverlay").classList.remove("show");
+document.body.style.overflow="";
 }
 
 function overlayClick(event){
-  if(event.target.id === "depositOverlay") closeDeposit();
+if(event.target.id==="depositOverlay")closeDeposit();
 }
 
 function selectAmount(amount){
-  selectedDepositAmount = amount;
-  document.getElementById("depositSelectionScreen").style.display = "none";
-  document.getElementById("depositPaymentScreen").style.display = "block";
-
-  document.querySelectorAll(".amount-btn").forEach(button => {
-    button.classList.toggle(
-      "selected",
-      Number(button.dataset.amount) === amount
-    );
-  });
-
-  document.getElementById("selectedAmount").textContent =
-    "Rs. " + amount.toLocaleString("en-PK");
-
-  document.getElementById("depositAmount").value = "";
+selectedDepositAmount=amount;
+document.getElementById("depositSelectionScreen").style.display="none";
+document.getElementById("depositPaymentScreen").style.display="block";
+document.getElementById("selectedAmount").textContent="Rs. "+amount.toLocaleString("en-PK");
+document.getElementById("depositAmount").value="";
 }
 
 function backToDepositSelection(){
-  document.getElementById("depositPaymentScreen").style.display = "none";
-  document.getElementById("depositSelectionScreen").style.display = "block";
-}
-
-function customAmountChanged(){
-  const input = document.getElementById("depositAmount");
-  const amount = Number(input.value);
-
-  if(input.value !== "" && Number.isFinite(amount) && amount > 0){
-    selectedDepositAmount = amount;
-
-    document.querySelectorAll(".amount-btn").forEach(button => {
-      button.classList.remove("selected");
-    });
-
-    document.getElementById("selectedAmount").textContent =
-      "Rs. " + amount.toLocaleString("en-PK");
-  }
+document.getElementById("depositPaymentScreen").style.display="none";
+document.getElementById("depositSelectionScreen").style.display="block";
 }
 
 function previewScreenshot(event){
-  const file = event.target.files && event.target.files[0];
-  const preview = document.getElementById("screenshotPreview");
-
-  if(!file){
-    preview.style.display = "none";
-    preview.removeAttribute("src");
-    return;
-  }
-
-  if(!file.type.startsWith("image/")){
-    alert("Please select an image file.");
-    event.target.value = "";
-    preview.style.display = "none";
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    preview.src = reader.result;
-    preview.style.display = "block";
-  };
-
-  reader.readAsDataURL(file);
+const file=event.target.files&&event.target.files[0];
+const preview=document.getElementById("screenshotPreview");
+if(!file){preview.style.display="none";return;}
+if(!file.type.startsWith("image/")){
+alert("Please select an image file.");
+event.target.value="";
+return;
+}
+const reader=new FileReader();
+reader.onload=()=>{
+preview.src=reader.result;
+preview.style.display="block";
+};
+reader.readAsDataURL(file);
 }
 
 async function submitDemoDeposit(){
-  const amount = Number(
-    document.getElementById("depositAmount").value || selectedDepositAmount
-  );
-
-  if(!Number.isFinite(amount) || amount <= 0){
-    alert("Pehle valid amount select karein.");
-    return;
-  }
-
-  const fileInput = document.getElementById("paymentScreenshot");
-  const file = fileInput.files && fileInput.files[0];
-
-  if(!file){
-    alert("Pehle payment screenshot select karein.");
-    return;
-  }
-
-  if(!file.type.startsWith("image/")){
-    alert("Please image screenshot select karein.");
-    return;
-  }
-
-  try{
-    if(navigator.canShare && navigator.share &&
-       navigator.canShare({files:[file]})){
-      await navigator.share({
-        files:[file],
-        title:"Payment Screenshot"
-      });
-      return;
-    }
-
-    if(navigator.share){
-      alert("Is browser mein screenshot sharing supported nahi. WhatsApp khol kar screenshot manually attach karein.");
-      return;
-    }
-
-    const waUrl = "https://wa.me/923125917677";
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-    alert("WhatsApp chat khul gayi. Screenshot manually attach karke send karein.");
-
-  }catch(error){
-    if(error && error.name === "AbortError") return;
-    alert("Screenshot share nahi ho saka. WhatsApp par manually attach karein.");
-  }
+const amount=Number(document.getElementById("depositAmount").value||selectedDepositAmount);
+const file=document.getElementById("paymentScreenshot").files[0];
+if(!amount||amount<=0){alert("Pehle amount select karein.");return;}
+if(!file){alert("Payment screenshot select karein.");return;}
+alert("Screenshot select ho gaya. Deposit approval ke liye support se rabta karein.");
 }
 
-document.addEventListener("keydown", event => {
-  if(event.key === "Escape") closeDeposit();
+document.addEventListener("keydown",event=>{
+if(event.key==="Escape")closeDeposit();
 });
 </script>
 
-<!-- Firebase dashboard data -->
+<!-- Firebase Dashboard Data -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, collection, getDocs
+getFirestore,doc,getDoc,collection,getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-  authDomain: "elitetask-pro.firebaseapp.com",
-  projectId: "elitetask-pro",
-  storageBucket: "elitetask-pro.firebasestorage.app",
-  messagingSenderId: "504295275402",
-  appId: "1:504295275402:web:cf744a5d4e82c72145a673"
+const firebaseConfig={
+apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+authDomain:"elitetask-pro.firebaseapp.com",
+projectId:"elitetask-pro",
+storageBucket:"elitetask-pro.firebasestorage.app",
+messagingSenderId:"504295275402",
+appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-onAuthStateChanged(auth, async user => {
-  if(!user){
-    location.href = "index.html";
-    return;
-  }
+function numberValue(value){
+const n=Number(value);
+return Number.isFinite(n)?n:0;
+}
 
-  try{
-    const userSnap = await getDoc(doc(db, "users", user.uid));
+function money(value){
+return "PKR "+numberValue(value).toFixed(2);
+}
 
-    if(userSnap.exists()){
-      const u = userSnap.data();
+onAuthStateChanged(auth,async user=>{
+if(!user){
+location.href="index.html";
+return;
+}
 
-      document.getElementById("userName").textContent = u.name || "User";
-      document.getElementById("balance").textContent =
-        "PKR " + Number(u.balance || 0).toFixed(2);
-      document.getElementById("commission").textContent =
-        "PKR " + Number(u.commission || 0).toFixed(2);
-      document.getElementById("pending").textContent =
-        "PKR " + Number(u.pending || 0)
+const currentOrder=document.getElementById("currentOrder");
+currentOrder.innerHTML='<div class="loading">Loading dashboard...</div>';
+
+try{
+const userRef=doc(db,"users",user.uid);
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+throw new Error("User document nahi mila: users/"+user.uid);
+}
+
+const u=userSnap.data();
+
+document.getElementById("userName").textContent=u.name||"User";
+
+/*
+Available Balance:
+Admin-approved balance + commission.
+Commission apni jagah alag bhi show hogi.
+*/
+const balance=numberValue(u.balance);
+const commission=numberValue(u.commission);
+
+document.getElementById("balance").textContent=money(balance+commission);
+document.getElementById("commission").textContent=money(commission);
+document.getElementById("pending").textContent=money(u.pending);
+
+/*
+Completed Tasks:
+completedTasks field ho to usay use karein,
+warna completed field se number lein.
+*/
+const completedTasks=
+u.completedTasks!==undefined&&u.completedTasks!==null
+?numberValue(u.completedTasks)
+:numberValue(u.completed);
+
+document.getElementById("completedTasks").textContent=completedTasks;
+
+/* Today's Commission */
+document.getElementById("todayCommission").textContent=
+money(u.todayCommission);
+
+/* Admin ke add kiye hue tamam tasks count karein */
+const taskSnap=await getDocs(collection(db,"tasks"));
+const tasks=taskSnap.docs
+.map(d=>({id:d.id,...d.data()}))
+.sort((a,b)=>numberValue(a.order)-numberValue(b.order));
+
+document.getElementById("totalTasks").textContent=tasks.length;
+
+/* User ka current task show karein */
+const taskIndex=Math.max(0,numberValue(u.currentTaskIndex));
+
+if(taskIndex>=tasks.length){
+currentOrder.innerHTML='<div class="loading">🎉 All tasks completed.</div>';
+return;
+}
+
+const task=tasks[taskIndex];
+const taskName=task.name||task.taskName||"Task";
+const price=numberValue(task.price||task.amount);
+const taskCommission=numberValue(task.commission);
+const image=task.image||task.imageURL||task.imageUrl||"";
+
+const card=document.createElement("div");
+card.className="task-card";
+
+if(image){
+const img=document.createElement("img");
+img.src=image;
+img.alt="Task image";
+card.appendChild(img);
+}
+
+const heading=document.createElement("h3");
+heading.textContent=taskName;
+card.appendChild(heading);
+
+const priceText=document.createElement("p");
+priceText.textContent="Task Price: "+money(price);
+card.appendChild(priceText);
+
+const commissionText=document.createElement("p");
+commissionText.className="task-commission";
+commissionText.textContent="Commission: "+money(taskCommission);
+card.appendChild(commissionText);
+
+const openButton=document.createElement("button");
+openButton.className="open-task";
+openButton.textContent="View Task";
+openButton.addEventListener("click",()=>{
+location.href="orders.html";
+});
+card.appendChild(openButton);
+
+currentOrder.replaceChildren(card);
+
+}catch(error){
+console.error("Dashboard loading error:",error);
+currentOrder.innerHTML=
+'<div class="loading">Dashboard data load nahi hua: '+
+String(error.message||error)+
+'</div>';
+}
+});
+</script>
+
+</body>
+</html>
