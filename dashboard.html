@@ -1,641 +1,597 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>EliteTask Pro Dashboard</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+ --purple:#7900ff;
+ --violet:#b52cff;
+ --gold:#e9b94f;
+ --gold2:#ffe6a0;
+ --black:#10051f;
+ --dark:#1d0a35;
+ --text:#211333;
+ --muted:#877b94;
+}
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:linear-gradient(135deg,#f7f4ff,#eee8ff,#f8f5ff);
-color:#20203a;padding-bottom:90px
+ font-family:Arial,sans-serif;
+ background:linear-gradient(145deg,#f7f0ff,#fff,#eee4fa);
+ color:var(--text);
+ padding-bottom:95px;
 }
-.profile-btn{
-position:absolute;right:15px;top:15px;width:42px;height:42px;
-display:flex;align-items:center;justify-content:center;
-border-radius:50%;background:white;text-decoration:none;
-box-shadow:0 4px 12px rgba(50,35,100,.15)
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:0}
+.header{
+ background:
+ radial-gradient(ellipse at 80% 0%,#6412a8 0%,transparent 45%),
+ linear-gradient(120deg,#090313,#21063e,#10051f);
+ padding:17px 17px 24px;
+ color:white;
+ border-radius:0 0 25px 25px;
+ position:relative;
+ overflow:hidden;
 }
-.logo-area{text-align:center;padding:20px 15px 10px}
+.header:after{
+ content:"";position:absolute;width:230px;height:230px;
+ border:1px solid #a94aff40;border-radius:50%;
+ right:-100px;top:-120px;
+ box-shadow:0 0 30px #9b35ff30;
+}
+.header-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:11px}
 .logo{
-width:48px;height:48px;margin:auto;display:flex;
-align-items:center;justify-content:center;border-radius:14px;
-background:linear-gradient(135deg,#673ab7,#8e63d8);
-color:white;font-size:20px;font-weight:bold;
-box-shadow:0 6px 18px rgba(103,58,183,.25)
+ width:48px;height:48px;border-radius:15px;
+ display:flex;align-items:center;justify-content:center;
+ font-size:20px;font-weight:900;color:#fff;
+ background:linear-gradient(145deg,#f9d77b,#a96b13);
+ border:2px solid #ffe6a0;
+ box-shadow:0 0 15px #e9b94f80;
 }
-.logo-text{margin-top:7px;font-size:20px;font-weight:bold;color:#56339b}
+.brand-name{font-size:18px;font-weight:900}
+.brand-sub{font-size:10px;color:#e9d3ff;margin-top:4px;letter-spacing:1px}
+.header-actions{display:flex;gap:10px}
+.header-icon{
+ width:39px;height:39px;border-radius:13px;
+ display:flex;align-items:center;justify-content:center;
+ background:#ffffff18;border:1px solid #ffffff30;font-size:18px;
+}
 .welcome{
-margin:15px;padding:18px;border-radius:18px;background:white;
-box-shadow:0 5px 18px rgba(60,40,100,.08)
+ margin-top:22px;padding:17px;
+ border-radius:19px;
+ background:linear-gradient(120deg,#fff,#f0e4ff);
+ color:#24103c;
+ box-shadow:0 7px 20px #0002;
+ position:relative;z-index:1;
 }
-.welcome h2{font-size:20px}
-.welcome h2 span{color:#673ab7}
-.welcome p{margin-top:7px;font-size:13px;color:#888}
+.welcome small{font-size:10px;color:#8b6da7;font-weight:bold;letter-spacing:1px}
+.welcome h2{font-size:22px;margin-top:7px}
+.welcome p{font-size:12px;color:#78678a;margin-top:6px}
+
 .balance-card{
-margin:15px;padding:22px;border-radius:20px;
-background:linear-gradient(135deg,#39206d,#673ab7,#8156ca,#512c91);
-color:white;box-shadow:0 10px 25px rgba(82,45,140,.22)
+ margin:-1px 15px 17px;
+ transform:translateY(0);
+ background:
+ radial-gradient(circle at 90% 0%,#6c16b9 0%,transparent 40%),
+ linear-gradient(120deg,#10051e,#260344,#10051e);
+ color:#fff;border-radius:22px;
+ padding:18px;
+ border:1px solid #b55aff;
+ box-shadow:0 8px 22px #6e1bbd35, inset 0 0 20px #9a2cff25;
 }
-.balance-title{font-size:13px;opacity:.85}
-.balance{margin-top:7px;font-size:34px;font-weight:bold}
-.balance-bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-.balance-item{padding:11px;border-radius:12px;background:rgba(255,255,255,.14)}
-.balance-item span{display:block;font-size:11px}
-.balance-item strong{display:block;margin-top:4px;font-size:16px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px}
+.balance-main{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.balance-label{font-size:12px;color:#e8d6ff}
+.balance-number{font-size:32px;font-weight:900;margin-top:7px;color:#fff4d4}
+.wallet-icon{font-size:38px;color:var(--gold)}
+.withdraw-mini{
+ background:linear-gradient(135deg,#fff0b8,#d99a28);
+ color:#2a1600;padding:12px 15px;border-radius:30px;
+ font-size:12px;font-weight:900;white-space:nowrap;
+ box-shadow:0 0 12px #f4c65d60;
+}
+.balance-bottom{
+ display:grid;grid-template-columns:1fr 1fr;
+ border-top:1px solid #ffffff35;margin-top:16px;padding-top:13px;
+}
+.balance-item small{font-size:10px;color:#d9c5ef}
+.balance-item strong{display:block;font-size:17px;margin-top:5px;color:#ffe6a0}
+.balance-item+ .balance-item{border-left:1px solid #ffffff35;padding-left:16px}
+
+.quick-actions{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:9px;padding:0 14px;margin-top:18px;
+}
+.quick-action{
+ background:linear-gradient(145deg,#fff,#f0e7fb);
+ border:1px solid #d8c4ef;border-radius:17px;
+ padding:13px 3px;text-align:center;
+ box-shadow:0 5px 12px #38105b17;
+}
+.quick-icon{
+ width:39px;height:39px;border-radius:12px;margin:0 auto 7px;
+ display:flex;align-items:center;justify-content:center;
+ background:linear-gradient(145deg,#a64aff,#420078);
+ color:#fff;font-size:20px;
+ box-shadow:0 3px 9px #7300bd55;
+}
+.quick-action span{font-size:10px;font-weight:900}
+
+.section-heading{
+ margin:19px 16px 11px;
+ padding:11px 14px;
+ border-radius:14px;
+ background:linear-gradient(100deg,#10051f,#390064,#10051f);
+ color:white;
+ border:1px solid #a84cff;
+ box-shadow:0 4px 12px #55009925;
+ display:flex;justify-content:space-between;align-items:center;
+}
+.section-heading h3{font-size:14px}
+.section-heading span{font-size:10px;color:#ffe19a}
+
+.stats-grid{
+ display:grid;grid-template-columns:1fr 1fr;
+ gap:10px;padding:0 15px;
+}
 .stat-card{
-padding:16px;border-radius:17px;background:white;
-border:1px solid #e3d9f7;box-shadow:0 5px 17px rgba(60,40,100,.07)
+ background:linear-gradient(145deg,#fff,#f2e8ff);
+ border:1px solid #d9c4f2;border-radius:17px;
+ padding:13px;box-shadow:0 4px 12px #3e126319;
 }
-.stat-icon{font-size:22px}
-.stat-card p{margin-top:9px;font-size:12px;color:#777}
-.stat-card h3{margin-top:5px;font-size:21px;color:#5b369c}
-.section-title{
-display:flex;align-items:center;justify-content:space-between;
-margin:20px 15px 10px
+.stat-top{display:flex;align-items:center;gap:10px}
+.stat-icon{
+ width:37px;height:37px;border-radius:50%;
+ background:linear-gradient(145deg,#c38aff,#6500b8);
+ color:#fff;display:flex;align-items:center;justify-content:center;
+ font-size:18px;box-shadow:0 0 10px #8a24d955;
 }
-.section-title h3{font-size:18px}
-.section-title a{
-padding:7px 10px;border-radius:8px;background:#673ab7;
-color:white;text-decoration:none;font-size:10px;font-weight:bold
+.stat-card small{display:block;color:#79658c;font-size:10px;margin-top:10px}
+.stat-card strong{font-size:20px;display:block;margin-top:5px;color:#26113c}
+
+.progress-card{
+ margin:15px;background:linear-gradient(120deg,#10051f,#30004f);
+ border:1px solid #a746ff;border-radius:18px;
+ padding:16px;color:#fff;
+ box-shadow:0 5px 15px #5e0b9e35;
 }
-#currentOrder{margin:0 15px}
-.loading{padding:25px;text-align:center;border-radius:17px;background:white;color:#888}
-.task-card{background:white;border-radius:17px;padding:14px;box-shadow:0 5px 17px rgba(60,40,100,.08)}
-.task-card img{width:100%;height:190px;object-fit:cover;border-radius:13px;display:block;margin-bottom:12px}
-.task-card h3{color:#50318c;margin-bottom:7px}
-.task-card p{font-size:13px;color:#777;margin-top:5px}
-.task-commission{color:#16894f!important;font-weight:bold}
-.open-task{
-width:100%;padding:13px;margin-top:12px;border:0;border-radius:11px;
-background:linear-gradient(135deg,#673ab7,#8b61d1);
-color:white;font-weight:bold
+.progress-head{display:flex;justify-content:space-between;align-items:center}
+.progress-head strong{font-size:14px}
+.progress-head span{font-size:13px;color:#ffe19a;font-weight:bold}
+.progress-track{height:9px;background:#ffffff35;border-radius:20px;margin-top:13px;overflow:hidden}
+.progress-fill{
+ height:100%;width:0%;border-radius:20px;
+ background:linear-gradient(90deg,#a000ff,#edbaff);
+ box-shadow:0 0 10px #c56aff;
+ transition:width .3s;
 }
-.grab-section{margin:18px 15px}
+.progress-note{font-size:10px;color:#ddc8f3;margin-top:8px}
+
+.order-card{
+ margin:0 15px;background:linear-gradient(145deg,#fff,#f3eaff);
+ border:1px solid #d8c2f1;border-radius:20px;padding:14px;
+ box-shadow:0 5px 15px #42116c1c;
+}
+.task-card{display:flex;gap:12px;align-items:center}
+.task-image{
+ width:85px;height:85px;object-fit:cover;
+ border-radius:14px;background:#eadcf9;flex-shrink:0;
+}
+.task-info{flex:1;min-width:0}
+.task-info h4{font-size:14px;margin-bottom:7px}
+.task-info p{font-size:11px;margin-top:5px;color:#645270}
+.task-commission{color:#18813e!important;font-weight:bold}
+.task-number{
+ display:inline-block;background:#ead8ff;color:#6500a8;
+ border-radius:7px;padding:5px 8px;font-size:10px;font-weight:bold;
+}
+.order-button{
+ width:100%;padding:13px;margin-top:14px;border-radius:13px;
+ background:linear-gradient(100deg,#6e00c9,#b12cff);
+ color:white;font-size:13px;font-weight:900;
+ box-shadow:0 4px 12px #7600c744;
+}
+.loading{text-align:center;padding:22px;color:#887b96;font-size:12px}
+.empty-order{text-align:center;padding:20px 10px}
+.empty-order div{font-size:34px}
+.empty-order h4{margin:9px 0 5px}
+.empty-order p{font-size:11px;color:#82758e}
+.grab-section{padding:0 15px;margin-top:15px}
 .grab-btn{
-width:100%;padding:15px;border:0;border-radius:14px;
-background:linear-gradient(135deg,#673ab7,#8b61d1);
-color:white;font-size:15px;font-weight:bold;
-box-shadow:0 7px 18px rgba(103,58,183,.20)
+ width:100%;padding:16px;border-radius:16px;
+ background:radial-gradient(circle at 50% 0%,#8f22e5,#160326);
+ border:1px solid #d18aff;color:#ffe5a2;
+ font-size:15px;font-weight:900;
+ box-shadow:0 5px 17px #6200a844;
 }
 
-/* Shop button */
-.deposit-launch{
-position:absolute;right:68px;top:17px;display:block;
-width:auto;margin:0;padding:9px 13px;border:1px solid #ff7777;
-border-radius:9px;background:linear-gradient(135deg,#ff3333,#b80000);
-color:white;font-size:13px;font-weight:bold;
-box-shadow:0 4px 12px rgba(180,0,0,.25);cursor:pointer
-}
 .bottom-nav{
-position:fixed;left:0;right:0;bottom:0;height:72px;
-display:flex;align-items:center;justify-content:space-around;
-background:white;border-top:1px solid #e3d9f7;
-box-shadow:0 -4px 18px rgba(50,35,80,.10);z-index:1000
+ position:fixed;bottom:0;left:0;right:0;z-index:20;
+ height:76px;background:linear-gradient(110deg,#10051f,#290047,#10051f);
+ border-top:1px solid #a74aff;
+ display:flex;justify-content:space-around;align-items:center;
+ padding-bottom:env(safe-area-inset-bottom);
+ box-shadow:0 -5px 20px #3e006e30;
 }
 .nav-item{
-display:flex;flex-direction:column;align-items:center;gap:4px;
-color:#777;text-decoration:none;font-size:11px;width:25%
+ display:flex;flex-direction:column;align-items:center;gap:5px;
+ color:#d8c1ef;font-size:10px;font-weight:bold;min-width:55px;
 }
-.nav-item span{font-size:20px}
-.nav-item.active{color:#673ab7;font-weight:bold}
-.nav-center{
-width:43px;height:43px;margin-top:-18px;display:flex;
-align-items:center;justify-content:center;border-radius:50%;
-background:linear-gradient(135deg,#673ab7,#8b61d1);
-color:white;border:4px solid white;
-box-shadow:0 6px 18px rgba(103,58,183,.25)
-}
+.nav-icon{font-size:20px}
+.nav-item.active{color:#ffdf8b}
+.nav-item.active .nav-icon{filter:drop-shadow(0 0 6px #e8b94f)}
 
-/* Deposit shop */
-.deposit-overlay{
-display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);
-z-index:2000;align-items:center;justify-content:center;padding:10px
+.overlay{
+ position:fixed;inset:0;background:#10051fdd;z-index:50;
+ display:none;align-items:flex-end;
 }
-.deposit-overlay.show{display:flex}
-.deposit-shop{
-position:relative;width:100%;max-width:570px;max-height:94vh;
-overflow-y:auto;border:3px solid #e5b35d;border-radius:13px;
-background:radial-gradient(circle at 50% 10%,#9d1c18 0,#68100e 44%,#390a09 100%);
-color:#fff1d5;box-shadow:0 0 0 2px #4a1710,0 15px 45px #000;
-padding:18px 14px 16px
+.deposit-box{
+ width:100%;max-height:88vh;overflow:auto;
+ background:linear-gradient(145deg,#fff,#f4eaff);
+ border-radius:24px 24px 0 0;padding:20px 17px 30px;
 }
-.shop-heading{
-position:sticky;top:-18px;z-index:3;text-align:center;
-margin:-18px -14px 16px;padding:10px;
-background:linear-gradient(#8b0e0d,#4d0505);
-border-bottom:2px solid #e7b45d;border-radius:8px 8px 0 0;
-color:#ffe6a3;font-size:27px;font-weight:900;
-letter-spacing:2px;text-shadow:0 2px 3px #330000
+.deposit-head{display:flex;justify-content:space-between;align-items:center}
+.deposit-head h3{font-size:19px;color:#3c155b}
+.close-btn{
+ width:35px;height:35px;border-radius:50%;
+ background:#eadbfa;color:#501080;font-size:20px;
 }
-.shop-close{
-position:absolute;right:8px;top:7px;z-index:5;
-width:38px;height:38px;border-radius:50%;
-border:2px solid #ffd978;background:linear-gradient(#ff6c47,#a70e0e);
-color:white;font-size:25px;font-weight:bold;cursor:pointer;
-box-shadow:0 2px 7px #280000
+.deposit-intro{font-size:11px;color:#806d91;margin:9px 0 15px}
+.payment-box{
+ background:#fff;border:1px solid #ddc8f2;
+ border-radius:14px;padding:14px;margin-bottom:14px;
 }
-.payment-label{
-padding:10px;border:1px solid #d8a65e;border-radius:7px;
-background:linear-gradient(90deg,#57110f,#7e2924,#40100e);
-font-weight:bold;margin-bottom:13px;text-align:center
-}
-.method-row{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:15px}
-.method-btn{
-padding:12px 6px;border:2px solid #c78e54;border-radius:8px;
-background:linear-gradient(#76211d,#410c0b);
-color:#fff0ce;font-size:15px;font-weight:bold;cursor:pointer
-}
-.method-btn.selected{border:3px solid #a8ff2f;box-shadow:0 0 8px #9cff24;color:#fff}
-.amount-grid{
-display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-gap:9px;margin-bottom:16px
-}
+.payment-box strong{font-size:13px;color:#45166b}
+.payment-box p{font-size:12px;margin-top:7px;color:#756382}
+.payment-box small{display:block;margin-top:7px;color:#986b20}
+.amount-title{font-size:13px;font-weight:bold;margin:15px 0 10px}
+.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .amount-btn{
-min-height:78px;padding:10px 3px 8px;border:2px solid #d6a05c;
-border-radius:7px;background:linear-gradient(145deg,#7e1714,#380605);
-color:#ffeac0;font-weight:bold;cursor:pointer;display:flex;
-flex-direction:column;align-items:center;justify-content:center;gap:7px
+ padding:12px 4px;border:1px solid #ddc7f0;
+ background:#fff;border-radius:11px;color:#4c1b70;
+ font-size:12px;font-weight:bold;
 }
-.amount-btn .coin{font-size:22px;line-height:1}
-.amount-btn .amount{font-size:15px;white-space:nowrap}
-.amount-btn.selected{border:3px solid #9cff28;box-shadow:0 0 10px #91ff26;transform:scale(1.02)}
-.shop-panel{
-padding:12px;border:1px solid #c88b51;border-radius:8px;
-background:rgba(35,4,4,.58);margin-top:12px
-}
-.shop-panel h3{font-size:16px;margin-bottom:10px;color:#ffe4a6}
-.account-line{font-size:13px;line-height:1.6;margin:4px 0;overflow-wrap:anywhere}
-.account-line strong{color:#fff}
-.copy-note{font-size:11px;color:#f3c8a0;margin-top:7px}
-.deposit-input{
-width:100%;padding:11px;border:1px solid #d39a57;
-border-radius:6px;background:#fff8ed;color:#32100e;
-font-size:15px;margin-top:7px
+.amount-btn.selected{background:#7200c8;color:#fff;border-color:#7200c8}
+.custom-input{
+ width:100%;padding:13px;border:1px solid #ddc7f0;
+ border-radius:12px;background:#fff;font-size:14px;margin-top:12px;
 }
 .upload-label{
-display:flex;align-items:center;justify-content:center;text-align:center;
-min-height:70px;margin-top:8px;padding:12px;border:2px dashed #e4b56d;
-border-radius:7px;background:rgba(255,255,255,.06);
-cursor:pointer;font-size:13px
+ display:block;padding:13px;border:1px dashed #9c59d0;
+ border-radius:12px;text-align:center;margin-top:12px;
+ font-size:12px;color:#68239a;background:#fff;
 }
 .upload-label input{display:none}
-.upload-preview{
-display:none;max-width:100%;max-height:160px;object-fit:contain;
-margin:10px auto 0;border-radius:7px
-}
+#previewImage{display:none;width:100%;max-height:150px;object-fit:contain;margin-top:10px;border-radius:10px}
 .deposit-submit{
-width:100%;margin-top:14px;padding:13px;border:2px solid #ffd783;
-border-radius:7px;background:linear-gradient(#ffb23e,#d86b0c);
-color:white;font-size:17px;font-weight:bold;
-text-shadow:0 1px 2px #8a3500;cursor:pointer
+ width:100%;padding:14px;border-radius:13px;
+ background:linear-gradient(100deg,#6500b5,#a52aff);
+ color:#fff;font-weight:900;margin-top:15px;
 }
-.deposit-note{font-size:11px;color:#f1c6a7;line-height:1.5;margin-top:10px}
-
-@media(max-width:380px){
-.logo-area{padding-top:17px}
-.logo{width:44px;height:44px}
-.logo-text{font-size:18px}
-.welcome{padding:15px}
-.balance-card{padding:18px}
-.balance{font-size:29px}
-.stat-card{padding:14px}
-.stat-card h3{font-size:19px}
-.task-card img{height:165px}
-.amount-grid{gap:6px}
-.amount-btn .amount{font-size:13px}
-.deposit-shop{padding-left:10px;padding-right:10px}
-.shop-heading{margin-left:-10px;margin-right:-10px}
-}
-@media(min-width:381px) and (max-width:600px){
-.task-card img{height:180px}
-}
+.demo-note{font-size:10px;color:#8b7b98;text-align:center;line-height:1.5;margin-top:12px}
 </style>
 </head>
 
 <body>
-<a href="profile.html" class="profile-btn" aria-label="Profile">👤</a>
 
-<div class="logo-area">
-  <div class="logo">ET</div>
-  <div class="logo-text">EliteTask Pro</div>
-</div>
-
-<div class="welcome">
-  <h2>Welcome, <span id="userName">User</span> 👋</h2>
-  <p>Manage your current order and earnings.</p>
-</div>
-
-<div class="balance-card">
-  <div class="balance-title">Available Balance</div>
-  <div class="balance" id="balance">$0.00</div>
-  <div class="balance-bottom">
-    <div class="balance-item">
-      <span>Commission</span>
-      <strong id="commission">$0.00</strong>
-    </div>
-    <div class="balance-item">
-      <span>Pending</span>
-      <strong id="pending">PKR 0.00</strong>
-    </div>
+<header class="header">
+ <div class="header-row">
+  <div class="brand">
+   <div class="logo">ET</div>
+   <div>
+    <div class="brand-name">EliteTask Pro</div>
+    <div class="brand-sub">EARN • COMPLETE • GROW</div>
+   </div>
   </div>
+  <div class="header-actions">
+   <div class="header-icon">♧</div>
+   <a href="profile.html" class="header-icon">👤</a>
+  </div>
+ </div>
+
+ <div class="welcome">
+  <small>WELCOME BACK</small>
+  <h2>Hello, <span id="userName">User</span> 👋</h2>
+  <p>Manage your tasks and earnings</p>
+ </div>
+</header>
+
+<section class="balance-card">
+ <div class="balance-main">
+  <div>
+   <div class="balance-label">AVAILABLE BALANCE</div>
+   <div class="balance-number" id="balance">$0.00</div>
+  </div>
+  <div style="text-align:right">
+   <div class="wallet-icon">💳</div>
+   <a href="withdraw.html" class="withdraw-mini">Withdraw →</a>
+  </div>
+ </div>
+ <div class="balance-bottom">
+  <div class="balance-item">
+   <small>👑 COMMISSION</small>
+   <strong id="commission">$0.00</strong>
+  </div>
+  <div class="balance-item">
+   <small>◷ PENDING</small>
+   <strong id="pending">PKR 0.00</strong>
+  </div>
+ </div>
+</section>
+
+<section class="quick-actions">
+ <a href="#" class="quick-action" onclick="openDeposit();return false">
+  <div class="quick-icon">▤</div><span>Deposit</span>
+ </a>
+ <a href="withdraw.html" class="quick-action">
+  <div class="quick-icon">↗</div><span>Withdraw</span>
+ </a>
+ <a href="orders.html" class="quick-action">
+  <div class="quick-icon">▣</div><span>Orders</span>
+ </a>
+ <a href="support.html" class="quick-action">
+  <div class="quick-icon">♧</div><span>Support</span>
+ </a>
+</section>
+
+<div class="section-heading">
+ <h3>▥ &nbsp; ACCOUNT OVERVIEW</h3><span>VIEW ALL →</span>
 </div>
 
-<button class="deposit-launch" type="button" onclick="openDeposit()">Shop</button>
+<section class="stats-grid">
+ <div class="stat-card">
+  <div class="stat-top">
+   <div class="stat-icon">✓</div>
+   <b>Completed Tasks</b>
+  </div>
+  <small>COMPLETED</small>
+  <strong id="completedTasks">0</strong>
+ </div>
 
-<div class="stats">
-  <div class="stat-card">
-    <div class="stat-icon">📦</div>
-    <p>Completed Tasks</p>
-    <h3 id="completedTasks">0</h3>
+ <div class="stat-card">
+  <div class="stat-top">
+   <div class="stat-icon">◆</div>
+   <b>Today's Commission</b>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">💰</div>
-    <p>Today's Commission</p>
-    <h3 id="todayCommission">$0.00</h3>
+  <small>TODAY'S EARNING</small>
+  <strong id="todayCommission">$0.00</strong>
+ </div>
+
+ <div class="stat-card">
+  <div class="stat-top">
+   <div class="stat-icon">▤</div>
+   <b>Total Tasks</b>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">📋</div>
-    <p>Total Tasks</p>
-    <h3 id="totalTasks">0</h3>
+  <small>AVAILABLE TASKS</small>
+  <strong id="totalTasks">0</strong>
+ </div>
+
+ <div class="stat-card">
+  <div class="stat-top">
+   <div class="stat-icon">#</div>
+   <b>Current Task</b>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">🔢</div>
-    <p>Current Task Number</p>
-    <h3 id="currentTaskNumber">0</h3>
-  </div>
+  <small>TASK NUMBER</small>
+  <strong id="currentTaskNumber">0</strong>
+ </div>
+</section>
+
+<section class="progress-card">
+ <div class="progress-head">
+  <strong>Task Progress</strong>
+  <span id="taskProgressText">0%</span>
+ </div>
+ <div class="progress-track">
+  <div class="progress-fill" id="taskProgressBar"></div>
+ </div>
+ <div class="progress-note">Complete more tasks to earn more!</div>
+</section>
+
+<div class="section-heading">
+ <h3>★ &nbsp; CURRENT ORDER</h3><span>ACTIVE TASK</span>
 </div>
 
-<div class="section-title">
-  <h3>Current Order</h3>
-  <a href="orders.html">VIEW ORDER</a>
-</div>
-
-<div id="currentOrder">
-  <div class="loading">Loading current order...</div>
-</div>
+<section class="order-card">
+ <div id="currentOrder">
+  <div class="loading">Loading your current order...</div>
+ </div>
+</section>
 
 <div class="grab-section">
-  <button class="grab-btn" onclick="location.href='orders.html'">
-    🚀 Start Grabbing Orders
-  </button>
+ <button class="grab-btn" onclick="location.href='orders.html'">
+  👑 &nbsp; START GRABBING ORDERS &nbsp; 🚀
+ </button>
 </div>
 
-<div class="bottom-nav">
-  <a href="dashboard.html" class="nav-item active"><span>⌂</span>Home</a>
-  <a href="orders.html" class="nav-item"><span>▣</span>Orders</a>
-  <a href="support.html" class="nav-item"><div class="nav-center">💬</div>Support</a>
-  <a href="profile.html" class="nav-item"><span>👤</span>Profile</a>
-</div>
+<nav class="bottom-nav">
+ <a href="dashboard.html" class="nav-item active">
+  <span class="nav-icon">⌂</span><span>Home</span>
+ </a>
+ <a href="orders.html" class="nav-item">
+  <span class="nav-icon">▣</span><span>Orders</span>
+ </a>
+ <a href="support.html" class="nav-item">
+  <span class="nav-icon">●</span><span>Support</span>
+ </a>
+ <a href="profile.html" class="nav-item">
+  <span class="nav-icon">♙</span><span>Profile</span>
+ </a>
+</nav>
 
-<!-- Deposit Shop Popup -->
-<div class="deposit-overlay" id="depositOverlay"
-     role="dialog" aria-modal="true" aria-labelledby="shopTitle"
-     onclick="overlayClick(event)">
-
-  <div class="deposit-shop">
-    <button class="shop-close" type="button"
-            onclick="closeDeposit()" aria-label="Close">×</button>
-
-    <div class="shop-heading" id="shopTitle">DEPOSIT SHOP</div>
-
-    <div id="depositSelectionScreen">
-      <div class="payment-label">SELECT PAYMENT METHOD</div>
-
-      <div class="method-row">
-        <div class="method-btn selected" style="text-align:center;cursor:default">
-          EasyPaisa
-        </div>
-      </div>
-
-      <div class="payment-label">SELECT DEPOSIT AMOUNT (PKR)</div>
-
-      <div class="amount-grid" id="amountGrid">
-        <button class="amount-btn" type="button" data-amount="800" onclick="selectAmount(800)"><span class="coin">🪙</span><span class="amount">Rs. 800</span></button>
-        <button class="amount-btn" type="button" data-amount="2000" onclick="selectAmount(2000)"><span class="coin">🪙</span><span class="amount">Rs. 2,000</span></button>
-        <button class="amount-btn" type="button" data-amount="5000" onclick="selectAmount(5000)"><span class="coin">🪙</span><span class="amount">Rs. 5,000</span></button>
-        <button class="amount-btn" type="button" data-amount="8000" onclick="selectAmount(8000)"><span class="coin">🪙</span><span class="amount">Rs. 8,000</span></button>
-        <button class="amount-btn" type="button" data-amount="10000" onclick="selectAmount(10000)"><span class="coin">🪙</span><span class="amount">Rs. 10,000</span></button>
-        <button class="amount-btn" type="button" data-amount="20000" onclick="selectAmount(20000)"><span class="coin">🪙</span><span class="amount">Rs. 20,000</span></button>
-        <button class="amount-btn" type="button" data-amount="30000" onclick="selectAmount(30000)"><span class="coin">🪙</span><span class="amount">Rs. 30,000</span></button>
-        <button class="amount-btn" type="button" data-amount="50000" onclick="selectAmount(50000)"><span class="coin">🪙</span><span class="amount">Rs. 50,000</span></button>
-        <button class="amount-btn" type="button" data-amount="100000" onclick="selectAmount(100000)"><span class="coin">🪙</span><span class="amount">Rs. 100,000</span></button>
-      </div>
-    </div>
-
-    <div id="depositPaymentScreen" style="display:none">
-      <button class="method-btn" type="button"
-              onclick="backToDepositSelection()"
-              style="width:100%;margin-bottom:12px">
-        ← Back to Deposit Shop
-      </button>
-
-      <div class="shop-heading"
-           style="position:static;margin:0 0 12px;border-radius:8px">
-        PAYMENT DETAILS
-      </div>
-
-      <div class="shop-panel" id="paymentAccountDetails">
-        <h3>Payment Account Details</h3>
-        <div class="account-line">Payment method: <strong>EasyPaisa</strong></div>
-        <div class="account-line">Account name: <strong>***</strong></div>
-        <div class="account-line">Account number: <strong>***</strong></div>
-        <div class="copy-note">
-          Payment karne se pehle account details ko confirm kar lein.
-        </div>
-      </div>
-
-      <div class="shop-panel">
-        <h3>Deposit Summary</h3>
-        <div class="account-line">
-          Selected amount: <strong id="selectedAmount">Please select an amount</strong>
-        </div>
-        <label for="depositAmount" class="account-line">
-          Amount in PKR (optional custom amount)
-        </label>
-        <input class="deposit-input" id="depositAmount" type="number"
-               min="1" step="1" placeholder="Enter amount in Rs."
-               oninput="customAmountChanged()">
-      </div>
-
-      <div class="shop-panel">
-        <h3>Payment Screenshot</h3>
-        <label class="upload-label" for="paymentScreenshot">
-          📷 Tap here to select payment screenshot from your phone
-          <input id="paymentScreenshot" type="file" accept="image/*"
-                 onchange="previewScreenshot(event)">
-        </label>
-        <img id="screenshotPreview" class="upload-preview"
-             alt="Selected payment screenshot preview">
-      </div>
-
-      <button class="deposit-submit" type="button" onclick="submitDemoDeposit()">
-        ADD DEPOSIT
-      </button>
-
-      <p class="deposit-note">
-        Demo interface only: this form does not verify a payment or add
-        money to your balance. Screenshot selection is preview-only.
-      </p>
-    </div>
+<div class="overlay" id="depositOverlay" onclick="overlayClick(event)">
+ <div class="deposit-box" onclick="event.stopPropagation()">
+  <div class="deposit-head">
+   <h3>Deposit Shop</h3>
+   <button class="close-btn" onclick="closeDeposit()">×</button>
   </div>
+  <p class="deposit-intro">Select an amount and follow payment instructions.</p>
+
+  <div class="payment-box">
+   <strong>EasyPaisa Payment</strong>
+   <p>Account Name: ***</p>
+   <p>Account Number: ***</p>
+   <small>Use the payment details provided by your administrator.</small>
+  </div>
+
+  <div id="depositSelection">
+   <div class="amount-title">Select Deposit Amount</div>
+   <div class="amount-grid">
+    <button class="amount-btn" onclick="selectAmount(800,this)">800</button>
+    <button class="amount-btn" onclick="selectAmount(2000,this)">2,000</button>
+    <button class="amount-btn" onclick="selectAmount(5000,this)">5,000</button>
+    <button class="amount-btn" onclick="selectAmount(8000,this)">8,000</button>
+    <button class="amount-btn" onclick="selectAmount(10000,this)">10,000</button>
+    <button class="amount-btn" onclick="selectAmount(20000,this)">20,000</button>
+    <button class="amount-btn" onclick="selectAmount(30000,this)">30,000</button>
+    <button class="amount-btn" onclick="selectAmount(50000,this)">50,000</button>
+    <button class="amount-btn" onclick="selectAmount(100000,this)">100,000</button>
+   </div>
+   <input class="custom-input" type="number" id="customAmount"
+    placeholder="Or enter custom amount" oninput="customAmountChanged()">
+   <button class="deposit-submit" onclick="backToDepositSelection()">Continue</button>
+  </div>
+
+  <div id="depositPayment" style="display:none">
+   <div class="payment-box">
+    <strong>Selected Amount</strong>
+    <p id="selectedAmountText">PKR 0</p>
+   </div>
+   <label class="upload-label">
+    📷 Upload Payment Screenshot
+    <input type="file" id="screenshotInput" accept="image/*" onchange="previewScreenshot(event)">
+   </label>
+   <img id="previewImage" alt="Payment screenshot preview">
+   <button class="deposit-submit" onclick="submitDemoDeposit()">Submit Deposit Request</button>
+   <button class="amount-btn" style="width:100%;margin-top:9px" onclick="backToDepositSelection()">Back</button>
+  </div>
+  <p class="demo-note">Demo deposit interface. Payment verification and automatic balance update are not connected.</p>
+ </div>
 </div>
+
 <script>
-let selectedDepositAmount = null;
+let selectedDepositAmount=0;
+let screenshotFile=null;
 
 function openDeposit(){
-  document.getElementById("depositOverlay").classList.add("show");
-  document.getElementById("depositSelectionScreen").style.display = "block";
-  document.getElementById("depositPaymentScreen").style.display = "none";
-  document.body.style.overflow = "hidden";
+ document.getElementById("depositOverlay").style.display="flex";
 }
-
 function closeDeposit(){
-  document.getElementById("depositOverlay").classList.remove("show");
-  document.body.style.overflow = "";
+ document.getElementById("depositOverlay").style.display="none";
 }
-
 function overlayClick(event){
-  if(event.target.id === "depositOverlay") closeDeposit();
+ if(event.target.id==="depositOverlay")closeDeposit();
 }
-
-function selectAmount(amount){
-  selectedDepositAmount = amount;
-  document.getElementById("depositSelectionScreen").style.display = "none";
-  document.getElementById("depositPaymentScreen").style.display = "block";
-
-  document.querySelectorAll(".amount-btn").forEach(button => {
-    button.classList.toggle(
-      "selected",
-      Number(button.dataset.amount) === amount
-    );
-  });
-
-  document.getElementById("selectedAmount").textContent =
-    "Rs. " + amount.toLocaleString("en-PK");
-
-  document.getElementById("depositAmount").value = "";
+function selectAmount(amount,button){
+ selectedDepositAmount=amount;
+ document.getElementById("customAmount").value="";
+ document.querySelectorAll(".amount-btn").forEach(b=>b.classList.remove("selected"));
+ button.classList.add("selected");
 }
-
-function backToDepositSelection(){
-  document.getElementById("depositPaymentScreen").style.display = "none";
-  document.getElementById("depositSelectionScreen").style.display = "block";
-}
-
 function customAmountChanged(){
-  const input = document.getElementById("depositAmount");
-  const amount = Number(input.value);
-
-  if(input.value !== "" && Number.isFinite(amount) && amount > 0){
-    selectedDepositAmount = amount;
-
-    document.querySelectorAll(".amount-btn").forEach(button => {
-      button.classList.remove("selected");
-    });
-
-    document.getElementById("selectedAmount").textContent =
-      "Rs. " + amount.toLocaleString("en-PK");
-  }
+ selectedDepositAmount=Number(document.getElementById("customAmount").value||0);
+ document.querySelectorAll(".amount-btn").forEach(b=>b.classList.remove("selected"));
 }
-
+function backToDepositSelection(){
+ if(selectedDepositAmount<=0){
+  alert("Please select or enter a deposit amount.");
+  return;
+ }
+ document.getElementById("selectedAmountText").textContent=
+  "PKR "+selectedDepositAmount.toLocaleString("en-PK");
+ document.getElementById("depositSelection").style.display="none";
+ document.getElementById("depositPayment").style.display="block";
+}
 function previewScreenshot(event){
-  const file = event.target.files && event.target.files[0];
-  const preview = document.getElementById("screenshotPreview");
-
-  if(!file){
-    preview.style.display = "none";
-    preview.removeAttribute("src");
-    return;
-  }
-
-  if(!file.type.startsWith("image/")){
-    alert("Please select an image file.");
-    event.target.value = "";
-    preview.style.display = "none";
-    return;
-  }
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    preview.src = reader.result;
-    preview.style.display = "block";
-  };
-
-  reader.readAsDataURL(file);
+ const file=event.target.files[0];
+ if(!file)return;
+ screenshotFile=file;
+ const reader=new FileReader();
+ reader.onload=function(){
+  const img=document.getElementById("previewImage");
+  img.src=reader.result;
+  img.style.display="block";
+ };
+ reader.readAsDataURL(file);
 }
-
-async function submitDemoDeposit(){
-  const amount = Number(
-    document.getElementById("depositAmount").value || selectedDepositAmount
-  );
-
-  if(!Number.isFinite(amount) || amount <= 0){
-    alert("Pehle valid amount select karein.");
-    return;
-  }
-
-  const fileInput = document.getElementById("paymentScreenshot");
-  const file = fileInput.files && fileInput.files[0];
-
-  if(!file){
-    alert("Pehle payment screenshot select karein.");
-    return;
-  }
-
-  if(!file.type.startsWith("image/")){
-    alert("Please image screenshot select karein.");
-    return;
-  }
-
-  try{
-    if(navigator.canShare && navigator.share &&
-       navigator.canShare({files:[file]})){
-      await navigator.share({
-        files:[file],
-        title:"Payment Screenshot"
-      });
-      return;
-    }
-
-    if(navigator.share){
-      alert("Is browser mein screenshot sharing supported nahi. WhatsApp khol kar screenshot manually attach karein.");
-      return;
-    }
-
-    const waUrl = "https://wa.me/923125917677";
-    window.open(waUrl, "_blank", "noopener,noreferrer");
-    alert("WhatsApp chat khul gayi. Screenshot manually attach karke send karein.");
-
-  }catch(error){
-    if(error && error.name === "AbortError") return;
-    alert("Screenshot share nahi ho saka. WhatsApp par manually attach karein.");
-  }
+function submitDemoDeposit(){
+ if(!screenshotFile){
+  alert("Please upload your payment screenshot.");
+  return;
+ }
+ alert("Demo only: Payment verification and balance update are not connected.");
 }
-
-document.addEventListener("keydown", event => {
-  if(event.key === "Escape") closeDeposit();
-});
+function money(value){
+ return "$"+Number(value||0).toFixed(2);
+}
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+ });
+}
 </script>
 
-<!-- Firebase dashboard data -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import {
-  getFirestore, doc, getDoc, collection, getDocs
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+import {getFirestore,doc,getDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-  authDomain: "elitetask-pro.firebaseapp.com",
-  projectId: "elitetask-pro",
-  storageBucket: "elitetask-pro.firebasestorage.app",
-  messagingSenderId: "504295275402",
-  appId: "1:504295275402:web:cf744a5d4e82c72145a673"
+const firebaseConfig={
+ apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+ authDomain:"elitetask-pro.firebaseapp.com",
+ projectId:"elitetask-pro",
+ storageBucket:"elitetask-pro.firebasestorage.app",
+ messagingSenderId:"504295275402",
+ appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const money = value => "$" + (Number(value) || 0).toFixed(2);
-const pkrMoney = value => "PKR " + (Number(value) || 0).toFixed(2);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-onAuthStateChanged(auth, async user => {
-  if(!user){
-    location.href = "index.html";
-    return;
-  }
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  location.href="index.html";
+  return;
+ }
 
-  const currentOrder = document.getElementById("currentOrder");
-  currentOrder.innerHTML = '<div class="loading">Loading current order...</div>';
+ try{
+  const [userSnap,taskSnap]=await Promise.all([
+   getDoc(doc(db,"users",user.uid)),
+   getDocs(collection(db,"tasks"))
+  ]);
 
-  try{
-    const [userSnap, taskSnap] = await Promise.all([
-      getDoc(doc(db, "users", user.uid)),
-      getDocs(collection(db, "tasks"))
-    ]);
+  if(!userSnap.exists())throw new Error("User record not found.");
 
-    if(!userSnap.exists()){
-      throw new Error("User record not found in users collection.");
-    }
+  const u=userSnap.data();
+  const balance=Number(u.balance||0);
+  const commission=Number(u.commission||0);
+  const pending=Number(u.pending||0);
+  const completed=Number(u.completedTasks??u.completed??0);
+  const todayCommission=Number(u.todayCommission||0);
+  const currentTaskIndex=Math.max(0,Number(u.currentTaskIndex||0));
 
-    const u = userSnap.data();
-    const balance = Number(u.balance || 0);
-    const commission = Number(u.commission || 0);
-    const pending = Number(u.pending || 0);
-    const completed = Number(u.completedTasks ?? u.completed ?? 0);
-    const todayCommission = Number(u.todayCommission || 0);
-    const currentTaskIndex = Math.max(0, Number(u.currentTaskIndex || 0));
+  document.getElementById("userName").textContent=u.name||"User";
+  document.getElementById("balance").textContent=money(balance);
+  document.getElementById("commission").textContent=money(commission);
+  document.getElementById("pending").textContent="PKR "+pending.toFixed(2);
+  document.getElementById("completedTasks").textContent=completed;
+  document.getElementById("todayCommission").textContent=money(todayCommission);
 
-    document.getElementById("userName").textContent = u.name || "User";
+  const tasks=taskSnap.docs.map(d=>({id:d.id,...d.data()}))
+   .sort((a,b)=>Number(a.order||0)-Number(b.order||0));
 
-    // Available Balance is intentionally read from balance only.
-    document.getElementById("balance").textContent = money(balance);
-    document.getElementById("commission").textContent = money(commission);
-    document.getElementById("pending").textContent = pkrMoney(pending);
-    document.getElementById("completedTasks").textContent = completed;
-    document.getElementById("todayCommission").textContent = money(todayCommission);
+  document.getElementById("totalTasks").textContent=tasks.length;
 
-    const tasks = taskSnap.docs
-      .map(d => ({id:d.id, ...d.data()}))
-      .sort((a,b) => Number(a.order || 0) - Number(b.order || 0));
+  const progress=tasks.length?
+   Math.min(100,Math.max(0,(completed/tasks.length)*100)):0;
 
-    document.getElementById("totalTasks").textContent = tasks.length;
+  document.getElementById("taskProgressBar").style.width=progress+"%";
+  document.getElementById("taskProgressText").textContent=Math.round(progress)+"%";
 
-    if(tasks.length === 0 || currentTaskIndex >= tasks.length){
-      document.getElementById("currentTaskNumber").textContent =
-        tasks.length ? "Completed" : "0";
-
-      currentOrder.innerHTML =
-        '<div class="loading">All tasks completed or no tasks available.</div>';
-      return;
-    }
-
-    const task = tasks[currentTaskIndex];
-    const taskNumber = Number(task.order || (currentTaskIndex + 1));
-
-    document.getElementById("currentTaskNumber").textContent = taskNumber;
-
-    const taskName = task.name || task.taskName || "Task";
-    const price = Number(task.price || task.amount || 0);
-    const taskCommission = Number(task.commission || 0);
-    const image = task.imageURL || task.imageUrl || task.image || "";
-
-    currentOrder.innerHTML = `
-      <div class="task-card">
-        ${image ? `<img src="${escapeHTML(image)}" alt="Task image">` : ""}
-        <h3>${escapeHTML(taskName)}</h3>
-        <p>Task Number: ${escapeHTML(taskNumber)}</p>
-        <p>Task Price: ${money(price)}</p>
-        <p class="task-commission">Commission: ${money(taskCommission)}</p>
-        <button class="open-task" onclick="location.href='orders.html'">
-          View Task
-        </button>
-      </div>
-    `;
-  }catch(error){
-    console.error("Dashboard loading error:", error);
-
-    currentOrder.innerHTML =
-      '<div class="loading">Dashboard data load nahi ho saka: ' +
-      escapeHTML(error.message) + '</div>';
-  }
-});
-
-function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  })[char]);
-}
-</script>
-
-</body>
-</html>
+  if(tasks.length===0||currentTaskIndex>=tasks.length){
+   document.getElementById("currentTaskNumber").textContent=tasks.length?"Completed":"0";
+   document.getElementById("currentOrder").innerHTML=`
+    <div class="empty-order"
