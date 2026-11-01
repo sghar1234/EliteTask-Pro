@@ -85,7 +85,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 
 <div class="balance-card">
  <h3>💎 Available Account Balance</h3>
- <h1 id="balance">Rs 0.00</h1>
+ <h1 id="balance">$0.00</h1>
  <div class="balance-bottom">
   <span>Manage your earnings</span>
   <a href="withdraw.html">Withdraw ↗</a>
@@ -104,8 +104,8 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  <h2 class="section-title">Account Overview</h2>
  <div class="stats">
   <div class="box"><h4>Total Orders</h4><span id="orders">0</span></div>
-  <div class="box"><h4>Total Commission</h4><span id="commission">Rs 0</span></div>
-  <div class="box"><h4>Today's Income</h4><span id="todayIncome">Rs 0</span></div>
+  <div class="box"><h4>Total Commission</h4><span id="commission">$0</span></div>
+  <div class="box"><h4>Today's Income</h4><span id="todayIncome">$0</span></div>
   <div class="box"><h4>VIP Level</h4><span>VIP 1</span></div>
  </div>
 
@@ -114,12 +114,14 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
    <b>Task Progress</b>
    <span id="taskProgressText">0% Completed</span>
   </div>
-  <div class="progress-track"><div class="progress-fill" id="taskProgressBar"></div></div>
+  <div class="progress-track">
+   <div class="progress-fill" id="taskProgressBar"></div>
+  </div>
  </div>
 
  <div class="task-heading">
   <h2>🔥 Available Tasks</h2>
-  <span>Start earning</span>
+  <span id="taskNumber">Task 1</span>
  </div>
  <div id="taskList">Loading tasks...</div>
 
@@ -140,7 +142,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <h2>Task Details</h2>
   <img id="popupImage" src="" alt="Task Image">
   <h3 id="popupName">Task Name</h3>
-  <p>Task Price: <b id="popupPrice">Rs 0</b></p>
+  <p>Task Price: <b id="popupPrice">$0</b></p>
   <p style="color:red;font-weight:bold" id="requiredBalance"></p>
   <button id="closePopup">Submit Task</button>
  </div>
@@ -149,33 +151,12 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 <script type="module" src="script.js"></script>
 
 <script>
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let selectedTask = null;
+window.dashboardTasks = [];
+window.selectedTask = null;
+window.completedTaskCount = 0;
 
-function renderTasks(){
- let html = "";
- if(tasks.length === 0){
-  html = "<h3 style='text-align:center;padding:20px;color:#735c31'>No Task Available</h3>";
- }else{
-  tasks.forEach((task,index)=>{
-   const image = task.image || task.imageURL || task.imageUrl || "";
-   const name = task.name || task.taskName || "Task";
-   const reward = Number(task.reward ?? task.price ?? task.amount ?? 0);
-   const commission = Number(task.commission || 0);
-
-   html += `
-   <div class="product-card">
-    <img src="${image}" alt="Task">
-    <div class="product-info">
-     <h3>${name}</h3>
-     <p>Task Price: <b>Rs ${reward}</b></p>
-     <p>Commission: <b>Rs ${commission}</b></p>
-     <button class="start-btn" onclick="openTask(${index})">🚀 Start Task</button>
-    </div>
-   </div>`;
-  });
- }
- document.getElementById("taskList").innerHTML = html;
+function money(value){
+ return "$" + Number(value || 0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
 function updateOrdersCount(){
@@ -189,49 +170,92 @@ function updateProgress(completed,total){
  document.getElementById("taskProgressBar").style.width = percent + "%";
 }
 
-renderTasks();
-updateOrdersCount();
+function renderOneTask(){
+ const list = document.getElementById("taskList");
+ const tasks = window.dashboardTasks;
+ const completed = window.completedTaskCount;
 
-window.openTask = function(index){
- selectedTask = tasks[index];
- if(!selectedTask) return;
-
- const balance = parseFloat(document.getElementById("balance").innerText.replace(/[^0-9.-]/g,"")) || 0;
- const price = Number(selectedTask.reward ?? selectedTask.price ?? selectedTask.amount ?? 0);
-
- if(balance < price){
-  alert("❌ Insufficient Balance\n\nRequired Balance: Rs "+price+"\nYour Balance: Rs "+balance);
+ if(!tasks.length){
+  document.getElementById("taskNumber").innerText = "No Tasks";
+  list.innerHTML = "<h3 style='text-align:center;padding:20px;color:#735c31'>No Task Available</h3>";
   return;
  }
 
- document.getElementById("popupImage").src = selectedTask.image || selectedTask.imageURL || selectedTask.imageUrl || "";
- document.getElementById("popupName").innerText = selectedTask.name || selectedTask.taskName || "Task";
- document.getElementById("popupPrice").innerText = "Rs "+price;
+ if(completed >= tasks.length){
+  document.getElementById("taskNumber").innerText = "Completed";
+  list.innerHTML = "<h3 style='text-align:center;padding:20px;color:#735c31'>🎉 All Tasks Completed!</h3>";
+  return;
+ }
+
+ const index = completed;
+ const task = tasks[index];
+ const image = task.image || task.imageURL || task.imageUrl || "";
+ const name = task.name || task.taskName || "Task";
+ const price = Number(task.reward ?? task.price ?? task.amount ?? 0);
+ const commission = Number(task.commission || 0);
+
+ document.getElementById("taskNumber").innerText = "Task " + (index+1) + " of " + tasks.length;
+
+ list.innerHTML = `
+ <div class="product-card">
+  <img src="${image}" alt="Task">
+  <div class="product-info">
+   <h3>${name}</h3>
+   <p>Task Price: <b>${money(price)}</b></p>
+   <p>Commission: <b>${money(commission)}</b></p>
+   <button class="start-btn" onclick="openTask()">🚀 Start Task</button>
+  </div>
+ </div>`;
+}
+
+window.openTask = function(){
+ const tasks = window.dashboardTasks;
+ const index = window.completedTaskCount;
+ window.selectedTask = tasks[index];
+
+ if(!window.selectedTask) return;
+
+ const task = window.selectedTask;
+ const balance = parseFloat(document.getElementById("balance").innerText.replace(/[^0-9.-]/g,"")) || 0;
+ const price = Number(task.reward ?? task.price ?? task.amount ?? 0);
+
+ if(balance < price){
+  alert("❌ Insufficient Balance\n\nRequired Balance: "+money(price)+"\nYour Balance: "+money(balance));
+  return;
+ }
+
+ document.getElementById("popupImage").src = task.image || task.imageURL || task.imageUrl || "";
+ document.getElementById("popupName").innerText = task.name || task.taskName || "Task";
+ document.getElementById("popupPrice").innerText = money(price);
  document.getElementById("requiredBalance").innerText = "";
  document.getElementById("popup").style.display = "flex";
 };
 
 document.getElementById("closePopup").onclick = function(){
- if(!selectedTask) return;
+ const task = window.selectedTask;
+ if(!task) return;
 
  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
  orders.push({
-  image:selectedTask.image || selectedTask.imageURL || selectedTask.imageUrl || "",
-  name:selectedTask.name || selectedTask.taskName || "Task",
-  price:selectedTask.reward ?? selectedTask.price ?? selectedTask.amount ?? 0,
-  commission:selectedTask.commission || 0,
+  image:task.image || task.imageURL || task.imageUrl || "",
+  name:task.name || task.taskName || "Task",
+  price:task.reward ?? task.price ?? task.amount ?? 0,
+  commission:task.commission || 0,
   status:"Pending",
   date:new Date().toLocaleString()
  });
 
  localStorage.setItem("orders",JSON.stringify(orders));
  updateOrdersCount();
+
  document.getElementById("popup").style.display = "none";
- selectedTask = null;
- alert("✅ Task Submitted Successfully");
+ window.selectedTask = null;
+
+ alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
-/* FIREBASE DASHBOARD DATA */
+updateOrdersCount();
 </script>
 
 <script type="module">
@@ -243,8 +267,6 @@ const app = getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const money = value => "Rs " + Number(value || 0).toLocaleString("en-PK",{minimumFractionDigits:2,maximumFractionDigits:2});
-
 onAuthStateChanged(auth, async user => {
  if(!user){
   location.href = "index.html";
@@ -252,51 +274,40 @@ onAuthStateChanged(auth, async user => {
  }
 
  try{
-  const userSnap = await getDoc(doc(db,"users",user.uid));
+  const userRef = doc(db,"users",user.uid);
+  const userSnap = await getDoc(userRef);
 
-  if(userSnap.exists()){
-   const data = userSnap.data();
-
-   document.getElementById("welcomeName").innerText = "Welcome, " + (data.name || data.username || "User");
-
-   const balance = Number(data.balance || 0);
-   const commission = Number(data.commission || 0);
-   const availableBalance = balance + commission;
-
-   document.getElementById("balance").innerText = money(availableBalance);
-   document.getElementById("commission").innerText = money(commission);
-   document.getElementById("todayIncome").innerText = money(data.todayCommission ?? data.todayIncome ?? 0);
-
-   const completed = Number(data.completedTasks ?? data.completed ?? 0);
-   updateProgress(completed,tasks.length);
-  }else{
-   console.log("User document not found in users collection");
+  if(!userSnap.exists()){
+   document.getElementById("taskList").innerHTML =
+    "<p style='text-align:center;padding:15px;color:#a33'>User account data not found.</p>";
+   return;
   }
- }catch(error){
-  console.error("Dashboard user data error:",error);
-  alert("Dashboard data load error: " + error.message);
- }
 
- try{
+  const data = userSnap.data();
+
+  document.getElementById("welcomeName").innerText =
+   "Welcome, " + (data.name || data.username || "User");
+
+  const balance = Number(data.balance || 0);
+  const commission = Number(data.commission || 0);
+
+  document.getElementById("balance").innerText = money(balance + commission);
+  document.getElementById("commission").innerText = money(commission);
+  document.getElementById("todayIncome").innerText =
+   money(data.todayCommission ?? data.todayIncome ?? 0);
+
+  window.completedTaskCount = Math.max(0,Number(data.completedTasks ?? data.completed ?? 0));
+
   const taskSnap = await getDocs(collection(db,"tasks"));
-  const firebaseTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
+  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
 
-  if(firebaseTasks.length > 0){
-   tasks = firebaseTasks;
-   renderTasks();
-   updateProgress(
-    Number((await getDoc(doc(db,"users",user.uid))).data()?.completedTasks || 0),
-    tasks.length
-   );
-  }else{
-   tasks = [];
-   renderTasks();
-   updateProgress(0,0);
-  }
+  renderOneTask();
+  updateProgress(window.completedTaskCount,window.dashboardTasks.length);
+
  }catch(error){
-  console.error("Tasks loading error:",error);
+  console.error("Dashboard loading error:",error);
   document.getElementById("taskList").innerHTML =
-   "<p style='text-align:center;padding:15px;color:#a33'>Tasks load nahi ho sake. Firebase permissions check karein.</p>";
+   "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
  }
 });
 </script>
