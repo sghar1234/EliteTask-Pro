@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -558,12 +559,9 @@ onAuthStateChanged(auth, async user => {
       const u = userSnap.data();
 
       document.getElementById("userName").textContent = u.name || "User";
-
-      // Available Balance: sirf deposited balance, commission shamil nahi.
-      const depositedBalance = Number(u.balance || 0);
-
       document.getElementById("balance").textContent =
-        "PKR " + depositedBalance.toFixed(2);
-
-      // Commission alag card mein show hogi.
-      document.getElementById("com
+        "PKR " + Number(u.balance || 0).toFixed(2);
+      document.getElementById("commission").textContent =
+        "PKR " + Number(u.commission || 0).toFixed(2);
+      document.getElementById("pending").textContent =
+        "PKR " + Number(u.pending || 0)
