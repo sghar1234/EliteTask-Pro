@@ -8,181 +8,64 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{
- font-family:Arial,sans-serif;
- background:#f5f1fa;
- color:#211b2d;
- padding-bottom:110px;
-}
-.topbar{
- background:linear-gradient(135deg,#10091e,#24103e,#120b20);
- color:#fff;padding:22px 18px 28px;
- border-radius:0 0 28px 28px;
- box-shadow:0 7px 22px #160b2d40;
-}
+body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-bottom:110px}
+.topbar{background:linear-gradient(135deg,#10091e,#24103e,#120b20);color:#fff;padding:22px 18px 28px;border-radius:0 0 28px 28px;box-shadow:0 7px 22px #160b2d40}
 .top-head{display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:21px;font-weight:900;color:#f5d77d}
 .logo small{display:block;color:#e8dff4;font-size:12px;font-weight:normal;margin-top:6px}
-.support-top{
- background:linear-gradient(135deg,#f8df91,#c99b36);
- border:0;padding:10px 13px;border-radius:22px;
- color:#241331;font-weight:bold;font-size:12px;
-}
-.welcome{
- margin-top:25px;background:linear-gradient(110deg,#f8e8bd,#fff8e8);
- padding:17px;border-radius:18px;color:#28153c;
-}
+.support-top{background:linear-gradient(135deg,#f8df91,#c99b36);border:0;padding:10px 13px;border-radius:22px;color:#241331;font-weight:bold;font-size:12px}
+.welcome{margin-top:25px;background:linear-gradient(110deg,#f8e8bd,#fff8e8);padding:17px;border-radius:18px;color:#28153c}
 .welcome h2{font-size:19px;margin-bottom:5px}
 .welcome p{font-size:12px;color:#695b70}
-
-.balance-card{
- margin:-1px 15px 20px;
- background:linear-gradient(135deg,#30134e,#160b28,#452064);
- color:white;padding:23px 20px;border-radius:21px;
- box-shadow:0 9px 22px #24103845;border:1px solid #b68a45;
-}
+.balance-card{margin:-1px 15px 20px;background:linear-gradient(135deg,#30134e,#160b28,#452064);color:white;padding:23px 20px;border-radius:21px;box-shadow:0 9px 22px #24103845;border:1px solid #b68a45}
 .balance-card h3{font-size:14px;color:#e8d9f6;font-weight:normal}
 .balance-card h1{color:#f7d77e;font-size:34px;margin:13px 0 20px}
 .balance-bottom{display:flex;justify-content:space-between;align-items:center}
 .balance-bottom span{font-size:12px;color:#e4d8ee}
-.balance-bottom a{
- background:linear-gradient(135deg,#ffe9a6,#c99a39);
- color:#251432;padding:11px 18px;border-radius:20px;
- text-decoration:none;font-size:13px;font-weight:bold;
-}
+.balance-bottom a{background:linear-gradient(135deg,#ffe9a6,#c99a39);color:#251432;padding:11px 18px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold}
 .container{padding:0 15px}
 .section-title{font-size:18px;margin:22px 0 14px;color:#241336}
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.action{
- text-align:center;background:white;border-radius:15px;padding:15px 4px;
- box-shadow:0 3px 12px #24103810;text-decoration:none;color:#28143c;
- border:1px solid #eee5f5;
-}
-.action .ico{
- width:42px;height:42px;display:flex;align-items:center;justify-content:center;
- margin:0 auto 8px;border-radius:13px;
- background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px;
-}
+.action{text-align:center;background:white;border-radius:15px;padding:15px 4px;box-shadow:0 3px 12px #24103810;text-decoration:none;color:#28143c;border:1px solid #eee5f5}
+.action .ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border-radius:13px;background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px}
 .action span{font-size:11px;font-weight:bold}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.box{
- background:white;border-radius:16px;padding:17px;
- box-shadow:0 3px 13px #2410380d;border:1px solid #eee5f5;
-}
+.box{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 13px #2410380d;border:1px solid #eee5f5}
 .box h4{font-size:12px;color:#81748c;font-weight:normal;margin-bottom:10px}
 .box span{font-size:21px;color:#35174e;font-weight:bold}
-.progress-card{
- margin-top:17px;padding:18px;background:linear-gradient(135deg,#2c1247,#160b28);
- color:white;border-radius:18px;box-shadow:0 5px 15px #24103825;
-}
+.progress-card{margin-top:17px;padding:18px;background:linear-gradient(135deg,#2c1247,#160b28);color:white;border-radius:18px;box-shadow:0 5px 15px #24103825}
 .progress-head{display:flex;justify-content:space-between;margin-bottom:13px;font-size:13px}
 .progress-track{background:#59436b;height:9px;border-radius:20px;overflow:hidden}
-.progress-fill{
- width:0%;height:100%;
- background:linear-gradient(90deg,#d5aa4c,#ffe9a1);border-radius:20px;
-}
+.progress-fill{width:0%;height:100%;background:linear-gradient(90deg,#d5aa4c,#ffe9a1);border-radius:20px}
 .task-heading{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px}
 .task-heading h2{font-size:18px}
 .task-heading span{font-size:12px;color:#97702d}
 #taskList{display:grid;grid-template-columns:1fr;gap:14px}
-.product-card{
- display:flex;align-items:center;gap:13px;padding:14px;border-radius:18px;
- background:linear-gradient(135deg,#fff9df,#f4df9b,#d5ad4e);
- border:1.5px solid #b98a27;box-shadow:0 5px 15px rgba(120,83,15,.20);
-}
-.product-card img{
- width:90px;height:95px;object-fit:cover;border-radius:13px;
- border:2px solid #c69a3b;background:#fff4d1;
-}
+.product-card{display:flex;align-items:center;gap:13px;padding:14px;border-radius:18px;background:linear-gradient(135deg,#fff9df,#f4df9b,#d5ad4e);border:1.5px solid #b98a27;box-shadow:0 5px 15px rgba(120,83,15,.20)}
+.product-card img{width:90px;height:95px;object-fit:cover;border-radius:13px;border:2px solid #c69a3b;background:#fff4d1}
 .product-info{flex:1;min-width:0}
 .product-info h3{color:#241334;font-size:16px;font-weight:800;margin:4px 0 8px}
 .product-info p{color:#493516;font-size:12px;margin-top:7px}
-.start-btn{
- margin-top:10px;background:linear-gradient(135deg,#241033,#482064);
- color:#ffe49a;border:1px solid #d2a843;border-radius:25px;
- padding:11px 18px;font-weight:bold;
-}
-.withdraw-btn,.support-btn{
- width:100%;margin-top:13px;padding:14px;border:0;border-radius:13px;
- font-weight:bold;font-size:14px;
- background:linear-gradient(135deg,#d8b45d,#ffe9a5);color:#271638;
-}
+.start-btn{margin-top:10px;background:linear-gradient(135deg,#241033,#482064);color:#ffe49a;border:1px solid #d2a843;border-radius:25px;padding:11px 18px;font-weight:bold}
+.withdraw-btn,.support-btn{width:100%;margin-top:13px;padding:14px;border:0;border-radius:13px;font-weight:bold;font-size:14px;background:linear-gradient(135deg,#d8b45d,#ffe9a5);color:#271638}
 .support-btn{background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d}
-
-/* INDIVIDUAL GOLDEN BOTTOM NAV BOXES */
-.navbar{
- position:fixed;
- left:0;right:0;bottom:0;
- z-index:9999;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:6px;
- padding:12px 7px;
- background:linear-gradient(135deg,#160b29,#2b1243);
- border-top:2px solid #d6ad50;
- box-shadow:0 -5px 20px rgba(20,8,35,.35);
-}
-.navbar a{
- flex:1;
- min-width:0;
- height:62px;
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- gap:5px;
- text-decoration:none;
- color:#30163f!important;
- background:linear-gradient(145deg,#fff8d9 0%,#f5df9b 35%,#dfba5d 70%,#c99a3d 100%);
- border:2px solid #f8df91;
- border-radius:13px;
- box-shadow:0 3px 9px rgba(0,0,0,.28),inset 0 2px 3px rgba(255,255,255,.8);
- font-size:21px;
- font-weight:bold;
- transition:transform .2s,box-shadow .2s;
-}
-.navbar a span{
- color:#30163f!important;
- font-size:10px;
- font-weight:900;
-}
-.navbar a.active{
- background:linear-gradient(145deg,#ffeeb1,#e4bd58,#c99731);
- border:2px solid #fff1bd;
- box-shadow:0 0 12px rgba(255,215,105,.8),inset 0 2px 4px rgba(255,255,255,.8);
- transform:translateY(-5px);
-}
+.navbar{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:12px 7px;background:linear-gradient(135deg,#160b29,#2b1243);border-top:2px solid #d6ad50;box-shadow:0 -5px 20px rgba(20,8,35,.35)}
+.navbar a{flex:1;min-width:0;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-decoration:none;color:#30163f!important;background:linear-gradient(145deg,#fff8d9 0%,#f5df9b 35%,#dfba5d 70%,#c99a3d 100%);border:2px solid #f8df91;border-radius:13px;box-shadow:0 3px 9px rgba(0,0,0,.28),inset 0 2px 3px rgba(255,255,255,.8);font-size:21px;font-weight:bold;transition:transform .2s,box-shadow .2s}
+.navbar a span{color:#30163f!important;font-size:10px;font-weight:900}
+.navbar a.active{background:linear-gradient(145deg,#ffeeb1,#e4bd58,#c99731);border:2px solid #fff1bd;box-shadow:0 0 12px rgba(255,215,105,.8),inset 0 2px 4px rgba(255,255,255,.8);transform:translateY(-5px)}
 .navbar a:active{transform:scale(.94)}
-
-.popup{
- display:none;position:fixed;inset:0;background:#10091dcc;
- align-items:center;justify-content:center;z-index:200;padding:20px;
-}
-.popup-content{
- background:white;width:100%;max-width:360px;padding:22px;
- border-radius:20px;text-align:center;
-}
+.popup{display:none;position:fixed;inset:0;background:#10091dcc;align-items:center;justify-content:center;z-index:200;padding:20px}
+.popup-content{background:white;width:100%;max-width:360px;padding:22px;border-radius:20px;text-align:center}
 .popup-content h2{color:#32164c;margin-bottom:15px}
-.popup-content img{
- width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px;
-}
+.popup-content img{width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px}
 .popup-content p{margin:12px 0}
-#closePopup{
- width:100%;padding:13px;border:0;border-radius:12px;
- background:linear-gradient(135deg,#35164f,#160b28);
- color:#f5d77d;font-weight:bold;
-}
+#closePopup{width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold}
 @media(max-width:360px){
- .quick-actions{gap:5px}
- .action span{font-size:10px}
- .balance-card h1{font-size:29px}
- .product-card img{width:78px;height:85px}
- .product-info h3{font-size:14px}
- .start-btn{padding:9px 13px;font-size:12px}
- .navbar{gap:4px;padding:10px 5px}
- .navbar a{height:56px;border-radius:11px}
- .navbar a span{font-size:9px}
+.quick-actions{gap:5px}.action span{font-size:10px}.balance-card h1{font-size:29px}
+.product-card img{width:78px;height:85px}.product-info h3{font-size:14px}
+.start-btn{padding:9px 13px;font-size:12px}
+.navbar{gap:4px;padding:10px 5px}.navbar a{height:56px;border-radius:11px}
+.navbar a span{font-size:9px}
 }
 </style>
 </head>
@@ -191,13 +74,8 @@ body{
 
 <header class="topbar">
  <div class="top-head">
-  <div class="logo">
-   👑 EliteTask Pro
-   <small id="welcomeName">Welcome</small>
-  </div>
-  <a href="support.html">
-   <button class="support-top">💬 Customer Service</button>
-  </a>
+  <div class="logo">👑 EliteTask Pro<small id="welcomeName">Welcome</small></div>
+  <a href="support.html"><button class="support-top">💬 Customer Service</button></a>
  </div>
  <div class="welcome">
   <h2>Welcome Back 👋</h2>
@@ -207,7 +85,7 @@ body{
 
 <div class="balance-card">
  <h3>💎 Available Account Balance</h3>
- <h1 id="balance">$0.00</h1>
+ <h1 id="balance">Rs 0.00</h1>
  <div class="balance-bottom">
   <span>Manage your earnings</span>
   <a href="withdraw.html">Withdraw ↗</a>
@@ -226,8 +104,8 @@ body{
  <h2 class="section-title">Account Overview</h2>
  <div class="stats">
   <div class="box"><h4>Total Orders</h4><span id="orders">0</span></div>
-  <div class="box"><h4>Total Commission</h4><span id="commission">$0</span></div>
-  <div class="box"><h4>Today's Income</h4><span id="todayIncome">$0</span></div>
+  <div class="box"><h4>Total Commission</h4><span id="commission">Rs 0</span></div>
+  <div class="box"><h4>Today's Income</h4><span id="todayIncome">Rs 0</span></div>
   <div class="box"><h4>VIP Level</h4><span>VIP 1</span></div>
  </div>
 
@@ -236,16 +114,14 @@ body{
    <b>Task Progress</b>
    <span id="taskProgressText">0% Completed</span>
   </div>
-  <div class="progress-track">
-   <div class="progress-fill" id="taskProgressBar"></div>
-  </div>
+  <div class="progress-track"><div class="progress-fill" id="taskProgressBar"></div></div>
  </div>
 
  <div class="task-heading">
   <h2>🔥 Available Tasks</h2>
   <span>Start earning</span>
  </div>
- <div id="taskList">No Task Available</div>
+ <div id="taskList">Loading tasks...</div>
 
  <a href="withdraw.html"><button class="withdraw-btn">💰 Withdraw</button></a>
  <a href="orders.html"><button class="support-btn">📦 My Orders</button></a>
@@ -271,62 +147,158 @@ body{
 </div>
 
 <script type="module" src="script.js"></script>
+
 <script>
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 let selectedTask = null;
 
-function loadTasks(){
+function renderTasks(){
  let html = "";
  if(tasks.length === 0){
   html = "<h3 style='text-align:center;padding:20px;color:#735c31'>No Task Available</h3>";
  }else{
   tasks.forEach((task,index)=>{
+   const image = task.image || task.imageURL || task.imageUrl || "";
+   const name = task.name || task.taskName || "Task";
+   const reward = Number(task.reward ?? task.price ?? task.amount ?? 0);
+   const commission = Number(task.commission || 0);
+
    html += `
    <div class="product-card">
-    <img src="${task.image || ''}" alt="Task">
+    <img src="${image}" alt="Task">
     <div class="product-info">
-     <h3>${task.name || 'Task'}</h3>
-     <p>Task Price: <b>Rs ${task.reward || 0}</b></p>
-     <p>Commission: <b>Rs ${task.commission || 0}</b></p>
+     <h3>${name}</h3>
+     <p>Task Price: <b>Rs ${reward}</b></p>
+     <p>Commission: <b>Rs ${commission}</b></p>
      <button class="start-btn" onclick="openTask(${index})">🚀 Start Task</button>
     </div>
    </div>`;
   });
  }
- document.getElementById("taskList").innerHTML=html;
+ document.getElementById("taskList").innerHTML = html;
 }
-loadTasks();
 
-window.openTask=function(index){
- selectedTask=tasks[index];
- let balance=parseFloat(document.getElementById("balance").innerText.replace(/[^0-9.-]/g,""))||0;
- let price=parseFloat(selectedTask.reward)||0;
- if(balance<price){
-  alert("❌ Insufficient Balance\n\nRequired Balance: Rs "+price+"\nYour Balance: "+balance);
+function updateOrdersCount(){
+ const orders = JSON.parse(localStorage.getItem("orders")) || [];
+ document.getElementById("orders").innerText = orders.length;
+}
+
+function updateProgress(completed,total){
+ const percent = total > 0 ? Math.min(100,Math.round((completed/total)*100)) : 0;
+ document.getElementById("taskProgressText").innerText = percent + "% Completed";
+ document.getElementById("taskProgressBar").style.width = percent + "%";
+}
+
+renderTasks();
+updateOrdersCount();
+
+window.openTask = function(index){
+ selectedTask = tasks[index];
+ if(!selectedTask) return;
+
+ const balance = parseFloat(document.getElementById("balance").innerText.replace(/[^0-9.-]/g,"")) || 0;
+ const price = Number(selectedTask.reward ?? selectedTask.price ?? selectedTask.amount ?? 0);
+
+ if(balance < price){
+  alert("❌ Insufficient Balance\n\nRequired Balance: Rs "+price+"\nYour Balance: Rs "+balance);
   return;
  }
- document.getElementById("popupImage").src=selectedTask.image||"";
- document.getElementById("popupName").innerText=selectedTask.name||"Task";
- document.getElementById("popupPrice").innerText="Rs "+price;
- document.getElementById("popup").style.display="flex";
+
+ document.getElementById("popupImage").src = selectedTask.image || selectedTask.imageURL || selectedTask.imageUrl || "";
+ document.getElementById("popupName").innerText = selectedTask.name || selectedTask.taskName || "Task";
+ document.getElementById("popupPrice").innerText = "Rs "+price;
+ document.getElementById("requiredBalance").innerText = "";
+ document.getElementById("popup").style.display = "flex";
 };
 
-document.getElementById("closePopup").onclick=function(){
- if(!selectedTask)return;
- let orders=JSON.parse(localStorage.getItem("orders"))||[];
+document.getElementById("closePopup").onclick = function(){
+ if(!selectedTask) return;
+
+ let orders = JSON.parse(localStorage.getItem("orders")) || [];
  orders.push({
-  image:selectedTask.image,
-  name:selectedTask.name,
-  price:selectedTask.reward,
-  commission:selectedTask.commission||0,
+  image:selectedTask.image || selectedTask.imageURL || selectedTask.imageUrl || "",
+  name:selectedTask.name || selectedTask.taskName || "Task",
+  price:selectedTask.reward ?? selectedTask.price ?? selectedTask.amount ?? 0,
+  commission:selectedTask.commission || 0,
   status:"Pending",
   date:new Date().toLocaleString()
  });
+
  localStorage.setItem("orders",JSON.stringify(orders));
- document.getElementById("orders").innerText=orders.length;
- document.getElementById("popup").style.display="none";
+ updateOrdersCount();
+ document.getElementById("popup").style.display = "none";
+ selectedTask = null;
  alert("✅ Task Submitted Successfully");
 };
+
+/* FIREBASE DASHBOARD DATA */
+</script>
+
+<script type="module">
+import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const app = getApp();
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const money = value => "Rs " + Number(value || 0).toLocaleString("en-PK",{minimumFractionDigits:2,maximumFractionDigits:2});
+
+onAuthStateChanged(auth, async user => {
+ if(!user){
+  location.href = "index.html";
+  return;
+ }
+
+ try{
+  const userSnap = await getDoc(doc(db,"users",user.uid));
+
+  if(userSnap.exists()){
+   const data = userSnap.data();
+
+   document.getElementById("welcomeName").innerText = "Welcome, " + (data.name || data.username || "User");
+
+   const balance = Number(data.balance || 0);
+   const commission = Number(data.commission || 0);
+   const availableBalance = balance + commission;
+
+   document.getElementById("balance").innerText = money(availableBalance);
+   document.getElementById("commission").innerText = money(commission);
+   document.getElementById("todayIncome").innerText = money(data.todayCommission ?? data.todayIncome ?? 0);
+
+   const completed = Number(data.completedTasks ?? data.completed ?? 0);
+   updateProgress(completed,tasks.length);
+  }else{
+   console.log("User document not found in users collection");
+  }
+ }catch(error){
+  console.error("Dashboard user data error:",error);
+  alert("Dashboard data load error: " + error.message);
+ }
+
+ try{
+  const taskSnap = await getDocs(collection(db,"tasks"));
+  const firebaseTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
+
+  if(firebaseTasks.length > 0){
+   tasks = firebaseTasks;
+   renderTasks();
+   updateProgress(
+    Number((await getDoc(doc(db,"users",user.uid))).data()?.completedTasks || 0),
+    tasks.length
+   );
+  }else{
+   tasks = [];
+   renderTasks();
+   updateProgress(0,0);
+  }
+ }catch(error){
+  console.error("Tasks loading error:",error);
+  document.getElementById("taskList").innerHTML =
+   "<p style='text-align:center;padding:15px;color:#a33'>Tasks load nahi ho sake. Firebase permissions check karein.</p>";
+ }
+});
 </script>
 
 </body>
