@@ -67,7 +67,7 @@ select:focus,input:focus{border-color:#2588ed}
 </div>
 
 <div class="balance-card">
-<span>Available Balance</span>
+<span>Total Available Balance (Balance + Commission)</span>
 <h2 id="balance">$0.00</h2>
 </div>
 
@@ -127,7 +127,9 @@ getDoc,
 collection,
 query,
 where,
-getDocs
+getDocs,
+runTransaction,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -146,6 +148,7 @@ const db = getFirestore(app);
 let currentUser = null;
 let completedTasks = 0;
 let userBalance = 0;
+let isSubmitting = false;
 
 const balanceElement = document.getElementById("balance");
 const historyElement = document.getElementById("history");
@@ -170,6 +173,7 @@ try {
 const snap = await getDoc(doc(db, "users", currentUser.uid));
 
 if (!snap.exists()) {
+userBalance = 0;
 balanceElement.textContent = "$0.00";
 lockWithdrawal(0);
 return;
@@ -181,7 +185,13 @@ const balance = Number(data.balance || 0);
 const commission = Number(data.commission || 0);
 
 userBalance = balance + commission;
-completedTasks = Number(data.completed || 0);
+
+completedTasks = Number(
+data.completedTasks ??
+data.completed ??
+data.tasksCompleted ??
+0
+);
 
 balanceElement.textContent = "$" + userBalance.toFixed(2);
 
@@ -226,6 +236,103 @@ amountInput.disabled = false;
 withdrawBtn.disabled = false;
 withdrawBtn.textContent = "Withdraw Now";
 }
+
+withdrawBtn.addEventListener("click", async () => {
+
+if (!currentUser || isSubmitting) return;
+
+const method = methodInput.value;
+const amount = Number(amountInput.value);
+
+if (!method) {
+alert("Please select payment method.");
+return;
+}
+
+if (!Number.isFinite(amount) || amount <= 0) {
+alert("Please enter a valid withdrawal amount.");
+return;
+}
+
+if (amount > userBalance) {
+alert("Insufficient balance. Your available balance is $" + userBalance.toFixed(2));
+return;
+}
+
+if (completedTasks < 12) {
+alert("Complete 12 tasks to unlock withdrawal.");
+return;
+}
+
+isSubmitting = true;
+withdrawBtn.disabled = true;
+withdrawBtn.textContent = "Processing...";
+
+try {
+
+const userRef = doc(db, "users", currentUser.uid);
+const withdrawalRef = doc(collection(db, "withdraws"));
+
+await runTransaction(db, async transaction => {
+
+const userSnap = await transaction.get(userRef);
+
+if (!userSnap.exists()) {
+throw new Error("User account not found.");
+}
+
+const data = userSnap.data();
+
+let balance = Number(data.balance || 0);
+let commission = Number(data.commission || 0);
+
+const totalAvailable = balance + commission;
+
+if (amount > totalAvailable) {
+throw new Error("Insufficient balance. Available: $" + totalAvailable.toFixed(2));
+}
+
+// Deduct commission first, then balance.
+const commissionDeduction = Math.min(commission, amount);
+commission -= commissionDeduction;
+
+const remainingAmount = amount - commissionDeduction;
+balance -= remainingAmount;
+
+transaction.update(userRef, {
+balance: balance,
+commission: commission
+});
+
+transaction.set(withdrawalRef, {
+userId: currentUser.uid,
+method: method,
+amount: amount,
+status: "pending",
+createdAt: serverTimestamp()
+});
+
+});
+
+amountInput.value = "";
+
+await loadUserData();
+await loadHistory();
+
+alert("Withdrawal request submitted successfully!");
+
+} catch (error) {
+console.error("Withdrawal error:", error);
+alert(error.message || "Withdrawal failed. Please try again.");
+} finally {
+isSubmitting = false;
+if (completedTasks >= 12) {
+withdrawBtn.disabled = false;
+withdrawBtn.textContent = "Withdraw Now";
+}
+}
+
+});
 
 async function loadHistory() {
 try {
