@@ -81,6 +81,8 @@ background:linear-gradient(135deg,#673ab7,#8b61d1);
 color:white;font-size:15px;font-weight:bold;
 box-shadow:0 7px 18px rgba(103,58,183,.20)
 }
+
+/* Shop button */
 .deposit-launch{
 position:absolute;right:68px;top:17px;display:block;
 width:auto;margin:0;padding:9px 13px;border:1px solid #ff7777;
@@ -107,6 +109,8 @@ background:linear-gradient(135deg,#673ab7,#8b61d1);
 color:white;border:4px solid white;
 box-shadow:0 6px 18px rgba(103,58,183,.25)
 }
+
+/* Deposit shop */
 .deposit-overlay{
 display:none;position:fixed;inset:0;background:rgba(0,0,0,.76);
 z-index:2000;align-items:center;justify-content:center;padding:10px
@@ -190,6 +194,7 @@ color:white;font-size:17px;font-weight:bold;
 text-shadow:0 1px 2px #8a3500;cursor:pointer
 }
 .deposit-note{font-size:11px;color:#f1c6a7;line-height:1.5;margin-top:10px}
+
 @media(max-width:380px){
 .logo-area{padding-top:17px}
 .logo{width:44px;height:44px}
@@ -226,11 +231,11 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
 
 <div class="balance-card">
   <div class="balance-title">Available Balance</div>
-  <div class="balance" id="balance">PKR 0.00</div>
+  <div class="balance" id="balance">$0.00</div>
   <div class="balance-bottom">
     <div class="balance-item">
       <span>Commission</span>
-      <strong id="commission">PKR 0.00</strong>
+      <strong id="commission">$0.00</strong>
     </div>
     <div class="balance-item">
       <span>Pending</span>
@@ -250,7 +255,7 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
   <div class="stat-card">
     <div class="stat-icon">💰</div>
     <p>Today's Commission</p>
-    <h3 id="todayCommission">PKR 0.00</h3>
+    <h3 id="todayCommission">$0.00</h3>
   </div>
   <div class="stat-card">
     <div class="stat-icon">📋</div>
@@ -536,7 +541,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const money = value => "PKR " + (Number(value) || 0).toFixed(2);
+const money = value => "$" + (Number(value) || 0).toFixed(2);
+const pkrMoney = value => "PKR " + (Number(value) || 0).toFixed(2);
 
 onAuthStateChanged(auth, async user => {
   if(!user){
@@ -567,10 +573,10 @@ onAuthStateChanged(auth, async user => {
 
     document.getElementById("userName").textContent = u.name || "User";
 
-    // Available Balance is read from balance only.
+    // Available Balance is intentionally read from balance only.
     document.getElementById("balance").textContent = money(balance);
     document.getElementById("commission").textContent = money(commission);
-    document.getElementById("pending").textContent = money(pending);
+    document.getElementById("pending").textContent = pkrMoney(pending);
     document.getElementById("completedTasks").textContent = completed;
     document.getElementById("todayCommission").textContent = money(todayCommission);
 
