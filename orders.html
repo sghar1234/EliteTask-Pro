@@ -1,1367 +1,333 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>EliteTask Pro - Orders</title>
 
 <style>
-
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
-
-body{
-font-family:Arial,sans-serif;
-background:#f5f8fa;
-color:#172033;
-padding-bottom:90px;
-}
-
-.topbar{
-height:65px;
-background:linear-gradient(135deg,#063b46,#078d91);
-display:flex;
-align-items:center;
-padding:0 15px;
-color:white;
-}
-
-.back{
-color:white;
-text-decoration:none;
-font-size:25px;
-margin-right:15px;
-}
-
-.logo{
-font-weight:bold;
-font-size:18px;
-}
-
-.container{
-max-width:600px;
-margin:auto;
-padding:20px 15px;
-}
-
-h1{
-font-size:28px;
-margin-bottom:5px;
-}
-
-.subtitle{
-color:#8992a2;
-font-size:13px;
-margin-bottom:18px;
-}
-
-.balance{
-background:linear-gradient(135deg,#07545d,#09a3a0);
-color:white;
-border-radius:20px;
-padding:20px;
-margin-bottom:18px;
-}
-
-.balance small{
-opacity:.8;
-}
-
-.balance strong{
-display:block;
-font-size:32px;
-margin-top:5px;
-}
-
-.card{
-background:white;
-border-radius:22px;
-padding:16px;
-box-shadow:0 6px 20px rgba(0,0,0,.08);
-}
-
-.task-image{
-width:100%;
-height:300px;
-object-fit:contain;
-background:#f3f6f7;
-border-radius:18px;
-margin-bottom:15px;
-}
-
-.task-name{
-font-size:24px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.details{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
-
-.box{
-background:#f7f9fa;
-padding:14px;
-border-radius:14px;
-}
-
-.box small{
-display:block;
-color:#8992a2;
-font-size:10px;
-margin-bottom:5px;
-}
-
-.box strong{
-font-size:19px;
-}
-
-.commission{
-color:#15965a;
-}
-
-.required{
-margin-top:12px;
-padding:14px;
-background:#fff6e5;
-border:1px solid #ffe1a6;
-border-radius:14px;
-}
-
-.required small{
-display:block;
-color:#9b7634;
-}
-
-.required strong{
-display:block;
-color:#c47b00;
-font-size:21px;
-margin-top:4px;
-}
-
-.insufficient{
-margin-top:10px;
-padding:12px;
-background:#fff0f0;
-border:1px solid #ffcaca;
-border-radius:12px;
-color:#d33a3a;
-font-size:13px;
-font-weight:bold;
-text-align:center;
-}
-
-/* RATING */
-
-.rating-box{
-margin-top:15px;
-padding:15px;
-background:#f7f9fa;
-border-radius:15px;
-text-align:center;
-}
-
-.rating-title{
-font-size:14px;
-font-weight:bold;
-margin-bottom:10px;
-}
-
-.stars{
-display:flex;
-justify-content:center;
-gap:7px;
-}
-
-.star{
-font-size:34px;
-color:#c9c9c9;
-cursor:pointer;
-line-height:1;
-}
-
-.star.active{
-color:#ffc107;
-}
-
-.comment-box{
-margin-top:12px;
-}
-
-.comment-box textarea{
-width:100%;
-height:90px;
-border:1px solid #dfe4e8;
-border-radius:12px;
-padding:12px;
-font-family:Arial,sans-serif;
-font-size:14px;
-resize:none;
-outline:none;
-}
-
-button{
-width:100%;
-border:0;
-border-radius:14px;
-padding:15px;
-margin-top:14px;
-background:linear-gradient(135deg,#078d91,#0bb9b0);
-color:white;
-font-weight:bold;
-font-size:15px;
-}
-
-button:disabled{
-background:#aaa;
-}
-
-.message{
-text-align:center;
-background:white;
-padding:35px 20px;
-border-radius:20px;
-color:#777;
-}
-
-.bottom{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:70px;
-background:white;
-display:flex;
-justify-content:space-around;
-align-items:center;
-box-shadow:0 -4px 15px rgba(0,0,0,.1);
-}
-
-.bottom a{
-text-decoration:none;
-color:#777;
-font-size:11px;
-text-align:center;
-}
-
-.bottom span{
-display:block;
-font-size:20px;
-margin-bottom:3px;
-}
-
-.active{
-color:#078d91!important;
-font-weight:bold;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f8fa;color:#172033;padding-bottom:90px}
+.topbar{height:65px;background:linear-gradient(135deg,#063b46,#078d91);display:flex;align-items:center;padding:0 15px;color:white}
+.back{color:white;text-decoration:none;font-size:25px;margin-right:15px}
+.logo{font-weight:bold;font-size:18px}
+.container{max-width:600px;margin:auto;padding:20px 15px}
+h1{font-size:28px;margin-bottom:5px}
+.subtitle{color:#8992a2;font-size:13px;margin-bottom:18px}
+.balance{background:linear-gradient(135deg,#07545d,#09a3a0);color:white;border-radius:20px;padding:20px;margin-bottom:18px}
+.balance small{opacity:.8}
+.balance strong{display:block;font-size:32px;margin-top:5px}
+.card{background:white;border-radius:22px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.task-image{width:100%;height:300px;object-fit:contain;background:#f3f6f7;border-radius:18px;margin-bottom:15px}
+.task-name{font-size:24px;font-weight:bold;margin-bottom:12px}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.box{background:#f7f9fa;padding:14px;border-radius:14px}
+.box small{display:block;color:#8992a2;font-size:10px;margin-bottom:5px}
+.box strong{font-size:19px}
+.commission{color:#15965a}
+.required{margin-top:12px;padding:14px;background:#fff6e5;border:1px solid #ffe1a6;border-radius:14px}
+.required small{display:block;color:#9b7634}
+.required strong{display:block;color:#c47b00;font-size:21px;margin-top:4px}
+.rating-box{margin-top:15px;padding:15px;background:#f7f9fa;border-radius:15px;text-align:center}
+.rating-title{font-size:14px;font-weight:bold;margin-bottom:10px}
+.stars{display:flex;justify-content:center;gap:7px}
+.star{font-size:34px;color:#c9c9c9;cursor:pointer;line-height:1}
+.star.active{color:#ffc107}
+.comment-box{margin-top:12px}
+.comment-box textarea{width:100%;height:90px;border:1px solid #dfe4e8;border-radius:12px;padding:12px;font-family:Arial,sans-serif;font-size:14px;resize:none;outline:none}
+button{width:100%;border:0;border-radius:14px;padding:15px;margin-top:14px;background:linear-gradient(135deg,#078d91,#0bb9b0);color:white;font-weight:bold;font-size:15px}
+button:disabled{background:#aaa}
+.message{text-align:center;background:white;padding:35px 20px;border-radius:20px;color:#777}
+.bottom{position:fixed;bottom:0;left:0;right:0;height:70px;background:white;display:flex;justify-content:space-around;align-items:center;box-shadow:0 -4px 15px rgba(0,0,0,.1)}
+.bottom a{text-decoration:none;color:#777;font-size:11px;text-align:center}
+.bottom span{display:block;font-size:20px;margin-bottom:3px}
+.active{color:#078d91!important;font-weight:bold}
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="topbar">
-
-<a href="dashboard.html"
-class="back">
-←
-</a>
-
-<div class="logo">
-EliteTask Pro
+<a href="dashboard.html" class="back">←</a>
+<div class="logo">EliteTask Pro</div>
 </div>
-
-</div>
-
 
 <div class="container">
-
-
-<h1>
-My Order
-</h1>
-
-<p class="subtitle">
-Complete your order and earn commission.
-</p>
-
+<h1>My Order</h1>
+<p class="subtitle">Complete your order and earn commission.</p>
 
 <div class="balance">
-
-<small>
-Available Balance
-</small>
-
-<strong id="balance">
-$0.00
-</strong>
-
+<small>Available Balance</small>
+<strong id="balance">PKR 0.00</strong>
 </div>
 
+<div id="loading" class="message">Loading current order...</div>
 
-<div id="loading"
-class="message">
+<div id="taskBox" class="card" style="display:none">
 
-Loading current order...
+<img id="taskImage" class="task-image" alt="Task">
 
-</div>
-
-
-<div id="taskBox"
-class="card"
-style="display:none">
-
-
-<img
-id="taskImage"
-class="task-image"
-alt="Task"
->
-
-
-<div
-id="taskName"
-class="task-name"
->
-Task
-</div>
-
+<div id="taskName" class="task-name">Task</div>
 
 <div class="details">
-
-
 <div class="box">
-
-<small>
-ORDER AMOUNT
-</small>
-
-<strong id="taskPrice">
-$0.00
-</strong>
-
+<small>ORDER AMOUNT</small>
+<strong id="taskPrice">PKR 0.00</strong>
 </div>
-
 
 <div class="box commission">
-
-<small>
-COMMISSION
-</small>
-
-<strong id="taskCommission">
-+$0.00
-</strong>
-
+<small>COMMISSION</small>
+<strong id="taskCommission">+PKR 0.00</strong>
 </div>
-
-
 </div>
-
 
 <div class="required">
-
-<small>
-REQUIRED DEPOSIT
-</small>
-
-<strong id="required">
-$0.00
-</strong>
-
+<small>REQUIRED DEPOSIT / SHORTFALL</small>
+<strong id="required">PKR 0.00</strong>
 </div>
-
-
-<div
-id="insufficientBox"
-class="insufficient"
-style="display:none"
->
-Insufficient balance for this order.
-</div>
-
-
-<!-- RATING -->
 
 <div class="rating-box">
-
-<div class="rating-title">
-Rate this order
-</div>
-
+<div class="rating-title">Rate this order</div>
 <div class="stars">
-
-<span
-class="star"
-data-rating="1"
->
-★
-</span>
-
-<span
-class="star"
-data-rating="2"
->
-★
-</span>
-
-<span
-class="star"
-data-rating="3"
->
-★
-</span>
-
-<span
-class="star"
-data-rating="4"
->
-★
-</span>
-
-<span
-class="star"
-data-rating="5"
->
-★
-</span>
-
+<span class="star" data-rating="1">★</span>
+<span class="star" data-rating="2">★</span>
+<span class="star" data-rating="3">★</span>
+<span class="star" data-rating="4">★</span>
+<span class="star" data-rating="5">★</span>
 </div>
-
 </div>
-
-
-<!-- COMMENT -->
 
 <div class="comment-box">
-
-<textarea
-id="orderComment"
-placeholder="Write your comment..."
-></textarea>
-
+<textarea id="orderComment" placeholder="Write your comment..."></textarea>
 </div>
 
-
-<button
-id="completeBtn"
-disabled
->
-Complete Order
-</button>
-
-
+<button id="completeBtn" disabled>Complete Order</button>
 </div>
 
-
-<div
-id="noTask"
-class="message"
-style="display:none"
->
-
-<div style="font-size:45px">
-🎉
+<div id="noTask" class="message" style="display:none">
+<div style="font-size:45px">🎉</div>
+<h3 style="margin:10px 0">All Tasks Completed</h3>
+<p>No more tasks are available.</p>
 </div>
-
-<h3 style="margin:10px 0">
-All Tasks Completed
-</h3>
-
-<p>
-No more tasks are available.
-</p>
-
 </div>
-
-
-</div>
-
 
 <div class="bottom">
-
-
-<a href="dashboard.html">
-
-<span>
-⌂
-</span>
-
-Home
-
-</a>
-
-
-<a href="orders.html"
-class="active">
-
-<span>
-▣
-</span>
-
-Orders
-
-</a>
-
-
-<a href="support.html">
-
-<span>
-💬
-</span>
-
-Support
-
-</a>
-
-
-<a href="profile.html">
-
-<span>
-👤
-</span>
-
-Profile
-
-</a>
-
-
+<a href="dashboard.html"><span>⌂</span>Home</a>
+<a href="orders.html" class="active"><span>▣</span>Orders</a>
+<a href="support.html"><span>💬</span>Support</a>
+<a href="profile.html"><span>👤</span>Profile</a>
 </div>
 
-
 <script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
-
-import {
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
+import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-getAuth,
-onAuthStateChanged
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
-
-import {
-getFirestore,
-doc,
-getDoc,
-updateDoc,
-collection,
-getDocs
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
+getFirestore,doc,getDoc,updateDoc,collection,getDocs
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const firebaseConfig={
-
-apiKey:
-"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-
-authDomain:
-"elitetask-pro.firebaseapp.com",
-
-projectId:
-"elitetask-pro",
-
-storageBucket:
-"elitetask-pro.firebasestorage.app",
-
-messagingSenderId:
-"504295275402",
-
-appId:
-"1:504295275402:web:cf744a5d4e82c72145a673"
-
+apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+authDomain:"elitetask-pro.firebaseapp.com",
+projectId:"elitetask-pro",
+storageBucket:"elitetask-pro.firebasestorage.app",
+messagingSenderId:"504295275402",
+appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 };
 
-
-const app=
-initializeApp(firebaseConfig);
-
-
-const auth=
-getAuth(app);
-
-
-const db=
-getFirestore(app);
-
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
 let userId=null;
-
 let currentTask=null;
-
 let taskIndex=0;
-
 let selectedRating=0;
 
+const stars=document.querySelectorAll(".star");
+const commentInput=document.getElementById("orderComment");
+const completeBtn=document.getElementById("completeBtn");
 
-/* =========================
-   RATING
-========================= */
-
-
-const stars=
-document.querySelectorAll(".star");
-
-
-const commentInput=
-document.getElementById(
-"orderComment"
-);
-
-
-const completeBtn=
-document.getElementById(
-"completeBtn"
-);
-
+const money=value=>"PKR "+(Number(value)||0).toFixed(2);
 
 function checkSubmit(){
-
-const comment=
-commentInput.value.trim();
-
-
-/*
-ONLY RATING + COMMENT
-AND SUFFICIENT BALANCE
-*/
-
-if(
-selectedRating>0 &&
-comment.length>0 &&
-currentTask &&
-window.currentUserBalance >=
-Number(currentTask.price||0)
-){
-
-completeBtn.disabled=false;
-
-}else{
-
-completeBtn.disabled=true;
-
+const comment=commentInput.value.trim();
+completeBtn.disabled=!(selectedRating>0 && comment.length>0);
 }
 
-}
+stars.forEach(star=>{
+star.addEventListener("click",()=>{
+selectedRating=Number(star.dataset.rating);
 
-
-stars.forEach(
-star=>{
-
-star.addEventListener(
-"click",
-()=>{
-
-selectedRating=
-Number(
-star.dataset.rating
-);
-
-
-stars.forEach(
-s=>{
-
-const rating=
-Number(
-s.dataset.rating
-);
-
-
-if(
-rating<=selectedRating
-){
-
-s.classList.add("active");
-
-}else{
-
-s.classList.remove("active");
-
-}
-
+stars.forEach(s=>{
+const rating=Number(s.dataset.rating);
+s.classList.toggle("active",rating<=selectedRating);
 });
-
 
 checkSubmit();
-
+});
 });
 
-});
+commentInput.addEventListener("input",checkSubmit);
 
-
-commentInput.addEventListener(
-"input",
-checkSubmit
-);
-
-
-/* =========================
-   LOGIN
-========================= */
-
-
-onAuthStateChanged(
-auth,
-async user=>{
-
+onAuthStateChanged(auth,async user=>{
 if(!user){
-
 location.href="index.html";
-
 return;
-
 }
 
-
-userId=
-user.uid;
-
-
+userId=user.uid;
 await loadOrder();
-
 });
-
-
-/* =========================
-   LOAD ORDER
-========================= */
-
 
 async function loadOrder(){
-
 try{
-
-
-const userSnap=
-await getDoc(
-doc(
-db,
-"users",
-userId
-)
-);
-
+const userSnap=await getDoc(doc(db,"users",userId));
 
 if(!userSnap.exists()){
-
 showNoTask();
-
 return;
-
 }
 
+const user=userSnap.data();
+const balance=Number(user.balance||0);
 
-const user=
-userSnap.data();
+document.getElementById("balance").textContent=money(balance);
 
+taskIndex=Number(user.currentTaskIndex||0);
 
-/*
-BALANCE ONLY
-COMMISSION IS NOT USED
-*/
-
-const balance=
-Number(
-user.balance||0
-);
-
-
-const commission=
-Number(
-user.commission||0
-);
-
-
-/*
-SAVE CURRENT BALANCE
-FOR BUTTON CHECK
-*/
-
-window.currentUserBalance=
-balance;
-
-
-document
-.getElementById("balance")
-.textContent=
-"$"+
-balance.toFixed(2);
-
-
-taskIndex=
-Number(
-user.currentTaskIndex||0
-);
-
-
-/* LOAD TASKS */
-
-const snap=
-await getDocs(
-collection(
-db,
-"tasks"
-)
-);
-
+const snap=await getDocs(collection(db,"tasks"));
 
 const tasks=[];
-
-
-snap.forEach(
-d=>{
-
-tasks.push({
-
-id:d.id,
-
-...d.data()
-
+snap.forEach(d=>{
+tasks.push({id:d.id,...d.data()});
 });
 
-});
+tasks.sort((a,b)=>Number(a.order||0)-Number(b.order||0));
 
-
-tasks.sort(
-(a,b)=>
-Number(a.order||0)-
-Number(b.order||0)
-);
-
-
-/* NO TASK */
-
-if(
-tasks.length===0 ||
-taskIndex>=tasks.length
-){
-
+if(tasks.length===0 || taskIndex>=tasks.length){
 showNoTask();
-
 return;
-
 }
 
+currentTask=tasks[taskIndex];
 
-currentTask=
-tasks[taskIndex];
+const price=Number(currentTask.price||0);
+const earned=Number(currentTask.commission||0);
+const required=Math.max(price-balance,0);
 
+document.getElementById("loading").style.display="none";
+document.getElementById("taskBox").style.display="block";
 
-const price=
-Number(
-currentTask.price||0
-);
+document.getElementById("taskName").textContent=currentTask.name||"Task";
+document.getElementById("taskPrice").textContent=money(price);
+document.getElementById("taskCommission").textContent="+"+money(earned);
+document.getElementById("required").textContent=money(required);
 
+const image=document.getElementById("taskImage");
+const imageUrl=currentTask.image||currentTask.imageURL||currentTask.imageUrl||"";
 
-const earned=
-Number(
-currentTask.commission||0
-);
-
-
-/*
-==================================
-IMPORTANT
-
-REQUIRED DEPOSIT ONLY USES BALANCE
-
-COMMISSION IS COMPLETELY IGNORED
-
-Example:
-
-Balance = 800
-Order = 1500
-Commission = 3500
-
-Required = 1500 - 800
-Required = 700
-==================================
-*/
-
-
-const required=
-Math.max(
-price-balance,
-0
-);
-
-
-document
-.getElementById("loading")
-.style.display=
-"none";
-
-
-document
-.getElementById("taskBox")
-.style.display=
-"block";
-
-
-document
-.getElementById("taskName")
-.textContent=
-currentTask.name||
-"Task";
-
-
-document
-.getElementById("taskPrice")
-.textContent=
-"$"+
-price.toFixed(2);
-
-
-document
-.getElementById("taskCommission")
-.textContent=
-"+$"+
-earned.toFixed(2);
-
-
-document
-.getElementById("required")
-.textContent=
-"$"+
-required.toFixed(2);
-
-
-/*
-INSUFFICIENT BALANCE MESSAGE
-*/
-
-const insufficientBox=
-document.getElementById(
-"insufficientBox"
-);
-
-
-if(balance<price){
-
-insufficientBox.style.display=
-"block";
-
-insufficientBox.textContent=
-"Insufficient balance. You need $"+
-required.toFixed(2)+
-" more balance to complete this order.";
-
+if(imageUrl){
+image.src=imageUrl;
+image.style.display="block";
 }else{
-
-insufficientBox.style.display=
-"none";
-
+image.style.display="none";
 }
-
-
-/* IMAGE */
-
-const image=
-document.getElementById(
-"taskImage"
-);
-
-
-if(currentTask.image){
-
-image.src=
-currentTask.image;
-
-image.style.display=
-"block";
-
-}else{
-
-image.style.display=
-"none";
-
-}
-
-
-/*
-UPDATE BUTTON
-*/
-
-checkSubmit();
-
 
 }catch(error){
-
-console.log(
-"Load order error:",
-error
-);
-
-
-document
-.getElementById("loading")
-.textContent=
-"Unable to load order.";
-
+console.error(error);
+document.getElementById("loading").textContent="Unable to load order: "+error.message;
+}
 }
 
-}
-
-
-/* =========================
-   COMPLETE ORDER
-========================= */
-
-
-completeBtn.onclick=
-async()=>{
-
-if(!currentTask)
-return;
-
-
-/* RATING */
+completeBtn.onclick=async()=>{
+if(!currentTask)return;
 
 if(selectedRating===0){
-
-alert(
-"Please select a star rating."
-);
-
+alert("Please select a star rating.");
 return;
-
 }
 
-
-/* COMMENT */
-
-const comment=
-commentInput.value.trim();
-
+const comment=commentInput.value.trim();
 
 if(!comment){
-
-alert(
-"Please write your comment."
-);
-
+alert("Please write your comment.");
 return;
-
 }
 
-
-completeBtn.disabled=
-true;
-
-
-completeBtn.textContent=
-"Completing...";
-
+completeBtn.disabled=true;
+completeBtn.textContent="Completing...";
 
 try{
-
-
-const userRef=
-doc(
-db,
-"users",
-userId
-);
-
-
-const userSnap=
-await getDoc(
-userRef
-);
-
+const userRef=doc(db,"users",userId);
+const userSnap=await getDoc(userRef);
 
 if(!userSnap.exists()){
+throw new Error("User record not found.");
+}
 
+const user=userSnap.data();
+
+const balance=Number(user.balance||0);
+const commission=Number(user.commission||0);
+
+const price=Number(currentTask.price||0);
+const earned=Number(currentTask.commission||0);
+
+/* Task price sirf balance se deduct hogi. */
+const required=Math.max(price-balance,0);
+
+if(required>0){
 alert(
-"User account not found."
+"Insufficient Balance!\n\n"+
+"Task Price: "+money(price)+"\n"+
+"Your Balance: "+money(balance)+"\n"+
+"Required Shortfall: "+money(required)
 );
 
-completeBtn.disabled=
-false;
-
-completeBtn.textContent=
-"Complete Order";
-
+completeBtn.disabled=false;
+completeBtn.textContent="Complete Order";
 return;
-
 }
 
+/* Balance se task price minus; commission alag rahegi. */
+const newBalance=balance-price;
+const newCommission=commission+earned;
 
-const user=
-userSnap.data();
+const oldTodayCommission=Number(user.todayCommission||0);
+const newTodayCommission=oldTodayCommission+earned;
 
+const completed=Number(user.completedTasks ?? user.completed ?? 0)+1;
+const nextIndex=taskIndex+1;
 
-/*
-==================================
-GET CURRENT BALANCE
-==================================
-*/
+await updateDoc(userRef,{
+balance:newBalance,
+commission:newCommission,
+todayCommission:newTodayCommission,
+completedTasks:completed,
+completed:completed,
+currentTaskIndex:nextIndex
+});
 
-let balance=
-Number(
-user.balance||0
-);
-
-
-let commission=
-Number(
-user.commission||0
-);
-
-
-const price=
-Number(
-currentTask.price||0
-);
-
-
-const earned=
-Number(
-currentTask.commission||0
-);
-
-
-/*
-==================================
-IMPORTANT SECURITY CHECK
-
-ONLY BALANCE CAN PAY FOR ORDER.
-
-COMMISSION CANNOT PAY FOR ORDER.
-==================================
-*/
-
-
-if(balance<price){
-
-const required=
-price-balance;
-
-
-alert(
-"Insufficient balance.\n\n"+
-"Order Amount: $"+
-price.toFixed(2)+
-"\n"+
-"Your Balance: $"+
-balance.toFixed(2)+
-"\n"+
-"Required: $"+
-required.toFixed(2)
-);
-
-
-completeBtn.disabled=
-false;
-
-
-completeBtn.textContent=
-"Complete Order";
-
-
-return;
-
-}
-
-
-/*
-==================================
-DEDUCT ORDER PRICE FROM BALANCE
-==================================
-*/
-
-const newBalance=
-balance-price;
-
-
-/*
-==================================
-ADD ORDER AMOUNT + EARNED
-COMMISSION
-
-The order amount moves from Balance
-into Commission.
-
-Earned commission is also added.
-
-Example:
-
-Balance = 1500
-Order = 1500
-Earned commission = 3500
-
-New Balance = 0
-New Commission =
-old Commission + 1500 + 3500
-==================================
-*/
-
-const newCommission=
-commission+
-price+
-earned;
-
-
-/*
-==================================
-TODAY'S COMMISSION
-
-Dashboard uses the same commission
-value, so keep it synchronized.
-==================================
-*/
-
-const newTodayCommission=
-newCommission;
-
-
-/*
-==================================
-COMPLETED TASKS
-==================================
-*/
-
-const completed=
-Number(
-user.completedTasks||0
-)+1;
-
-
-/*
-==================================
-NEXT TASK
-==================================
-*/
-
-const nextIndex=
-taskIndex+1;
-
-
-/*
-==================================
-SAVE FIREBASE
-==================================
-*/
-
-await updateDoc(
-userRef,
-{
-
-balance:
-newBalance,
-
-commission:
-newCommission,
-
-todayCommission:
-newTodayCommission,
-
-completedTasks:
-completed,
-
-currentTaskIndex:
-nextIndex
-
-}
-);
-
-
-/*
-==================================
-SUCCESS
-==================================
-*/
-
-alert(
-"Order completed successfully!"
-);
-
-
-/*
-RESET PAGE
-*/
-
+alert("Order completed successfully!");
 location.reload();
 
-
 }catch(error){
-
-console.log(
-"Complete order error:",
-error
-);
-
-
-alert(
-"Order complete nahi ho saka.\n\n"+
-error.message
-);
-
-
-completeBtn.disabled=
-false;
-
-
-completeBtn.textContent=
-"Complete Order";
-
+console.error(error);
+alert("Error: "+error.message);
+completeBtn.disabled=false;
+completeBtn.textContent="Complete Order";
 }
-
 };
 
-
-/* =========================
-   NO TASK
-========================= */
-
-
 function showNoTask(){
-
-document
-.getElementById("loading")
-.style.display=
-"none";
-
-
-document
-.getElementById("taskBox")
-.style.display=
-"none";
-
-
-document
-.getElementById("noTask")
-.style.display=
-"block";
-
+document.getElementById("loading").style.display="none";
+document.getElementById("taskBox").style.display="none";
+document.getElementById("noTask").style.display="block";
 }
-
 </script>
 
-
 </body>
-
 </html>
