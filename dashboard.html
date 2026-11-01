@@ -3,595 +3,331 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>EliteTask Pro Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EliteTask Pro - Dashboard</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
- --purple:#7900ff;
- --violet:#b52cff;
- --gold:#e9b94f;
- --gold2:#ffe6a0;
- --black:#10051f;
- --dark:#1d0a35;
- --text:#211333;
- --muted:#877b94;
-}
 body{
  font-family:Arial,sans-serif;
- background:linear-gradient(145deg,#f7f0ff,#fff,#eee4fa);
- color:var(--text);
- padding-bottom:95px;
+ background:#f5f1fa;
+ color:#211b2d;
+ padding-bottom:110px;
 }
-a{text-decoration:none;color:inherit}
-button{font-family:inherit;cursor:pointer;border:0}
-.header{
- background:
- radial-gradient(ellipse at 80% 0%,#6412a8 0%,transparent 45%),
- linear-gradient(120deg,#090313,#21063e,#10051f);
- padding:17px 17px 24px;
- color:white;
- border-radius:0 0 25px 25px;
- position:relative;
- overflow:hidden;
+.topbar{
+ background:linear-gradient(135deg,#10091e,#24103e,#120b20);
+ color:#fff;padding:22px 18px 28px;
+ border-radius:0 0 28px 28px;
+ box-shadow:0 7px 22px #160b2d40;
 }
-.header:after{
- content:"";position:absolute;width:230px;height:230px;
- border:1px solid #a94aff40;border-radius:50%;
- right:-100px;top:-120px;
- box-shadow:0 0 30px #9b35ff30;
-}
-.header-row{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
-.brand{display:flex;align-items:center;gap:11px}
-.logo{
- width:48px;height:48px;border-radius:15px;
- display:flex;align-items:center;justify-content:center;
- font-size:20px;font-weight:900;color:#fff;
- background:linear-gradient(145deg,#f9d77b,#a96b13);
- border:2px solid #ffe6a0;
- box-shadow:0 0 15px #e9b94f80;
-}
-.brand-name{font-size:18px;font-weight:900}
-.brand-sub{font-size:10px;color:#e9d3ff;margin-top:4px;letter-spacing:1px}
-.header-actions{display:flex;gap:10px}
-.header-icon{
- width:39px;height:39px;border-radius:13px;
- display:flex;align-items:center;justify-content:center;
- background:#ffffff18;border:1px solid #ffffff30;font-size:18px;
+.top-head{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;font-weight:900;color:#f5d77d}
+.logo small{display:block;color:#e8dff4;font-size:12px;font-weight:normal;margin-top:6px}
+.support-top{
+ background:linear-gradient(135deg,#f8df91,#c99b36);
+ border:0;padding:10px 13px;border-radius:22px;
+ color:#241331;font-weight:bold;font-size:12px;
 }
 .welcome{
- margin-top:22px;padding:17px;
- border-radius:19px;
- background:linear-gradient(120deg,#fff,#f0e4ff);
- color:#24103c;
- box-shadow:0 7px 20px #0002;
- position:relative;z-index:1;
+ margin-top:25px;background:linear-gradient(110deg,#f8e8bd,#fff8e8);
+ padding:17px;border-radius:18px;color:#28153c;
 }
-.welcome small{font-size:10px;color:#8b6da7;font-weight:bold;letter-spacing:1px}
-.welcome h2{font-size:22px;margin-top:7px}
-.welcome p{font-size:12px;color:#78678a;margin-top:6px}
+.welcome h2{font-size:19px;margin-bottom:5px}
+.welcome p{font-size:12px;color:#695b70}
 
 .balance-card{
- margin:-1px 15px 17px;
- transform:translateY(0);
- background:
- radial-gradient(circle at 90% 0%,#6c16b9 0%,transparent 40%),
- linear-gradient(120deg,#10051e,#260344,#10051e);
- color:#fff;border-radius:22px;
- padding:18px;
- border:1px solid #b55aff;
- box-shadow:0 8px 22px #6e1bbd35, inset 0 0 20px #9a2cff25;
+ margin:-1px 15px 20px;
+ background:linear-gradient(135deg,#30134e,#160b28,#452064);
+ color:white;padding:23px 20px;border-radius:21px;
+ box-shadow:0 9px 22px #24103845;border:1px solid #b68a45;
 }
-.balance-main{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.balance-label{font-size:12px;color:#e8d6ff}
-.balance-number{font-size:32px;font-weight:900;margin-top:7px;color:#fff4d4}
-.wallet-icon{font-size:38px;color:var(--gold)}
-.withdraw-mini{
- background:linear-gradient(135deg,#fff0b8,#d99a28);
- color:#2a1600;padding:12px 15px;border-radius:30px;
- font-size:12px;font-weight:900;white-space:nowrap;
- box-shadow:0 0 12px #f4c65d60;
+.balance-card h3{font-size:14px;color:#e8d9f6;font-weight:normal}
+.balance-card h1{color:#f7d77e;font-size:34px;margin:13px 0 20px}
+.balance-bottom{display:flex;justify-content:space-between;align-items:center}
+.balance-bottom span{font-size:12px;color:#e4d8ee}
+.balance-bottom a{
+ background:linear-gradient(135deg,#ffe9a6,#c99a39);
+ color:#251432;padding:11px 18px;border-radius:20px;
+ text-decoration:none;font-size:13px;font-weight:bold;
 }
-.balance-bottom{
- display:grid;grid-template-columns:1fr 1fr;
- border-top:1px solid #ffffff35;margin-top:16px;padding-top:13px;
+.container{padding:0 15px}
+.section-title{font-size:18px;margin:22px 0 14px;color:#241336}
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.action{
+ text-align:center;background:white;border-radius:15px;padding:15px 4px;
+ box-shadow:0 3px 12px #24103810;text-decoration:none;color:#28143c;
+ border:1px solid #eee5f5;
 }
-.balance-item small{font-size:10px;color:#d9c5ef}
-.balance-item strong{display:block;font-size:17px;margin-top:5px;color:#ffe6a0}
-.balance-item+ .balance-item{border-left:1px solid #ffffff35;padding-left:16px}
-
-.quick-actions{
- display:grid;grid-template-columns:repeat(4,1fr);
- gap:9px;padding:0 14px;margin-top:18px;
+.action .ico{
+ width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+ margin:0 auto 8px;border-radius:13px;
+ background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px;
 }
-.quick-action{
- background:linear-gradient(145deg,#fff,#f0e7fb);
- border:1px solid #d8c4ef;border-radius:17px;
- padding:13px 3px;text-align:center;
- box-shadow:0 5px 12px #38105b17;
+.action span{font-size:11px;font-weight:bold}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.box{
+ background:white;border-radius:16px;padding:17px;
+ box-shadow:0 3px 13px #2410380d;border:1px solid #eee5f5;
 }
-.quick-icon{
- width:39px;height:39px;border-radius:12px;margin:0 auto 7px;
- display:flex;align-items:center;justify-content:center;
- background:linear-gradient(145deg,#a64aff,#420078);
- color:#fff;font-size:20px;
- box-shadow:0 3px 9px #7300bd55;
-}
-.quick-action span{font-size:10px;font-weight:900}
-
-.section-heading{
- margin:19px 16px 11px;
- padding:11px 14px;
- border-radius:14px;
- background:linear-gradient(100deg,#10051f,#390064,#10051f);
- color:white;
- border:1px solid #a84cff;
- box-shadow:0 4px 12px #55009925;
- display:flex;justify-content:space-between;align-items:center;
-}
-.section-heading h3{font-size:14px}
-.section-heading span{font-size:10px;color:#ffe19a}
-
-.stats-grid{
- display:grid;grid-template-columns:1fr 1fr;
- gap:10px;padding:0 15px;
-}
-.stat-card{
- background:linear-gradient(145deg,#fff,#f2e8ff);
- border:1px solid #d9c4f2;border-radius:17px;
- padding:13px;box-shadow:0 4px 12px #3e126319;
-}
-.stat-top{display:flex;align-items:center;gap:10px}
-.stat-icon{
- width:37px;height:37px;border-radius:50%;
- background:linear-gradient(145deg,#c38aff,#6500b8);
- color:#fff;display:flex;align-items:center;justify-content:center;
- font-size:18px;box-shadow:0 0 10px #8a24d955;
-}
-.stat-card small{display:block;color:#79658c;font-size:10px;margin-top:10px}
-.stat-card strong{font-size:20px;display:block;margin-top:5px;color:#26113c}
-
+.box h4{font-size:12px;color:#81748c;font-weight:normal;margin-bottom:10px}
+.box span{font-size:21px;color:#35174e;font-weight:bold}
 .progress-card{
- margin:15px;background:linear-gradient(120deg,#10051f,#30004f);
- border:1px solid #a746ff;border-radius:18px;
- padding:16px;color:#fff;
- box-shadow:0 5px 15px #5e0b9e35;
+ margin-top:17px;padding:18px;background:linear-gradient(135deg,#2c1247,#160b28);
+ color:white;border-radius:18px;box-shadow:0 5px 15px #24103825;
 }
-.progress-head{display:flex;justify-content:space-between;align-items:center}
-.progress-head strong{font-size:14px}
-.progress-head span{font-size:13px;color:#ffe19a;font-weight:bold}
-.progress-track{height:9px;background:#ffffff35;border-radius:20px;margin-top:13px;overflow:hidden}
+.progress-head{display:flex;justify-content:space-between;margin-bottom:13px;font-size:13px}
+.progress-track{background:#59436b;height:9px;border-radius:20px;overflow:hidden}
 .progress-fill{
- height:100%;width:0%;border-radius:20px;
- background:linear-gradient(90deg,#a000ff,#edbaff);
- box-shadow:0 0 10px #c56aff;
- transition:width .3s;
+ width:0%;height:100%;
+ background:linear-gradient(90deg,#d5aa4c,#ffe9a1);border-radius:20px;
 }
-.progress-note{font-size:10px;color:#ddc8f3;margin-top:8px}
+.task-heading{display:flex;justify-content:space-between;align-items:center;margin:24px 0 13px}
+.task-heading h2{font-size:18px}
+.task-heading span{font-size:12px;color:#97702d}
+#taskList{display:grid;grid-template-columns:1fr;gap:14px}
+.product-card{
+ display:flex;align-items:center;gap:13px;padding:14px;border-radius:18px;
+ background:linear-gradient(135deg,#fff9df,#f4df9b,#d5ad4e);
+ border:1.5px solid #b98a27;box-shadow:0 5px 15px rgba(120,83,15,.20);
+}
+.product-card img{
+ width:90px;height:95px;object-fit:cover;border-radius:13px;
+ border:2px solid #c69a3b;background:#fff4d1;
+}
+.product-info{flex:1;min-width:0}
+.product-info h3{color:#241334;font-size:16px;font-weight:800;margin:4px 0 8px}
+.product-info p{color:#493516;font-size:12px;margin-top:7px}
+.start-btn{
+ margin-top:10px;background:linear-gradient(135deg,#241033,#482064);
+ color:#ffe49a;border:1px solid #d2a843;border-radius:25px;
+ padding:11px 18px;font-weight:bold;
+}
+.withdraw-btn,.support-btn{
+ width:100%;margin-top:13px;padding:14px;border:0;border-radius:13px;
+ font-weight:bold;font-size:14px;
+ background:linear-gradient(135deg,#d8b45d,#ffe9a5);color:#271638;
+}
+.support-btn{background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d}
 
-.order-card{
- margin:0 15px;background:linear-gradient(145deg,#fff,#f3eaff);
- border:1px solid #d8c2f1;border-radius:20px;padding:14px;
- box-shadow:0 5px 15px #42116c1c;
+/* INDIVIDUAL GOLDEN BOTTOM NAV BOXES */
+.navbar{
+ position:fixed;
+ left:0;right:0;bottom:0;
+ z-index:9999;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:6px;
+ padding:12px 7px;
+ background:linear-gradient(135deg,#160b29,#2b1243);
+ border-top:2px solid #d6ad50;
+ box-shadow:0 -5px 20px rgba(20,8,35,.35);
 }
-.task-card{display:flex;gap:12px;align-items:center}
-.task-image{
- width:85px;height:85px;object-fit:cover;
- border-radius:14px;background:#eadcf9;flex-shrink:0;
+.navbar a{
+ flex:1;
+ min-width:0;
+ height:62px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:5px;
+ text-decoration:none;
+ color:#30163f!important;
+ background:linear-gradient(145deg,#fff8d9 0%,#f5df9b 35%,#dfba5d 70%,#c99a3d 100%);
+ border:2px solid #f8df91;
+ border-radius:13px;
+ box-shadow:0 3px 9px rgba(0,0,0,.28),inset 0 2px 3px rgba(255,255,255,.8);
+ font-size:21px;
+ font-weight:bold;
+ transition:transform .2s,box-shadow .2s;
 }
-.task-info{flex:1;min-width:0}
-.task-info h4{font-size:14px;margin-bottom:7px}
-.task-info p{font-size:11px;margin-top:5px;color:#645270}
-.task-commission{color:#18813e!important;font-weight:bold}
-.task-number{
- display:inline-block;background:#ead8ff;color:#6500a8;
- border-radius:7px;padding:5px 8px;font-size:10px;font-weight:bold;
+.navbar a span{
+ color:#30163f!important;
+ font-size:10px;
+ font-weight:900;
 }
-.order-button{
- width:100%;padding:13px;margin-top:14px;border-radius:13px;
- background:linear-gradient(100deg,#6e00c9,#b12cff);
- color:white;font-size:13px;font-weight:900;
- box-shadow:0 4px 12px #7600c744;
+.navbar a.active{
+ background:linear-gradient(145deg,#ffeeb1,#e4bd58,#c99731);
+ border:2px solid #fff1bd;
+ box-shadow:0 0 12px rgba(255,215,105,.8),inset 0 2px 4px rgba(255,255,255,.8);
+ transform:translateY(-5px);
 }
-.loading{text-align:center;padding:22px;color:#887b96;font-size:12px}
-.empty-order{text-align:center;padding:20px 10px}
-.empty-order div{font-size:34px}
-.empty-order h4{margin:9px 0 5px}
-.empty-order p{font-size:11px;color:#82758e}
-.grab-section{padding:0 15px;margin-top:15px}
-.grab-btn{
- width:100%;padding:16px;border-radius:16px;
- background:radial-gradient(circle at 50% 0%,#8f22e5,#160326);
- border:1px solid #d18aff;color:#ffe5a2;
- font-size:15px;font-weight:900;
- box-shadow:0 5px 17px #6200a844;
-}
+.navbar a:active{transform:scale(.94)}
 
-.bottom-nav{
- position:fixed;bottom:0;left:0;right:0;z-index:20;
- height:76px;background:linear-gradient(110deg,#10051f,#290047,#10051f);
- border-top:1px solid #a74aff;
- display:flex;justify-content:space-around;align-items:center;
- padding-bottom:env(safe-area-inset-bottom);
- box-shadow:0 -5px 20px #3e006e30;
+.popup{
+ display:none;position:fixed;inset:0;background:#10091dcc;
+ align-items:center;justify-content:center;z-index:200;padding:20px;
 }
-.nav-item{
- display:flex;flex-direction:column;align-items:center;gap:5px;
- color:#d8c1ef;font-size:10px;font-weight:bold;min-width:55px;
+.popup-content{
+ background:white;width:100%;max-width:360px;padding:22px;
+ border-radius:20px;text-align:center;
 }
-.nav-icon{font-size:20px}
-.nav-item.active{color:#ffdf8b}
-.nav-item.active .nav-icon{filter:drop-shadow(0 0 6px #e8b94f)}
-
-.overlay{
- position:fixed;inset:0;background:#10051fdd;z-index:50;
- display:none;align-items:flex-end;
+.popup-content h2{color:#32164c;margin-bottom:15px}
+.popup-content img{
+ width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px;
 }
-.deposit-box{
- width:100%;max-height:88vh;overflow:auto;
- background:linear-gradient(145deg,#fff,#f4eaff);
- border-radius:24px 24px 0 0;padding:20px 17px 30px;
+.popup-content p{margin:12px 0}
+#closePopup{
+ width:100%;padding:13px;border:0;border-radius:12px;
+ background:linear-gradient(135deg,#35164f,#160b28);
+ color:#f5d77d;font-weight:bold;
 }
-.deposit-head{display:flex;justify-content:space-between;align-items:center}
-.deposit-head h3{font-size:19px;color:#3c155b}
-.close-btn{
- width:35px;height:35px;border-radius:50%;
- background:#eadbfa;color:#501080;font-size:20px;
+@media(max-width:360px){
+ .quick-actions{gap:5px}
+ .action span{font-size:10px}
+ .balance-card h1{font-size:29px}
+ .product-card img{width:78px;height:85px}
+ .product-info h3{font-size:14px}
+ .start-btn{padding:9px 13px;font-size:12px}
+ .navbar{gap:4px;padding:10px 5px}
+ .navbar a{height:56px;border-radius:11px}
+ .navbar a span{font-size:9px}
 }
-.deposit-intro{font-size:11px;color:#806d91;margin:9px 0 15px}
-.payment-box{
- background:#fff;border:1px solid #ddc8f2;
- border-radius:14px;padding:14px;margin-bottom:14px;
-}
-.payment-box strong{font-size:13px;color:#45166b}
-.payment-box p{font-size:12px;margin-top:7px;color:#756382}
-.payment-box small{display:block;margin-top:7px;color:#986b20}
-.amount-title{font-size:13px;font-weight:bold;margin:15px 0 10px}
-.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.amount-btn{
- padding:12px 4px;border:1px solid #ddc7f0;
- background:#fff;border-radius:11px;color:#4c1b70;
- font-size:12px;font-weight:bold;
-}
-.amount-btn.selected{background:#7200c8;color:#fff;border-color:#7200c8}
-.custom-input{
- width:100%;padding:13px;border:1px solid #ddc7f0;
- border-radius:12px;background:#fff;font-size:14px;margin-top:12px;
-}
-.upload-label{
- display:block;padding:13px;border:1px dashed #9c59d0;
- border-radius:12px;text-align:center;margin-top:12px;
- font-size:12px;color:#68239a;background:#fff;
-}
-.upload-label input{display:none}
-#previewImage{display:none;width:100%;max-height:150px;object-fit:contain;margin-top:10px;border-radius:10px}
-.deposit-submit{
- width:100%;padding:14px;border-radius:13px;
- background:linear-gradient(100deg,#6500b5,#a52aff);
- color:#fff;font-weight:900;margin-top:15px;
-}
-.demo-note{font-size:10px;color:#8b7b98;text-align:center;line-height:1.5;margin-top:12px}
 </style>
 </head>
 
 <body>
 
-<header class="header">
- <div class="header-row">
-  <div class="brand">
-   <div class="logo">ET</div>
-   <div>
-    <div class="brand-name">EliteTask Pro</div>
-    <div class="brand-sub">EARN • COMPLETE • GROW</div>
-   </div>
+<header class="topbar">
+ <div class="top-head">
+  <div class="logo">
+   👑 EliteTask Pro
+   <small id="welcomeName">Welcome</small>
   </div>
-  <div class="header-actions">
-   <div class="header-icon">♧</div>
-   <a href="profile.html" class="header-icon">👤</a>
-  </div>
+  <a href="support.html">
+   <button class="support-top">💬 Customer Service</button>
+  </a>
  </div>
-
  <div class="welcome">
-  <small>WELCOME BACK</small>
-  <h2>Hello, <span id="userName">User</span> 👋</h2>
-  <p>Manage your tasks and earnings</p>
+  <h2>Welcome Back 👋</h2>
+  <p>Your premium task dashboard is ready.</p>
  </div>
 </header>
 
-<section class="balance-card">
- <div class="balance-main">
-  <div>
-   <div class="balance-label">AVAILABLE BALANCE</div>
-   <div class="balance-number" id="balance">$0.00</div>
-  </div>
-  <div style="text-align:right">
-   <div class="wallet-icon">💳</div>
-   <a href="withdraw.html" class="withdraw-mini">Withdraw →</a>
-  </div>
- </div>
+<div class="balance-card">
+ <h3>💎 Available Account Balance</h3>
+ <h1 id="balance">$0.00</h1>
  <div class="balance-bottom">
-  <div class="balance-item">
-   <small>👑 COMMISSION</small>
-   <strong id="commission">$0.00</strong>
-  </div>
-  <div class="balance-item">
-   <small>◷ PENDING</small>
-   <strong id="pending">PKR 0.00</strong>
-  </div>
+  <span>Manage your earnings</span>
+  <a href="withdraw.html">Withdraw ↗</a>
  </div>
-</section>
-
-<section class="quick-actions">
- <a href="#" class="quick-action" onclick="openDeposit();return false">
-  <div class="quick-icon">▤</div><span>Deposit</span>
- </a>
- <a href="withdraw.html" class="quick-action">
-  <div class="quick-icon">↗</div><span>Withdraw</span>
- </a>
- <a href="orders.html" class="quick-action">
-  <div class="quick-icon">▣</div><span>Orders</span>
- </a>
- <a href="support.html" class="quick-action">
-  <div class="quick-icon">♧</div><span>Support</span>
- </a>
-</section>
-
-<div class="section-heading">
- <h3>▥ &nbsp; ACCOUNT OVERVIEW</h3><span>VIEW ALL →</span>
 </div>
 
-<section class="stats-grid">
- <div class="stat-card">
-  <div class="stat-top">
-   <div class="stat-icon">✓</div>
-   <b>Completed Tasks</b>
+<main class="container">
+ <h2 class="section-title">Quick Actions</h2>
+ <div class="quick-actions">
+  <a class="action" href="recharge.html"><div class="ico">💳</div><span>Recharge</span></a>
+  <a class="action" href="withdraw.html"><div class="ico">💰</div><span>Withdraw</span></a>
+  <a class="action" href="orders.html"><div class="ico">📦</div><span>My Orders</span></a>
+  <a class="action" href="support.html"><div class="ico">💬</div><span>Support</span></a>
+ </div>
+
+ <h2 class="section-title">Account Overview</h2>
+ <div class="stats">
+  <div class="box"><h4>Total Orders</h4><span id="orders">0</span></div>
+  <div class="box"><h4>Total Commission</h4><span id="commission">$0</span></div>
+  <div class="box"><h4>Today's Income</h4><span id="todayIncome">$0</span></div>
+  <div class="box"><h4>VIP Level</h4><span>VIP 1</span></div>
+ </div>
+
+ <div class="progress-card">
+  <div class="progress-head">
+   <b>Task Progress</b>
+   <span id="taskProgressText">0% Completed</span>
   </div>
-  <small>COMPLETED</small>
-  <strong id="completedTasks">0</strong>
- </div>
-
- <div class="stat-card">
-  <div class="stat-top">
-   <div class="stat-icon">◆</div>
-   <b>Today's Commission</b>
+  <div class="progress-track">
+   <div class="progress-fill" id="taskProgressBar"></div>
   </div>
-  <small>TODAY'S EARNING</small>
-  <strong id="todayCommission">$0.00</strong>
  </div>
 
- <div class="stat-card">
-  <div class="stat-top">
-   <div class="stat-icon">▤</div>
-   <b>Total Tasks</b>
-  </div>
-  <small>AVAILABLE TASKS</small>
-  <strong id="totalTasks">0</strong>
+ <div class="task-heading">
+  <h2>🔥 Available Tasks</h2>
+  <span>Start earning</span>
  </div>
+ <div id="taskList">No Task Available</div>
 
- <div class="stat-card">
-  <div class="stat-top">
-   <div class="stat-icon">#</div>
-   <b>Current Task</b>
-  </div>
-  <small>TASK NUMBER</small>
-  <strong id="currentTaskNumber">0</strong>
- </div>
-</section>
+ <a href="withdraw.html"><button class="withdraw-btn">💰 Withdraw</button></a>
+ <a href="orders.html"><button class="support-btn">📦 My Orders</button></a>
+</main>
 
-<section class="progress-card">
- <div class="progress-head">
-  <strong>Task Progress</strong>
-  <span id="taskProgressText">0%</span>
- </div>
- <div class="progress-track">
-  <div class="progress-fill" id="taskProgressBar"></div>
- </div>
- <div class="progress-note">Complete more tasks to earn more!</div>
-</section>
-
-<div class="section-heading">
- <h3>★ &nbsp; CURRENT ORDER</h3><span>ACTIVE TASK</span>
-</div>
-
-<section class="order-card">
- <div id="currentOrder">
-  <div class="loading">Loading your current order...</div>
- </div>
-</section>
-
-<div class="grab-section">
- <button class="grab-btn" onclick="location.href='orders.html'">
-  👑 &nbsp; START GRABBING ORDERS &nbsp; 🚀
- </button>
-</div>
-
-<nav class="bottom-nav">
- <a href="dashboard.html" class="nav-item active">
-  <span class="nav-icon">⌂</span><span>Home</span>
- </a>
- <a href="orders.html" class="nav-item">
-  <span class="nav-icon">▣</span><span>Orders</span>
- </a>
- <a href="support.html" class="nav-item">
-  <span class="nav-icon">●</span><span>Support</span>
- </a>
- <a href="profile.html" class="nav-item">
-  <span class="nav-icon">♙</span><span>Profile</span>
- </a>
+<nav class="navbar">
+ <a href="dashboard.html" class="active">🏠<span>Home</span></a>
+ <a href="recharge.html">💳<span>Recharge</span></a>
+ <a href="orders.html">📦<span>Orders</span></a>
+ <a href="withdraw.html">💰<span>Withdraw</span></a>
+ <a href="profile.html">👤<span>Profile</span></a>
 </nav>
 
-<div class="overlay" id="depositOverlay" onclick="overlayClick(event)">
- <div class="deposit-box" onclick="event.stopPropagation()">
-  <div class="deposit-head">
-   <h3>Deposit Shop</h3>
-   <button class="close-btn" onclick="closeDeposit()">×</button>
-  </div>
-  <p class="deposit-intro">Select an amount and follow payment instructions.</p>
-
-  <div class="payment-box">
-   <strong>EasyPaisa Payment</strong>
-   <p>Account Name: ***</p>
-   <p>Account Number: ***</p>
-   <small>Use the payment details provided by your administrator.</small>
-  </div>
-
-  <div id="depositSelection">
-   <div class="amount-title">Select Deposit Amount</div>
-   <div class="amount-grid">
-    <button class="amount-btn" onclick="selectAmount(800,this)">800</button>
-    <button class="amount-btn" onclick="selectAmount(2000,this)">2,000</button>
-    <button class="amount-btn" onclick="selectAmount(5000,this)">5,000</button>
-    <button class="amount-btn" onclick="selectAmount(8000,this)">8,000</button>
-    <button class="amount-btn" onclick="selectAmount(10000,this)">10,000</button>
-    <button class="amount-btn" onclick="selectAmount(20000,this)">20,000</button>
-    <button class="amount-btn" onclick="selectAmount(30000,this)">30,000</button>
-    <button class="amount-btn" onclick="selectAmount(50000,this)">50,000</button>
-    <button class="amount-btn" onclick="selectAmount(100000,this)">100,000</button>
-   </div>
-   <input class="custom-input" type="number" id="customAmount"
-    placeholder="Or enter custom amount" oninput="customAmountChanged()">
-   <button class="deposit-submit" onclick="backToDepositSelection()">Continue</button>
-  </div>
-
-  <div id="depositPayment" style="display:none">
-   <div class="payment-box">
-    <strong>Selected Amount</strong>
-    <p id="selectedAmountText">PKR 0</p>
-   </div>
-   <label class="upload-label">
-    📷 Upload Payment Screenshot
-    <input type="file" id="screenshotInput" accept="image/*" onchange="previewScreenshot(event)">
-   </label>
-   <img id="previewImage" alt="Payment screenshot preview">
-   <button class="deposit-submit" onclick="submitDemoDeposit()">Submit Deposit Request</button>
-   <button class="amount-btn" style="width:100%;margin-top:9px" onclick="backToDepositSelection()">Back</button>
-  </div>
-  <p class="demo-note">Demo deposit interface. Payment verification and automatic balance update are not connected.</p>
+<div class="popup" id="popup">
+ <div class="popup-content">
+  <h2>Task Details</h2>
+  <img id="popupImage" src="" alt="Task Image">
+  <h3 id="popupName">Task Name</h3>
+  <p>Task Price: <b id="popupPrice">Rs 0</b></p>
+  <p style="color:red;font-weight:bold" id="requiredBalance"></p>
+  <button id="closePopup">Submit Task</button>
  </div>
 </div>
 
+<script type="module" src="script.js"></script>
 <script>
-let selectedDepositAmount=0;
-let screenshotFile=null;
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let selectedTask = null;
 
-function openDeposit(){
- document.getElementById("depositOverlay").style.display="flex";
+function loadTasks(){
+ let html = "";
+ if(tasks.length === 0){
+  html = "<h3 style='text-align:center;padding:20px;color:#735c31'>No Task Available</h3>";
+ }else{
+  tasks.forEach((task,index)=>{
+   html += `
+   <div class="product-card">
+    <img src="${task.image || ''}" alt="Task">
+    <div class="product-info">
+     <h3>${task.name || 'Task'}</h3>
+     <p>Task Price: <b>Rs ${task.reward || 0}</b></p>
+     <p>Commission: <b>Rs ${task.commission || 0}</b></p>
+     <button class="start-btn" onclick="openTask(${index})">🚀 Start Task</button>
+    </div>
+   </div>`;
+  });
+ }
+ document.getElementById("taskList").innerHTML=html;
 }
-function closeDeposit(){
- document.getElementById("depositOverlay").style.display="none";
-}
-function overlayClick(event){
- if(event.target.id==="depositOverlay")closeDeposit();
-}
-function selectAmount(amount,button){
- selectedDepositAmount=amount;
- document.getElementById("customAmount").value="";
- document.querySelectorAll(".amount-btn").forEach(b=>b.classList.remove("selected"));
- button.classList.add("selected");
-}
-function customAmountChanged(){
- selectedDepositAmount=Number(document.getElementById("customAmount").value||0);
- document.querySelectorAll(".amount-btn").forEach(b=>b.classList.remove("selected"));
-}
-function backToDepositSelection(){
- if(selectedDepositAmount<=0){
-  alert("Please select or enter a deposit amount.");
+loadTasks();
+
+window.openTask=function(index){
+ selectedTask=tasks[index];
+ let balance=parseFloat(document.getElementById("balance").innerText.replace(/[^0-9.-]/g,""))||0;
+ let price=parseFloat(selectedTask.reward)||0;
+ if(balance<price){
+  alert("❌ Insufficient Balance\n\nRequired Balance: Rs "+price+"\nYour Balance: "+balance);
   return;
  }
- document.getElementById("selectedAmountText").textContent=
-  "PKR "+selectedDepositAmount.toLocaleString("en-PK");
- document.getElementById("depositSelection").style.display="none";
- document.getElementById("depositPayment").style.display="block";
-}
-function previewScreenshot(event){
- const file=event.target.files[0];
- if(!file)return;
- screenshotFile=file;
- const reader=new FileReader();
- reader.onload=function(){
-  const img=document.getElementById("previewImage");
-  img.src=reader.result;
-  img.style.display="block";
- };
- reader.readAsDataURL(file);
-}
-function submitDemoDeposit(){
- if(!screenshotFile){
-  alert("Please upload your payment screenshot.");
-  return;
- }
- alert("Demo only: Payment verification and balance update are not connected.");
-}
-function money(value){
- return "$"+Number(value||0).toFixed(2);
-}
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,function(c){
-  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
- });
-}
-</script>
-
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import {getAuth,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import {getFirestore,doc,getDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-const firebaseConfig={
- apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
- authDomain:"elitetask-pro.firebaseapp.com",
- projectId:"elitetask-pro",
- storageBucket:"elitetask-pro.firebasestorage.app",
- messagingSenderId:"504295275402",
- appId:"1:504295275402:web:cf744a5d4e82c72145a673"
+ document.getElementById("popupImage").src=selectedTask.image||"";
+ document.getElementById("popupName").innerText=selectedTask.name||"Task";
+ document.getElementById("popupPrice").innerText="Rs "+price;
+ document.getElementById("popup").style.display="flex";
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
+document.getElementById("closePopup").onclick=function(){
+ if(!selectedTask)return;
+ let orders=JSON.parse(localStorage.getItem("orders"))||[];
+ orders.push({
+  image:selectedTask.image,
+  name:selectedTask.name,
+  price:selectedTask.reward,
+  commission:selectedTask.commission||0,
+  status:"Pending",
+  date:new Date().toLocaleString()
+ });
+ localStorage.setItem("orders",JSON.stringify(orders));
+ document.getElementById("orders").innerText=orders.length;
+ document.getElementById("popup").style.display="none";
+ alert("✅ Task Submitted Successfully");
+};
+</script>
 
-onAuthStateChanged(auth,async user=>{
- if(!user){
-  location.href="index.html";
-  return;
- }
-
- try{
-  const [userSnap,taskSnap]=await Promise.all([
-   getDoc(doc(db,"users",user.uid)),
-   getDocs(collection(db,"tasks"))
-  ]);
-
-  if(!userSnap.exists())throw new Error("User record not found.");
-
-  const u=userSnap.data();
-  const balance=Number(u.balance||0);
-  const commission=Number(u.commission||0);
-  const pending=Number(u.pending||0);
-  const completed=Number(u.completedTasks??u.completed??0);
-  const todayCommission=Number(u.todayCommission||0);
-  const currentTaskIndex=Math.max(0,Number(u.currentTaskIndex||0));
-
-  document.getElementById("userName").textContent=u.name||"User";
-  document.getElementById("balance").textContent=money(balance);
-  document.getElementById("commission").textContent=money(commission);
-  document.getElementById("pending").textContent="PKR "+pending.toFixed(2);
-  document.getElementById("completedTasks").textContent=completed;
-  document.getElementById("todayCommission").textContent=money(todayCommission);
-
-  const tasks=taskSnap.docs.map(d=>({id:d.id,...d.data()}))
-   .sort((a,b)=>Number(a.order||0)-Number(b.order||0));
-
-  document.getElementById("totalTasks").textContent=tasks.length;
-
-  const progress=tasks.length?
-   Math.min(100,Math.max(0,(completed/tasks.length)*100)):0;
-
-  document.getElementById("taskProgressBar").style.width=progress+"%";
-  document.getElementById("taskProgressText").textContent=Math.round(progress)+"%";
-
-  if(tasks.length===0||currentTaskIndex>=tasks.length){
-   document.getElementById("currentTaskNumber").textContent=tasks.length?"Completed":"0";
-   document.getElementById("currentOrder").innerHTML=`
-    <div class="empty-order"
+</body>
+</html>
