@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,15 +233,15 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
 
 <div class="balance-card">
   <div class="balance-title">Available Balance</div>
-  <div class="balance" id="balance">$ 0.00</div>
+  <div class="balance" id="balance">PKR 0.00</div>
   <div class="balance-bottom">
     <div class="balance-item">
       <span>Commission</span>
-      <strong id="commission">$ 0.00</strong>
+      <strong id="commission">PKR 0.00</strong>
     </div>
     <div class="balance-item">
       <span>Pending</span>
-      <strong id="pending">$ 0.00</strong>
+      <strong id="pending">PKR 0.00</strong>
     </div>
   </div>
 </div>
@@ -256,7 +257,7 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
   <div class="stat-card">
     <div class="stat-icon">💰</div>
     <p>Today's Commission</p>
-    <h3 id="todayCommission">$ 0.00</h3>
+    <h3 id="todayCommission">PKR 0.00</h3>
   </div>
   <div class="stat-card">
     <div class="stat-icon">📋</div>
@@ -312,18 +313,18 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
         </div>
       </div>
 
-      <div class="payment-label">SELECT DEPOSIT AMOUNT ($)</div>
+      <div class="payment-label">SELECT DEPOSIT AMOUNT (PKR)</div>
 
       <div class="amount-grid" id="amountGrid">
-        <button class="amount-btn" type="button" data-amount="800" onclick="selectAmount(800)"><span class="coin">🪙</span><span class="amount">$ 800</span></button>
-        <button class="amount-btn" type="button" data-amount="2000" onclick="selectAmount(2000)"><span class="coin">🪙</span><span class="amount">$ 2,000</span></button>
-        <button class="amount-btn" type="button" data-amount="5000" onclick="selectAmount(5000)"><span class="coin">🪙</span><span class="amount">$ 5,000</span></button>
-        <button class="amount-btn" type="button" data-amount="8000" onclick="selectAmount(8000)"><span class="coin">🪙</span><span class="amount">$ 8,000</span></button>
-        <button class="amount-btn" type="button" data-amount="10000" onclick="selectAmount(10000)"><span class="coin">🪙</span><span class="amount">$ 10,000</span></button>
-        <button class="amount-btn" type="button" data-amount="20000" onclick="selectAmount(20000)"><span class="coin">🪙</span><span class="amount">$ 20,000</span></button>
-        <button class="amount-btn" type="button" data-amount="30000" onclick="selectAmount(30000)"><span class="coin">🪙</span><span class="amount">$ 30,000</span></button>
-        <button class="amount-btn" type="button" data-amount="50000" onclick="selectAmount(50000)"><span class="coin">🪙</span><span class="amount">$ 50,000</span></button>
-        <button class="amount-btn" type="button" data-amount="100000" onclick="selectAmount(100000)"><span class="coin">🪙</span><span class="amount">$ 100,000</span></button>
+        <button class="amount-btn" type="button" data-amount="800" onclick="selectAmount(800)"><span class="coin">🪙</span><span class="amount">Rs. 800</span></button>
+        <button class="amount-btn" type="button" data-amount="2000" onclick="selectAmount(2000)"><span class="coin">🪙</span><span class="amount">Rs. 2,000</span></button>
+        <button class="amount-btn" type="button" data-amount="5000" onclick="selectAmount(5000)"><span class="coin">🪙</span><span class="amount">Rs. 5,000</span></button>
+        <button class="amount-btn" type="button" data-amount="8000" onclick="selectAmount(8000)"><span class="coin">🪙</span><span class="amount">Rs. 8,000</span></button>
+        <button class="amount-btn" type="button" data-amount="10000" onclick="selectAmount(10000)"><span class="coin">🪙</span><span class="amount">Rs. 10,000</span></button>
+        <button class="amount-btn" type="button" data-amount="20000" onclick="selectAmount(20000)"><span class="coin">🪙</span><span class="amount">Rs. 20,000</span></button>
+        <button class="amount-btn" type="button" data-amount="30000" onclick="selectAmount(30000)"><span class="coin">🪙</span><span class="amount">Rs. 30,000</span></button>
+        <button class="amount-btn" type="button" data-amount="50000" onclick="selectAmount(50000)"><span class="coin">🪙</span><span class="amount">Rs. 50,000</span></button>
+        <button class="amount-btn" type="button" data-amount="100000" onclick="selectAmount(100000)"><span class="coin">🪙</span><span class="amount">Rs. 100,000</span></button>
       </div>
     </div>
 
@@ -355,10 +356,10 @@ text-shadow:0 1px 2px #8a3500;cursor:pointer
           Selected amount: <strong id="selectedAmount">Please select an amount</strong>
         </div>
         <label for="depositAmount" class="account-line">
-          Amount in $ (optional custom amount)
+          Amount in PKR (optional custom amount)
         </label>
         <input class="deposit-input" id="depositAmount" type="number"
-               min="1" step="1" placeholder="Enter amount in $"
+               min="1" step="1" placeholder="Enter amount in Rs."
                oninput="customAmountChanged()">
       </div>
 
@@ -417,7 +418,7 @@ function selectAmount(amount){
   });
 
   document.getElementById("selectedAmount").textContent =
-    "$ " + amount.toLocaleString("en-US");
+    "Rs. " + amount.toLocaleString("en-PK");
 
   document.getElementById("depositAmount").value = "";
 }
@@ -439,7 +440,7 @@ function customAmountChanged(){
     });
 
     document.getElementById("selectedAmount").textContent =
-      "$ " + amount.toLocaleString("en-US");
+      "Rs. " + amount.toLocaleString("en-PK");
   }
 }
 
@@ -557,10 +558,12 @@ onAuthStateChanged(auth, async user => {
       const u = userSnap.data();
 
       document.getElementById("userName").textContent = u.name || "User";
+
+      // Available Balance: sirf deposited balance, commission shamil nahi.
+      const depositedBalance = Number(u.balance || 0);
+
       document.getElementById("balance").textContent =
-        "$ " + Number(u.balance || 0).toFixed(2);
-      document.getElementById("commission").textContent =
-        "$ " + Number(u.commission || 0).toFixed(2);
-      document.getElementById("pending").textContent =
-        "$ " + Number(u.pending || 0).toFixed(2);
-      document.getEleme
+        "PKR " + depositedBalance.toFixed(2);
+
+      // Commission alag card mein show hogi.
+      document.getElementById("com
