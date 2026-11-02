@@ -291,7 +291,7 @@ onAuthStateChanged(auth, async user => {
   const balance = Number(data.balance || 0);
   const commission = Number(data.commission || 0);
 
-  document.getElementById("balance").innerText = money(balance + commission);
+  document.getElementById("balance").innerText = money(balance);
   document.getElementById("commission").innerText = money(commission);
   document.getElementById("todayIncome").innerText =
    money(data.todayCommission ?? data.todayIncome ?? 0);
