@@ -1,2460 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>EliteTask Pro Admin</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f7edbd;color:#3d2d00;padding:15px 15px 40px}
+.container{max-width:700px;margin:auto}
+.header{background:linear-gradient(135deg,#806000,#d9b43d,#967000);color:white;padding:18px;border-radius:18px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center}
+.header h2{font-size:25px}
+.logout{background:white;color:#806000;border:0;padding:10px 14px;border-radius:9px;font-weight:bold}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:15px}
+.tab{padding:12px 4px;border:0;border-radius:9px;background:white;color:#725300;font-weight:bold;font-size:11px;cursor:pointer}
+.tab.active{background:#b48600;color:white}
+.panel{display:none}
+.panel.active{display:block}
+.card{background:white;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 5px 18px rgba(0,0,0,.10)}
+.card h3{color:#715200;margin-bottom:14px}
+.input{width:100%;padding:13px;border:1px solid #dbc879;border-radius:10px;margin-bottom:10px;outline:none;font-size:14px}
+textarea.input{min-height:90px;resize:vertical}
+.preview{width:100%;max-height:230px;object-fit:cover;border-radius:14px;display:none;margin-bottom:10px}
+.main-btn{width:100%;padding:14px;border:0;border-radius:11px;background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);color:white;font-weight:bold;cursor:pointer}
+.main-btn:disabled{opacity:.6}
+.item{border:1px solid #ead99a;border-radius:14px;padding:13px;margin-top:10px;background:#fffdf7}
+.item img{width:100%;height:170px;object-fit:cover;border-radius:10px;margin-bottom:9px}
+.item h4{margin-bottom:6px;color:#624700}
+.item p{font-size:13px;color:#777;margin:5px 0;word-break:break-word}
+.row{display:flex;gap:7px;margin-top:10px}
+.small{flex:1;padding:10px;border:0;border-radius:8px;background:#b48600;color:white;font-weight:bold;cursor:pointer}
+.small:disabled{opacity:.5;cursor:not-allowed}
+.red{background:#b33b2e}
+.green{background:#218c55}
+.blue{background:#2868b2}
+.status{text-align:center;margin-top:10px;font-size:13px;color:#777}
+.loading{background:white;padding:20px;text-align:center;border-radius:15px;color:#888}
+.no-data{padding:18px;text-align:center;color:#888;background:white;border-radius:14px}
+.message{background:#faf7e8;padding:12px;border-radius:12px;margin-top:9px;font-size:13px;cursor:pointer;border:1px solid #ead99a}
+.message.selected{border:2px solid #2868b2}
+.message img{max-width:180px;max-height:180px;border-radius:10px;margin-top:8px}
+.support-user-title{font-weight:bold;color:#624700;margin-bottom:8px}
+.chat-area{margin-top:10px;max-height:350px;overflow-y:auto;padding:5px}
+.chat-message{padding:9px 11px;border-radius:11px;margin-top:6px;max-width:90%;font-size:12px;line-height:1.4;word-break:break-word}
+.chat-user{margin-left:auto;background:#e4c75e;color:white}
+.chat-admin{background:white;border:1px solid #ead99a}
+.reply-box{display:flex;gap:6px;margin-top:10px}
+.reply-box input{flex:1;min-width:0;padding:11px;border:1px solid #dbc879;border-radius:9px;outline:none}
+.reply-box button{width:55px;border:0;border-radius:9px;background:#2868b2;color:white;font-weight:bold}
+.user-actions{display:flex;gap:7px;margin-top:10px}
+.user-actions button{flex:1}
+.error-box{background:#fff0ed;border:1px solid #e0a095;color:#9b3024;padding:14px;border-radius:12px;font-size:13px;line-height:1.5}
 
-body{
-    font-family:Arial,sans-serif;
-    background:#f7edbd;
-    color:#3d2d00;
-    padding:15px 15px 40px;
-}
-
-.container{
-    max-width:700px;
-    margin:auto;
-}
-
-.header{
-    background:linear-gradient(135deg,#806000,#d9b43d,#967000);
-    color:white;
-    padding:18px;
-    border-radius:18px;
-    margin-bottom:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.header h2{
-    font-size:25px;
-}
-
-.logout{
-    background:white;
-    color:#806000;
-    border:0;
-    padding:10px 14px;
-    border-radius:9px;
-    font-weight:bold;
-}
-
-.tabs{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:7px;
-    margin-bottom:15px;
-}
-
-.tab{
-    padding:12px 4px;
-    border:0;
-    border-radius:9px;
-    background:white;
-    color:#725300;
-    font-weight:bold;
-    font-size:11px;
-    cursor:pointer;
-}
-
-.tab.active{
-    background:#b48600;
-    color:white;
-}
-
-.panel{
+/* EDIT POPUP */
+.modal{
     display:none;
-}
-
-.panel.active{
-    display:block;
-}
-
-.card{
-    background:white;
-    border-radius:18px;
-    padding:18px;
-    margin-bottom:15px;
-    box-shadow:0 5px 18px rgba(0,0,0,.10);
-}
-
-.card h3{
-    color:#715200;
-    margin-bottom:14px;
-}
-
-.input{
-    width:100%;
-    padding:13px;
-    border:1px solid #dbc879;
-    border-radius:10px;
-    margin-bottom:10px;
-    outline:none;
-    font-size:14px;
-}
-
-textarea.input{
-    min-height:90px;
-    resize:vertical;
-}
-
-.preview{
-    width:100%;
-    max-height:230px;
-    object-fit:cover;
-    border-radius:14px;
-    display:none;
-    margin-bottom:10px;
-}
-
-.main-btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:11px;
-    background:linear-gradient(135deg,#9d7200,#dfba45,#9d7200);
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.main-btn:disabled{
-    opacity:.6;
-}
-
-.item{
-    border:1px solid #ead99a;
-    border-radius:14px;
-    padding:13px;
-    margin-top:10px;
-    background:#fffdf7;
-}
-
-.item img{
-    width:100%;
-    height:170px;
-    object-fit:cover;
-    border-radius:10px;
-    margin-bottom:9px;
-}
-
-.item h4{
-    margin-bottom:6px;
-    color:#624700;
-}
-
-.item p{
-    font-size:13px;
-    color:#777;
-    margin:5px 0;
-}
-
-.row{
-    display:flex;
-    gap:7px;
-    margin-top:10px;
-}
-
-.small{
-    flex:1;
-    padding:10px;
-    border:0;
-    border-radius:8px;
-    background:#b48600;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.small:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
-.red{
-    background:#b33b2e;
-}
-
-.green{
-    background:#218c55;
-}
-
-.blue{
-    background:#2868b2;
-}
-
-.status{
-    text-align:center;
-    margin-top:10px;
-    font-size:13px;
-    color:#777;
-}
-
-.loading{
-    background:white;
-    padding:20px;
-    text-align:center;
-    border-radius:15px;
-    color:#888;
-}
-
-.no-data{
-    padding:18px;
-    text-align:center;
-    color:#888;
-    background:white;
-    border-radius:14px;
-}
-
-.message{
-    background:#faf7e8;
-    padding:12px;
-    border-radius:12px;
-    margin-top:9px;
-    font-size:13px;
-    cursor:pointer;
-    border:1px solid #ead99a;
-}
-
-.message.selected{
-    border:2px solid #2868b2;
-}
-
-.message img{
-    max-width:180px;
-    max-height:180px;
-    border-radius:10px;
-    margin-top:8px;
-}
-
-.support-user-title{
-    font-weight:bold;
-    color:#624700;
-    margin-bottom:8px;
-}
-
-.chat-area{
-    margin-top:10px;
-    max-height:350px;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:9999;
+    padding:15px;
     overflow-y:auto;
-    padding:5px;
 }
-
-.chat-message{
-    padding:9px 11px;
-    border-radius:11px;
-    margin-top:6px;
-    max-width:90%;
-    font-size:12px;
-    line-height:1.4;
-    word-break:break-word;
-}
-
-.chat-user{
-    margin-left:auto;
-    background:#e4c75e;
-    color:white;
-}
-
-.chat-admin{
+.modal-box{
     background:white;
-    border:1px solid #ead99a;
+    max-width:450px;
+    margin:35px auto;
+    padding:20px;
+    border-radius:17px;
 }
-
-.reply-box{
-    display:flex;
-    gap:6px;
-    margin-top:10px;
-}
-
-.reply-box input{
-    flex:1;
-    min-width:0;
-    padding:11px;
-    border:1px solid #dbc879;
-    border-radius:9px;
-    outline:none;
-}
-
-.reply-box button{
-    width:55px;
-    border:0;
-    border-radius:9px;
-    background:#2868b2;
-    color:white;
-    font-weight:bold;
-}
-
-.user-actions{
-    display:flex;
-    gap:7px;
-    margin-top:10px;
-}
-
-.user-actions button{
-    flex:1;
-}
-
-.error-box{
-    background:#fff0ed;
-    border:1px solid #e0a095;
-    color:#9b3024;
-    padding:14px;
-    border-radius:12px;
-    font-size:13px;
-    line-height:1.5;
-}
+.modal-box h3{color:#715200;margin-bottom:15px}
+.modal-box label{display:block;font-size:13px;font-weight:bold;margin:10px 0 6px;color:#624700}
+.modal-actions{display:flex;gap:8px;margin-top:12px}
+.modal-actions button{flex:1}
+.modal-note{font-size:12px;color:#777;line-height:1.5;margin:8px 0}
 
 @media(max-width:380px){
-
-    .header h2{
-        font-size:20px;
-    }
-
-    .tab{
-        font-size:10px;
-    }
-
-    .row{
-        flex-direction:column;
-    }
-
-    .user-actions{
-        flex-direction:column;
-    }
+.header h2{font-size:20px}
+.tab{font-size:10px}
+.row,.user-actions{flex-direction:column}
 }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <div class="header">
-    <h2>EliteTask Pro Admin</h2>
-
-    <button class="logout" id="logoutBtn">
-        Logout
-    </button>
+<h2>EliteTask Pro Admin</h2>
+<button class="logout" id="logoutBtn">Logout</button>
 </div>
 
 <div class="tabs">
-
-    <button class="tab active" data-tab="tasks">
-        Tasks
-    </button>
-
-    <button class="tab" data-tab="users">
-        Users
-    </button>
-
-    <button class="tab" data-tab="withdraws">
-        Withdraws
-    </button>
-
-    <button class="tab" data-tab="support">
-        Support
-    </button>
-
+<button class="tab active" data-tab="tasks">Tasks</button>
+<button class="tab" data-tab="users">Users</button>
+<button class="tab" data-tab="withdraws">Withdraws</button>
+<button class="tab" data-tab="support">Support</button>
 </div>
 
-
 <!-- TASKS -->
-
 <div id="tasks" class="panel active">
 
 <div class="card">
-
 <h3>Add New Task</h3>
 
-<input
-    id="taskName"
-    class="input"
-    placeholder="Task name"
->
-
-<input
-    id="taskPrice"
-    class="input"
-    type="number"
-    placeholder="Task price"
->
-
-<input
-    id="taskCommission"
-    class="input"
-    type="number"
-    placeholder="Commission"
->
-
-<input
-    id="taskImage"
-    class="input"
-    type="file"
-    accept="image/*"
->
-
+<input id="taskName" class="input" placeholder="Task name">
+<input id="taskPrice" class="input" type="number" min="0" placeholder="Task price">
+<input id="taskCommission" class="input" type="number" min="0" placeholder="Commission">
+<input id="taskImage" class="input" type="file" accept="image/*">
 <img id="imagePreview" class="preview">
 
-<button id="saveTask" class="main-btn">
-    Save Task
-</button>
-
-<div id="taskStatus" class="status">
-    Ready
+<button id="saveTask" class="main-btn">Save Task</button>
+<div id="taskStatus" class="status">Ready</div>
 </div>
-
-</div>
-
 
 <div class="card">
-
-<h3>Tasks</h3>
-
-<div id="taskList">
-    Loading tasks...
+<h3>Tasks — Global Settings</h3>
+<p class="modal-note">Yahan Edit karne se task ki default Price aur Commission global settings mein update hongi.</p>
+<div id="taskList">Loading tasks...</div>
 </div>
-
 </div>
-
-</div>
-
 
 <!-- USERS -->
-
 <div id="users" class="panel">
-
 <div class="card">
-
 <h3>Users</h3>
-
-<div id="userList">
-    Loading users...
+<div id="userList">Loading users...</div>
 </div>
-
 </div>
-
-</div>
-
 
 <!-- WITHDRAWS -->
-
 <div id="withdraws" class="panel">
-
 <div class="card">
-
 <h3>Withdraw Requests</h3>
-
-<div id="withdrawList">
-    Loading withdrawals...
+<div id="withdrawList">Loading withdrawals...</div>
 </div>
-
 </div>
-
-</div>
-
 
 <!-- SUPPORT -->
-
 <div id="support" class="panel">
-
 <div class="card">
-
 <h3>Customer Service</h3>
+<div id="supportList">Loading messages...</div>
 
-<div id="supportList">
-    Loading messages...
+<div id="selectedSupport" style="display:none;margin-top:15px">
+<div class="support-user-title" id="selectedUserTitle">Customer</div>
+<div id="chatArea" class="chat-area"></div>
+<div class="reply-box">
+<input id="replyInput" type="text" placeholder="Type reply...">
+<button id="replyBtn">➤</button>
 </div>
-
-<div id="selectedSupport"
-     style="display:none;margin-top:15px">
-
-    <div
-        class="support-user-title"
-        id="selectedUserTitle"
-    >
-        Customer
-    </div>
-
-    <div
-        id="chatArea"
-        class="chat-area"
-    ></div>
-
-    <div class="reply-box">
-
-        <input
-            id="replyInput"
-            type="text"
-            placeholder="Type reply..."
-        >
-
-        <button id="replyBtn">
-            ➤
-        </button>
-
-    </div>
-
-    <div
-        id="supportStatus"
-        class="status"
-    ></div>
-
+<div id="supportStatus" class="status"></div>
+</div>
+</div>
 </div>
 
 </div>
 
+<!-- EDIT TASK MODAL -->
+<div class="modal" id="editModal">
+<div class="modal-box">
+<h3 id="editTitle">Edit Task</h3>
+<p class="modal-note" id="editDescription"></p>
+
+<label>Task Price</label>
+<input class="input" id="editPrice" type="number" min="0" placeholder="Task price">
+
+<label>Task Commission</label>
+<input class="input" id="editCommission" type="number" min="0" placeholder="Commission">
+
+<div class="modal-actions">
+<button class="small green" id="saveEdit">Save Changes</button>
+<button class="small red" id="cancelEdit">Cancel</button>
+</div>
+<div class="status" id="editStatus"></div>
+</div>
 </div>
 
+<!-- USER TASKS MODAL -->
+<div class="modal" id="userTasksModal">
+<div class="modal-box">
+<h3 id="userTasksTitle">User Tasks</h3>
+<p class="modal-note">Is list mein kisi task ko edit karne se sirf selected user ki individual setting save hogi. Doosre users ki settings change nahi hongi.</p>
+<div id="userTasksList"></div>
+<div class="modal-actions">
+<button class="small red" id="closeUserTasks">Close</button>
 </div>
-
+</div>
+</div>
 
 <script type="module">
 
-import {
-    initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 
 import {
-    getAuth,
-    onAuthStateChanged,
-    signOut
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-
+getAuth,onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
 
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs,
-    getDoc,
-    updateDoc,
-    deleteDoc,
-    doc,
-    query,
-    where,
-    serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+getFirestore,collection,addDoc,getDocs,getDoc,
+updateDoc,deleteDoc,doc,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 
-/* FIREBASE */
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
-
-    authDomain:
-    "elitetask-pro.firebaseapp.com",
-
-    projectId:
-    "elitetask-pro",
-
-    storageBucket:
-    "elitetask-pro.firebasestorage.app",
-
-    messagingSenderId:
-    "504295275402",
-
-    appId:
-    "1:504295275402:web:cf744a5d4e82c72145a673"
-
+const firebaseConfig={
+apiKey:"AIzaSyA0i_06l0wqKyk05N5AgZBtl8c461QZAgg",
+authDomain:"elitetask-pro.firebaseapp.com",
+projectId:"elitetask-pro",
+storageBucket:"elitetask-pro.firebasestorage.app",
+messagingSenderId:"504295275402",
+appId:"1:504295275402:web:cf744a5d4e82c72145a673"
 };
 
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-const app =
-    initializeApp(firebaseConfig);
+const ADMIN_UID="BLmacTdfuBVlQ0eEJWsQidnexY02";
 
-const auth =
-    getAuth(app);
-
-const db =
-    getFirestore(app);
-
-
-/* ADMIN UID */
-
-const ADMIN_UID =
-"BLmacTdfuBVlQ0eEJWsQidnexY02";
-
-
-let currentAdmin = null;
-let selectedUserId = null;
-
-
-/* SAFE HTML */
+let currentAdmin=null;
+let selectedUserId=null;
+let allTasks=[];
+let editMode=null;
+let editTaskId=null;
+let editUserId=null;
 
 function safe(value){
-
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
+return String(value??"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
 }
 
-
-/* ERROR */
-
 function showError(element,message){
+element.innerHTML=`<div class="error-box">${safe(message)}</div>`;
+}
 
-    element.innerHTML =
-    `
-    <div class="error-box">
-        ${safe(message)}
-    </div>
-    `;
-
+function money(value){
+return Number(value||0).toFixed(2);
 }
 
 
 /* AUTH */
 
-onAuthStateChanged(
-    auth,
-    async user => {
+onAuthStateChanged(auth,async user=>{
+if(!user){
+location.href="index.html";
+return;
+}
 
-        if(!user){
+if(user.uid!==ADMIN_UID){
+alert("Admin access required.");
+await signOut(auth);
+location.href="index.html";
+return;
+}
 
-            location.href =
-            "index.html";
+currentAdmin=user;
+await loadTasks();
 
-            return;
-
-        }
-
-
-        /*
-        Sirf admin UID ko access
-        */
-
-        if(user.uid !== ADMIN_UID){
-
-            alert(
-                "Admin access required."
-            );
-
-            await signOut(auth);
-
-            location.href =
-            "index.html";
-
-            return;
-
-        }
-
-
-        currentAdmin = user;
-
-
-        /*
-        Firebase load hone ke baad
-        Tasks load karo
-        */
-
-        await loadTasks();
-
-    },
-    error => {
-
-        console.error(
-            "Auth error:",
-            error
-        );
-
-        showError(
-            document.getElementById("taskList"),
-            error.message
-        );
-
-    }
-);
+},error=>{
+console.error(error);
+showError(document.getElementById("taskList"),error.message);
+});
 
 
 /* TABS */
 
-document
-.querySelectorAll(".tab")
-.forEach(button => {
+document.querySelectorAll(".tab").forEach(button=>{
+button.addEventListener("click",async function(){
 
-    button.addEventListener(
-        "click",
-        async function(){
+const target=this.dataset.tab;
 
-            const target =
-            this.dataset.tab;
+document.querySelectorAll(".tab").forEach(btn=>btn.classList.remove("active"));
+document.querySelectorAll(".panel").forEach(panel=>panel.classList.remove("active"));
 
+this.classList.add("active");
+document.getElementById(target).classList.add("active");
 
-            document
-            .querySelectorAll(".tab")
-            .forEach(btn => {
+if(target==="tasks")await loadTasks();
+if(target==="users")await loadUsers();
+if(target==="withdraws")await loadWithdraws();
+if(target==="support")await loadSupport(selectedUserId);
 
-                btn.classList.remove(
-                    "active"
-                );
-
-            });
-
-
-            document
-            .querySelectorAll(".panel")
-            .forEach(panel => {
-
-                panel.classList.remove(
-                    "active"
-                );
-
-            });
-
-
-            this.classList.add(
-                "active"
-            );
-
-
-            const panel =
-            document.getElementById(
-                target
-            );
-
-
-            if(panel){
-
-                panel.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            if(target === "tasks"){
-
-                await loadTasks();
-
-            }
-
-
-            if(target === "users"){
-
-                await loadUsers();
-
-            }
-
-
-            if(target === "withdraws"){
-
-                await loadWithdraws();
-
-            }
-
-
-            if(target === "support"){
-
-                await loadSupport(
-                    selectedUserId
-                );
-
-            }
-
-        }
-    );
-
+});
 });
 
 
 /* LOGOUT */
 
-document
-.getElementById("logoutBtn")
-.addEventListener(
-    "click",
-    async () => {
-
-        try{
-
-            await signOut(auth);
-
-            location.href =
-            "index.html";
-
-        }
-        catch(error){
-
-            alert(error.message);
-
-        }
-
-    }
-);
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+try{
+await signOut(auth);
+location.href="index.html";
+}catch(error){
+alert(error.message);
+}
+});
 
 
 /* IMAGE PREVIEW */
 
-document
-.getElementById("taskImage")
-.addEventListener(
-    "change",
-    function(){
+document.getElementById("taskImage").addEventListener("change",function(){
+const file=this.files[0];
+const preview=document.getElementById("imagePreview");
 
-        const file =
-        this.files[0];
+if(!file){
+preview.style.display="none";
+preview.removeAttribute("src");
+return;
+}
 
-        const preview =
-        document.getElementById(
-            "imagePreview"
-        );
-
-
-        if(!file){
-
-            preview.style.display =
-            "none";
-
-            preview.removeAttribute("src");
-
-            return;
-
-        }
+preview.src=URL.createObjectURL(file);
+preview.style.display="block";
+});
 
 
-        preview.src =
-        URL.createObjectURL(file);
-
-        preview.style.display =
-        "block";
-
-    }
-);
-
-
-/* COMPRESS IMAGE */
+/* IMAGE COMPRESS */
 
 function compressImage(file){
+return new Promise((resolve,reject)=>{
+const reader=new FileReader();
 
-    return new Promise(
-        (resolve,reject) => {
+reader.onload=event=>{
+const img=new Image();
 
-            const reader =
-            new FileReader();
+img.onload=()=>{
+const canvas=document.createElement("canvas");
+let width=img.width;
+let height=img.height;
+const max=350;
 
+if(width>max||height>max){
+if(width>height){
+height=height*max/width;
+width=max;
+}else{
+width=width*max/height;
+height=max;
+}
+}
 
-            reader.onload =
-            event => {
+canvas.width=Math.round(width);
+canvas.height=Math.round(height);
 
-                const img =
-                new Image();
+const ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,canvas.width,canvas.height);
 
+resolve(canvas.toDataURL("image/jpeg",0.35));
+};
 
-                img.onload =
-                () => {
+img.onerror=()=>reject(new Error("Image could not be loaded."));
+img.src=event.target.result;
+};
 
-                    const canvas =
-                    document.createElement(
-                        "canvas"
-                    );
-
-
-                    let width =
-                    img.width;
-
-                    let height =
-                    img.height;
-
-
-                    const max =
-                    350;
-
-
-                    if(
-                        width > max ||
-                        height > max
-                    ){
-
-                        if(width > height){
-
-                            height =
-                            height * max / width;
-
-                            width =
-                            max;
-
-                        }
-                        else{
-
-                            width =
-                            width * max / height;
-
-                            height =
-                            max;
-
-                        }
-
-                    }
-
-
-                    canvas.width =
-                    Math.round(width);
-
-                    canvas.height =
-                    Math.round(height);
-
-
-                    const ctx =
-                    canvas.getContext("2d");
-
-
-                    ctx.drawImage(
-                        img,
-                        0,
-                        0,
-                        canvas.width,
-                        canvas.height
-                    );
-
-
-                    resolve(
-                        canvas.toDataURL(
-                            "image/jpeg",
-                            0.35
-                        )
-                    );
-
-                };
-
-
-                img.onerror =
-                () => reject(
-                    new Error(
-                        "Image could not be loaded."
-                    )
-                );
-
-
-                img.src =
-                event.target.result;
-
-            };
-
-
-            reader.onerror =
-            () => reject(
-                new Error(
-                    "Image could not be read."
-                )
-            );
-
-
-            reader.readAsDataURL(file);
-
-        }
-    );
-
+reader.onerror=()=>reject(new Error("Image could not be read."));
+reader.readAsDataURL(file);
+});
 }
 
 
-/* SAVE TASK */
+/* ADD TASK */
 
-document
-.getElementById("saveTask")
-.addEventListener(
-    "click",
-    async () => {
+document.getElementById("saveTask").addEventListener("click",async()=>{
+const status=document.getElementById("taskStatus");
+const button=document.getElementById("saveTask");
 
-        const status =
-        document.getElementById(
-            "taskStatus"
-        );
+try{
+const name=document.getElementById("taskName").value.trim();
+const price=Number(document.getElementById("taskPrice").value);
+const commission=Number(document.getElementById("taskCommission").value);
+const file=document.getElementById("taskImage").files[0];
 
-        const button =
-        document.getElementById(
-            "saveTask"
-        );
+if(!name||!Number.isFinite(price)||price<=0||
+!Number.isFinite(commission)||commission<0){
+alert("Task name, valid price aur commission enter karo.");
+return;
+}
 
+button.disabled=true;
+let image="";
 
-        try{
+if(file){
+status.textContent="Compressing image...";
+image=await compressImage(file);
+}
 
-            const name =
-            document
-            .getElementById("taskName")
-            .value
-            .trim();
+status.textContent="Saving task...";
 
+await addDoc(collection(db,"tasks"),{
+name,
+price,
+commission,
+image,
+order:Date.now(),
+createdAt:serverTimestamp()
+});
 
-            const price =
-            Number(
-                document
-                .getElementById("taskPrice")
-                .value
-            );
+status.textContent="Task saved successfully ✓";
 
+document.getElementById("taskName").value="";
+document.getElementById("taskPrice").value="";
+document.getElementById("taskCommission").value="";
+document.getElementById("taskImage").value="";
+document.getElementById("imagePreview").style.display="none";
+document.getElementById("imagePreview").removeAttribute("src");
 
-            const commission =
-            Number(
-                document
-                .getElementById("taskCommission")
-                .value
-            );
+await loadTasks();
 
-
-            const file =
-            document
-            .getElementById("taskImage")
-            .files[0];
-
-
-            if(
-                !name ||
-                !Number.isFinite(price) ||
-                price <= 0 ||
-                !Number.isFinite(commission) ||
-                commission < 0
-            ){
-
-                alert(
-                    "Task name, price and commission enter karo."
-                );
-
-                return;
-
-            }
+}catch(error){
+console.error(error);
+status.textContent=error.message;
+alert(error.message);
+}finally{
+button.disabled=false;
+}
+});
 
 
-            button.disabled =
-            true;
-
-
-            let image = "";
-
-
-            if(file){
-
-                status.textContent =
-                "Compressing image...";
-
-                image =
-                await compressImage(file);
-
-            }
-
-
-            status.textContent =
-            "Saving task...";
-
-
-            await addDoc(
-                collection(db,"tasks"),
-                {
-
-                    name:
-                    name,
-
-                    price:
-                    price,
-
-                    commission:
-                    commission,
-
-                    image:
-                    image,
-
-                    order:
-                    Date.now(),
-
-                    createdAt:
-                    serverTimestamp()
-
-                }
-            );
-
-
-            status.textContent =
-            "Task saved successfully ✓";
-
-
-            document
-            .getElementById("taskName")
-            .value = "";
-
-
-            document
-            .getElementById("taskPrice")
-            .value = "";
-
-
-            document
-            .getElementById("taskCommission")
-            .value = "";
-
-
-            document
-            .getElementById("taskImage")
-            .value = "";
-
-
-            const preview =
-            document.getElementById(
-                "imagePreview"
-            );
-
-            preview.style.display =
-            "none";
-
-            preview.removeAttribute("src");
-
-
-            await loadTasks();
-
-        }
-        catch(error){
-
-            console.error(
-                "Save task error:",
-                error
-            );
-
-            status.textContent =
-            error.message;
-
-            alert(
-                error.message
-            );
-
-        }
-        finally{
-
-            button.disabled =
-            false;
-
-        }
-
-    }
-);
-
-
-/* LOAD TASKS */
+/* LOAD GLOBAL TASKS */
 
 async function loadTasks(){
 
-    const list =
-    document.getElementById(
-        "taskList"
-    );
+const list=document.getElementById("taskList");
+list.innerHTML='<div class="loading">Loading tasks...</div>';
+
+try{
+const snap=await getDocs(collection(db,"tasks"));
+allTasks=[];
+
+snap.forEach(item=>{
+allTasks.push({id:item.id,...item.data()});
+});
+
+allTasks.sort((a,b)=>Number(a.order||0)-Number(b.order||0));
+
+if(!allTasks.length){
+list.innerHTML='<div class="no-data">No tasks found.</div>';
+return;
+}
+
+list.innerHTML="";
+
+allTasks.forEach(task=>{
+
+const div=document.createElement("div");
+div.className="item";
+
+div.innerHTML=`
+${task.image?`<img src="${safe(task.image)}" alt="Task Image">`:""}
+<h4>${safe(task.name||"Task")}</h4>
+<p>Price: PKR ${money(task.price)}</p>
+<p>Commission: PKR ${money(task.commission)}</p>
+<div class="row">
+<button class="small blue edit-global">Edit Price / Commission</button>
+<button class="small red delete-task">Delete</button>
+</div>
+`;
+
+div.querySelector(".edit-global").addEventListener("click",()=>{
+openEditModal({
+mode:"global",
+task:task
+});
+});
+
+div.querySelector(".delete-task").addEventListener("click",async()=>{
+if(!confirm("Delete this task?"))return;
+
+try{
+await deleteDoc(doc(db,"tasks",task.id));
+await loadTasks();
+}catch(error){
+alert(error.message);
+}
+});
+
+list.appendChild(div);
+});
+
+}catch(error){
+console.error(error);
+showError(list,"Unable to load tasks: "+error.message);
+}
+}
 
 
-    list.innerHTML =
-    '<div class="loading">Loading tasks...</div>';
+/* EDIT MODAL OPEN */
+
+function openEditModal(options){
+
+editMode=options.mode;
+editTaskId=options.task.id;
+editUserId=options.userId||null;
+
+document.getElementById("editPrice").value=Number(options.price??options.task.price??0);
+document.getElementById("editCommission").value=Number(options.commission??options.task.commission??0);
+
+document.getElementById("editStatus").textContent="";
+
+if(editMode==="global"){
+document.getElementById("editTitle").textContent="Edit Global Task";
+document.getElementById("editDescription").textContent="Ye changes global task ki default Price aur Commission update karengi.";
+}else{
+document.getElementById("editTitle").textContent="Edit Individual User Task";
+document.getElementById("editDescription").textContent="Ye changes sirf selected user ke liye save hongi.";
+}
+
+document.getElementById("editModal").style.display="block";
+}
+
+function closeEditModal(){
+document.getElementById("editModal").style.display="none";
+editMode=null;
+editTaskId=null;
+editUserId=null;
+}
+
+document.getElementById("cancelEdit").addEventListener("click",closeEditModal);
 
 
-    try{
+/* SAVE EDIT */
 
-        const snap =
-        await getDocs(
-            collection(
-                db,
-                "tasks"
-            )
-        );
+document.getElementById("saveEdit").addEventListener("click",async()=>{
 
+const button=document.getElementById("saveEdit");
+const status=document.getElementById("editStatus");
 
-        if(snap.empty){
+const price=Number(document.getElementById("editPrice").value);
+const commission=Number(document.getElementById("editCommission").value);
 
-            list.innerHTML =
-            '<div class="no-data">No tasks found.</div>';
+if(!Number.isFinite(price)||price<=0||
+!Number.isFinite(commission)||commission<0){
+alert("Valid Price aur Commission enter karo.");
+return;
+}
 
-            return;
+if(!editTaskId||!editMode)return;
 
-        }
+button.disabled=true;
+status.textContent="Saving...";
 
+try{
 
-        const tasks = [];
+if(editMode==="global"){
 
+await updateDoc(doc(db,"tasks",editTaskId),{
+price:price,
+commission:commission,
+updatedAt:serverTimestamp()
+});
 
-        snap.forEach(
-            item => {
+status.textContent="Global task updated ✓";
 
-                tasks.push({
+}else if(editMode==="individual"){
 
-                    id:
-                    item.id,
+const userRef=doc(db,"users",editUserId);
+const userSnap=await getDoc(userRef);
 
-                    ...item.data()
+if(!userSnap.exists()){
+throw new Error("User document not found.");
+}
 
-                });
+const userData=userSnap.data();
+const overrides={
+...(userData.taskOverrides||{})
+};
 
-            }
-        );
+/*
+Individual task override:
+Sirf selected user ke document mein save hota hai.
+Global task document ko change nahi karta.
+*/
 
+overrides[editTaskId]={
+price:price,
+commission:commission,
+updatedAt:new Date().toISOString()
+};
 
-        tasks.sort(
-            (a,b) =>
-            Number(a.order || 0) -
-            Number(b.order || 0)
-        );
+await updateDoc(userRef,{
+taskOverrides:overrides
+});
 
-
-        list.innerHTML = "";
-
-
-        tasks.forEach(
-            task => {
-
-                const div =
-                document.createElement(
-                    "div"
-                );
-
-
-                div.className =
-                "item";
-
-
-                div.innerHTML =
-                `
-
-                ${
-                    task.image
-                    ?
-                    `<img
-                        src="${safe(task.image)}"
-                        alt="Task Image"
-                    >`
-                    :
-                    ""
-                }
-
-                <h4>
-                    ${safe(task.name || "Task")}
-                </h4>
-
-                <p>
-                    Price:
-                    PKR ${Number(task.price || 0).toFixed(2)}
-                </p>
-
-                <p>
-                    Commission:
-                    PKR ${Number(task.commission || 0).toFixed(2)}
-                </p>
-
-                <div class="row">
-
-                    <button
-                        class="small red delete-task"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-                `;
-
-
-                div
-                .querySelector(
-                    ".delete-task"
-                )
-                .addEventListener(
-                    "click",
-                    async () => {
-
-                        if(
-                            !confirm(
-                                "Delete this task?"
-                            )
-                        ){
-
-                            return;
-
-                        }
-
-
-                        try{
-
-                            await deleteDoc(
-                                doc(
-                                    db,
-                                    "tasks",
-                                    task.id
-                                )
-                            );
-
-
-                            await loadTasks();
-
-                        }
-                        catch(error){
-
-                            alert(
-                                error.message
-                            );
-
-                        }
-
-                    }
-                );
-
-
-                list.appendChild(div);
-
-            }
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Tasks error:",
-            error
-        );
-
-
-        showError(
-            list,
-            "Unable to load tasks: " +
-            error.message
-        );
-
-    }
+status.textContent="Individual user task updated ✓";
 
 }
+
+alert("Price aur Commission successfully save ho gaye.");
+closeEditModal();
+
+if(editMode==="global"){
+await loadTasks();
+}else{
+await showUserTasks(editUserId);
+}
+
+}catch(error){
+console.error(error);
+status.textContent=error.message;
+alert("Update failed: "+error.message);
+}finally{
+button.disabled=false;
+}
+
+});
 
 
 /* LOAD USERS */
 
 async function loadUsers(){
 
-    const list =
-    document.getElementById(
-        "userList"
-    );
+const list=document.getElementById("userList");
+list.innerHTML='<div class="loading">Loading users...</div>';
 
+try{
 
-    list.innerHTML =
-    '<div class="loading">Loading users...</div>';
+const snap=await getDocs(collection(db,"users"));
 
+if(snap.empty){
+list.innerHTML='<div class="no-data">No users found.</div>';
+return;
+}
 
-    try{
+list.innerHTML="";
+let foundUser=false;
 
-        const snap =
-        await getDocs(
-            collection(
-                db,
-                "users"
-            )
-        );
+snap.forEach(item=>{
 
+const user=item.data();
 
-        if(snap.empty){
+if(item.id===ADMIN_UID)return;
+foundUser=true;
 
-            list.innerHTML =
-            '<div class="no-data">No users found.</div>';
+const div=document.createElement("div");
+div.className="item";
 
-            return;
+div.innerHTML=`
+<h4>${safe(user.name||"User")}</h4>
+<p>Email: ${safe(user.email||"")}</p>
+<p>Balance: PKR ${money(user.balance)}</p>
+<p>Commission: PKR ${money(user.commission)}</p>
 
-        }
+<input class="input newBalance" type="number" min="0" placeholder="New balance">
 
+<div class="user-actions">
+<button class="small green update-balance">Update Balance</button>
+<button class="small blue open-user-tasks">Tasks</button>
+<button class="small blue open-support">Support</button>
+<button class="small red delete-user">Delete User</button>
+</div>
+`;
 
-        list.innerHTML = "";
+div.querySelector(".update-balance").addEventListener("click",async()=>{
 
+const input=div.querySelector(".newBalance");
+const value=Number(input.value);
 
-        let foundUser = false;
+if(input.value.trim()===""||!Number.isFinite(value)||value<0){
+alert("Valid balance enter karo.");
+return;
+}
 
+try{
+await updateDoc(doc(db,"users",item.id),{balance:value});
+alert("Balance updated successfully.");
+await loadUsers();
+}catch(error){
+alert(error.message);
+}
 
-        snap.forEach(
-            item => {
+});
 
-                const user =
-                item.data();
 
+/* INDIVIDUAL USER TASK BUTTON */
 
-                if(item.id === ADMIN_UID){
+div.querySelector(".open-user-tasks").addEventListener("click",async()=>{
 
-                    return;
+selectedUserId=item.id;
+document.getElementById("userTasksTitle").textContent=
+"Tasks: "+(user.name||item.id);
 
-                }
+document.getElementById("userTasksModal").style.display="block";
 
+await showUserTasks(item.id);
 
-                foundUser = true;
+});
 
 
-                const div =
-                document.createElement(
-                    "div"
-                );
+/* OPEN SUPPORT */
 
+div.querySelector(".open-support").addEventListener("click",async()=>{
 
-                div.className =
-                "item";
+selectedUserId=item.id;
+const supportTab=document.querySelector('[data-tab="support"]');
+if(supportTab)supportTab.click();
+await loadSupport(selectedUserId);
 
+});
 
-                div.innerHTML =
-                `
 
-                <h4>
-                    ${safe(user.name || "User")}
-                </h4>
+/* DELETE USER */
 
-                <p>
-                    Email:
-                    ${safe(user.email || "")}
-                </p>
+div.querySelector(".delete-user").addEventListener("click",async()=>{
 
-                <p>
-                    Balance:
-                    PKR ${Number(user.balance || 0).toFixed(2)}
-                </p>
+if(!confirm("Delete this user from Firestore?"))return;
 
-                <p>
-                    Commission:
-                    PKR ${Number(user.commission || 0).toFixed(2)}
-                </p>
+try{
+await deleteDoc(doc(db,"users",item.id));
+alert("User deleted from users list.");
+await loadUsers();
+}catch(error){
+alert(error.message);
+}
 
-                <input
-                    class="input newBalance"
-                    type="number"
-                    min="0"
-                    placeholder="New balance"
-                >
+});
 
-                <div class="user-actions">
+list.appendChild(div);
 
-                    <button
-                        class="small green update-balance"
-                    >
-                        Update Balance
-                    </button>
+});
 
-                    <button
-                        class="small blue open-support"
-                    >
-                        Support
-                    </button>
+if(!foundUser){
+list.innerHTML='<div class="no-data">No users found.</div>';
+}
 
-                    <button
-                        class="small red delete-user"
-                    >
-                        Delete User
-                    </button>
-
-                </div>
-
-                `;
-
-
-                /* UPDATE BALANCE */
-
-                div
-                .querySelector(
-                    ".update-balance"
-                )
-                .addEventListener(
-                    "click",
-                    async () => {
-
-                        const input =
-                        div.querySelector(
-                            ".newBalance"
-                        );
-
-
-                        const value =
-                        Number(
-                            input.value
-                        );
-
-
-                        if(
-                            !Number.isFinite(value) ||
-                            value < 0
-                        ){
-
-                            alert(
-                                "Valid balance enter karo."
-                            );
-
-                            return;
-
-                        }
-
-
-                        try{
-
-                            await updateDoc(
-                                doc(
-                                    db,
-                                    "users",
-                                    item.id
-                                ),
-                                {
-                                    balance:
-                                    value
-                                }
-                            );
-
-
-                            alert(
-                                "Balance updated successfully."
-                            );
-
-
-                            await loadUsers();
-
-                        }
-                        catch(error){
-
-                            console.error(error);
-
-                            alert(
-                                error.message
-                            );
-
-                        }
-
-                    }
-                );
-
-
-                /* OPEN SUPPORT */
-
-                div
-                .querySelector(
-                    ".open-support"
-                )
-                .addEventListener(
-                    "click",
-                    async () => {
-
-                        selectedUserId =
-                        item.id;
-
-
-                        const supportTab =
-                        document.querySelector(
-                            '[data-tab="support"]'
-                        );
-
-
-                        if(supportTab){
-
-                            supportTab.click();
-
-                        }
-
-
-                        await loadSupport(
-                            selectedUserId
-                        );
-
-                    }
-                );
-
-
-                /* DELETE USER */
-
-                div
-                .querySelector(
-                    ".delete-user"
-                )
-                .addEventListener(
-                    "click",
-                    async () => {
-
-                        if(
-                            !confirm(
-                                "Delete this user from Firestore?"
-                            )
-                        ){
-
-                            return;
-
-                        }
-
-
-                        try{
-
-                            await deleteDoc(
-                                doc(
-                                    db,
-                                    "users",
-                                    item.id
-                                )
-                            );
-
-
-                            alert(
-                                "User deleted from users list."
-                            );
-
-
-                            await loadUsers();
-
-                        }
-                        catch(error){
-
-                            console.error(error);
-
-                            alert(
-                                error.message
-                            );
-
-                        }
-
-                    }
-                );
-
-
-                list.appendChild(div);
-
-            }
-        );
-
-
-        if(!foundUser){
-
-            list.innerHTML =
-            '<div class="no-data">No users found.</div>';
-
-        }
-
-    }
-    catch(error){
-
-        console.error(
-            "Users error:",
-            error
-        );
-
-
-        showError(
-            list,
-            "Unable to load users: " +
-            error.message
-        );
-
-    }
-
+}catch(error){
+console.error(error);
+showError(list,"Unable to load users: "+error.message);
+}
 }
 
 
-/* LOAD WITHDRAWS */
+/* USER TASKS LIST */
 
-async function loadWithdraws(){
+async function showUserTasks(uid){
 
-    const list =
-    document.getElementById(
-        "withdrawList"
-    );
+const list=document.getElementById("userTasksList");
+list.innerHTML='<div class="loading">Loading user tasks...</div>';
 
+try{
 
-    list.innerHTML =
-    '<div class="loading">Loading withdrawals...</div>';
+const userSnap=await getDoc(doc(db,"users",uid));
 
-
-    try{
-
-        const snap =
-        await getDocs(
-            collection(
-                db,
-                "withdraws"
-            )
-        );
-
-
-        if(snap.empty){
-
-            list.innerHTML =
-            '<div class="no-data">No withdrawal requests.</div>';
-
-            return;
-
-        }
-
-
-        const withdrawals = [];
-
-
-        snap.forEach(
-            item => {
-
-                withdrawals.push({
-
-                    id:
-                    item.id,
-
-                    ...item.data()
-
-                });
-
-            }
-        );
-
-
-        withdrawals.sort(
-            (a,b) => {
-
-                const aTime =
-                a.createdAt?.seconds || 0;
-
-                const bTime =
-                b.createdAt?.seconds || 0;
-
-                return bTime - aTime;
-
-            }
-        );
-
-
-        list.innerHTML = "";
-
-
-        withdrawals.forEach(
-            withdrawal => {
-
-                const div =
-                document.createElement(
-                    "div"
-                );
-
-
-                div.className =
-                "item";
-
-
-                const status =
-                String(
-                    withdrawal.status ||
-                    "pending"
-                ).toLowerCase();
-
-
-                div.innerHTML =
-                `
-
-                <h4>
-                    Withdrawal Request
-                </h4>
-
-                <p>
-                    User ID:
-                    ${safe(
-                        withdrawal.userId ||
-                        withdrawal.uid ||
-                        ""
-                    )}
-                </p>
-
-                <p>
-                    Amount:
-                    PKR ${Number(
-                        withdrawal.amount || 0
-                    ).toFixed(2)}
-                </p>
-
-                <p>
-                    Method:
-                    ${safe(
-                        withdrawal.method ||
-                        withdrawal.paymentMethod ||
-                        ""
-                    )}
-                </p>
-
-                <p>
-                    Account:
-                    ${safe(
-                        withdrawal.account ||
-                        withdrawal.accountNumber ||
-                        ""
-                    )}
-                </p>
-
-                <p>
-                    Status:
-                    <b>
-                        ${safe(status.toUpperCase())}
-                    </b>
-                </p>
-
-                <div class="row">
-
-                    <button
-                        class="small green approve"
-                        ${status !== "pending" ? "disabled" : ""}
-                    >
-                        Approve
-                    </button>
-
-                    <button
-                        class="small red reject"
-                        ${status !== "pending" ? "disabled" : ""}
-                    >
-                        Reject
-                    </button>
-
-                </div>
-
-                `;
-
-
-                const approve =
-                div.querySelector(
-                    ".approve"
-                );
-
-
-                const reject =
-                div.querySelector(
-                    ".reject"
-                );
-
-
-                approve.addEventListener(
-                    "click",
-                    async () => {
-
-                        await changeWithdrawStatus(
-                            withdrawal.id,
-                            "approved"
-                        );
-
-                    }
-                );
-
-
-                reject.addEventListener(
-                    "click",
-                    async () => {
-
-                        await changeWithdrawStatus(
-                            withdrawal.id,
-                            "rejected"
-                        );
-
-                    }
-                );
-
-
-                list.appendChild(div);
-
-            }
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Withdraw error:",
-            error
-        );
-
-
-        showError(
-            list,
-            "Unable to load withdrawals: " +
-            error.message
-        );
-
-    }
-
+if(!userSnap.exists()){
+list.innerHTML='<div class="no-data">User not found.</div>';
+return;
 }
 
+const userData=userSnap.data();
+const overrides=userData.taskOverrides||{};
 
-/* WITHDRAW STATUS */
+if(!allTasks.length){
+const snap=await getDocs(collection(db,"tasks"));
+allTasks=[];
 
-async function changeWithdrawStatus(
-    withdrawId,
-    status
-){
+snap.forEach(item=>{
+allTasks.push({id:item.id,...item.data()});
+});
 
-    try{
-
-        await updateDoc(
-            doc(
-                db,
-                "withdraws",
-                withdrawId
-            ),
-            {
-
-                status:
-                status,
-
-                updatedAt:
-                serverTimestamp()
-
-            }
-        );
-
-
-        await loadWithdraws();
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert(
-            error.message
-        );
-
-    }
-
+allTasks.sort((a,b)=>Number(a.order||0)-Number(b.order||0));
 }
 
-
-/* LOAD SUPPORT */
-
-async function loadSupport(
-    focusUserId = null
-){
-
-    const list =
-    document.getElementById(
-        "supportList"
-    );
-
-
-    list.innerHTML =
-    '<div class="loading">Loading messages...</div>';
-
-
-    try{
-
-        const snap =
-        await getDocs(
-            collection(
-                db,
-                "supportMessages"
-            )
-        );
-
-
-        if(snap.empty){
-
-            list.innerHTML =
-            '<div class="no-data">No support messages.</div>';
-
-            document
-            .getElementById(
-                "selectedSupport"
-            )
-            .style.display =
-            "none";
-
-            return;
-
-        }
-
-
-        const users = {};
-
-
-        snap.forEach(
-            item => {
-
-                const message =
-                item.data();
-
-
-                const uid =
-                message.userId ||
-                message.uid;
-
-
-                if(!uid){
-
-                    return;
-
-                }
-
-
-                if(!users[uid]){
-
-                    users[uid] = [];
-
-                }
-
-
-                users[uid].push({
-
-                    id:
-                    item.id,
-
-                    ...message
-
-                });
-
-            }
-        );
-
-
-        list.innerHTML = "";
-
-
-        const userIds =
-        Object.keys(users);
-
-
-        if(userIds.length === 0){
-
-            list.innerHTML =
-            '<div class="no-data">No support messages.</div>';
-
-            return;
-
-        }
-
-
-        userIds.forEach(
-            uid => {
-
-                const messages =
-                users[uid];
-
-
-                messages.sort(
-                    (a,b) =>
-                    getTime(a.createdAt) -
-                    getTime(b.createdAt)
-                );
-
-
-                const last =
-                messages[
-                    messages.length - 1
-                ];
-
-
-                const div =
-                document.createElement(
-                    "div"
-                );
-
-
-                div.className =
-                "message";
-
-
-                div.innerHTML =
-                `
-
-                <b>
-                    User ID:
-                </b>
-
-                ${safe(uid)}
-
-                <br>
-
-                <span style="color:#777">
-                    ${safe(
-                        last.message ||
-                        last.text ||
-                        ""
-                    )}
-                </span>
-
-                `;
-
-
-                if(
-                    focusUserId &&
-                    uid === focusUserId
-                ){
-
-                    div.classList.add(
-                        "selected"
-                    );
-
-                }
-
-
-                div.addEventListener(
-                    "click",
-                    () => {
-
-                        selectedUserId =
-                        uid;
-
-
-                        document
-                        .querySelectorAll(
-                            ".message"
-                        )
-                        .forEach(
-                            x =>
-                            x.classList.remove(
-                                "selected"
-                            )
-                        );
-
-
-                        div.classList.add(
-                            "selected"
-                        );
-
-
-                        showUserChat(
-                            uid,
-                            users[uid]
-                        );
-
-                    }
-                );
-
-
-                list.appendChild(div);
-
-            }
-        );
-
-
-        if(focusUserId){
-
-            if(users[focusUserId]){
-
-                selectedUserId =
-                focusUserId;
-
-
-                showUserChat(
-                    focusUserId,
-                    users[focusUserId]
-                );
-
-            }
-
-        }
-
-    }
-    catch(error){
-
-        console.error(
-            "Support error:",
-            error
-        );
-
-
-        showError(
-            list,
-            "Unable to load support: " +
-            error.message
-        );
-
-    }
-
+if(!allTasks.length){
+list.innerHTML='<div class="no-data">No tasks available.</div>';
+return;
 }
 
+list.innerHTML="";
 
-/* TIME */
+allTasks.forEach(task=>{
 
-function getTime(timestamp){
-
-    if(
-        timestamp &&
-        typeof timestamp.toMillis ===
-        "function"
-    ){
-
-        return timestamp.toMillis();
-
-    }
-
-    if(
-        timestamp &&
-        timestamp.seconds
-    ){
-
-        return Number(
-            timestamp.seconds
-        ) * 1000;
-
-    }
-
-    return 0;
-
-}
-
-
-/* SHOW USER CHAT */
-
-function showUserChat(
-    uid,
-    messages
-){
-
-    selectedUserId =
-    uid;
-
-
-    const box =
-    document.getElementById(
-        "selectedSupport"
-    );
-
-
-    const title =
-    document.getElementById(
-        "selectedUserTitle"
-    );
-
-
-    const chat =
-    document.getElementById(
-        "chatArea"
-    );
-
-
-    box.style.display =
-    "block";
-
-
-    title.textContent =
-    "Customer: " + uid;
-
-
-    chat.innerHTML = "";
-
-
-    messages
-    .slice()
-    .sort(
-        (a,b) =>
-        getTime(a.createdAt) -
-        getTime(b.createdAt)
-    )
-    .forEach(
-        message => {
-
-            const div =
-            document.createElement(
-                "div"
-            );
-
-
-            const sender =
-            String(
-                message.sender ||
-                message.from ||
-                "user"
-            ).toLowerCase();
-
-
-            div.className =
-            "chat-message " +
-            (
-                sender === "admin" ||
-                sender === "support"
-                ?
-                "chat-admin"
-                :
-                "chat-user"
-            );
-
-
-            let html =
-            safe(
-                message.message ||
-                message.text ||
-                ""
-            );
-
-
-            if(message.image){
-
-                html +=
-                `<br>
-                <img
-                    src="${safe(message.image)}"
-                    style="max-width:180px;border-radius:10px;margin-top:8px"
-                >`;
-
-            }
-
-
-            div.innerHTML =
-            html;
-
-
-            chat.appendChild(div);
-
-        }
-    );
-
-
-    chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-/* ADMIN REPLY */
-
-document
-.getElementById("replyBtn")
-.addEventListener(
-    "click",
-    async () => {
-
-        const input =
-        document.getElementById(
-            "replyInput"
-        );
-
-
-        const status =
-        document.getElementById(
-            "supportStatus"
-        );
-
-
-        const button =
-        document.getElementById(
-            "replyBtn"
-        );
-
-
-        const text =
-        input.value.trim();
-
-
-        if(!selectedUserId){
-
-            alert(
-                "Pehle customer select karo."
-            );
-
-            return;
-
-        }
-
-
-        if(!text){
-
-            alert(
-                "Reply likho."
-            );
-
-            return;
-
-        }
-
-
-        button.disabled =
-        true;
-
-
-        try{
-
-            await addDoc(
-                collection(
-                    db,
-                    "supportMessages"
-                ),
-                {
-
-                    userId:
-                    selectedUserId,
-
-                    message:
-                    text,
-
-                    sender:
-                    "admin",
-
-                    status:
-                    "answered",
-
-                    createdAt:
-                    serverTimestamp()
-
-                }
-            );
-
-
-            input.value = "";
-
-
-            status.textContent =
-            "Reply sent ✓";
-
-
-            await loadSupport(
-                selectedUserId
-            );
-
-        }
-        catch(error){
-
-            console.error(
-                "Reply error:",
-                error
-            );
-
-
-            status.textContent =
-            error.message;
-
-
-            alert(
-                error.message
-            );
-
-        }
-        finally{
-
-            button.disabled =
-            false;
-
-        }
-
-    }
-);
-
-
-/* ENTER REPLY */
-
-document
-.getElementById("replyInput")
-.addEventListener(
-    "keydown",
-    event => {
-
-        if(event.key === "Enter"){
-
-            event.preventDefault();
-
-
-            document
-            .getElementById("replyBtn")
-            .click();
-
-        }
-
-    }
-);
-
-</script>
-
-</body>
-</html>
+const override=overrides[task.id]||{};
+const effectivePrice=override.price??task.price??0;
+const effectiveCommission=
