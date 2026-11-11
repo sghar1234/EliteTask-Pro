@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +24,20 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .balance-bottom a{background:linear-gradient(135deg,#ffe9a6,#c99a39);color:#251432;padding:11px 18px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold}
 .container{padding:0 15px}
 .section-title{font-size:18px;margin:22px 0 14px;color:#241336}
-.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.quick-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
 .action{text-align:center;background:white;border-radius:15px;padding:15px 4px;box-shadow:0 3px 12px #24103810;text-decoration:none;color:#28143c;border:1px solid #eee5f5}
 .action .ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border-radius:13px;background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px}
-.action span{font-size:11px;font-weight:bold}
+.action span{font-size:10px;font-weight:bold}
+
+.shop-overlay{display:none;position:fixed;inset:0;background:#10091ddd;z-index:10000;align-items:center;justify-content:center;padding:18px}
+.shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005}
+.shop-box h2{color:#32164c;margin-bottom:16px}
+.payment-option{width:100%;padding:16px;border:1px solid #d5ad4e;border-radius:14px;background:linear-gradient(135deg,#fff8df,#f0d68d);color:#241334;font-weight:800;font-size:16px;margin:8px 0}
+.payment-details{display:none;margin-top:12px;padding:15px;border:1px solid #e4cf91;border-radius:14px;background:#fffaf0;color:#28153c}
+.payment-details p{margin:9px 0;font-size:14px}
+.copy-number{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold;margin-top:8px}
+.shop-close{width:100%;padding:12px;border:0;border-radius:12px;background:#eee7f4;color:#32164c;font-weight:bold;margin-top:12px}
+
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .box{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 13px #2410380d;border:1px solid #eee5f5}
 .box h4{font-size:12px;color:#81748c;font-weight:normal;margin-bottom:10px}
@@ -60,11 +69,18 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .popup-content img{width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px}
 .popup-content p{margin:12px 0}
 #closePopup{width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold}
+
 @media(max-width:360px){
-.quick-actions{gap:5px}.action span{font-size:10px}.balance-card h1{font-size:29px}
-.product-card img{width:78px;height:85px}.product-info h3{font-size:14px}
+.quick-actions{gap:4px}
+.action{padding:12px 2px}
+.action .ico{width:36px;height:36px;font-size:18px}
+.action span{font-size:9px}
+.balance-card h1{font-size:29px}
+.product-card img{width:78px;height:85px}
+.product-info h3{font-size:14px}
 .start-btn{padding:9px 13px;font-size:12px}
-.navbar{gap:4px;padding:10px 5px}.navbar a{height:56px;border-radius:11px}
+.navbar{gap:4px;padding:10px 5px}
+.navbar a{height:56px;border-radius:11px}
 .navbar a span{font-size:9px}
 }
 </style>
@@ -99,6 +115,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <a class="action" href="withdraw.html"><div class="ico">💰</div><span>Withdraw</span></a>
   <a class="action" href="orders.html"><div class="ico">📦</div><span>My Orders</span></a>
   <a class="action" href="support.html"><div class="ico">💬</div><span>Support</span></a>
+  <a class="action" href="#" onclick="openShop();return false;"><div class="ico">🛍️</div><span>Shop</span></a>
  </div>
 
  <h2 class="section-title">Account Overview</h2>
@@ -136,6 +153,26 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  <a href="withdraw.html">💰<span>Withdraw</span></a>
  <a href="profile.html">👤<span>Profile</span></a>
 </nav>
+
+<!-- SHOP PAYMENT POPUP -->
+<div class="shop-overlay" id="shopOverlay">
+ <div class="shop-box">
+  <h2>🛍️ Shop Payments</h2>
+
+  <div id="paymentOptions">
+   <button class="payment-option" onclick="showEasyPaisa()">🟢 EasyPaisa</button>
+  </div>
+
+  <div class="payment-details" id="easyPaisaDetails">
+   <h3>🟢 EasyPaisa Payment</h3>
+   <p>Account Title: <b id="easyPaisaTitle">YOUR ACCOUNT TITLE</b></p>
+   <p>Account Number: <b id="easyPaisaNumber">YOUR EASYPAISA NUMBER</b></p>
+   <button class="copy-number" onclick="copyEasyPaisa()">📋 Copy Account Number</button>
+  </div>
+
+  <button class="shop-close" onclick="closeShop()">Close</button>
+ </div>
+</div>
 
 <div class="popup" id="popup">
  <div class="popup-content">
@@ -253,6 +290,44 @@ document.getElementById("closePopup").onclick = function(){
  window.selectedTask = null;
 
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
+};
+
+/* SHOP FUNCTIONS */
+window.openShop = function(){
+ document.getElementById("shopOverlay").style.display = "flex";
+ document.getElementById("paymentOptions").style.display = "block";
+ document.getElementById("easyPaisaDetails").style.display = "none";
+};
+
+window.showEasyPaisa = function(){
+ document.getElementById("paymentOptions").style.display = "none";
+ document.getElementById("easyPaisaDetails").style.display = "block";
+};
+
+window.closeShop = function(){
+ document.getElementById("shopOverlay").style.display = "none";
+};
+
+window.copyEasyPaisa = async function(){
+ const number = document.getElementById("easyPaisaNumber").innerText;
+
+ if(number === "YOUR EASYPAISA NUMBER"){
+  alert("Please add your EasyPaisa account number in dashboard.html first.");
+  return;
+ }
+
+ try{
+  await navigator.clipboard.writeText(number);
+  alert("✅ EasyPaisa account number copied: " + number);
+ }catch(error){
+  const field = document.createElement("textarea");
+  field.value = number;
+  document.body.appendChild(field);
+  field.select();
+  document.execCommand("copy");
+  field.remove();
+  alert("✅ EasyPaisa account number copied: " + number);
+ }
 };
 
 updateOrdersCount();
