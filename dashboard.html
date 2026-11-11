@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EliteTask Pro - Dashboard</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-bottom:110px}
@@ -28,7 +28,6 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .action{text-align:center;background:white;border-radius:15px;padding:15px 4px;box-shadow:0 3px 12px #24103810;text-decoration:none;color:#28143c;border:1px solid #eee5f5}
 .action .ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border-radius:13px;background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px}
 .action span{font-size:10px;font-weight:bold}
-
 .shop-overlay{display:none;position:fixed;inset:0;background:#10091ddd;z-index:10000;align-items:center;justify-content:center;padding:18px}
 .shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005}
 .shop-box h2{color:#32164c;margin-bottom:16px}
@@ -37,7 +36,6 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .payment-details p{margin:9px 0;font-size:14px}
 .copy-number{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold;margin-top:8px}
 .shop-close{width:100%;padding:12px;border:0;border-radius:12px;background:#eee7f4;color:#32164c;font-weight:bold;margin-top:12px}
-
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .box{background:white;border-radius:16px;padding:17px;box-shadow:0 3px 13px #2410380d;border:1px solid #eee5f5}
 .box h4{font-size:12px;color:#81748c;font-weight:normal;margin-bottom:10px}
@@ -69,23 +67,15 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .popup-content img{width:100%;max-height:180px;object-fit:cover;border-radius:12px;margin-bottom:12px}
 .popup-content p{margin:12px 0}
 #closePopup{width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold}
-
 @media(max-width:360px){
-.quick-actions{gap:4px}
-.action{padding:12px 2px}
-.action .ico{width:36px;height:36px;font-size:18px}
-.action span{font-size:9px}
-.balance-card h1{font-size:29px}
-.product-card img{width:78px;height:85px}
-.product-info h3{font-size:14px}
+.quick-actions{gap:4px}.action{padding:12px 2px}.action .ico{width:36px;height:36px;font-size:18px}.action span{font-size:9px}.balance-card h1{font-size:29px}
+.product-card img{width:78px;height:85px}.product-info h3{font-size:14px}
 .start-btn{padding:9px 13px;font-size:12px}
-.navbar{gap:4px;padding:10px 5px}
-.navbar a{height:56px;border-radius:11px}
+.navbar{gap:4px;padding:10px 5px}.navbar a{height:56px;border-radius:11px}
 .navbar a span{font-size:9px}
 }
 </style>
 </head>
-
 <body>
 
 <header class="topbar">
@@ -111,7 +101,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 <main class="container">
  <h2 class="section-title">Quick Actions</h2>
  <div class="quick-actions">
-  <a class="action" href="recharge.html"><div class="ico">💳</div><span>Recharge</span></a>
+  <a class="action" href="#" onclick="openShop();return false;"><div class="ico">💳</div><span>Recharge</span></a>
   <a class="action" href="withdraw.html"><div class="ico">💰</div><span>Withdraw</span></a>
   <a class="action" href="orders.html"><div class="ico">📦</div><span>My Orders</span></a>
   <a class="action" href="support.html"><div class="ico">💬</div><span>Support</span></a>
@@ -141,35 +131,31 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <span id="taskNumber">Task 1</span>
  </div>
  <div id="taskList">Loading tasks...</div>
-
  <a href="withdraw.html"><button class="withdraw-btn">💰 Withdraw</button></a>
  <a href="orders.html"><button class="support-btn">📦 My Orders</button></a>
 </main>
 
 <nav class="navbar">
  <a href="dashboard.html" class="active">🏠<span>Home</span></a>
- <a href="recharge.html">💳<span>Recharge</span></a>
+ <a href="#" onclick="openShop();return false;">💳<span>Recharge</span></a>
  <a href="orders.html">📦<span>Orders</span></a>
  <a href="withdraw.html">💰<span>Withdraw</span></a>
  <a href="profile.html">👤<span>Profile</span></a>
 </nav>
 
-<!-- SHOP PAYMENT POPUP -->
+<!-- SHOP / RECHARGE PAYMENT -->
 <div class="shop-overlay" id="shopOverlay">
  <div class="shop-box">
   <h2>🛍️ Shop Payments</h2>
-
   <div id="paymentOptions">
    <button class="payment-option" onclick="showEasyPaisa()">🟢 EasyPaisa</button>
   </div>
-
   <div class="payment-details" id="easyPaisaDetails">
    <h3>🟢 EasyPaisa Payment</h3>
    <p>Account Title: <b id="easyPaisaTitle">YOUR ACCOUNT TITLE</b></p>
    <p>Account Number: <b id="easyPaisaNumber">YOUR EASYPAISA NUMBER</b></p>
    <button class="copy-number" onclick="copyEasyPaisa()">📋 Copy Account Number</button>
   </div>
-
   <button class="shop-close" onclick="closeShop()">Close</button>
  </div>
 </div>
@@ -292,7 +278,7 @@ document.getElementById("closePopup").onclick = function(){
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
-/* SHOP FUNCTIONS */
+/* SHOP AND RECHARGE */
 window.openShop = function(){
  document.getElementById("shopOverlay").style.display = "flex";
  document.getElementById("paymentOptions").style.display = "block";
