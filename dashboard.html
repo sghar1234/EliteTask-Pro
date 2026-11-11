@@ -148,7 +148,17 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  <a href="orders.html"><button class="support-btn">📦 My Orders</button></a>
 </main>
 
-<button class="elite-shop-button" id="eliteShopButton" type="button" onclick="openShop()">🛍️ SHOP</button>
+<button class="elite-shop-button" id="eliteShopButton" type="button"
+onclick="
+var o=document.getElementById('shopOverlay');
+var p=document.getElementById('paymentOptions');
+var d=document.getElementById('easyPaisaDetails');
+if(o){o.style.display='flex';}
+if(p){p.style.display='grid';}
+if(d){d.style.display='none';}
+">
+🛍️ SHOP
+</button>
 
 <nav class="navbar">
  <a href="dashboard.html" class="active">🏠<span>Home</span></a>
@@ -402,12 +412,4 @@ window.processDepositImage = async function(file){
  }
 };
 
-window.previewDepositScreenshot = function(event){
- const file = event.target.files && event.target.files[0];
- window.processDepositImage(file);
-};
-
-window.pasteDepositScreenshot = function(event){
- const items = event.clipboardData && event.clipboardData.items;
-
- if(!ite
+window.previewDepositScreenshot = functi
