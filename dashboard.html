@@ -110,11 +110,11 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 <main class="container">
  <h2 class="section-title">Quick Actions</h2>
  <div class="quick-actions">
-  <a class="action" href="#" onclick="openShop();return false;"><div class="ico">💳</div><span>Recharge</span></a>
+  <a class="action" href="#" onclick="return showShopPopup(event)"><div class="ico">💳</div><span>Recharge</span></a>
   <a class="action" href="withdraw.html"><div class="ico">💰</div><span>Withdraw</span></a>
   <a class="action" href="orders.html"><div class="ico">📦</div><span>My Orders</span></a>
   <a class="action" href="support.html"><div class="ico">💬</div><span>Support</span></a>
-  <a class="action" href="#" onclick="openShop();return false;"><div class="ico">🛍️</div><span>Shop</span></a>
+  <a class="action" href="#" onclick="return showShopPopup(event)"><div class="ico">🛍️</div><span>Shop</span></a>
  </div>
 
  <h2 class="section-title">Account Overview</h2>
@@ -147,7 +147,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 
 <nav class="navbar">
  <a href="dashboard.html" class="active">🏠<span>Home</span></a>
- <a href="#" onclick="openShop();return false;">💳<span>Recharge</span></a>
+ <a href="#" onclick="return showShopPopup(event)">💳<span>Recharge</span></a>
  <a href="orders.html">📦<span>Orders</span></a>
  <a href="withdraw.html">💰<span>Withdraw</span></a>
  <a href="profile.html">👤<span>Profile</span></a>
@@ -197,6 +197,37 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 <script type="module" src="script.js"></script>
 
 <script>
+/* Recharge popup direct handler: does not depend on openShop() */
+window.showShopPopup = function(event){
+ if(event) event.preventDefault();
+
+ const overlay = document.getElementById("shopOverlay");
+ const payments = document.getElementById("paymentOptions");
+ const details = document.getElementById("easyPaisaDetails");
+
+ if(!overlay){
+  alert("Recharge popup nahi mila. dashboard.html check karein.");
+  return false;
+ }
+
+ overlay.style.display = "flex";
+ overlay.style.visibility = "visible";
+
+ if(payments) payments.style.display = "grid";
+ if(details) details.style.display = "none";
+
+ window.selectedDepositAmount = 0;
+ window.depositScreenshotData = "";
+
+ const screenshot = document.getElementById("depositScreenshot");
+ const preview = document.getElementById("screenshotPreview");
+
+ if(screenshot) screenshot.value = "";
+ if(preview) preview.style.display = "none";
+
+ return false;
+};
+
 window.dashboardTasks = [];
 window.selectedTask = null;
 window.completedTaskCount = 0;
@@ -206,8 +237,12 @@ function money(value){
 }
 
 function updateOrdersCount(){
- const orders = JSON.parse(localStorage.getItem("orders")) || [];
- document.getElementById("orders").innerText = orders.length;
+ try{
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  document.getElementById("orders").innerText = orders.length;
+ }catch(error){
+  document.getElementById("orders").innerText = "0";
+ }
 }
 
 function updateProgress(completed,total){
@@ -281,7 +316,12 @@ document.getElementById("closePopup").onclick = function(){
  const task = window.selectedTask;
  if(!task) return;
 
- let orders = JSON.parse(localStorage.getItem("orders")) || [];
+ let orders = [];
+ try{
+  orders = JSON.parse(localStorage.getItem("orders") || "[]");
+ }catch(error){
+  orders = [];
+ }
 
  orders.push({
   image:task.image || task.imageURL || task.imageUrl || "",
@@ -304,15 +344,7 @@ document.getElementById("closePopup").onclick = function(){
 window.selectedDepositAmount = 0;
 window.depositScreenshotData = "";
 
-window.openShop = function(){
- document.getElementById("shopOverlay").style.display = "flex";
- document.getElementById("paymentOptions").style.display = "grid";
- document.getElementById("easyPaisaDetails").style.display = "none";
- window.selectedDepositAmount = 0;
- window.depositScreenshotData = "";
- document.getElementById("depositScreenshot").value = "";
- document.getElementById("screenshotPreview").style.display = "none";
-};
+window.openShop = window.showShopPopup;
 
 window.selectDepositAmount = function(amount){
  window.selectedDepositAmount = Number(amount);
@@ -333,8 +365,19 @@ window.closeShop = function(){
 window.previewDepositScreenshot = async function(event){
  const file = event.target.files && event.target.files[0];
  if(!file) return;
- if(!file.type.startsWith("image/")){alert("Please select an image screenshot.");event.target.value="";return;}
- if(file.size > 8*1024*1024){alert("Screenshot 8 MB se chhota hona chahiye.");event.target.value="";return;}
+
+ if(!file.type.startsWith("image/")){
+  alert("Please select an image screenshot.");
+  event.target.value="";
+  return;
+ }
+
+ if(file.size > 8*1024*1024){
+  alert("Screenshot 8 MB se chhota hona chahiye.");
+  event.target.value="";
+  return;
+ }
+
  try{
   const dataUrl = await new Promise((resolve,reject)=>{
    const reader = new FileReader();
@@ -342,26 +385,37 @@ window.previewDepositScreenshot = async function(event){
    reader.onerror = reject;
    reader.readAsDataURL(file);
   });
+
   const img = new Image();
-  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=dataUrl;});
+  await new Promise((resolve,reject)=>{
+   img.onload=resolve;
+   img.onerror=reject;
+   img.src=dataUrl;
+  });
+
   const canvas = document.createElement("canvas");
   const maxSide = 1000;
   const scale = Math.min(1,maxSide/Math.max(img.width,img.height));
   canvas.width = Math.round(img.width*scale);
   canvas.height = Math.round(img.height*scale);
   canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+
   window.depositScreenshotData = canvas.toDataURL("image/jpeg",0.68);
   document.getElementById("screenshotPreview").src = window.depositScreenshotData;
   document.getElementById("screenshotPreview").style.display = "block";
- }catch(error){alert("Screenshot read nahi ho saka. Dobara select karein.");}
+ }catch(error){
+  alert("Screenshot read nahi ho saka. Dobara select karein.");
+ }
 };
 
 window.copyEasyPaisa = async function(){
  const number = document.getElementById("easyPaisaNumber").innerText.trim();
+
  if(!number){
   alert("EasyPaisa account number available nahi hai.");
   return;
  }
+
  try{
   await navigator.clipboard.writeText(number);
   alert("✅ EasyPaisa account number copied: " + number);
@@ -378,33 +432,142 @@ window.copyEasyPaisa = async function(){
 
 window.submitDepositRequest = async function(){
  const btn = document.getElementById("submitDepositBtn");
- if(!window.selectedDepositAmount){alert("Pehle deposit amount select karein.");return;}
- if(!window.depositScreenshotData){alert("Payment screenshot upload karein.");return;}
+
+ if(!window.selectedDepositAmount){
+  alert("Pehle deposit amount select karein.");
+  return;
+ }
+
+ if(!window.depositScreenshotData){
+  alert("Payment screenshot upload karein.");
+  return;
+ }
 
  const amount = Number(window.selectedDepositAmount);
+
  const message = "Hello Customer Service, I want to submit my EliteTask Pro deposit.\nDeposit Amount: " + money(amount) + "\nPayment Method: EasyPaisa\nAccount Title: Sheeraz Ali\nAccount Number: 03495173106\nPlease verify my payment screenshot.";
 
  btn.disabled = true;
- btn.innerTex
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const shop = document.getElementById("shopOverlay");
+ btn.innerText = "Opening WhatsApp...";
 
-    window.openShop = function () {
-        if (!shop) {
-            alert("Shop popup HTML nahi mila!");
-            return;
-        }
+ try{
+  if(window.submitDepositToFirebase){
+   try{
+    await window.submitDepositToFirebase(amount,window.depositScreenshotData);
+   }catch(firebaseError){
+    console.warn("Firebase deposit save skipped:",firebaseError);
+   }
+  }
 
-        shop.style.display = "flex";
-        shop.style.visibility = "visible";
-        shop.style.opacity = "1";
+  const response = await fetch(window.depositScreenshotData);
+  const blob = await response.blob();
+  const screenshotFile = new File([blob],"EliteTask-Pro-Payment-Screenshot.jpg",{type:"image/jpeg"});
 
-        const payments = document.getElementById("paymentOptions");
-        const details = document.getElementById("easyPaisaDetails");
+  if(navigator.share && navigator.canShare && navigator.canShare({files:[screenshotFile]})){
+   await navigator.share({
+    title:"EliteTask Pro Deposit",
+    text:message,
+    files:[screenshotFile]
+   });
+  }else{
+   window.open("https://wa.me/923125917677?text="+encodeURIComponent(message),"_blank");
+   alert("WhatsApp open ho gaya hai. Chat mein payment screenshot manually attach karke Send karein.");
+  }
+ }catch(error){
+  if(error && error.name === "AbortError"){
+   // Share sheet cancelled by user.
+  }else{
+   window.open("https://wa.me/923125917677?text="+encodeURIComponent(message),"_blank");
+   alert("WhatsApp chat open ho jayegi. Screenshot manually attach karke Send karein.");
+  }
+ }finally{
+  btn.disabled = false;
+  btn.innerText = "Submit Deposit";
+ }
+};
 
-        if (payments) payments.style.display = "grid";
-        if (details) details.style.display = "none";
-    };
+updateOrdersCount();
+</script>
+
+<script type="module">
+import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+
+const app = getApp();
+const auth = getAuth(app);
+const db = getFirestore(app);
+let signedInUser = null;
+
+window.submitDepositToFirebase = async function(amount,screenshotData){
+ if(!signedInUser) throw new Error("Please login again.");
+
+ const userSnap = await getDoc(doc(db,"users",signedInUser.uid));
+ const userData = userSnap.exists() ? userSnap.data() : {};
+
+ const message = "Deposit Request: " + money(amount) + " via EasyPaisa. User: " + (userData.name || userData.username || signedInUser.email || "User") + ". Please verify the attached payment screenshot.";
+
+ await addDoc(collection(db,"supportMessages"),{
+  userId:signedInUser.uid,
+  sender:"user",
+  message:message,
+  text:message,
+  type:"deposit",
+  depositAmount:Number(amount),
+  paymentMethod:"EasyPaisa",
+  image:screenshotData,
+  screenshot:screenshotData,
+  status:"pending",
+  createdAt:serverTimestamp()
+ });
+};
+
+onAuthStateChanged(auth, async user => {
+ if(!user){
+  location.href = "index.html";
+  return;
+ }
+
+ signedInUser = user;
+
+ try{
+  const userRef = doc(db,"users",user.uid);
+  const userSnap = await getDoc(userRef);
+
+  if(!userSnap.exists()){
+   document.getElementById("taskList").innerHTML =
+    "<p style='text-align:center;padding:15px;color:#a33'>User account data not found.</p>";
+   return;
+  }
+
+  const data = userSnap.data();
+
+  document.getElementById("welcomeName").innerText =
+   "Welcome, " + (data.name || data.username || "User");
+
+  const balance = Number(data.balance || 0);
+  const commission = Number(data.commission || 0);
+
+  document.getElementById("balance").innerText = money(balance);
+  document.getElementById("commission").innerText = money(commission);
+  document.getElementById("todayIncome").innerText =
+   money(data.todayCommission ?? data.todayIncome ?? 0);
+
+  window.completedTaskCount = Math.max(0,Number(data.completedTasks ?? data.completed ?? 0));
+
+  const taskSnap = await getDocs(collection(db,"tasks"));
+  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
+
+  renderOneTask();
+  updateProgress(window.completedTaskCount,window.dashboardTasks.length);
+
+ }catch(error){
+  console.error("Dashboard loading error:",error);
+  document.getElementById("taskList").innerHTML =
+   "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
+ }
 });
 </script>
+
+</body>
+</html>
