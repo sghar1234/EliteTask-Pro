@@ -182,6 +182,8 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
    <input type="file" id="depositScreenshot" accept="image/*" onchange="previewDepositScreenshot(event)">
    <img id="screenshotPreview" alt="Payment screenshot preview">
 
+   <p id="ocrStatus" class="deposit-note">Screenshot upload karne ke baad amount detect hoga.</p>
+
    <button class="deposit-submit" id="submitDepositBtn" onclick="submitDepositRequest()">Submit Deposit</button>
    <button class="deposit-back" onclick="backToAmounts()">← Change Amount</button>
   </div>
@@ -202,6 +204,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 </div>
 
 <script type="module" src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
 <script>
 window.dashboardTasks = [];
@@ -308,18 +311,23 @@ document.getElementById("closePopup").onclick = function(){
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
+/* RECHARGE SYSTEM */
 window.selectedDepositAmount = 0;
 window.depositScreenshotData = "";
+window.detectedPaymentAmount = null;
+window.ocrReadingComplete = false;
 
 window.openShop = function(){
- const overlay = document.getElementById("shopOverlay");
- overlay.style.display = "flex";
+ document.getElementById("shopOverlay").style.display = "flex";
  document.getElementById("paymentOptions").style.display = "grid";
  document.getElementById("easyPaisaDetails").style.display = "none";
  window.selectedDepositAmount = 0;
  window.depositScreenshotData = "";
+ window.detectedPaymentAmount = null;
+ window.ocrReadingComplete = false;
  document.getElementById("depositScreenshot").value = "";
  document.getElementById("screenshotPreview").style.display = "none";
+ document.getElementById("ocrStatus").innerText = "Screenshot upload karne ke baad amount detect hoga.";
 };
 
 window.selectDepositAmount = function(amount){
@@ -342,6 +350,10 @@ window.previewDepositScreenshot = async function(event){
  const file = event.target.files && event.target.files[0];
  if(!file) return;
 
+ window.detectedPaymentAmount = null;
+ window.ocrReadingComplete = false;
+ window.depositScreenshotData = "";
+
  if(!file.type.startsWith("image/")){
   alert("Please select an image screenshot.");
   event.target.value="";
@@ -353,6 +365,9 @@ window.previewDepositScreenshot = async function(event){
   event.target.value="";
   return;
  }
+
+ const status = document.getElementById("ocrStatus");
+ status.innerText = "Screenshot upload ho raha hai...";
 
  try{
   const dataUrl = await new Promise((resolve,reject)=>{
@@ -370,168 +385,30 @@ window.previewDepositScreenshot = async function(event){
   });
 
   const canvas = document.createElement("canvas");
-  const maxSide = 1000;
-  const scale = Math.min(1,maxSide/Math.max(img.width,img.height));
-
+  const scale = Math.min(1,1400/Math.max(img.width,img.height));
   canvas.width = Math.round(img.width*scale);
   canvas.height = Math.round(img.height*scale);
   canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
 
-  window.depositScreenshotData = canvas.toDataURL("image/jpeg",0.68);
+  window.depositScreenshotData = canvas.toDataURL("image/jpeg",0.72);
 
   document.getElementById("screenshotPreview").src = window.depositScreenshotData;
   document.getElementById("screenshotPreview").style.display = "block";
 
- }catch(error){
-  alert("Screenshot read nahi ho saka. Dobara select karein.");
- }
-};
+  status.innerText = "Screenshot ka amount read ho raha hai. Please wait...";
 
-window.copyEasyPaisa = async function(){
- const number = document.getElementById("easyPaisaNumber").innerText.trim();
-
- try{
-  await navigator.clipboard.writeText(number);
-  alert("✅ EasyPaisa account number copied: " + number);
- }catch(error){
-  const field = document.createElement("textarea");
-  field.value = number;
-  document.body.appendChild(field);
-  field.select();
-  document.execCommand("copy");
-  field.remove();
-  alert("✅ EasyPaisa account number copied: " + number);
- }
-};
-
-window.submitDepositRequest = async function(){
- const btn = document.getElementById("submitDepositBtn");
-
- if(!window.selectedDepositAmount){
-  alert("Pehle deposit amount select karein.");
-  return;
- }
-
- if(!window.depositScreenshotData){
-  alert("Payment screenshot upload karein.");
-  return;
- }
-
- if(!window.submitDepositToFirebase){
-  alert("Firebase load nahi hua. Page refresh karke dobara try karein.");
-  return;
- }
-
- btn.disabled = true;
- btn.innerText = "Submitting...";
-
- try{
-  await window.submitDepositToFirebase(
-   window.selectedDepositAmount,
-   window.depositScreenshotData
-  );
-
-  alert("✅ Deposit request Customer Service ko bhej di gayi hai. Verification ke baad balance update hoga.");
-  closeShop();
-
- }catch(error){
-  console.error("Deposit request error:",error);
-  alert("Deposit request send nahi hui: " + (error.message || error));
-
- }finally{
-  btn.disabled = false;
-  btn.innerText = "Submit Deposit";
- }
-};
-
-updateOrdersCount();
-</script>
-
-<script type="module">
-import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-const app = getApp();
-const auth = getAuth(app);
-const db = getFirestore(app);
-let signedInUser = null;
-
-window.submitDepositToFirebase = async function(amount,screenshotData){
- if(!signedInUser) throw new Error("Please login again.");
-
- const userSnap = await getDoc(doc(db,"users",signedInUser.uid));
- const userData = userSnap.exists() ? userSnap.data() : {};
-
- const message = "Deposit Request: " + money(amount) +
-  " via EasyPaisa. User: " +
-  (userData.name || userData.username || signedInUser.email || "User") +
-  ". Please verify the attached payment screenshot.";
-
- await addDoc(collection(db,"supportMessages"),{
-  userId:signedInUser.uid,
-  sender:"user",
-  message:message,
-  text:message,
-  type:"deposit",
-  depositAmount:Number(amount),
-  paymentMethod:"EasyPaisa",
-  image:screenshotData,
-  screenshot:screenshotData,
-  status:"pending",
-  createdAt:serverTimestamp()
- });
-};
-
-onAuthStateChanged(auth, async user => {
- if(!user){
-  location.href = "index.html";
-  return;
- }
-
- signedInUser = user;
-
- try{
-  const userRef = doc(db,"users",user.uid);
-  const userSnap = await getDoc(userRef);
-
-  if(!userSnap.exists()){
-   document.getElementById("taskList").innerHTML =
-    "<p style='text-align:center;padding:15px;color:#a33'>User account data not found.</p>";
+  if(!window.Tesseract){
+   status.innerText = "Amount automatic read nahi ho saka. Customer Service manually verify karegi.";
+   window.ocrReadingComplete = true;
    return;
   }
 
-  const data = userSnap.data();
+  const result = await Tesseract.recognize(window.depositScreenshotData,"eng");
+  const lines = result.data.text.split(/\n/);
 
-  document.getElementById("welcomeName").innerText =
-   "Welcome, " + (data.name || data.username || "User");
+  let detected = null;
 
-  const balance = Number(data.balance || 0);
-  const commission = Number(data.commission || 0);
+  const keywords = /amount|received|credited|payment|paid|transfer|transaction amount|total/i;
 
-  document.getElementById("balance").innerText = money(balance);
-  document.getElementById("commission").innerText = money(commission);
-  document.getElementById("todayIncome").innerText =
-   money(data.todayCommission ?? data.todayIncome ?? 0);
-
-  window.completedTaskCount = Math.max(
-   0,
-   Number(data.completedTasks ?? data.completed ?? 0)
-  );
-
-  const taskSnap = await getDocs(collection(db,"tasks"));
-  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
-
-  renderOneTask();
-  updateProgress(window.completedTaskCount,window.dashboardTasks.length);
-
- }catch(error){
-  console.error("Dashboard loading error:",error);
-  document.getElementById("taskList").innerHTML =
-   "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
- }
-});
-</script>
-
-</body>
-</html>
+  for(let i=0;i<lines.length;i++){
+   const line = lines[i].
