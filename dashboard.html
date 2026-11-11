@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EliteTask Pro - Dashboard</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-bottom:110px}
@@ -29,9 +30,16 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .action .ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border-radius:13px;background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px}
 .action span{font-size:10px;font-weight:bold}
 .shop-overlay{display:none;position:fixed;inset:0;background:#10091ddd;z-index:10000;align-items:center;justify-content:center;padding:18px}
-.shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005}
+.shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005;max-height:90vh;overflow-y:auto}
 .shop-box h2{color:#32164c;margin-bottom:16px}
-.payment-option{width:100%;padding:16px;border:1px solid #d5ad4e;border-radius:14px;background:linear-gradient(135deg,#fff8df,#f0d68d);color:#241334;font-weight:800;font-size:16px;margin:8px 0}
+.amount-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.amount-btn{padding:14px 7px;border:1px solid #d5ad4e;border-radius:12px;background:linear-gradient(135deg,#fff8df,#f0d68d);color:#241334;font-weight:800;font-size:16px}
+.amount-btn:active{transform:scale(.97)}
+.deposit-back{width:100%;padding:10px;border:0;border-radius:10px;background:#eee7f4;color:#32164c;font-weight:bold;margin-top:10px}
+.deposit-submit{width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold;margin-top:12px}
+#depositScreenshot{width:100%;padding:10px;border:1px dashed #b98a27;border-radius:10px;background:#fff;font-size:13px}
+#screenshotPreview{display:none;width:100%;max-height:180px;object-fit:contain;margin-top:10px;border-radius:10px}
+.deposit-note{font-size:12px;color:#705d3b;line-height:1.5;margin:10px 0}
 .payment-details{display:none;margin-top:12px;padding:15px;border:1px solid #e4cf91;border-radius:14px;background:#fffaf0;color:#28153c}
 .payment-details p{margin:9px 0;font-size:14px}
 .copy-number{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(135deg,#35164f,#160b28);color:#f5d77d;font-weight:bold;margin-top:8px}
@@ -76,6 +84,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 }
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
@@ -131,6 +140,7 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <span id="taskNumber">Task 1</span>
  </div>
  <div id="taskList">Loading tasks...</div>
+
  <a href="withdraw.html"><button class="withdraw-btn">💰 Withdraw</button></a>
  <a href="orders.html"><button class="support-btn">📦 My Orders</button></a>
 </main>
@@ -143,23 +153,46 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  <a href="profile.html">👤<span>Profile</span></a>
 </nav>
 
-<!-- SHOP / RECHARGE PAYMENT -->
+<!-- DEPOSIT POPUP -->
 <div class="shop-overlay" id="shopOverlay">
  <div class="shop-box">
-  <h2>🛍️ Shop Payments</h2>
-  <div id="paymentOptions">
-   <button class="payment-option" onclick="showEasyPaisa()">🟢 EasyPaisa</button>
+  <h2>💳 Select Deposit Amount</h2>
+
+  <div id="paymentOptions" class="amount-grid">
+   <button class="amount-btn" onclick="selectDepositAmount(3000)">$3,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(5000)">$5,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(7000)">$7,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(15000)">$15,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(20000)">$20,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(30000)">$30,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(50000)">$50,000</button>
+   <button class="amount-btn" onclick="selectDepositAmount(100000)">$100,000</button>
   </div>
+
   <div class="payment-details" id="easyPaisaDetails">
    <h3>🟢 EasyPaisa Payment</h3>
+   <p style="font-size:16px">Deposit Amount: <b id="selectedDepositAmount">$0</b></p>
    <p>Account Title: <b id="easyPaisaTitle">YOUR ACCOUNT TITLE</b></p>
    <p>Account Number: <b id="easyPaisaNumber">YOUR EASYPAISA NUMBER</b></p>
+
    <button class="copy-number" onclick="copyEasyPaisa()">📋 Copy Account Number</button>
+
+   <p class="deposit-note">
+    Payment karne ke baad transaction ka screenshot upload karein aur Submit Deposit dabayein.
+   </p>
+
+   <input type="file" id="depositScreenshot" accept="image/*" onchange="previewDepositScreenshot(event)">
+   <img id="screenshotPreview" alt="Payment screenshot preview">
+
+   <button class="deposit-submit" id="submitDepositBtn" onclick="submitDepositRequest()">Submit Deposit</button>
+   <button class="deposit-back" onclick="backToAmounts()">← Change Amount</button>
   </div>
+
   <button class="shop-close" onclick="closeShop()">Close</button>
  </div>
 </div>
 
+<!-- TASK POPUP -->
 <div class="popup" id="popup">
  <div class="popup-content">
   <h2>Task Details</h2>
@@ -179,7 +212,10 @@ window.selectedTask = null;
 window.completedTaskCount = 0;
 
 function money(value){
- return "$" + Number(value || 0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+ return "$" + Number(value || 0).toLocaleString("en-US",{
+  minimumFractionDigits:2,
+  maximumFractionDigits:2
+ });
 }
 
 function updateOrdersCount(){
@@ -278,27 +314,89 @@ document.getElementById("closePopup").onclick = function(){
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
-/* SHOP AND RECHARGE */
+/* DEPOSIT SYSTEM */
+window.selectedDepositAmount = 0;
+window.depositScreenshotData = "";
+
 window.openShop = function(){
  document.getElementById("shopOverlay").style.display = "flex";
- document.getElementById("paymentOptions").style.display = "block";
+ document.getElementById("paymentOptions").style.display = "grid";
  document.getElementById("easyPaisaDetails").style.display = "none";
+ window.selectedDepositAmount = 0;
+ window.depositScreenshotData = "";
+ document.getElementById("depositScreenshot").value = "";
+ document.getElementById("screenshotPreview").style.display = "none";
 };
 
-window.showEasyPaisa = function(){
+window.selectDepositAmount = function(amount){
+ window.selectedDepositAmount = Number(amount);
+ document.getElementById("selectedDepositAmount").innerText = money(amount);
  document.getElementById("paymentOptions").style.display = "none";
  document.getElementById("easyPaisaDetails").style.display = "block";
+};
+
+window.backToAmounts = function(){
+ document.getElementById("easyPaisaDetails").style.display = "none";
+ document.getElementById("paymentOptions").style.display = "grid";
 };
 
 window.closeShop = function(){
  document.getElementById("shopOverlay").style.display = "none";
 };
 
-window.copyEasyPaisa = async function(){
- const number = document.getElementById("easyPaisaNumber").innerText;
+window.previewDepositScreenshot = async function(event){
+ const file = event.target.files && event.target.files[0];
+ if(!file) return;
 
- if(number === "YOUR EASYPAISA NUMBER"){
-  alert("Please add your EasyPaisa account number in dashboard.html first.");
+ if(!file.type.startsWith("image/")){
+  alert("Please select an image screenshot.");
+  event.target.value="";
+  return;
+ }
+
+ if(file.size > 8*1024*1024){
+  alert("Screenshot 8 MB se chhota hona chahiye.");
+  event.target.value="";
+  return;
+ }
+
+ try{
+  const dataUrl = await new Promise((resolve,reject)=>{
+   const reader = new FileReader();
+   reader.onload = ()=>resolve(reader.result);
+   reader.onerror = reject;
+   reader.readAsDataURL(file);
+  });
+
+  const img = new Image();
+  await new Promise((resolve,reject)=>{
+   img.onload=resolve;
+   img.onerror=reject;
+   img.src=dataUrl;
+  });
+
+  const canvas = document.createElement("canvas");
+  const maxSide = 1000;
+  const scale = Math.min(1,maxSide/Math.max(img.width,img.height));
+
+  canvas.width = Math.round(img.width*scale);
+  canvas.height = Math.round(img.height*scale);
+  canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
+
+  window.depositScreenshotData = canvas.toDataURL("image/jpeg",0.68);
+  document.getElementById("screenshotPreview").src = window.depositScreenshotData;
+  document.getElementById("screenshotPreview").style.display = "block";
+
+ }catch(error){
+  alert("Screenshot read nahi ho saka. Dobara select karein.");
+ }
+};
+
+window.copyEasyPaisa = async function(){
+ const number = document.getElementById("easyPaisaNumber").innerText.trim();
+
+ if(number === "YOUR EASYPAISA NUMBER" || !number){
+  alert("Dashboard.html mein apna EasyPaisa account number add karein.");
   return;
  }
 
@@ -316,25 +414,110 @@ window.copyEasyPaisa = async function(){
  }
 };
 
+window.submitDepositRequest = async function(){
+ const btn = document.getElementById("submitDepositBtn");
+
+ if(!window.selectedDepositAmount){
+  alert("Pehle deposit amount select karein.");
+  return;
+ }
+
+ if(!window.depositScreenshotData){
+  alert("Payment screenshot upload karein.");
+  return;
+ }
+
+ if(!window.submitDepositToFirebase){
+  alert("Firebase load nahi hua. Page refresh karke dobara try karein.");
+  return;
+ }
+
+ btn.disabled = true;
+ btn.innerText = "Submitting...";
+
+ try{
+  await window.submitDepositToFirebase(
+   window.selectedDepositAmount,
+   window.depositScreenshotData
+  );
+
+  alert("✅ Deposit request Customer Service ko bhej di gayi hai. Verification ke baad balance update hoga.");
+  closeShop();
+
+ }catch(error){
+  console.error("Deposit request error:",error);
+  alert("Deposit request send nahi hui: " + (error.message || error));
+
+ }finally{
+  btn.disabled = false;
+  btn.innerText = "Submit Deposit";
+ }
+};
+
 updateOrdersCount();
 </script>
 
+<!-- FIREBASE DEPOSIT REQUEST -->
 <script type="module">
 import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import {
+ getFirestore,
+ doc,
+ getDoc,
+ collection,
+ getDocs,
+ addDoc,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const app = getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+let signedInUser = null;
+
+window.submitDepositToFirebase = async function(amount,screenshotData){
+
+ if(!signedInUser){
+  throw new Error("Please login again.");
+ }
+
+ const userSnap = await getDoc(doc(db,"users",signedInUser.uid));
+ const userData = userSnap.exists() ? userSnap.data() : {};
+
+ const message =
+  "Deposit Request: " + money(amount) +
+  " via EasyPaisa. User: " +
+  (userData.name || userData.username || signedInUser.email || "User") +
+  ". Please verify the attached payment screenshot.";
+
+ await addDoc(collection(db,"supportMessages"),{
+  userId:signedInUser.uid,
+  sender:"user",
+  message:message,
+  text:message,
+  type:"deposit",
+  depositAmount:Number(amount),
+  paymentMethod:"EasyPaisa",
+  image:screenshotData,
+  screenshot:screenshotData,
+  status:"pending",
+  createdAt:serverTimestamp()
+ });
+};
+
 onAuthStateChanged(auth, async user => {
+
  if(!user){
   location.href = "index.html";
   return;
  }
 
+ signedInUser = user;
+
  try{
+
   const userRef = doc(db,"users",user.uid);
   const userSnap = await getDoc(userRef);
 
@@ -354,19 +537,29 @@ onAuthStateChanged(auth, async user => {
 
   document.getElementById("balance").innerText = money(balance);
   document.getElementById("commission").innerText = money(commission);
+
   document.getElementById("todayIncome").innerText =
    money(data.todayCommission ?? data.todayIncome ?? 0);
 
-  window.completedTaskCount = Math.max(0,Number(data.completedTasks ?? data.completed ?? 0));
+  window.completedTaskCount = Math.max(
+   0,
+   Number(data.completedTasks ?? data.completed ?? 0)
+  );
 
   const taskSnap = await getDocs(collection(db,"tasks"));
-  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
+
+  window.dashboardTasks = taskSnap.docs.map(d => ({
+   id:d.id,
+   ...d.data()
+  }));
 
   renderOneTask();
   updateProgress(window.completedTaskCount,window.dashboardTasks.length);
 
  }catch(error){
+
   console.error("Dashboard loading error:",error);
+
   document.getElementById("taskList").innerHTML =
    "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
  }
