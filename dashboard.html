@@ -431,3 +431,38 @@ window.submitDepositRequest = async function(){
 
   const message =
    "New Deposit Request - EliteTask Pro\
+
+  const amount = window.selectedDepositAmount;
+  const whatsappNumber = "03125917677";
+
+  const message =
+    "New Deposit Request - EliteTask Pro\n" +
+    "Deposit Amount: " + money(amount) + "\n" +
+    "Account Title: Sheeraz Ali\n" +
+    "Account Number: 03495173106\n" +
+    "Please check my deposit screenshot in the app.";
+
+  const whatsappURL =
+    "https://wa.me/" +
+    whatsappNumber.replace(/\D/g, "") +
+    "?text=" + encodeURIComponent(message);
+
+  alert("Deposit request submitted successfully.");
+
+  window.open(whatsappURL, "_blank");
+
+  window.depositScreenshotData = "";
+  window.selectedDepositAmount = 0;
+
+} catch(error) {
+  console.error(error);
+  alert("Deposit submit nahi hua: " + error.message);
+} finally {
+  btn.disabled = false;
+  btn.innerText = "Submit Deposit";
+}
+};
+
+</script>
+</body>
+</html>
