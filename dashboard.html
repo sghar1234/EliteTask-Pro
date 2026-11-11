@@ -386,3 +386,25 @@ window.submitDepositRequest = async function(){
 
  btn.disabled = true;
  btn.innerTex
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const shop = document.getElementById("shopOverlay");
+
+    window.openShop = function () {
+        if (!shop) {
+            alert("Shop popup HTML nahi mila!");
+            return;
+        }
+
+        shop.style.display = "flex";
+        shop.style.visibility = "visible";
+        shop.style.opacity = "1";
+
+        const payments = document.getElementById("paymentOptions");
+        const details = document.getElementById("easyPaisaDetails");
+
+        if (payments) payments.style.display = "grid";
+        if (details) details.style.display = "none";
+    };
+});
+</script>
