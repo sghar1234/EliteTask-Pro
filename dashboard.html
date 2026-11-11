@@ -30,9 +30,10 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 .action .ico{width:42px;height:42px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;border-radius:13px;background:linear-gradient(135deg,#f5e3ae,#d4b15b);font-size:21px}
 .action span{font-size:10px;font-weight:bold}
 .shop-overlay{display:none;position:fixed;inset:0;background:#10091ddd;z-index:10000;align-items:center;justify-content:center;padding:18px}
-.shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005;max-height:90vh;overflow-y:auto}
+.shop-box{background:#fff;width:100%;max-width:360px;border-radius:20px;padding:22px;text-align:center;box-shadow:0 10px 35px #0005}
 .shop-box h2{color:#32164c;margin-bottom:16px}
-.amount-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.payment-option{width:100%;padding:13px;border:1px solid #d5ad4e;border-radius:14px;background:linear-gradient(135deg,#fff8df,#f0d68d);color:#241334;font-weight:800;font-size:16px;margin:6px 0}
+.amount-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;max-height:55vh;overflow-y:auto}
 .amount-btn{padding:14px 7px;border:1px solid #d5ad4e;border-radius:12px;background:linear-gradient(135deg,#fff8df,#f0d68d);color:#241334;font-weight:800;font-size:16px}
 .amount-btn:active{transform:scale(.97)}
 .deposit-back{width:100%;padding:10px;border:0;border-radius:10px;background:#eee7f4;color:#32164c;font-weight:bold;margin-top:10px}
@@ -153,7 +154,6 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  <a href="profile.html">👤<span>Profile</span></a>
 </nav>
 
-<!-- DEPOSIT POPUP -->
 <div class="shop-overlay" id="shopOverlay">
  <div class="shop-box">
   <h2>💳 Select Deposit Amount</h2>
@@ -172,14 +172,12 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <div class="payment-details" id="easyPaisaDetails">
    <h3>🟢 EasyPaisa Payment</h3>
    <p style="font-size:16px">Deposit Amount: <b id="selectedDepositAmount">$0</b></p>
-   <p>Account Title: <b id="easyPaisaTitle">YOUR ACCOUNT TITLE</b></p>
-   <p>Account Number: <b id="easyPaisaNumber">YOUR EASYPAISA NUMBER</b></p>
+   <p>Account Title: <b id="easyPaisaTitle">Sheeraz Ali</b></p>
+   <p>Account Number: <b id="easyPaisaNumber">03495173106</b></p>
 
    <button class="copy-number" onclick="copyEasyPaisa()">📋 Copy Account Number</button>
 
-   <p class="deposit-note">
-    Payment karne ke baad transaction ka screenshot upload karein aur Submit Deposit dabayein.
-   </p>
+   <p class="deposit-note">Payment karne ke baad transaction ka screenshot upload karein aur Submit Deposit dabayein.</p>
 
    <input type="file" id="depositScreenshot" accept="image/*" onchange="previewDepositScreenshot(event)">
    <img id="screenshotPreview" alt="Payment screenshot preview">
@@ -192,7 +190,6 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
  </div>
 </div>
 
-<!-- TASK POPUP -->
 <div class="popup" id="popup">
  <div class="popup-content">
   <h2>Task Details</h2>
@@ -212,10 +209,7 @@ window.selectedTask = null;
 window.completedTaskCount = 0;
 
 function money(value){
- return "$" + Number(value || 0).toLocaleString("en-US",{
-  minimumFractionDigits:2,
-  maximumFractionDigits:2
- });
+ return "$" + Number(value || 0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
 function updateOrdersCount(){
@@ -314,12 +308,12 @@ document.getElementById("closePopup").onclick = function(){
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
-/* DEPOSIT SYSTEM */
 window.selectedDepositAmount = 0;
 window.depositScreenshotData = "";
 
 window.openShop = function(){
- document.getElementById("shopOverlay").style.display = "flex";
+ const overlay = document.getElementById("shopOverlay");
+ overlay.style.display = "flex";
  document.getElementById("paymentOptions").style.display = "grid";
  document.getElementById("easyPaisaDetails").style.display = "none";
  window.selectedDepositAmount = 0;
@@ -384,6 +378,7 @@ window.previewDepositScreenshot = async function(event){
   canvas.getContext("2d").drawImage(img,0,0,canvas.width,canvas.height);
 
   window.depositScreenshotData = canvas.toDataURL("image/jpeg",0.68);
+
   document.getElementById("screenshotPreview").src = window.depositScreenshotData;
   document.getElementById("screenshotPreview").style.display = "block";
 
@@ -394,11 +389,6 @@ window.previewDepositScreenshot = async function(event){
 
 window.copyEasyPaisa = async function(){
  const number = document.getElementById("easyPaisaNumber").innerText.trim();
-
- if(number === "YOUR EASYPAISA NUMBER" || !number){
-  alert("Dashboard.html mein apna EasyPaisa account number add karein.");
-  return;
- }
 
  try{
   await navigator.clipboard.writeText(number);
@@ -457,37 +447,23 @@ window.submitDepositRequest = async function(){
 updateOrdersCount();
 </script>
 
-<!-- FIREBASE DEPOSIT REQUEST -->
 <script type="module">
 import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import {
- getFirestore,
- doc,
- getDoc,
- collection,
- getDocs,
- addDoc,
- serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
 
 const app = getApp();
 const auth = getAuth(app);
 const db = getFirestore(app);
-
 let signedInUser = null;
 
 window.submitDepositToFirebase = async function(amount,screenshotData){
-
- if(!signedInUser){
-  throw new Error("Please login again.");
- }
+ if(!signedInUser) throw new Error("Please login again.");
 
  const userSnap = await getDoc(doc(db,"users",signedInUser.uid));
  const userData = userSnap.exists() ? userSnap.data() : {};
 
- const message =
-  "Deposit Request: " + money(amount) +
+ const message = "Deposit Request: " + money(amount) +
   " via EasyPaisa. User: " +
   (userData.name || userData.username || signedInUser.email || "User") +
   ". Please verify the attached payment screenshot.";
@@ -508,7 +484,6 @@ window.submitDepositToFirebase = async function(amount,screenshotData){
 };
 
 onAuthStateChanged(auth, async user => {
-
  if(!user){
   location.href = "index.html";
   return;
@@ -517,7 +492,6 @@ onAuthStateChanged(auth, async user => {
  signedInUser = user;
 
  try{
-
   const userRef = doc(db,"users",user.uid);
   const userSnap = await getDoc(userRef);
 
@@ -537,7 +511,6 @@ onAuthStateChanged(auth, async user => {
 
   document.getElementById("balance").innerText = money(balance);
   document.getElementById("commission").innerText = money(commission);
-
   document.getElementById("todayIncome").innerText =
    money(data.todayCommission ?? data.todayIncome ?? 0);
 
@@ -547,19 +520,13 @@ onAuthStateChanged(auth, async user => {
   );
 
   const taskSnap = await getDocs(collection(db,"tasks"));
-
-  window.dashboardTasks = taskSnap.docs.map(d => ({
-   id:d.id,
-   ...d.data()
-  }));
+  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
 
   renderOneTask();
   updateProgress(window.completedTaskCount,window.dashboardTasks.length);
 
  }catch(error){
-
   console.error("Dashboard loading error:",error);
-
   document.getElementById("taskList").innerHTML =
    "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
  }
