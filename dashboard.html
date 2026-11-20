@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,14 +89,14 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
 <body>
 
 <header class="topbar">
- <div class="top-head">
-  <div class="logo">👑 EliteTask Pro<small id="welcomeName">Welcome</small></div>
-  <a href="support.html"><button class="support-top">💬 Customer Service</button></a>
- </div>
- <div class="welcome">
-  <h2>Welcome Back 👋</h2>
-  <p>Your premium task dashboard is ready.</p>
- </div>
+  <div class="top-head">
+   <div class="logo">👑 EliteTask Pro<small id="welcomeName">Welcome</small></div>
+   <a href="support.html"><button class="support-top">💬 Customer Service</button></a>
+  </div>
+  <div class="welcome">
+   <h2>Welcome Back 👋</h2>
+   <p>Your premium task dashboard is ready.</p>
+  </div>
 </header>
 
 <div class="balance-card">
@@ -170,8 +171,8 @@ body{font-family:Arial,sans-serif;background:#f5f1fa;color:#211b2d;padding-botto
   <div class="payment-details" id="easyPaisaDetails">
    <h3>🟢 EasyPaisa Payment</h3>
    <p style="font-size:16px">Deposit Amount: <b id="selectedDepositAmount">$0</b></p>
-   <p>Account Title: <b id="easyPaisaTitle">Sheeraz Ali</b></p>
-   <p>Account Number: <b id="easyPaisaNumber">03495173106</b></p>
+   <p>Account Title: <b id="easyPaisaTitle">Faizan Tahir</b></p>
+   <p>Account Number: <b id="easyPaisaNumber">03435179633</b></p>
    <button class="copy-number" onclick="copyEasyPaisa()">📋 Copy Account Number</button>
    <p class="deposit-note">Payment karne ke baad transaction ka screenshot upload karein aur Submit Deposit dabayein.</p>
    <input type="file" id="depositScreenshot" accept="image/*" onchange="previewDepositScreenshot(event)">
@@ -304,7 +305,6 @@ document.getElementById("closePopup").onclick = function(){
  alert("✅ Task Submitted Successfully. Next task will appear after this task is marked completed.");
 };
 
-
 window.selectedDepositAmount = 0;
 window.depositScreenshotData = "";
 window.detectedDepositAmount = "";
@@ -399,178 +399,4 @@ window.previewDepositScreenshot = async function(event){
 
     const matches = text.match(/(?:Rs\.?|PKR|\$)?\s*([0-9][0-9,]{2,})/gi) || [];
     const values = matches.map(v => Number(v.replace(/[^0-9]/g,""))).filter(v => v > 0);
-    const selected = Number(window.selectedDepositAmount || 0);
-    const detected = values.find(v => v === selected) || values.sort((a,b)=>Math.abs(a-selected)-Math.abs(b-selected))[0];
-
-    if(detected){
-     window.detectedDepositAmount = detected;
-     document.getElementById("ocrStatus").innerText = "Screenshot amount reading complete. Manual verification zaroori hai.";
-     document.getElementById("ocrAmount").innerText = "Detected Amount: " + money(detected);
-    }else{
-     document.getElementById("ocrStatus").innerText = "Amount screenshot se read nahi ho saka. Customer Service manually verify karegi.";
-    }
-   }catch(ocrError){
-    document.getElementById("ocrStatus").innerText = "OCR amount read nahi kar saka. Manual verification zaroori hai.";
-   }
-  }else{
-   document.getElementById("ocrStatus").innerText = "OCR service load nahi hui. Manual verification zaroori hai.";
-  }
-
- }catch(error){
-  alert("Screenshot read nahi ho saka. Dobara select karein.");
- }
-};
-
-window.copyEasyPaisa = async function(){
- const number = document.getElementById("easyPaisaNumber").innerText.trim();
-
- if(!number){
-  alert("Dashboard.html mein apna EasyPaisa account number add karein.");
-  return;
- }
-
- try{
-  await navigator.clipboard.writeText(number);
-  alert("✅ EasyPaisa account number copied: " + number);
- }catch(error){
-  const field = document.createElement("textarea");
-  field.value = number;
-  document.body.appendChild(field);
-  field.select();
-  document.execCommand("copy");
-  field.remove();
-  alert("✅ EasyPaisa account number copied: " + number);
- }
-};
-
-window.submitDepositRequest = async function(){
- const btn = document.getElementById("submitDepositBtn");
-
- if(!window.selectedDepositAmount){
-  alert("Please select deposit amount.");
-  return;
- }
-
- if(!window.depositScreenshotData){
-  alert("Please upload payment screenshot.");
-  return;
- }
-
- if(!window.submitDepositToFirebase){
-  alert("Please refresh and try again.");
-  return;
- }
-
- btn.disabled = true;
- btn.innerText = "Submitting...";
-
- try{
-  await window.submitDepositToFirebase(
-   window.selectedDepositAmount,
-   window.depositScreenshotData,
-   window.detectedDepositAmount,
-   window.depositOCRText
-  );
-
-  alert("Request Submitted");
-  closeShop();
-
- }catch(error){
-  console.error("Deposit request error:",error);
-  alert("Request not submitted. Please try again.");
-
- }finally{
-  btn.disabled = false;
-  btn.innerText = "Submit Deposit";
- }
-};
-
-updateOrdersCount();
-</script>
-
-<script type="module">
-import { getApp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.0/firebase-firestore.js";
-
-const app = getApp();
-const auth = getAuth(app);
-const db = getFirestore(app);
-let signedInUser = null;
-
-window.submitDepositToFirebase = async function(amount,screenshotData,detectedAmount,ocrText){
- if(!signedInUser) throw new Error("Please login again.");
-
- const userSnap = await getDoc(doc(db,"users",signedInUser.uid));
- const userData = userSnap.exists() ? userSnap.data() : {};
-
- const message = "Deposit Request: " + money(amount) + " via EasyPaisa. User: " + (userData.name || userData.username || signedInUser.email || "User") + ". OCR detected amount: " + (detectedAmount ? money(detectedAmount) : "Not detected; manual verification required") + ". Please verify the payment screenshot saved with this support message.";
-
- await addDoc(collection(db,"supportMessages"),{
-  userId:signedInUser.uid,
-  sender:"user",
-  message:message,
-  text:message,
-  type:"deposit",
-  depositAmount:Number(amount),
-  detectedDepositAmount:detectedAmount ? Number(detectedAmount) : null,
-  ocrText:ocrText || "",
-  Faizan Tahir",
-  accountNumber:"03435179633",
-  paymentMethod:"EasyPaisa",
-  image:screenshotData,
-  screenshot:screenshotData,
-  status:"pending",
-  createdAt:serverTimestamp()
- });
-};
-
-onAuthStateChanged(auth, async user => {
- if(!user){
-  location.href = "index.html";
-  return;
- }
-
- signedInUser = user;
-
- try{
-  const userRef = doc(db,"users",user.uid);
-  const userSnap = await getDoc(userRef);
-
-  if(!userSnap.exists()){
-   document.getElementById("taskList").innerHTML =
-    "<p style='text-align:center;padding:15px;color:#a33'>User account data not found.</p>";
-   return;
-  }
-
-  const data = userSnap.data();
-
-  document.getElementById("welcomeName").innerText =
-   "Welcome, " + (data.name || data.username || "User");
-
-  const balance = Number(data.balance || 0);
-  const commission = Number(data.commission || 0);
-
-  document.getElementById("balance").innerText = money(balance);
-  document.getElementById("commission").innerText = money(commission);
-  document.getElementById("todayIncome").innerText =
-   money(data.todayCommission ?? data.todayIncome ?? 0);
-
-  window.completedTaskCount = Math.max(0,Number(data.completedTasks ?? data.completed ?? 0));
-
-  const taskSnap = await getDocs(collection(db,"tasks"));
-  window.dashboardTasks = taskSnap.docs.map(d => ({id:d.id,...d.data()}));
-
-  renderOneTask();
-  updateProgress(window.completedTaskCount,window.dashboardTasks.length);
-
- }catch(error){
-  console.error("Dashboard loading error:",error);
-  document.getElementById("taskList").innerHTML =
-   "<p style='text-align:center;padding:15px;color:#a33'>Data load error: "+error.message+"</p>";
- }
-});
-</script>
-
-</body>
-</html>
+    const selected = Number(window.selectedDe
